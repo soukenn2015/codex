@@ -1924,3 +1924,10 @@ h3 {
     white-space: normal;
   }
 }
+
+.focus-highlight {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+  transition: box-shadow 0.2s ease;
+}

@@ -2112,9 +2112,49 @@ function buildTodayEmptyReasons() {
   ];
 }
 
+function buildHiddenActionReasonLines(visibleItems) {
+  const visibleKeys = new Set((visibleItems ?? []).map((item) => item.actionKey));
+  const lines = [];
+
+  for (const deal of state.deals) {
+    const calc = calculateDeal(deal);
+    const active = dealAvailability(deal).kind === "active";
+    if (!active) continue;
+    const profitKey = dealActionKey(deal, "profit");
+    const recheckKey = dealActionKey(deal, "recheck");
+    if (visibleKeys.has(profitKey) || visibleKeys.has(recheckKey)) continue;
+
+    const priceSignal = dealPriceSignal(deal, calc);
+    let reason = "";
+    if ((deal.confidence ?? "中") === "低") {
+      reason = "信頼度低";
+    } else if (priceSignal.kind !== "gap") {
+      reason = `利益条件未達（${dealRecheckReason(deal, calc)}）`;
+    } else {
+      reason = "優先度外";
+    }
+    lines.push(`${deal.name}: ${reason}`);
+  }
+
+  for (const release of pokemonReleases) {
+    if (releaseWatchState(release).kind !== "active") continue;
+    const key = release.id;
+    if (visibleKeys.has(key)) continue;
+    const routes = getActiveRoutes(release);
+    if (routes.length === 0) {
+      lines.push(`${release.name}: 有効な抽選ルートなし`);
+      continue;
+    }
+    lines.push(`${release.name}: 優先度外`);
+  }
+
+  return lines.slice(0, 6);
+}
+
 function renderActionItems() {
   elements.actionList.replaceChildren();
   const items = buildActionItems();
+  const hiddenReasonLines = buildHiddenActionReasonLines(items);
 
   if (items.length === 0) {
     const empty = document.createElement("div");
@@ -2141,6 +2181,20 @@ function renderActionItems() {
     items.filter((item) => item.kind === "lottery" || item.kind === "upcoming").length
   } / 非表示 利益 ${Math.max(0, hiddenProfit)} / 抽選 ${Math.max(0, hiddenLottery)}`;
   elements.actionList.append(status);
+  if (hiddenReasonLines.length > 0) {
+    const reasonsBox = document.createElement("div");
+    reasonsBox.className = "detail-box";
+    reasonsBox.hidden = false;
+    const title = document.createElement("strong");
+    title.textContent = "非表示の主な理由";
+    reasonsBox.append(title);
+    for (const line of hiddenReasonLines) {
+      const row = document.createElement("div");
+      row.textContent = line;
+      reasonsBox.append(row);
+    }
+    elements.actionList.append(reasonsBox);
+  }
 
   for (const item of items) {
     const card = document.createElement("article");
