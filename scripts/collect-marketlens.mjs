@@ -478,6 +478,14 @@ function makeSearchUrl(base, query) {
   return `${base}${encodeURIComponent(query)}`;
 }
 
+function makeMercariSoldLikeUrls(query) {
+  return [
+    makeSearchUrl("https://jp.mercari.com/search?keyword=", query),
+    makeSearchUrl("https://jp.mercari.com/search?keyword=", `${query} 売り切れ`),
+    makeSearchUrl("https://jp.mercari.com/search?keyword=", `${query} 成約`),
+  ];
+}
+
 function candidateMarketQueries(candidate) {
   const name = candidate?.name ?? "";
   const queries = [];
@@ -491,7 +499,7 @@ function candidateMarketQueries(candidate) {
   return [...new Set(queries)];
 }
 
-function extractMarketPriceFromText(text, candidateName) {
+function extractMarketPriceFromText(text, candidateName, sourceUrl = "") {
   const baseName = String(candidateName ?? "").toLowerCase();
   const nameTokens = baseName
     .replace(/[^\p{L}\p{N}]+/gu, " ")
@@ -514,6 +522,7 @@ function extractMarketPriceFromText(text, candidateName) {
   for (const line of windows) {
     const lower = line.toLowerCase();
     const hasMarketSignal = /相場|取引|落札|成約|販売中|出品|snkrdunk|mercari|メルカリ|スニダン/.test(lower);
+    const hasSoldSignal = /売り切れ|sold|成約|取引済み|落札/.test(lower);
     const hasNoise = /定価|希望小売|手数料|送料|クーポン|ポイント|割引|off|％|レビュー/.test(lower);
     const tokenHits = nameTokens.filter((token) => lower.includes(token)).length;
     const nameHit =
@@ -525,12 +534,14 @@ function extractMarketPriceFromText(text, candidateName) {
     for (const value of values) {
       let weight = 1;
       if (hasMarketSignal) weight += 2;
+      if (hasSoldSignal) weight += 3;
+      if (/mercari/.test(sourceUrl) && hasSoldSignal) weight += 2;
       if (nameHit) weight += 2;
       if (tokenHits >= 3) weight += 1;
       if (hasNoise) weight -= 2;
       if (tokenHits === 0 && !hasMarketSignal) weight -= 2;
       if (weight <= 0) continue;
-      scored.push({ value, weight });
+      scored.push({ value, weight, sold: hasSoldSignal });
     }
   }
 
@@ -553,6 +564,7 @@ function extractMarketPriceFromText(text, candidateName) {
     marketPrice: median,
     marketPriceLabel: `${candidateName} 相場 ${median.toLocaleString("ja-JP")}円`,
     tokenSupport,
+    soldSupport: scored.filter((item) => item.sold).length / Math.max(1, scored.length),
   };
 }
 
@@ -563,10 +575,7 @@ async function collectSpecializedCandidateMarkets(candidates) {
     if (queries.length === 0) continue;
     const pageBuckets = [];
     for (const query of queries.slice(0, 2)) {
-      const urls = [
-        makeSearchUrl("https://snkrdunk.com/search?keyword=", query),
-        makeSearchUrl("https://jp.mercari.com/search?keyword=", query),
-      ];
+      const urls = [makeSearchUrl("https://snkrdunk.com/search?keyword=", query), ...makeMercariSoldLikeUrls(query)];
       for (const url of urls) {
         const result = await fetchSource({ id: `market:${candidate.name}:${url}`, url });
         if (result.ok && result.text) pageBuckets.push({ url, text: result.text });
@@ -574,7 +583,7 @@ async function collectSpecializedCandidateMarkets(candidates) {
     }
     const extractedRows = pageBuckets
       .map((page) => ({
-        ...extractMarketPriceFromText(page.text, candidate.name),
+        ...extractMarketPriceFromText(page.text, candidate.name, page.url),
         url: page.url,
       }))
       .filter((row) => Number.isFinite(row.marketPrice));
@@ -583,12 +592,15 @@ async function collectSpecializedCandidateMarkets(candidates) {
         .map((row) => Number(row.tokenSupport ?? 0))
         .sort((a, b) => a - b)[Math.floor(extractedRows.length / 2)];
       if (supportMedian < 0.35) continue;
+      const soldStrength = extractedRows
+        .map((row) => Number(row.soldSupport ?? 0))
+        .sort((a, b) => a - b)[Math.floor(extractedRows.length / 2)];
       const values = extractedRows.map((row) => row.marketPrice).sort((a, b) => a - b);
       const marketPrice = values[Math.floor(values.length / 2)];
       results.set(candidate.name, {
         marketPrice,
-        marketPriceLabel: `${candidate.name} 相場 ${marketPrice.toLocaleString("ja-JP")}円`,
-        marketPriceSource: `specialized-search(${extractedRows.length})`,
+        marketPriceLabel: `${candidate.name} 実売寄り相場 ${marketPrice.toLocaleString("ja-JP")}円`,
+        marketPriceSource: `specialized-search(${extractedRows.length})/sold:${soldStrength.toFixed(2)}`,
       });
     }
   }

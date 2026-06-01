@@ -2421,6 +2421,7 @@ function renderProvisionalCandidateCard(candidate, container) {
     `利益状態: ${profitSummary.value}`,
     candidate.retailPrice ? `公式価格: ${yen.format(candidate.retailPrice)}` : "",
     candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
+    candidate.marketPriceSource ? `相場ソース: ${candidate.marketPriceSource}` : "",
     `不足: ${candidateMissingReasons(candidate).join(" / ") || "数値再取得"}`,
     `取得先: ${candidateResearchTargets(candidate).join(" / ")}`,
     `検証状態: ${validationLabel}`,
