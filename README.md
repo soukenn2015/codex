@@ -94,3 +94,11 @@ name,shop,buyPrice,sellPrice,category,releaseUrl
 ```text
 node scripts/daily-digest.mjs
 ```
+
+## Regression Check
+
+スナップショット整合性の軽量回帰チェック:
+
+```text
+node scripts/regression-check.mjs
+```
