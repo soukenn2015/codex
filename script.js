@@ -1921,7 +1921,7 @@ function displayTrendKeyword(keyword) {
 }
 
 const trendMinLeadHours = 24;
-const trendImmediateWindowDays = 7;
+const trendImmediateWindowDays = 3;
 const trendFocusWindowMinDays = 8;
 const trendFocusWindowMaxDays = 30;
 const trendEarlyWindowMinDays = 31;
@@ -1968,7 +1968,7 @@ function trendDisplayPhase(trend) {
 
   if (startTs && startTs <= now) {
     const startedDays = (now - startTs) / 86_400_000;
-    if (startedDays <= 21) return "focus";
+    if (startedDays <= 3) return "focus";
     return null;
   }
 
@@ -2020,7 +2020,13 @@ function shouldDisplayRoute(route) {
 
 function isConcreteCandidate(candidate) {
   const name = String(candidate?.name ?? "");
-  return !/(品薄|完売).*(ウォッチ|監視)|監視$|ウォッチ$/i.test(name);
+  if (!name) return false;
+  if (/(品薄|完売).*(ウォッチ|監視)|監視$|ウォッチ$/i.test(name)) return false;
+  if (/(速報|情報|まとめ)/.test(name) && !/(一番くじ|ポケモン|ポケカ|ドラゴンボール|ワンピース|ドラクエ|g-shock|garrack|フィギュア|サプライ)/i.test(name)) {
+    return false;
+  }
+  if (/^@|（@|公式サイト|ブログ監視|sns監視/i.test(name)) return false;
+  return true;
 }
 
 function splitMissingParts(value) {
@@ -2101,48 +2107,40 @@ function candidatePromotionReason(candidate, profitSummary) {
 }
 
 function buildKujiSpecialCandidates() {
-  const now = Date.now();
-  return kujiSpecials
-    .filter((special) => {
-      const startTs = parseFlexibleTs(special.salesStartDate ?? special.releaseDate, { defaultTime: "start" });
-      const endTs = parseFlexibleTs(special.salesEndDate ?? special.displayUntil, { defaultTime: "end" });
-      if (Number.isFinite(endTs) && endTs < now) return false;
-      if (Number.isFinite(startTs)) {
-        const leadDays = (startTs - now) / 86_400_000;
-        if (leadDays < -7) return false;
-        if (leadDays > 180) return false;
-      }
-      return /一番くじ|1kuji|kuji/i.test(special.title ?? "");
-    })
-    .map((special) => {
-      const officialLineup = Array.isArray(special.officialLineup) ? special.officialLineup.join(" / ") : "";
-      return {
-        id: `kuji-candidate:${special.id}`,
-        stageKind: "candidate",
-        stage: "候補",
-        name: special.title,
-        trend: special.title,
-        confidence: /発売前|強化|発売中/.test(special.status ?? "") ? "高" : "中",
-        genreScore: 86,
-        historyRecentHits: 3,
-        marginSignal: "一番くじ発売前監視",
-        reason:
-          special.marketForecast ||
-          "一番くじ発売前の監視枠。発売日・抽選開始日・終了日の更新時に優先確認。",
-        startDate: special.salesStartDate ?? special.releaseDate ?? null,
-        endDate: special.salesEndDate ?? special.displayUntil ?? null,
-        sourceUrl: special.sourceUrl ?? "",
-        retailPrice: null,
-        marketPrice: null,
-        marketPriceSource: null,
-        marketObservedAt: null,
-        priceData: officialLineup || special.targetPrizes || "公式ラインナップ",
-        tradeVolume: special.watchPoints || "発売前監視",
-        missingData: "公式価格,相場価格,送料サイズ",
-        adoptionReason: special.targetPrizes || "発売前の強化候補",
-        category: "kuji",
-      };
-    });
+  const selection = buildKujiSelectionState();
+  return [...selection.strong, ...selection.watch].map(({ special, prediction, missingFields }) => {
+    const officialLineup = Array.isArray(special.officialLineup) ? special.officialLineup.join(" / ") : "";
+    const missing =
+      missingFields.length > 0
+        ? missingFields.join(",")
+        : Number.isFinite(special?.retailPrice) || Number.isFinite(special?.marketPrice)
+          ? "送料サイズ"
+          : "公式価格,相場価格,送料サイズ";
+    return {
+      id: `kuji-candidate:${special.id}`,
+      stageKind: "candidate",
+      stage: prediction.score >= 70 ? "候補" : "先読み",
+      name: special.title,
+      trend: special.title,
+      confidence: prediction.score >= 70 ? "高" : "中",
+      genreScore: prediction.score,
+      historyRecentHits: prediction.score >= 70 ? 4 : 2,
+      marginSignal: `一番くじ強さスコア ${prediction.score}`,
+      reason: prediction.whyLine,
+      startDate: special.salesStartDate ?? special.releaseDate ?? null,
+      endDate: special.salesEndDate ?? special.displayUntil ?? null,
+      sourceUrl: special.sourceUrl ?? "",
+      retailPrice: Number.isFinite(special?.retailPrice) ? special.retailPrice : null,
+      marketPrice: Number.isFinite(special?.marketPrice) ? special.marketPrice : null,
+      marketPriceSource: Number.isFinite(special?.marketPrice) ? "kuji-special" : null,
+      marketObservedAt: Number.isFinite(special?.marketPrice) ? new Date().toISOString() : null,
+      priceData: officialLineup || special.targetPrizes || "公式ラインナップ",
+      tradeVolume: special.watchPoints || "発売前監視",
+      missingData: missing,
+      adoptionReason: prediction.mainReason,
+      category: "kuji",
+    };
+  });
 }
 
 function getUnifiedCandidates() {
@@ -2227,7 +2225,7 @@ function candidateActionPeriodKind(candidate) {
 function candidateValidationState(candidate) {
   const periodKnown = Boolean(candidate.startDate && candidate.endDate);
   const periodActive = candidate.endDate ? isDateActive(candidate.endDate) : true;
-  const hasPrice = Number.isFinite(candidate?.retailPrice) && Number.isFinite(candidate?.marketPrice);
+  const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
   const hasRoute = Boolean(candidate.sourceUrl);
   if (!periodKnown) return "missing_period";
   if (!periodActive) return "ended";
@@ -2251,92 +2249,6 @@ function itemPeriodRank(item) {
   if (item.periodKind === "active") return 0;
   if (item.periodKind === "upcoming") return 1;
   return 2;
-}
-
-function isPokemonLikeItem(item) {
-  const text = [item?.title, item?.meta, item?.body, item?.value].filter(Boolean).join(" ");
-  return /ポケモン|ポケカ|拡張パック|未開封|シュリンク/i.test(text);
-}
-
-function isKujiLikeItem(item) {
-  const text = [item?.title, item?.meta, item?.body, item?.value].filter(Boolean).join(" ");
-  return /一番くじ|1kuji|kuji/i.test(text);
-}
-
-function buildSelectionReason(item) {
-  if (item.kind === "lottery") {
-    const total = item.routes?.length ?? 0;
-    const done = item.routes?.filter((route) => route.done).length ?? 0;
-    return `${done}/${total}ルート応募済み、期限内の抽選導線を優先追跡`;
-  }
-  if (item.kind === "profit") {
-    return "販売中かつ利益条件を満たしており、即判断対象";
-  }
-  if (item.kind === "recheck") {
-    return "価格は取れているが目標利益未達のため、再確認対象";
-  }
-  if (item.kind === "signal") {
-    return item.value?.includes("想定利益")
-      ? "相場が取れており、今日の監視候補として優先"
-      : "相場補完前だが期間中のため、先行監視対象";
-  }
-  return compactReasonText(item.why, "更新情報を確認");
-}
-
-function buildSelectionSummary(item) {
-  if (isKujiLikeItem(item)) {
-    const startLabel = String(item.meta ?? "").match(/開始\s[0-9]{2}\/[0-9]{2}/)?.[0] ?? "開始日確認中";
-    const endLabel = String(item.meta ?? "").match(/終了\s[0-9]{2}\/[0-9]{2}/)?.[0] ?? "終了日確認中";
-    return `${item.value} / ${startLabel} / ${endLabel}`;
-  }
-  if (item.kind === "lottery") {
-    const total = item.routes?.length ?? 0;
-    const done = item.routes?.filter((route) => route.done).length ?? 0;
-    const hasPokemon = isPokemonLikeItem(item);
-    const variant = item.variantSummary?.[0];
-    if (hasPokemon && variant) {
-      return `${done}/${total}ルート応募済み / ${variant.marketText} / ${variant.profitText}`;
-    }
-    return `${done}/${total}ルート応募済み / ${compactReasonText(item.body, "抽選ルートを確認")}`;
-  }
-  if (item.kind === "profit" || item.kind === "recheck") {
-    return `${item.value} / ${compactReasonText(item.body, "価格情報を確認")}`;
-  }
-  if (item.kind === "signal") {
-    return item.value?.includes("想定利益")
-      ? `${item.value} / ${compactReasonText(item.body, "価格差候補を監視")}`
-      : `${item.value} / ${compactReasonText(item.meta, "価格補完待ち")}`;
-  }
-  return compactReasonText(item.body, "更新情報を確認");
-}
-
-function buildWatchCondition(item) {
-  const hasPokemon = isPokemonLikeItem(item);
-  if (hasPokemon) {
-    return "5ヶ月内の公式拡張パックを対象。シュリンクあり/なしを分け、再販・招待リクエスト時に優先確認。";
-  }
-  if (isKujiLikeItem(item)) {
-    return "発売前から監視し、発売日・抽選開始日・終了日が確定した時点で今日見るもの/利益候補を優先確認。";
-  }
-  if (item.kind === "lottery") {
-    return "応募期限・再販通知・店舗告知の更新時に確認。";
-  }
-  if (item.kind === "profit") {
-    return "価格差が維持されている間は販売終了まで監視。";
-  }
-  if (item.kind === "recheck") {
-    return "相場上振れか仕入れ値低下が出た時に再計算。";
-  }
-  return "開始/終了日と相場更新を確認して昇格判断。";
-}
-
-function attachSelectionNarrative(item) {
-  return {
-    ...item,
-    selectionReason: buildSelectionReason(item),
-    selectionSummary: buildSelectionSummary(item),
-    watchCondition: buildWatchCondition(item),
-  };
 }
 
 function buildActionItems() {
@@ -2634,7 +2546,6 @@ function buildActionItems() {
   };
 
   return [...topLotteryItems, ...topProfitItems, ...topCandidateItems, ...topRecheckItems]
-    .map((item) => attachSelectionNarrative(item))
     .filter((item) => hasDetailTargetData(item.detailTargetId))
     .sort(byUrgency)
     .slice(0, 36);
@@ -2762,21 +2673,6 @@ function renderActionItems() {
     body.className = "route-note";
     body.textContent = item.body;
 
-    const insight = document.createElement("div");
-    insight.className = "action-insight";
-    for (const [label, text] of [
-      ["選定理由", item.selectionReason],
-      ["概要", item.selectionSummary],
-      ["監視条件", item.watchCondition],
-    ]) {
-      const line = document.createElement("p");
-      line.className = "action-insight-line";
-      const strong = document.createElement("strong");
-      strong.textContent = `${label}: `;
-      line.append(strong, document.createTextNode(text || "確認中"));
-      insight.append(line);
-    }
-
     const variantList = document.createElement("div");
     variantList.className = "action-condition-list";
     for (const variant of item.variantSummary ?? []) {
@@ -2868,7 +2764,7 @@ function renderActionItems() {
     checkLabel.append(checkbox, checkText);
     footer.append(checkLabel);
 
-    card.append(top, facts, body, insight);
+    card.append(top, facts, body);
     if ((item.variantSummary ?? []).length > 0) {
       card.append(variantList);
     }
@@ -4167,63 +4063,73 @@ function buildKujiPrediction(special) {
     .join(" ");
 
   const ipRules = [
-    { pattern: /ONE PIECE|ワンピース|赤髪|シャンクス/i, points: 23, label: "ONE PIECE強IP" },
-    { pattern: /DRAGON BALL|ドラゴンボール|悟空|ベジータ/i, points: 23, label: "ドラゴンボール強IP" },
-    { pattern: /HUNTER|キルア|ゾルディック/i, points: 19, label: "HUNTER人気キャラ軸" },
-    { pattern: /BLEACH|ブリーチ/i, points: 16, label: "ジャンプ系バトルIP" },
-    { pattern: /ヒーローアカデミア|ヒロアカ|爆豪|轟|デク/i, points: 16, label: "ヒロアカ主要キャラ軸" },
-    { pattern: /Gundam|ガンダム|ジークアクス/i, points: 15, label: "ガンダム立体物需要" },
-    { pattern: /星のカービィ|カービィ/i, points: 13, label: "カービィ安定回転" },
-    { pattern: /アイカツ|アイドルマスター|学園アイドル/i, points: 11, label: "推し需要IP" },
-    { pattern: /薬屋のひとりごと|おジャ魔女/i, points: 9, label: "固定ファンIP" },
-    { pattern: /サッカー|日本代表/i, points: 2, label: "短期話題型" },
+    { pattern: /ONE PIECE|ワンピース|赤髪|シャンクス/i, points: 25, label: "ONE PIECE強IP" },
+    { pattern: /DRAGON BALL|ドラゴンボール|悟空|ベジータ/i, points: 25, label: "ドラゴンボール強IP" },
+    { pattern: /HUNTER|キルア|ゾルディック/i, points: 20, label: "HUNTER人気軸" },
+    { pattern: /BLEACH|ブリーチ|ヒーローアカデミア|ヒロアカ/i, points: 18, label: "ジャンプ主力IP" },
+    { pattern: /Gundam|ガンダム|ジークアクス/i, points: 16, label: "ガンダム立体需要" },
+    { pattern: /星のカービィ|カービィ/i, points: 14, label: "カービィ回転型" },
+    { pattern: /薬屋のひとりごと|アイカツ|アイドルマスター|おジャ魔女/i, points: 11, label: "固定ファンIP" },
+    { pattern: /サッカー|日本代表/i, points: 5, label: "短期話題IP" },
   ];
   const prizeRules = [
-    { pattern: /MASTERLISE|EXPIECE|SOFVICS|BUSTISAN/i, points: 14, label: "上位立体賞" },
-    { pattern: /ラストワン/i, points: 12, label: "ラストワン賞" },
-    { pattern: /フィギュア|胸像|ソフビ/i, points: 10, label: "立体物中心" },
-    { pattern: /シャンクス|大猿|ミケ|キルア|爆豪|轟|デク|孫悟空|ベジータ/i, points: 8, label: "人気キャラ賞" },
-    { pattern: /上位|A-F賞|A-D賞/i, points: 6, label: "上位賞あり" },
+    { pattern: /MASTERLISE|EXPIECE|SOFVICS|BUSTISAN/i, points: 11, label: "上位立体賞" },
+    { pattern: /ラストワン/i, points: 9, label: "ラストワン賞" },
+    { pattern: /フィギュア|胸像|ソフビ/i, points: 7, label: "立体賞中心" },
+    { pattern: /上位|A-F賞|A-D賞/i, points: 5, label: "上位賞あり" },
+    { pattern: /ぬいぐるみ|雑貨|実用|キッチン/i, points: -5, label: "雑貨寄り構成" },
   ];
-  const reactionRules = [
-    { pattern: /発売前強化|強化/i, points: 8, label: "発売前から監視強化" },
-    { pattern: /成約|初動|店舗在庫|オンライン販売|残り店舗/i, points: 7, label: "成約/在庫の確認材料あり" },
-    { pattern: /公式|HOBBY Watch|一番くじONLINE|セブン|ONE PIECE公式/i, points: 4, label: "公式/専門媒体で確認" },
-    { pattern: /発売7日以内|発売中/i, points: 3, label: "初動確認期間" },
+  const momentumRules = [
+    { pattern: /発売前強化|強化|監視強化/i, points: 8, label: "発売前監視強化" },
+    { pattern: /成約|初動|店舗在庫|オンライン販売|残り店舗/i, points: 6, label: "初動確認材料あり" },
+    { pattern: /公式|HOBBY Watch|一番くじONLINE|セブン|ONE PIECE公式/i, points: 4, label: "公式/専門ソース確認" },
+    { pattern: /発売7日以内|発売中/i, points: 3, label: "発売直近" },
   ];
-  const riskRules = [
-    { pattern: /スポーツ|サッカー/i, points: -12, label: "ホビー相場とズレやすい" },
-    { pattern: /雑貨|実用|キッチン|グッズ/i, points: -7, label: "雑貨中心は伸びにくい" },
-    { pattern: /下位賞|まとめ売り/i, points: -6, label: "下位賞は利益に入れない" },
-    { pattern: /単価550|薄利/i, points: -6, label: "薄利になりやすい" },
-    { pattern: /ぬいぐるみ/i, points: /カービィ|ミケ|HUNTER/i.test(text) ? -2 : -5, label: "状態差とサイズに注意" },
-    { pattern: /大型|送料750/i, points: -4, label: "大型賞は送料750円前提" },
+  const scarcityRules = [
+    { pattern: /ラストワン|大型|胸像|限定|店舗在庫|残り店舗|再販告知/i, points: 8, label: "希少性シグナルあり" },
+    { pattern: /オンライン販売開始|再販|抽選/i, points: 5, label: "供給変動あり" },
+    { pattern: /雑貨|実用|キッチン|下位賞|まとめ売り/i, points: -6, label: "供給過多になりやすい" },
   ];
 
   const ipMatch = matchKujiRule(text, ipRules);
   const prizeMatches = collectKujiRules(text, prizeRules);
-  const reactionMatches = collectKujiRules(text, reactionRules);
-  const riskMatches = collectKujiRules(text, riskRules);
+  const momentumMatches = collectKujiRules(text, momentumRules);
+  const scarcityMatches = collectKujiRules(text, scarcityRules);
+  const releaseBoost = isPreRelease ? 3 : releaseAge !== null && releaseAge <= 7 ? 2 : 0;
+  const hasPriceSignal = Number.isFinite(special?.retailPrice) || Number.isFinite(special?.marketPrice) || /円|価格|相場/.test(text);
+  const hasStrongPrize = /ラストワン|MASTERLISE|EXPIECE|SOFVICS|BUSTISAN|フィギュア|胸像|ソフビ/i.test(text);
+
   const scoreParts = {
-    ip: ipMatch?.points ?? 4,
-    prize: clampNumber(prizeMatches.reduce((sum, rule) => sum + rule.points, 0), 0, 24),
-    reaction: clampNumber(reactionMatches.reduce((sum, rule) => sum + rule.points, 0), 0, 18),
-    risk: clampNumber(riskMatches.reduce((sum, rule) => sum + rule.points, 0), -18, 0),
-    timing: isPreRelease ? 6 : releaseAge !== null && releaseAge <= 7 ? 4 : 0,
+    ip: clampNumber(ipMatch?.points ?? 6, 0, 25),
+    prize: clampNumber(prizeMatches.reduce((sum, rule) => sum + rule.points, 0), 0, 25),
+    momentum: clampNumber(momentumMatches.reduce((sum, rule) => sum + rule.points, 0) + releaseBoost, 0, 20),
+    scarcity: clampNumber(scarcityMatches.reduce((sum, rule) => sum + rule.points, 0), 0, 15),
+    profit: clampNumber((hasPriceSignal ? 8 : 3) + (hasStrongPrize ? 4 : 0), 0, 15),
   };
-  const score = clampNumber(36 + scoreParts.ip + scoreParts.prize + scoreParts.reaction + scoreParts.risk + scoreParts.timing, 25, 98);
-  const grade = score >= 80 ? "強い" : score >= 64 ? "要確認" : "薄い";
-  const kind = score >= 80 ? "strong" : score >= 64 ? "watch" : "weak";
-  const topPrize = prizeMatches[0]?.label ?? "賞構成待ち";
-  const riskLabel = riskMatches[0]?.label ?? "大きな減点なし";
-  const reactionLabel = reactionMatches[0]?.label ?? (isPreRelease ? "発売前の反応待ち" : "初動データ待ち");
-  const pastLabel = ipMatch?.label ?? "過去相場は個別確認";
+  const score = clampNumber(
+    scoreParts.ip + scoreParts.prize + scoreParts.momentum + scoreParts.scarcity + scoreParts.profit,
+    0,
+    100,
+  );
+  const grade = score >= 70 ? "強い弾" : score >= 55 ? "先読み" : "薄い";
+  const kind = score >= 70 ? "strong" : score >= 55 ? "watch" : "weak";
+  const topPrize = prizeMatches[0]?.label ?? "賞構成確認中";
+  const scarcityLabel = scarcityMatches[0]?.label ?? "供給は平常";
+  const momentumLabel = momentumMatches[0]?.label ?? (isPreRelease ? "発売前監視中" : "反応待ち");
+  const pastLabel = ipMatch?.label ?? "過去実績は中立";
+  const mainReason = [pastLabel, topPrize, momentumLabel].filter(Boolean).join(" / ");
+  const whyLine =
+    grade === "強い弾"
+      ? `${mainReason} が揃い、実行候補として優先。`
+      : grade === "先読み"
+        ? `${mainReason} はあるが、供給と価格の裏取り待ち。`
+        : `${mainReason} は弱く、現時点では見送り。`;
   const conclusion =
-    grade === "強い"
-      ? "発売前から上位賞とラストワンを優先監視。初動成約が出たら価格差候補へ上げる。"
-      : grade === "要確認"
-        ? "候補には残す。賞構成と初動成約が揃うまで買い判断は保留。"
-        : "今は薄い。話題化か完売シグナルが出るまで通常監視で十分。";
+    grade === "強い弾"
+      ? "強い弾判定。発売前30日〜発売後7日の間で実行優先。"
+      : grade === "先読み"
+        ? "先読み判定。必要情報が揃えば実行候補へ昇格。"
+        : "薄い判定。履歴保持のみ。";
 
   const basePredictedMedian = Math.round(1800 + score * 95);
   const predictedMedian = applyPredictionLearning(special.ip ?? "unknown", basePredictedMedian, special);
@@ -4252,12 +4158,109 @@ function buildKujiPrediction(special) {
     actualMarketPrice,
     error,
     errorRate,
+    scoreParts,
+    mainReason,
+    whyLine,
     factors: [
-      ["過去相場", pastLabel],
-      ["現在反応", reactionLabel],
-      ["賞構成", topPrize],
-      ["送料/リスク", riskLabel],
+      ["IP強度", `${scoreParts.ip}/25`],
+      ["賞構成", `${scoreParts.prize}/25`],
+      ["初動熱量", `${scoreParts.momentum}/20`],
+      ["供給希少", `${scoreParts.scarcity}/15`],
+      ["利益成立", `${scoreParts.profit}/15`],
+      ["主理由", mainReason],
+      ["供給所見", scarcityLabel],
     ],
+  };
+}
+
+const KUJI_WINDOW_BEFORE_DAYS = 30;
+const KUJI_WINDOW_AFTER_DAYS = 7;
+const KUJI_STRONG_THRESHOLD = 70;
+const KUJI_WATCH_THRESHOLD = 55;
+const KUJI_MAX_VISIBLE = 8;
+const KUJI_MAX_PER_IP = 2;
+
+function normalizeKujiIp(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
+
+function hasKujiRequiredFields(special, prediction) {
+  const hasReleaseDate = Boolean(special?.releaseDate);
+  const hasPrize = Boolean(special?.targetPrizes) || (Array.isArray(special?.officialLineup) && special.officialLineup.length > 0);
+  const hasRoute = Boolean(special?.sourceUrl);
+  const hasPrice = Number.isFinite(special?.retailPrice) || Number.isFinite(special?.marketPrice) || Number.isFinite(prediction?.predictedMedian);
+  const missing = [];
+  if (!hasReleaseDate) missing.push("発売日");
+  if (!hasPrize) missing.push("主要賞");
+  if (!hasRoute) missing.push("公式導線");
+  if (!hasPrice) missing.push("価格値");
+  return { ok: missing.length === 0, missing };
+}
+
+function buildKujiSelectionState() {
+  const now = Date.now();
+  const dayMs = 86_400_000;
+  const windowStart = now - KUJI_WINDOW_AFTER_DAYS * dayMs;
+  const windowEnd = now + KUJI_WINDOW_BEFORE_DAYS * dayMs;
+  const evaluated = kujiSpecials
+    .map((special) => {
+      const prediction = buildKujiPrediction(special);
+      const releaseTs = parseFlexibleTs(special.releaseDate, { defaultTime: "start" });
+      const inWindow = Number.isFinite(releaseTs) && releaseTs >= windowStart && releaseTs <= windowEnd;
+      const required = hasKujiRequiredFields(special, prediction);
+      return {
+        special,
+        prediction,
+        releaseTs,
+        inWindow,
+        requiredOk: required.ok,
+        missingFields: required.missing,
+        ipKey: normalizeKujiIp(special.ip || special.title),
+      };
+    })
+    .filter((item) => /一番くじ|1kuji|kuji/i.test(item.special.title ?? ""));
+
+  const scoped = evaluated.filter((item) => item.inWindow);
+  const strongPool = scoped
+    .filter((item) => item.requiredOk)
+    .filter((item) => item.prediction.score >= KUJI_STRONG_THRESHOLD)
+    .sort((a, b) => {
+      if (b.prediction.score !== a.prediction.score) return b.prediction.score - a.prediction.score;
+      return (a.releaseTs ?? Number.MAX_SAFE_INTEGER) - (b.releaseTs ?? Number.MAX_SAFE_INTEGER);
+    });
+
+  const perIpCount = new Map();
+  const strong = [];
+  for (const item of strongPool) {
+    if (strong.length >= KUJI_MAX_VISIBLE) break;
+    const used = perIpCount.get(item.ipKey) ?? 0;
+    if (used >= KUJI_MAX_PER_IP) continue;
+    perIpCount.set(item.ipKey, used + 1);
+    strong.push(item);
+  }
+
+  const strongIds = new Set(strong.map((item) => item.special.id));
+  const watch = scoped
+    .filter((item) => !strongIds.has(item.special.id))
+    .filter((item) => item.prediction.score >= KUJI_WATCH_THRESHOLD && item.prediction.score < KUJI_STRONG_THRESHOLD)
+    .sort((a, b) => {
+      const timeDiff = (a.releaseTs ?? Number.MAX_SAFE_INTEGER) - (b.releaseTs ?? Number.MAX_SAFE_INTEGER);
+      if (timeDiff !== 0) return timeDiff;
+      return b.prediction.score - a.prediction.score;
+    });
+
+  const hiddenCount = scoped.length - strong.length - watch.length;
+  const outOfWindowCount = evaluated.length - scoped.length;
+  return {
+    strong,
+    watch,
+    hiddenCount,
+    outOfWindowCount,
+    totalScoped: scoped.length,
+    totalAll: evaluated.length,
   };
 }
 
@@ -4268,7 +4271,7 @@ function createKujiPredictionBox(prediction) {
   const top = document.createElement("div");
   top.className = "kuji-prediction-top";
   const title = document.createElement("p");
-  title.textContent = "発売前利益予想";
+  title.textContent = "強さスコア（100点）";
   const score = document.createElement("span");
   score.textContent = `${prediction.grade} ${prediction.score}`;
   top.append(title, score);
@@ -4305,41 +4308,29 @@ function createKujiPredictionBox(prediction) {
 function renderKujiSpecials() {
   if (!elements.kujiSpecialList) return;
   elements.kujiSpecialList.replaceChildren();
-
-  const now = Date.now();
-  const dayMs = 86_400_000;
-  const pastGraceMs = 7 * dayMs;
-  const futureWindowMs = 35 * dayMs;
-  const visibleSpecials = kujiSpecials
-    .filter((special) => {
-      const releaseTime = parseFlexibleTs(special.releaseDate, { defaultTime: "start" }) ?? now;
-      return releaseTime >= now - pastGraceMs && releaseTime <= now + futureWindowMs;
-    })
-    .sort((a, b) => {
-      const aTime = parseFlexibleTs(a.releaseDate, { defaultTime: "start" }) ?? Number.MAX_SAFE_INTEGER;
-      const bTime = parseFlexibleTs(b.releaseDate, { defaultTime: "start" }) ?? Number.MAX_SAFE_INTEGER;
-      return aTime - bTime;
-    });
+  const selection = buildKujiSelectionState();
+  const visibleSpecials = [...selection.strong].sort((a, b) => {
+    const aTime = a.releaseTs ?? Number.MAX_SAFE_INTEGER;
+    const bTime = b.releaseTs ?? Number.MAX_SAFE_INTEGER;
+    if (aTime !== bTime) return aTime - bTime;
+    return b.prediction.score - a.prediction.score;
+  });
 
   elements.kujiSpecialSection?.classList.toggle("collapsed", state.kujiCollapsed);
   if (elements.kujiSpecialSummary) {
-    const activeCount = visibleSpecials.filter((special) => {
-      const releaseTime = parseFlexibleTs(special.releaseDate, { defaultTime: "start" }) ?? now;
-      return releaseTime <= now;
-    }).length;
-    const upcomingCount = visibleSpecials.filter((special) => {
-      const releaseTime = parseFlexibleTs(special.releaseDate, { defaultTime: "start" }) ?? now;
-      return releaseTime > now;
-    }).length;
-    const hiddenCount = kujiSpecials.length - visibleSpecials.length;
+    const now = Date.now();
+    const activeCount = visibleSpecials.filter((item) => (item.releaseTs ?? now) <= now).length;
+    const upcomingCount = visibleSpecials.filter((item) => (item.releaseTs ?? now) > now).length;
     const metrics = overallPredictionMetrics();
     elements.kujiSpecialSummary.textContent = [
-      `表示 ${visibleSpecials.length}件`,
-      activeCount ? `発売7日以内 ${activeCount}件` : "",
-      upcomingCount ? `1ヶ月先まで ${upcomingCount}件` : "",
+      `強い弾 ${visibleSpecials.length}件`,
+      activeCount ? `発売中/直後 ${activeCount}件` : "",
+      upcomingCount ? `発売前30日 ${upcomingCount}件` : "",
+      selection.watch.length ? `先読み ${selection.watch.length}件` : "",
       metrics.count > 0 ? `予想精度 MAE ${yen.format(Math.round(metrics.mae ?? 0))}` : "",
       metrics.count > 0 && Number.isFinite(metrics.mape) ? `MAPE ${metrics.mape.toFixed(1)}%` : "",
-      hiddenCount ? `期間外 ${hiddenCount}件は非表示` : "",
+      selection.hiddenCount ? `薄い弾 ${selection.hiddenCount}件は非表示` : "",
+      selection.outOfWindowCount ? `期間外 ${selection.outOfWindowCount}件は非表示` : "",
     ]
       .filter(Boolean)
       .join(" / ");
@@ -4350,7 +4341,8 @@ function renderKujiSpecials() {
   }
   if (state.kujiCollapsed) return;
 
-  for (const special of visibleSpecials) {
+  for (const item of visibleSpecials) {
+    const { special, prediction } = item;
     const node = document.createElement("article");
     node.className = "kuji-special-card";
 
@@ -4364,15 +4356,14 @@ function renderKujiSpecials() {
     title.textContent = special.title;
     heading.append(meta, title);
     const status = document.createElement("span");
-    status.className = "kuji-special-status";
-    status.textContent = special.status;
+    status.className = `kuji-special-status ${prediction.kind}`;
+    status.textContent = `${prediction.grade} ${prediction.score}`;
     top.append(heading, status);
 
-    const predictionData = buildKujiPrediction(special);
-    if (Number.isFinite(predictionData.actualMarketPrice)) {
-      recordPredictionResult(special, predictionData.predictedMedian, predictionData.actualMarketPrice);
+    if (Number.isFinite(prediction.actualMarketPrice)) {
+      recordPredictionResult(special, prediction.predictedMedian, prediction.actualMarketPrice);
     }
-    const prediction = createKujiPredictionBox(predictionData);
+    const predictionBox = createKujiPredictionBox(prediction);
 
     const rows = document.createElement("div");
     rows.className = "kuji-special-rows";
@@ -4381,11 +4372,10 @@ function renderKujiSpecials() {
       ["発売日", formatDateOnly(special.releaseDate)],
       ["開始日", formatDateOnly(special.salesStartDate ?? special.releaseDate, "発売開始")],
       ["終了日", formatDateOnly(special.salesEndDate ?? special.displayUntil, "継続")],
+      ["理由", prediction.whyLine],
       ["公式ラインナップ", lineup],
       ["見る賞", special.targetPrizes],
-      ["相場予想", special.marketForecast],
-      ["過去相場メモ", special.pastMarketBasis],
-      ["判断材料", special.watchPoints],
+      ["想定利益レンジ", `${yen.format(prediction.predictedLow)} - ${yen.format(prediction.predictedHigh)}`],
     ]) {
       if (!value) continue;
       const row = document.createElement("p");
@@ -4395,7 +4385,7 @@ function renderKujiSpecials() {
       rows.append(row);
     }
 
-    node.append(top, prediction, rows);
+    node.append(top, predictionBox, rows);
 
     if (special.sourceUrl) {
       const link = document.createElement("a");

@@ -183,6 +183,237 @@ function normalizeSignalText(value) {
     .replace(/[^\p{L}\p{N}]+/gu, "");
 }
 
+function clampNumber(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+const BLOG_SNS_RECENT_LIMIT = 30;
+const BLOG_SNS_DETAIL_FETCH_LIMIT = 10;
+const PRODUCT_ALIAS_RULES = [
+  [/ドラスタ/gi, "ドラゴンスター"],
+  [/イエサブ/gi, "イエローサブマリン"],
+  [/ポケカbox/gi, "ポケモンカード BOX"],
+  [/ワンピ/gi, "ワンピース"],
+];
+const PRODUCT_SIGNAL_WORD =
+  /(一番くじ|ポケモン|ポケカ|拡張パック|BOX|ドラゴンボール|ワンピース|ドラクエ|ドラゴンクエスト|G-SHOCK|GARRACK|フィギュア|プレバン|抽選|再販|完売|品薄|サプライ)/i;
+const ROUTE_HOST_ALLOW =
+  /(pokemoncenter-online\.com|pokemon-card\.com|membercard\.jp|p-bandai\.jp|dmm\.com|amiami\.jp|yellowsubmarine\.co\.jp|joshinweb\.jp|biccamera\.com|yodobashi\.com|edion\.com|one-piece\.com|square-enix\.com|casio\.com|gshock\.casio\.com|nyuka-now\.com|7netshopping\.jp|rakuten\.co\.jp|amazon\.co\.jp)/i;
+
+function canonicalizeProductName(name) {
+  let normalized = String(name ?? "").replace(/\s+/g, " ").trim();
+  for (const [pattern, replacement] of PRODUCT_ALIAS_RULES) {
+    normalized = normalized.replace(pattern, replacement);
+  }
+  return normalized.replace(/[|｜].*$/, "").replace(/[【\[].*$/, "").trim();
+}
+
+function detectSourceChannel(source, url = "") {
+  const typeText = [source?.trend?.type, source?.trend?.context, source?.candidate?.reason].join(" ");
+  const host = String(tryParseUrl(url || source?.url || "")?.hostname ?? "").toLowerCase();
+  if (/ブログ監視/.test(typeText)) return "blog";
+  if (/sns監視/.test(typeText)) return "sns";
+  if (host.includes("x.com") || host.includes("twitter.com")) return "sns";
+  if (host.includes("fc2.com") || host.includes("blog") || host.includes("livedoor")) return "blog";
+  return "official";
+}
+
+function sourceReliabilityLevel(source, url = "") {
+  const channel = detectSourceChannel(source, url);
+  if (channel === "official") return "high";
+  if (channel === "blog") return "medium";
+  return "medium";
+}
+
+function extractIsoDatesFromText(text) {
+  const found = new Set();
+  const patterns = [
+    /20\d{2}[\/\-.年](\d{1,2})[\/\-.月](\d{1,2})日?/g,
+    /(\d{1,2})月(\d{1,2})日/g,
+  ];
+  for (const pattern of patterns) {
+    let match;
+    while ((match = pattern.exec(text))) {
+      if (match[0].includes("年")) {
+        const converted = toIsoDateFromJapanese(match[0]);
+        if (converted) found.add(converted);
+      } else if (/^\d{4}[\/\-.]/.test(match[0])) {
+        const ymd = match[0].replace(/[年/.]/g, "-").replace("月", "-").replace("日", "");
+        const [year, month, day] = ymd.split("-").map((v) => v.trim()).filter(Boolean);
+        if (year && month && day) found.add(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+      } else if (match[1] && match[2]) {
+        const now = new Date();
+        const year = String(now.getFullYear());
+        found.add(`${year}-${String(match[1]).padStart(2, "0")}-${String(match[2]).padStart(2, "0")}`);
+      }
+      if (found.size >= 6) break;
+    }
+  }
+  return [...found].sort();
+}
+
+function determineStartEndDate(source, fallbackDate, textSnippet = "") {
+  const isoDates = extractIsoDatesFromText(textSnippet);
+  const explicitStart = source?.candidate?.startDate ?? source?.trend?.startDate ?? null;
+  const explicitEnd = source?.candidate?.endDate ?? source?.trend?.endDate ?? null;
+  const startDate = explicitStart ?? isoDates[0] ?? fallbackDate;
+  const endDate = explicitEnd ?? isoDates[1] ?? (startDate ? addDaysToIsoDate(startDate, 14) : fallbackDate);
+  return { startDate, endDate };
+}
+
+function scoreCandidateByAxes({ freshnessDays = 7, hasRoute = false, hasPeriod = false, hasPrice = false, repeatHits = 0 }) {
+  const speed = clampNumber(20 - Math.max(0, freshnessDays - 1) * 2, 0, 20);
+  const route = hasRoute ? 20 : 4;
+  const period = hasPeriod ? 20 : 6;
+  const price = hasPrice ? 20 : 5;
+  const repeat = clampNumber(8 + repeatHits * 2, 0, 20);
+  return {
+    speed,
+    route,
+    period,
+    price,
+    repeat,
+    total: clampNumber(speed + route + period + price + repeat, 35, 98),
+  };
+}
+
+function extractProductPhrases(text) {
+  const phrases = [];
+  const patterns = [
+    /一番くじ[^。、「」\n]{4,90}/g,
+    /ポケモンカード[^。、「」\n]{2,90}/g,
+    /ドラゴンボール[^。、「」\n]{2,90}/g,
+    /ワンピース[^。、「」\n]{2,90}/g,
+    /ドラゴンクエスト[^。、「」\n]{2,90}/g,
+    /G-SHOCK[^。、「」\n]{1,90}/gi,
+    /GARRACK[^。、「」\n]{1,90}/gi,
+  ];
+  for (const pattern of patterns) {
+    const matches = text.match(pattern) ?? [];
+    for (const match of matches) {
+      const cleaned = canonicalizeProductName(match.replace(/\s+/g, " ").trim());
+      if (cleaned.length >= 5 && cleaned.length <= 96) phrases.push(cleaned);
+    }
+  }
+  return [...new Set(phrases)].slice(0, 8);
+}
+
+function scoreArticleLink(link, sourceHost = "") {
+  const text = `${link.anchorText ?? ""} ${link.url ?? ""}`;
+  const host = String(tryParseUrl(link.url)?.hostname ?? "");
+  let score = 0;
+  if (PRODUCT_SIGNAL_WORD.test(text)) score += 8;
+  if (/抽選|再販|発売|予約|完売|品薄/.test(text)) score += 4;
+  if (/\/status\/|\/archives\/|\/article|\/news\//.test(link.url)) score += 3;
+  if (host && sourceHost && host === sourceHost) score += 2;
+  if (/privacy|about|contact|profile|help/i.test(link.url)) score -= 8;
+  return score;
+}
+
+function pickRecentArticleLinks(source, result) {
+  const links = extractLinksFromHtml(result?.html ?? "", result?.url ?? source?.url ?? "");
+  const sourceHost = String(tryParseUrl(result?.url ?? source?.url ?? "")?.hostname ?? "");
+  return links
+    .map((link) => ({ ...link, score: scoreArticleLink(link, sourceHost) }))
+    .filter((item) => item.score >= 6)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, BLOG_SNS_RECENT_LIMIT);
+}
+
+async function expandBlogSnsCandidates(source, result, historyRuns) {
+  if (!result?.ok) return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 } };
+  const channel = detectSourceChannel(source, result.url);
+  if (channel !== "blog" && channel !== "sns") return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 } };
+
+  const links = pickRecentArticleLinks(source, result);
+  const trends = [];
+  const candidates = [];
+  const seen = new Set();
+  const scannedLinks = links.slice(0, BLOG_SNS_DETAIL_FETCH_LIMIT);
+  const reliability = sourceReliabilityLevel(source, result.url);
+
+  for (const [index, link] of scannedLinks.entries()) {
+    const articleResult = await fetchSource({ id: `${source.id}:article:${index}`, url: link.url });
+    const articleText = `${link.anchorText ?? ""} ${articleResult.title ?? ""} ${articleResult.text ?? ""}`.slice(0, 22000);
+    if (!PRODUCT_SIGNAL_WORD.test(articleText)) continue;
+    const dateBase =
+      toIsoDateFromJapanese(extractFirst(articleText, [/(\d{4}年\d{1,2}月\d{1,2}日)/])) ?? articleResult.fetchedAt.slice(0, 10);
+    const { startDate, endDate } = determineStartEndDate(source, dateBase, articleText);
+    const routeLinks = extractLinksFromHtml(articleResult.html ?? "", articleResult.url ?? link.url)
+      .filter((item) => ROUTE_HOST_ALLOW.test(item.url))
+      .slice(0, 3);
+    const routeUrl = routeLinks[0]?.url ?? "";
+    const names = [
+      canonicalizeProductName(link.anchorText ?? ""),
+      ...extractProductPhrases(articleText),
+    ].filter((name) => PRODUCT_SIGNAL_WORD.test(name));
+    for (const rawName of names.slice(0, 4)) {
+      const name = canonicalizeProductName(rawName);
+      const dedupKey = normalizeSignalText(name);
+      if (!dedupKey || seen.has(dedupKey)) continue;
+      seen.add(dedupKey);
+      const retailPrice = extractRetailPrice(articleText, name, null);
+      const support = computeHistorySupport(historyRuns, name);
+      const dayDiff = Math.max(0, Math.floor((Date.now() - new Date(`${dateBase}T00:00:00+09:00`).getTime()) / 86_400_000));
+      const axis = scoreCandidateByAxes({
+        freshnessDays: dayDiff,
+        hasRoute: Boolean(routeUrl),
+        hasPeriod: Boolean(startDate && endDate),
+        hasPrice: Number.isFinite(retailPrice),
+        repeatHits: support.recentHits,
+      });
+      const confidence = axis.total >= 78 ? "高" : axis.total >= 62 ? "中" : "低";
+      const monitorType = channel === "blog" ? "ブログ抽出" : "SNS抽出";
+
+      trends.push({
+        keyword: name,
+        context: `${monitorType} / ${source.keyword ?? source.trend?.keyword ?? "監視ソース"}`,
+        score: axis.total,
+        type: monitorType,
+        change24h: `抽出 ${dateBase.slice(5).replace("-", "/")}`,
+        source: source.trend?.source ?? source.keyword ?? "監視ソース",
+        confidence,
+        startDate,
+        endDate,
+        action: "導線・価格・期間を再確認して候補判定",
+      });
+
+      const missing = [];
+      if (!startDate || !endDate) missing.push("期間情報");
+      if (!routeUrl) missing.push("公式導線");
+      if (!Number.isFinite(retailPrice)) missing.push("価格データ");
+      candidates.push({
+        name,
+        trend: source.trend?.keyword ?? source.keyword ?? "監視ソース",
+        stage: "追加候補",
+        stageKind: "candidate",
+        genreScore: axis.total,
+        priceData: Number.isFinite(retailPrice) ? "取得" : "未取得",
+        tradeVolume: support.recentHits >= 2 ? "上昇" : "要確認",
+        marginSignal: `速報性${axis.speed}/20 導線${axis.route}/20 期間${axis.period}/20 価格${axis.price}/20 反復${axis.repeat}/20`,
+        reason: `${monitorType}の最新記事から商品名を抽出。導線と価格を照合して昇格判定。`,
+        confidence,
+        adoptionReason: `${source.keyword ?? source.trend?.keyword ?? "監視ソース"}由来 / 記事抽出`,
+        missingData: missing.length > 0 ? missing.join("、") : "発売後の成約価格、送料サイズ",
+        sourceUrl: routeUrl || articleResult.url || link.url,
+        retailPrice: Number.isFinite(retailPrice) ? retailPrice : null,
+        retailPriceLabel: Number.isFinite(retailPrice) ? `抽出価格 ${formatYen(retailPrice)}` : null,
+        retailPriceSource: Number.isFinite(retailPrice) ? "blog-sns-article" : null,
+        startDate,
+        endDate,
+        sourceChannel: channel,
+        sourceReliability: reliability,
+      });
+    }
+  }
+
+  return {
+    trends,
+    candidates,
+    stats: { scanned: links.length, generated: candidates.length },
+  };
+}
+
 async function readJsonFile(url, fallback) {
   try {
     return JSON.parse(await readFile(url, "utf8"));
@@ -784,6 +1015,42 @@ async function collectSpecializedCandidateMarkets(candidates) {
   return results;
 }
 
+function mergeCandidateRecords(base, next) {
+  const scoreBase = Number(base?.genreScore ?? 0);
+  const scoreNext = Number(next?.genreScore ?? 0);
+  const chosen = scoreNext >= scoreBase ? { ...base, ...next } : { ...next, ...base };
+  const mergedMissing = new Set(
+    [String(base?.missingData ?? ""), String(next?.missingData ?? "")]
+      .flatMap((value) => value.split(/[、,]/))
+      .map((item) => item.trim())
+      .filter(Boolean),
+  );
+  const hasRetail = Number.isFinite(base?.retailPrice) || Number.isFinite(next?.retailPrice);
+  const hasMarket = Number.isFinite(base?.marketPrice) || Number.isFinite(next?.marketPrice);
+  if (hasRetail) {
+    for (const item of [...mergedMissing]) {
+      if (/定価|価格データ/.test(item)) mergedMissing.delete(item);
+    }
+  }
+  if (hasMarket) {
+    for (const item of [...mergedMissing]) {
+      if (/相場|成約価格/.test(item)) mergedMissing.delete(item);
+    }
+  }
+  return {
+    ...chosen,
+    genreScore: Math.max(scoreBase, scoreNext),
+    confidence:
+      base?.confidence === "高" || next?.confidence === "高"
+        ? "高"
+        : base?.confidence === "中" || next?.confidence === "中"
+          ? "中"
+          : "低",
+    sourceUrl: next?.sourceUrl || base?.sourceUrl || "",
+    missingData: [...mergedMissing].join("、"),
+  };
+}
+
 function verificationDateLabel(value) {
   if (!value) return "未確認";
   const date = new Date(value);
@@ -981,6 +1248,53 @@ function computeHistorySupport(historyRuns, trendOrName) {
   return { hits, recentHits, lastSeen };
 }
 
+function buildYearlyProductLearning(historyRuns) {
+  const oneYearAgo = Date.now() - 365 * 24 * 60 * 60 * 1000;
+  const rows = new Map();
+  for (const run of historyRuns) {
+    const runTs = Date.parse(run?.snapshot?.metadata?.updatedAt ?? run?.savedAt ?? "");
+    if (!Number.isFinite(runTs) || runTs < oneYearAgo) continue;
+    for (const candidate of run?.snapshot?.discoveryCandidates ?? []) {
+      const key = normalizeSignalText(candidate?.name);
+      if (!key) continue;
+      const existing = rows.get(key) ?? {
+        key,
+        name: candidate.name,
+        mentions: 0,
+        withPeriod: 0,
+        withRoute: 0,
+        retailValues: [],
+        marketValues: [],
+        firstSeen: run?.snapshot?.metadata?.updatedAt ?? run?.savedAt ?? null,
+        lastSeen: run?.snapshot?.metadata?.updatedAt ?? run?.savedAt ?? null,
+      };
+      existing.mentions += 1;
+      if (candidate?.startDate && candidate?.endDate) existing.withPeriod += 1;
+      if (candidate?.sourceUrl) existing.withRoute += 1;
+      if (Number.isFinite(candidate?.retailPrice)) existing.retailValues.push(candidate.retailPrice);
+      if (Number.isFinite(candidate?.marketPrice)) existing.marketValues.push(candidate.marketPrice);
+      existing.lastSeen = run?.snapshot?.metadata?.updatedAt ?? run?.savedAt ?? existing.lastSeen;
+      rows.set(key, existing);
+    }
+  }
+  const summarizeMedian = (values) => {
+    if (!values || values.length === 0) return null;
+    const sorted = [...values].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)];
+  };
+  return [...rows.values()].map((row) => ({
+    key: row.key,
+    name: row.name,
+    mentions: row.mentions,
+    periodFillRate: row.mentions > 0 ? row.withPeriod / row.mentions : 0,
+    routeFillRate: row.mentions > 0 ? row.withRoute / row.mentions : 0,
+    retailMedian: summarizeMedian(row.retailValues),
+    marketMedian: summarizeMedian(row.marketValues),
+    firstSeen: row.firstSeen,
+    lastSeen: row.lastSeen,
+  }));
+}
+
 function estimateCandidateMarketPrice(snapshot, historyRuns, candidate) {
   if (Number.isFinite(candidate.marketPrice)) {
     return {
@@ -1105,6 +1419,8 @@ const history = await readJsonFile(historyUrl, {
   runs: [],
 });
 const historyRuns = history.runs ?? [];
+const yearlyLearning = buildYearlyProductLearning(historyRuns);
+const yearlyLearningMap = new Map(yearlyLearning.map((item) => [item.key, item]));
 const snapshot = {
   metadata: {
     source: "collector",
@@ -1121,6 +1437,7 @@ const snapshot = {
   routeVerificationResults: [],
   archivedConcreteTrends: [],
   trendCollectionPool: [],
+  productLearning: [],
   sourceResults,
 };
 
@@ -1146,6 +1463,15 @@ for (const rawSource of config.sources ?? []) {
     if (!source.hideFromDiscovery) {
       snapshot.discoveryCandidates.push(parsed.candidate);
     }
+    const expanded = await expandBlogSnsCandidates(source, result, historyRuns);
+    publicResult.expandedScanned = expanded.stats.scanned;
+    publicResult.expandedGenerated = expanded.stats.generated;
+    if (!source.hideFromTrends) {
+      snapshot.trends.push(...expanded.trends);
+    }
+    if (!source.hideFromDiscovery) {
+      snapshot.discoveryCandidates.push(...expanded.candidates);
+    }
   }
 
   const lotteryCandidates = extractLotteryRoutesFromSource(source, result);
@@ -1155,6 +1481,21 @@ for (const rawSource of config.sources ?? []) {
 
   sourceResults.push(publicResult);
 }
+
+snapshot.trends = Array.from(
+  new Map(
+    snapshot.trends.map((trend) => [normalizeSignalText(`${trend.keyword}|${trend.startDate ?? ""}`), trend]),
+  ).values(),
+);
+
+const mergedCandidates = new Map();
+for (const candidate of snapshot.discoveryCandidates) {
+  const key = normalizeSignalText(candidate.name);
+  if (!key) continue;
+  const previous = mergedCandidates.get(key);
+  mergedCandidates.set(key, previous ? mergeCandidateRecords(previous, candidate) : candidate);
+}
+snapshot.discoveryCandidates = [...mergedCandidates.values()];
 
 snapshot.lotteryRoutes = Array.from(
   new Map(snapshot.lotteryRoutes.map((route) => [`${normalizeSignalText(route.name)}|${route.sourceUrl}`, route])).values(),
@@ -1208,12 +1549,51 @@ snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
   const estimated = estimateCandidateMarketPrice(snapshot, historyRuns, candidate);
   const specialized = specializedMarketMap.get(candidate.name) ?? null;
   const retailEstimated = estimateCandidateRetailPrice(snapshot, historyRuns, candidate);
+  const learning = yearlyLearningMap.get(normalizeSignalText(candidate.name)) ?? null;
+  const channel = candidate.sourceChannel ?? detectSourceChannel({ trend: { type: candidate.trend, context: candidate.reason } }, candidate.sourceUrl);
+  const startKnown = Boolean(candidate.startDate);
+  const endKnown = Boolean(candidate.endDate);
+  const hasRoute = Boolean(candidate.sourceUrl);
+  const hasPrice = Boolean(specialized?.marketPrice || estimated?.marketPrice || candidate.marketPrice || retailEstimated?.retailPrice);
+  const freshnessDays = candidate.startDate
+    ? Math.max(0, Math.floor((Date.now() - new Date(`${String(candidate.startDate).slice(0, 10)}T00:00:00+09:00`).getTime()) / 86_400_000))
+    : 7;
+  const axis = scoreCandidateByAxes({
+    freshnessDays,
+    hasRoute,
+    hasPeriod: startKnown && endKnown,
+    hasPrice,
+    repeatHits: support.recentHits + (learning?.mentions ? Math.min(3, Math.floor(learning.mentions / 4)) : 0),
+  });
+  const sourceBoost =
+    /pokemon-card\.com|pokemoncenter-online\.com/.test(String(candidate.sourceUrl ?? ""))
+      ? 8
+      : /nyuka-now\.com|membercard\.jp|dmm\.com|p-bandai\.jp/.test(String(candidate.sourceUrl ?? ""))
+        ? 5
+        : channel === "official"
+          ? 4
+          : channel === "blog"
+            ? 2
+            : 1;
+  const learnedBoost = learning ? clampNumber(Math.floor(learning.mentions / 3), 0, 8) : 0;
+  const normalizedScore = clampNumber(
+    Math.max(candidate.genreScore ?? 0, axis.total) + sourceBoost + learnedBoost,
+    35,
+    98,
+  );
   const missingItems = String(candidate.missingData ?? "")
     .split(/[、,]/)
     .map((item) => item.trim())
     .filter(Boolean)
     .filter((item) => !((specialized?.marketPrice || estimated?.marketPrice) && /成約価格|相場/.test(item)))
     .filter((item) => !(retailEstimated?.retailPrice && /定価|価格データ/.test(item)));
+  if (!(candidate.startDate && candidate.endDate)) missingItems.push("期間情報");
+  if (!hasRoute) missingItems.push("公式導線");
+  if (!(specialized?.marketPrice || estimated?.marketPrice || candidate.marketPrice)) missingItems.push("相場価格");
+  if (!(retailEstimated?.retailPrice || candidate.retailPrice)) missingItems.push("公式価格");
+  const dedupMissing = [...new Set(missingItems)];
+  const inferredConfidence =
+    normalizedScore >= 84 ? "高" : normalizedScore >= 68 ? "中" : "低";
   return {
     ...candidate,
     marketPrice: specialized?.marketPrice ?? estimated?.marketPrice ?? candidate.marketPrice ?? null,
@@ -1223,10 +1603,21 @@ snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
     retailPrice: retailEstimated?.retailPrice ?? candidate.retailPrice ?? null,
     retailPriceLabel: retailEstimated?.retailPriceLabel ?? candidate.retailPriceLabel ?? null,
     retailPriceSource: retailEstimated?.retailPriceSource ?? candidate.retailPriceSource ?? null,
-    missingData: missingItems.join("、"),
+    missingData: dedupMissing.join("、"),
     historyHits: support.hits,
     historyRecentHits: support.recentHits,
     historyLastSeen: support.lastSeen,
+    sourceChannel: channel,
+    sourceReliability: candidate.sourceReliability ?? sourceReliabilityLevel({ trend: { type: candidate.trend } }, candidate.sourceUrl),
+    genreScore: normalizedScore,
+    scoreAxes: axis,
+    confidence:
+      candidate.confidence === "高" || inferredConfidence === "高"
+        ? "高"
+        : candidate.confidence === "中" || inferredConfidence === "中"
+          ? "中"
+          : "低",
+    learningMentions1y: learning?.mentions ?? 0,
   };
 });
 
@@ -1237,6 +1628,8 @@ snapshot.metadata.totalSources = sourceResults.length;
 snapshot.metadata.manualDeals = snapshot.deals.length;
 snapshot.metadata.verifiedRouteTargets = snapshot.routeVerificationResults.filter((result) => result.ok).length;
 snapshot.metadata.totalRouteTargets = snapshot.routeVerificationResults.length;
+snapshot.productLearning = yearlyLearning;
+snapshot.metadata.learningProducts1y = yearlyLearning.length;
 
 await writeFile(outputUrl, `${JSON.stringify(snapshot, null, 2)}\n`);
 

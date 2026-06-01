@@ -1290,27 +1290,6 @@ h3 {
   line-height: 1.55;
 }
 
-.action-insight {
-  display: grid;
-  gap: 4px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.action-insight-line {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.action-insight-line strong {
-  color: var(--text);
-  font-weight: 760;
-}
-
 .action-condition-list {
   display: grid;
   gap: 6px;
@@ -1781,6 +1760,21 @@ h3 {
   font-size: 12px;
   font-weight: 760;
   white-space: nowrap;
+}
+
+.kuji-special-status.strong {
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.kuji-special-status.watch {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.kuji-special-status.weak {
+  color: var(--muted);
+  background: var(--surface);
 }
 
 .kuji-prediction {
