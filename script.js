@@ -1199,12 +1199,36 @@ function formatUpdatedAt(value) {
 
 function updateDataStatus(label) {
   if (!elements.dataStatus) return;
+  const backlog = candidateValidationBacklog();
+  const backlogText =
+    backlog.total > 0
+      ? ` / 未確定 ${backlog.total}（期間${backlog.missingPeriod} 価格${backlog.missingPrice} 導線${backlog.missingRoute}）`
+      : "";
   const source =
     state.dataMeta.status === "partial" && state.dataMeta.reachableSources != null && state.dataMeta.totalSources != null
       ? `${state.dataMeta.source} partial ${state.dataMeta.reachableSources}/${state.dataMeta.totalSources}`
       : state.dataMeta.source;
   const deals = state.dataMeta.manualDeals ? ` / deals ${state.dataMeta.manualDeals}` : "";
-  elements.dataStatus.textContent = label ?? `Data: ${source}${deals} / ${formatUpdatedAt(state.dataMeta.updatedAt)}`;
+  elements.dataStatus.textContent = label ?? `Data: ${source}${deals} / ${formatUpdatedAt(state.dataMeta.updatedAt)}${backlogText}`;
+}
+
+function candidateValidationBacklog() {
+  let missingPeriod = 0;
+  let missingPrice = 0;
+  let missingRoute = 0;
+  for (const candidate of discoveryCandidates) {
+    if (candidate.stageKind !== "candidate") continue;
+    const status = candidateValidationState(candidate);
+    if (status === "missing_period") missingPeriod += 1;
+    if (status === "missing_price") missingPrice += 1;
+    if (status === "missing_route") missingRoute += 1;
+  }
+  return {
+    missingPeriod,
+    missingPrice,
+    missingRoute,
+    total: missingPeriod + missingPrice + missingRoute,
+  };
 }
 
 async function loadResearchSnapshot({ rerender = false } = {}) {
