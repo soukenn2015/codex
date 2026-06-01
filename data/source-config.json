@@ -940,6 +940,102 @@
       }
     },
     {
+      "id": "pokecachan-signal",
+      "type": "trendCandidate",
+      "hideFromDiscovery": true,
+      "url": "https://x.com/pokecachan",
+      "keyword": "ポケカ抽選",
+      "trend": {
+        "keyword": "ポケカ抽選・再販速報",
+        "context": "X速報 / 抽選開始 / 再販告知",
+        "score": 86,
+        "type": "SNS速報",
+        "change24h": "監視強化",
+        "source": "@pokecachan",
+        "confidence": "中",
+        "action": "抽選開始と再販告知を最優先で照合"
+      },
+      "candidate": {
+        "name": "ポケカ抽選・再販速報（@pokecachan）",
+        "trend": "ポケカ抽選・再販速報",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 84,
+        "priceData": "速報ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "抽選開始の早期把握を重視",
+        "reason": "抽選開始前後の動きを早めに拾うための速報ソース。公式導線と突合して候補判定する。",
+        "confidence": "中",
+        "adoptionReason": "ポケカ抽選の速報検知を補強。",
+        "missingData": "対象商品名、公式応募リンク、期間、定価、相場",
+        "sourceUrl": "https://x.com/pokecachan"
+      }
+    },
+    {
+      "id": "pokegetoinfo-main-signal",
+      "type": "trendCandidate",
+      "hideFromDiscovery": true,
+      "url": "https://x.com/PokeGetoinfoMain",
+      "keyword": "ポケカ再販",
+      "trend": {
+        "keyword": "ポケカ再販・抽選情報",
+        "context": "X速報 / 店舗別再販 / 抽選受付",
+        "score": 84,
+        "type": "SNS速報",
+        "change24h": "監視強化",
+        "source": "@PokeGetoinfoMain",
+        "confidence": "中",
+        "action": "再販時刻と店舗別抽選受付を優先照合"
+      },
+      "candidate": {
+        "name": "ポケカ再販・抽選情報（@PokeGetoinfoMain）",
+        "trend": "ポケカ再販・抽選情報",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 82,
+        "priceData": "速報ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "店舗別の再販時刻を重視",
+        "reason": "店舗別の再販/抽選動向を早めに拾うための補助ソース。単独採用はせず、公式導線で確認後に候補化する。",
+        "confidence": "中",
+        "adoptionReason": "再販導線の検知速度を上げる。",
+        "missingData": "商品別URL、応募期限、販売価格、相場",
+        "sourceUrl": "https://x.com/PokeGetoinfoMain"
+      }
+    },
+    {
+      "id": "pokecamatomeru-signal",
+      "type": "trendCandidate",
+      "hideFromDiscovery": true,
+      "url": "https://x.com/pokecamatomeru",
+      "keyword": "ポケカまとめ",
+      "trend": {
+        "keyword": "ポケカ抽選・再販まとめ",
+        "context": "Xまとめ / 抽選開始 / 入荷速報",
+        "score": 83,
+        "type": "SNS速報",
+        "change24h": "監視強化",
+        "source": "@pokecamatomeru",
+        "confidence": "中",
+        "action": "抽選開始と入荷速報を公式導線と照合"
+      },
+      "candidate": {
+        "name": "ポケカ抽選・再販まとめ（@pokecamatomeru）",
+        "trend": "ポケカ抽選・再販まとめ",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 81,
+        "priceData": "速報ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "抽選開始タイミングの把握を重視",
+        "reason": "抽選・再販の時系列まとめを早めに拾うソース。公式ページと突合した情報だけ採用する。",
+        "confidence": "中",
+        "adoptionReason": "ポケカ抽選導線の取りこぼし削減。",
+        "missingData": "商品名、応募リンク、開始/終了、価格、相場",
+        "sourceUrl": "https://x.com/pokecamatomeru"
+      }
+    },
+    {
       "id": "onepiece-garrack-watch",
       "type": "trendCandidate",
       "url": "https://one-piece.com/news/79661/index.html",

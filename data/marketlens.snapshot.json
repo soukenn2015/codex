@@ -2,9 +2,9 @@
   "metadata": {
     "source": "collector",
     "status": "collected",
-    "updatedAt": "2026-06-01T01:41:11.460Z",
-    "reachableSources": 22,
-    "totalSources": 22,
+    "updatedAt": "2026-06-01T12:02:04.833Z",
+    "reachableSources": 25,
+    "totalSources": 25,
     "manualDeals": 2,
     "verifiedRouteTargets": 3,
     "totalRouteTargets": 4
@@ -81,13 +81,13 @@
       "action": "公式ニュース確認: ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョンの発売/予約導線を確認",
       "startDate": "2026-05-27",
       "endDate": "2026-06-25",
-      "historyHits": 40,
+      "historyHits": 50,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "DMM通販 プレミアホビー商品抽選販売",
-      "context": "周年 / 公式グッズ / コラボ / 記念コンテンツ / 発売予定 / X話題 / 可愛い系",
+      "context": "周年 / 公式グッズ / 記念コンテンツ / 発売予定 / X話題 / 可愛い系",
       "score": 93,
       "type": "抽選",
       "change24h": "公式 09/04",
@@ -96,9 +96,9 @@
       "action": "公式ニュース確認: DMM通販 プレミアホビー商品抽選販売の発売/予約導線を確認",
       "startDate": "2025-09-04",
       "endDate": "2025-10-03",
-      "historyHits": 40,
+      "historyHits": 50,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
@@ -111,9 +111,9 @@
       "action": "公式ニュース確認: S.H.Figuarts 仮面ライダーギーツ ブーストフォームマークIIIの発売/予約導線を確認",
       "startDate": "2026-06-01",
       "endDate": "2026-06-21",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "ドラクエ メタリックモンスターズ在庫薄",
@@ -126,9 +126,9 @@
       "action": "公式ニュース確認: ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタルの発売/予約導線を確認",
       "startDate": "2026-01-30",
       "endDate": "2026-02-28",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "ポケカ周辺サプライ新作",
@@ -141,9 +141,54 @@
       "action": "公式ニュース確認: ポケモンカードゲーム 限定デッキシールド・プレイマットの発売/予約導線を確認",
       "startDate": "2026-05-21",
       "endDate": "2026-06-19",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
+    },
+    {
+      "keyword": "ポケカ抽選・再販速報",
+      "context": "X話題",
+      "score": 50,
+      "type": "SNS速報",
+      "change24h": "公式 06/01",
+      "source": "公式",
+      "confidence": "低",
+      "action": "公式ページを再取得して内容を確認",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
+      "historyHits": 6,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
+    },
+    {
+      "keyword": "ポケカ再販・抽選情報",
+      "context": "X話題",
+      "score": 50,
+      "type": "SNS速報",
+      "change24h": "公式 06/01",
+      "source": "公式",
+      "confidence": "低",
+      "action": "公式ページを再取得して内容を確認",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
+      "historyHits": 6,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
+    },
+    {
+      "keyword": "ポケカ抽選・再販まとめ",
+      "context": "X話題",
+      "score": 50,
+      "type": "SNS速報",
+      "change24h": "公式 06/01",
+      "source": "公式",
+      "confidence": "低",
+      "action": "公式ページを再取得して内容を確認",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
+      "historyHits": 6,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "ONE PIECE コラボ時計・限定グッズ",
@@ -156,9 +201,9 @@
       "action": "公式ニュース確認: GARRACK ONE PIECE スマートウォッチ シャンクスモデルの発売/予約導線を確認",
       "startDate": "2026-05-29",
       "endDate": "2026-06-27",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "コラボG-SHOCK / CasiOak新作",
@@ -171,9 +216,9 @@
       "action": "公式ニュース確認: G-SHOCK × Coca-Cola GA-2100CC-3AJRの発売/予約導線を確認",
       "startDate": "2026-06-01",
       "endDate": "2026-06-30",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "品薄・完売ブログ監視",
@@ -186,24 +231,24 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-05-31",
       "endDate": "2026-06-13",
-      "historyHits": 31,
+      "historyHits": 41,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "えみのせどり部屋 品薄監視",
-      "context": "コラボ / 発売予定",
+      "context": "コラボ",
       "score": 50,
       "type": "SNS監視",
-      "change24h": "公式 05/31",
+      "change24h": "公式 06/01",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-05-31",
-      "endDate": "2026-06-13",
-      "historyHits": 30,
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-14",
+      "historyHits": 40,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "プレ値SNS監視",
@@ -216,9 +261,9 @@
       "action": "公式ニュース確認: 3度の飯よりプレミアム 完売ウォッチの発売/予約導線を確認",
       "startDate": "2026-06-01",
       "endDate": "2026-06-14",
-      "historyHits": 29,
+      "historyHits": 39,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "しなかん 品薄完売監視",
@@ -231,9 +276,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-06-12",
       "endDate": "2026-06-25",
-      "historyHits": 30,
+      "historyHits": 40,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "keyword": "転売ヤーかなえ 品薄監視",
@@ -246,9 +291,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-06-01",
       "endDate": "2026-06-14",
-      "historyHits": 24,
+      "historyHits": 34,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     }
   ],
   "discoveryCandidates": [
@@ -276,9 +321,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "deal-buy-price",
-      "historyHits": 40,
+      "historyHits": 50,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル",
@@ -304,9 +349,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "candidate",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "ドラゴンクエスト メタリックモンスターズギャラリー キングスライム ロトブルー系",
@@ -332,9 +377,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "candidate",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "ポケモンカードゲーム 限定デッキシールド・プレイマット",
@@ -360,9 +405,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "candidate",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "GARRACK ONE PIECE スマートウォッチ シャンクスモデル",
@@ -388,9 +433,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "GARRACK ONE PIECE スマートウォッチ ルフィモデル",
@@ -416,9 +461,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 35,
+      "historyHits": 45,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "G-SHOCK × Coca-Cola GA-2100CC-3AJR",
@@ -444,9 +489,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 39,
+      "historyHits": 49,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "転売はかせ＠転売LABO 品薄完売ウォッチ",
@@ -472,9 +517,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 31,
+      "historyHits": 41,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "えみのせどり部屋 品薄ウォッチ",
@@ -490,8 +535,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量",
       "sourceUrl": "https://emisresaleroom.com/",
-      "startDate": "2026-05-31",
-      "endDate": "2026-06-13",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-14",
       "retailPrice": 33000,
       "retailPriceLabel": "公式価格 ¥33,000（履歴補完）",
       "category": "unknown",
@@ -500,9 +545,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 30,
+      "historyHits": 40,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "3度の飯よりプレミアム 完売ウォッチ",
@@ -528,9 +573,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 29,
+      "historyHits": 39,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "しなかん 品薄完売ウォッチ",
@@ -556,9 +601,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 30,
+      "historyHits": 40,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     },
     {
       "name": "転売ヤーかなえ 品薄ウォッチ",
@@ -584,9 +629,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 24,
+      "historyHits": 34,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-06-01T01:36:36.579Z"
+      "historyLastSeen": "2026-06-01T06:33:10.333Z"
     }
   ],
   "kujiSpecials": [
@@ -1027,10 +1072,10 @@
             "status": "verified",
             "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.497Z",
+            "checkedAt": "2026-06-01T12:02:23.893Z",
             "sourceStatus": "200",
             "finalUrl": "https://x.com/YS_SHINJYUKU",
-            "summary": "接続 06/01 10:41 / 終了日あり / 常時/再販枠",
+            "summary": "接続 06/01 21:02 / 終了日あり / 常時/再販枠",
             "issues": []
           }
         },
@@ -1050,7 +1095,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1075,7 +1120,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1133,7 +1178,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1158,7 +1203,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1183,7 +1228,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1241,7 +1286,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1266,7 +1311,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1324,7 +1369,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.556Z",
+            "checkedAt": "2026-06-01T12:02:23.969Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -1346,10 +1391,10 @@
             "status": "verified",
             "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.600Z",
+            "checkedAt": "2026-06-01T12:02:24.007Z",
             "sourceStatus": "200",
             "finalUrl": "https://nyuka-now.com/archives/156404",
-            "summary": "接続 06/01 10:41 / 終了日あり / 常時/再販枠",
+            "summary": "接続 06/01 21:02 / 終了日あり / 常時/再販枠",
             "issues": []
           }
         }
@@ -1401,10 +1446,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.885Z",
+            "checkedAt": "2026-06-01T12:02:24.386Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 06/01 10:41 / 終了日あり / 常時/再販枠",
+            "summary": "接続 06/01 21:02 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -1423,10 +1468,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-06-01T01:41:22.885Z",
+            "checkedAt": "2026-06-01T12:02:24.386Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 06/01 10:41 / 終了日あり / 常時/再販枠",
+            "summary": "接続 06/01 21:02 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -1445,7 +1490,7 @@
       "url": "https://x.com/YS_SHINJYUKU",
       "title": "",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:22.497Z"
+      "fetchedAt": "2026-06-01T12:02:23.893Z"
     },
     {
       "id": "route:https://dorasuta.membercard.jp/lottery",
@@ -1454,7 +1499,7 @@
       "url": "https://dorasuta.membercard.jp/lottery",
       "title": "Just a moment...",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:22.556Z"
+      "fetchedAt": "2026-06-01T12:02:23.969Z"
     },
     {
       "id": "route:https://nyuka-now.com/archives/156404",
@@ -1463,7 +1508,7 @@
       "url": "https://nyuka-now.com/archives/156404",
       "title": "【2026年6月1日更新】ポケモンカード ニンジャスピナーの抽選予約・先着販売・在庫あり・再販入荷情報まとめ│入荷Now",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:22.600Z"
+      "fetchedAt": "2026-06-01T12:02:24.007Z"
     },
     {
       "id": "route:https://snkrdunk.com/articles/30254/",
@@ -1472,7 +1517,7 @@
       "url": "https://snkrdunk.com/articles/30254/",
       "title": "【ポケカ】インフェルノXの再販はいつ？再販入荷情報まとめ【5/29更新】 | スニーカーダンク",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:22.885Z"
+      "fetchedAt": "2026-06-01T12:02:24.386Z"
     }
   ],
   "archivedConcreteTrends": [
@@ -1502,6 +1547,27 @@
       "source": "公式",
       "startDate": "2026-01-30",
       "endDate": "2026-02-28",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケカ抽選・再販速報",
+      "source": "公式",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケカ再販・抽選情報",
+      "source": "公式",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケカ抽選・再販まとめ",
+      "source": "公式",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-21",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     }
   ],
@@ -1537,6 +1603,24 @@
       "startDate": "2026-05-21"
     },
     {
+      "keyword": "ポケカ抽選・再販速報",
+      "type": "specific",
+      "source": "公式",
+      "startDate": "2026-06-01"
+    },
+    {
+      "keyword": "ポケカ再販・抽選情報",
+      "type": "specific",
+      "source": "公式",
+      "startDate": "2026-06-01"
+    },
+    {
+      "keyword": "ポケカ抽選・再販まとめ",
+      "type": "specific",
+      "source": "公式",
+      "startDate": "2026-06-01"
+    },
+    {
       "keyword": "ONE PIECE コラボ時計・限定グッズ",
       "type": "specific",
       "source": "公式",
@@ -1564,7 +1648,7 @@
       "keyword": "えみのせどり部屋 品薄監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-05-31"
+      "startDate": "2026-06-01"
     },
     {
       "keyword": "プレ値SNS監視",
@@ -1590,46 +1674,46 @@
       "id": "pokemon-official-abyss-eye",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=3&dateLowerM=12&dateLowerY=2025&dateUpperD=26&dateUpperM=2&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:11.737Z"
+      "fetchedAt": "2026-06-01T12:02:11.165Z"
     },
     {
       "id": "pokemon-official-mega-dream-ex",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=3&dateLowerM=12&dateLowerY=2025&dateUpperD=26&dateUpperM=2&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:11.808Z"
+      "fetchedAt": "2026-06-01T12:02:11.234Z"
     },
     {
       "id": "pokemon-official-munikisu-zero",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=3&dateLowerM=12&dateLowerY=2025&dateUpperD=26&dateUpperM=2&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:11.871Z"
+      "fetchedAt": "2026-06-01T12:02:11.269Z"
     },
     {
       "id": "pokemon-official-ninja-spinner",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=3&dateLowerM=12&dateLowerY=2025&dateUpperD=26&dateUpperM=2&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:11.909Z"
+      "fetchedAt": "2026-06-01T12:02:11.304Z"
     },
     {
       "id": "pokemon-official-inferno-x",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=1&dateLowerM=9&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=3&dateLowerM=12&dateLowerY=2025&dateUpperD=26&dateUpperM=2&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:11.952Z"
+      "fetchedAt": "2026-06-01T12:02:11.347Z"
     },
     {
       "id": "dragonquest-40th",
@@ -1638,7 +1722,7 @@
       "url": "https://www.dragonquest.jp/news/detail/4245/",
       "title": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！ | ドラクエ・パラダイス(ドラパラ)ドラゴンクエスト公式サイト | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:12.134Z",
+      "fetchedAt": "2026-06-01T12:02:11.514Z",
       "newsTitle": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！",
       "newsDate": "2026-05-27",
       "signals": [
@@ -1658,7 +1742,7 @@
       "url": "https://www.sej.co.jp/products/hhkuji2605.html",
       "title": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY｜セブン‐イレブン",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:12.214Z",
+      "fetchedAt": "2026-06-01T12:02:11.773Z",
       "newsTitle": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY｜セブン‐イレブン",
       "newsDate": "2026-05-22",
       "signals": [
@@ -1675,7 +1759,7 @@
       "url": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448",
       "title": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4 | 一番くじONLINE",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:12.451Z",
+      "fetchedAt": "2026-06-01T12:02:11.942Z",
       "newsTitle": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4",
       "newsDate": "2026-05-22",
       "signals": [
@@ -1691,7 +1775,7 @@
       "url": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/",
       "title": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:12.551Z",
+      "fetchedAt": "2026-06-01T12:02:12.039Z",
       "newsTitle": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
       "newsDate": "2026-06-01",
       "signals": []
@@ -1703,13 +1787,12 @@
       "url": "https://hobby.watch.impress.co.jp/docs/news/2044682.html",
       "title": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:12.689Z",
+      "fetchedAt": "2026-06-01T12:02:12.198Z",
       "newsTitle": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "newsDate": "2025-09-04",
       "signals": [
         "周年",
         "公式グッズ",
-        "コラボ",
         "記念コンテンツ",
         "発売予定",
         "X話題",
@@ -1723,7 +1806,7 @@
       "url": "https://p-bandai.jp/",
       "title": "�v���~�A���o���_�C�b�o���_�C�i���R�O���[�v�̌����ʔ̃T�C�g�b�A�j���O�b�Y �E�t�B�M���A�E��������",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:13.418Z",
+      "fetchedAt": "2026-06-01T12:02:12.812Z",
       "newsTitle": "�v���~�A���o���_�C�b�o���_�C�i���R�O���[�v�̌����ʔ̃T�C�g�b�A�j���O�b�Y �E�t�B�M���A�E��������",
       "newsDate": "2026-06-01",
       "signals": [
@@ -1737,7 +1820,7 @@
       "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "title": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル | スクウェア・エニックス e-STORE",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:13.883Z",
+      "fetchedAt": "2026-06-01T12:02:13.313Z",
       "newsTitle": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル",
       "newsDate": "2026-01-30",
       "signals": [
@@ -1755,7 +1838,7 @@
       "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "title": "ドラゴンクエスト メタリックモンスターズギャラリー | スクウェア・エニックス e-STORE",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:14.228Z",
+      "fetchedAt": "2026-06-01T12:02:13.722Z",
       "newsTitle": "ドラゴンクエスト メタリックモンスターズギャラリー",
       "newsDate": "2026-02-14",
       "signals": [
@@ -1773,7 +1856,7 @@
       "url": "https://www.pokemoncenter-online.com/",
       "title": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:14.362Z",
+      "fetchedAt": "2026-06-01T12:02:13.883Z",
       "newsTitle": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "newsDate": "2026-05-21",
       "signals": [
@@ -1786,13 +1869,55 @@
       ]
     },
     {
+      "id": "pokecachan-signal",
+      "ok": true,
+      "status": 200,
+      "url": "https://x.com/pokecachan",
+      "title": "",
+      "keywordFound": false,
+      "fetchedAt": "2026-06-01T12:02:15.164Z",
+      "newsTitle": "ポケカ抽選",
+      "newsDate": "2026-06-01",
+      "signals": [
+        "X話題"
+      ]
+    },
+    {
+      "id": "pokegetoinfo-main-signal",
+      "ok": true,
+      "status": 200,
+      "url": "https://x.com/PokeGetoinfoMain",
+      "title": "",
+      "keywordFound": false,
+      "fetchedAt": "2026-06-01T12:02:15.750Z",
+      "newsTitle": "ポケカ再販",
+      "newsDate": "2026-06-01",
+      "signals": [
+        "X話題"
+      ]
+    },
+    {
+      "id": "pokecamatomeru-signal",
+      "ok": true,
+      "status": 200,
+      "url": "https://x.com/pokecamatomeru",
+      "title": "",
+      "keywordFound": false,
+      "fetchedAt": "2026-06-01T12:02:16.912Z",
+      "newsTitle": "ポケカまとめ",
+      "newsDate": "2026-06-01",
+      "signals": [
+        "X話題"
+      ]
+    },
+    {
       "id": "onepiece-garrack-watch",
       "ok": true,
       "status": 200,
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:14.444Z",
+      "fetchedAt": "2026-06-01T12:02:17.325Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -1809,7 +1934,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:14.510Z",
+      "fetchedAt": "2026-06-01T12:02:17.391Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -1826,7 +1951,7 @@
       "url": "https://gshock.casio.com/jp/products/recommend/",
       "title": "G-SHOCK 新作モデル 2026年5月発売 | G-SHOCK 腕時計",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:14.651Z",
+      "fetchedAt": "2026-06-01T12:02:18.863Z",
       "newsTitle": "G-SHOCK 新作モデル 2026年5月発売",
       "newsDate": "2026-06-01",
       "signals": [
@@ -1844,7 +1969,7 @@
       "url": "https://tenbailabo.com/",
       "title": "転売博士の転売LABO | 転売・せどりで稼げるおすすめの商品（アパレル、スニーカー、ポケカ、ホビーなど）を紹介するブログ。副業を始めたい初心者の方も歓迎！メンバー800人超えの転売オンラインサロンのオーナーもやってます",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:15.363Z",
+      "fetchedAt": "2026-06-01T12:02:19.596Z",
       "newsTitle": "転売博士の転売LABO",
       "newsDate": "2026-05-31",
       "signals": [
@@ -1858,12 +1983,11 @@
       "url": "https://emisresaleroom.com/",
       "title": "絵美のせどり部屋",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:15.449Z",
+      "fetchedAt": "2026-06-01T12:02:19.701Z",
       "newsTitle": "絵美のせどり部屋",
-      "newsDate": "2026-05-31",
+      "newsDate": "2026-06-01",
       "signals": [
-        "コラボ",
-        "発売予定"
+        "コラボ"
       ]
     },
     {
@@ -1873,7 +1997,7 @@
       "url": "http://gentei333.blog108.fc2.com/",
       "title": "三度の飯よりプレミアム",
       "keywordFound": true,
-      "fetchedAt": "2026-06-01T01:41:15.509Z",
+      "fetchedAt": "2026-06-01T12:02:19.777Z",
       "newsTitle": "三度の飯よりプレミアム",
       "newsDate": "2026-06-01",
       "signals": [
@@ -1889,7 +2013,7 @@
       "url": "http://spkey.blog114.fc2.com/",
       "title": "品薄完売ブログ しなかん！",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:16.011Z",
+      "fetchedAt": "2026-06-01T12:02:20.179Z",
       "newsTitle": "品薄完売ブログ しなかん！",
       "newsDate": "2026-06-12",
       "signals": [
@@ -1908,7 +2032,7 @@
       "url": "https://x.com/KanaeKanri20674?lang=ja",
       "title": "",
       "keywordFound": false,
-      "fetchedAt": "2026-06-01T01:41:18.626Z",
+      "fetchedAt": "2026-06-01T12:02:20.773Z",
       "newsTitle": "転売ヤーかなえ",
       "newsDate": "2026-06-01",
       "signals": [

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MarketLens</title>
-    <link rel="stylesheet" href="./styles.css?v=20260531-48" />
+    <link rel="stylesheet" href="./styles.css?v=20260601-15" />
   </head>
   <body>
     <div class="app-shell">
@@ -64,30 +64,16 @@
           </div>
         </header>
 
-        <section class="summary-grid" aria-label="Summary">
-          <article class="metric-panel">
-            <span class="metric-label">今見る内訳</span>
-            <strong id="hotCount">0</strong>
-            <span class="metric-note">利益候補 / 抽選ルート</span>
-          </article>
-          <article class="metric-panel">
-            <span class="metric-label">今見る想定利益</span>
-            <strong id="totalProfit">0円</strong>
-            <span class="metric-note">販売中 × 価格差あり</span>
-          </article>
-          <article class="metric-panel">
-            <span class="metric-label">今見る平均利率</span>
-            <strong id="avgMargin">0%</strong>
-            <span class="metric-note">対象候補のみ</span>
-          </article>
-          <article class="metric-panel">
-            <span class="metric-label">急上昇シグナル</span>
-            <strong id="trendCount">0</strong>
-            <span class="metric-note">検出中</span>
+        <section class="summary-grid" aria-label="Summary" hidden>
+          <article class="ai-summary-panel">
+            <p class="metric-label">AI全体まとめ</p>
+            <h3 id="aiSummaryTitle">データ確認中</h3>
+            <p class="ai-summary-body" id="aiSummaryBody">スナップショット読込後に、今見るべきポイントを要約します。</p>
+            <p class="metric-note" id="aiSummaryMeta">-</p>
           </article>
         </section>
 
-        <section class="panel action-panel" id="actionSection" aria-label="Today actions">
+        <section class="panel action-panel" id="actionSection" aria-label="Today action details">
           <div class="panel-header slim">
             <div>
               <p class="panel-kicker">Action Queue</p>
@@ -97,19 +83,41 @@
           <div class="action-list" id="actionList"></div>
         </section>
 
+        <section class="panel layer-panel" id="layerSection" aria-label="Layered watch board">
+          <div class="panel-header slim">
+            <div>
+              <p class="panel-kicker">Focus Flow</p>
+              <h2>注目フロー</h2>
+            </div>
+          </div>
+          <div class="layer-grid" id="layerGrid">
+            <article class="layer-card">
+              <h3>全体まとめ</h3>
+              <div class="layer-list" id="layerFlowList"></div>
+            </article>
+            <article class="layer-card">
+              <h3>今すぐ見る（0〜2日）</h3>
+              <div class="layer-list" id="layerNowList"></div>
+            </article>
+            <article class="layer-card">
+              <h3>近日チェック（3〜14日）</h3>
+              <div class="layer-list" id="layer2wList"></div>
+            </article>
+            <article class="layer-card">
+              <h3>先読みメモ（15日〜6ヶ月 + 外れ）</h3>
+              <div class="layer-list" id="layer6mList"></div>
+            </article>
+          </div>
+        </section>
+
         <section class="panel lottery-panel" id="lotterySection" aria-label="Pokeca lottery routes">
           <div class="panel-header">
             <div>
               <p class="panel-kicker">Pokeca</p>
-              <h2>弾別 抽選・相場</h2>
+              <h2>ポケカ</h2>
               <p class="lottery-summary" id="lotterySummary">タイトル発表済みの弾だけ表示</p>
             </div>
             <div class="lottery-controls">
-              <div class="segmented" role="group" aria-label="Period filter">
-                <button class="route-segment active" type="button" data-route-filter="all">All</button>
-                <button class="route-segment" type="button" data-route-filter="active">期間中</button>
-                <button class="route-segment" type="button" data-route-filter="upcoming">予定</button>
-              </div>
               <button class="ghost-button" id="pokecaToggle" type="button" aria-expanded="false">展開</button>
             </div>
           </div>
@@ -121,7 +129,7 @@
           <div class="panel-header">
             <div>
               <p class="panel-kicker">Ichiban Kuji</p>
-              <h2>一番くじ特設</h2>
+              <h2>一番くじ</h2>
               <p class="kuji-special-summary" id="kujiSpecialSummary">直近1ヶ月の発売日順</p>
             </div>
             <button class="ghost-button" id="kujiSpecialToggle" type="button" aria-expanded="false">展開</button>
@@ -136,18 +144,12 @@
               <h2>利益候補</h2>
             </div>
             <div class="panel-controls">
-              <div class="segmented" role="group" aria-label="Filter">
-                <button class="segment active" type="button" data-filter="all">All</button>
-                <button class="segment" type="button" data-filter="active">販売中</button>
-                <button class="segment" type="button" data-filter="upcoming">予定</button>
-                <button class="segment" type="button" data-filter="recheck">要再確認</button>
-              </div>
               <label class="sort-control">
                 <span>並び替え</span>
                 <select id="sortSelect">
                   <option value="profit_desc">利益高い順</option>
                   <option value="profit_asc">利益低い順</option>
-                  <option value="buyline_desc">買える上限高い順</option>
+                  <option value="buyline_desc">最大仕入れ価格高い順</option>
                   <option value="deadline_asc">終了近い順</option>
                 </select>
               </label>
@@ -190,14 +192,14 @@
 
         </section>
 
-        <section class="panel settings-bottom-panel" id="settingsSection" aria-label="Settings">
+        <section class="panel settings-bottom-panel" id="settingsSection" aria-label="Settings" hidden>
           <div class="panel-header slim">
             <div>
               <p class="panel-kicker">Settings</p>
-              <h2>計算条件</h2>
+              <h2>通知設定</h2>
             </div>
           </div>
-          <form class="settings-form" id="settingsForm">
+          <form class="settings-form" id="settingsForm" hidden>
             <label>
               <span>手数料</span>
               <div class="input-suffix">
@@ -267,19 +269,18 @@
             <strong class="profit"></strong>
           </div>
           <div>
-            <span>買える上限</span>
+            <span>最大仕入れ価格</span>
             <strong class="buy-line"></strong>
           </div>
         </div>
-        <div class="deal-footer">
-          <div class="cost-line"></div>
-          <div class="deal-actions">
-            <a class="ghost-button deal-link" target="_blank" rel="noreferrer">発売元</a>
-            <a class="ghost-button market-link" target="_blank" rel="noreferrer">相場</a>
-            <button class="ghost-button detail-toggle" type="button">詳細</button>
+          <div class="deal-footer">
+            <div class="cost-line"></div>
+            <div class="deal-actions">
+              <a class="ghost-button deal-link" target="_blank" rel="noreferrer">発売元</a>
+              <a class="ghost-button market-link" target="_blank" rel="noreferrer">相場</a>
+            </div>
           </div>
-        </div>
-        <div class="detail-box" hidden></div>
+        <div class="detail-box"></div>
       </article>
     </template>
 
@@ -308,7 +309,7 @@
             <strong class="release-profit"></strong>
           </div>
           <div>
-            <span>買える上限</span>
+            <span>最大仕入れ価格</span>
             <strong class="release-buyline"></strong>
           </div>
         </div>
@@ -320,6 +321,6 @@
       </article>
     </template>
 
-    <script src="./script.js?v=20260531-48"></script>
+    <script src="./script.js?v=20260601-15"></script>
   </body>
 </html>

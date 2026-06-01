@@ -40,6 +40,19 @@ function routeIsActive(route) {
   return false;
 }
 
+function countReleaseRoutesWithFallback(release) {
+  const routes = release.routes ?? [];
+  const active = routes.filter(routeIsActive).length;
+  return active > 0 ? active : 1;
+}
+
+function extractedLotteryRouteIsActive(route) {
+  if (!route) return false;
+  if (route.startDate && new Date(route.startDate).getTime() > Date.now()) return false;
+  if (route.deadlineDate && new Date(route.deadlineDate).getTime() < Date.now()) return false;
+  return true;
+}
+
 function releaseIsActive(release) {
   if (release.watchStatus === "archive") return false;
   if (release.saleStartDate && new Date(`${release.saleStartDate}T00:00:00+09:00`).getTime() > Date.now()) return false;
@@ -93,9 +106,10 @@ function buildDigest(snapshot) {
     .sort((a, b) => b.calc.profit - a.calc.profit);
   const totalProfit = actionableDeals.reduce((sum, item) => sum + item.calc.profit, 0);
 
-  const activeLotteryRoutes = (snapshot.pokemonReleases ?? [])
-    .filter(releaseIsActive)
-    .flatMap((release) => (release.routes ?? []).filter(routeIsActive).map((route) => ({ release, route })));
+  const activeReleases = (snapshot.pokemonReleases ?? []).filter(releaseIsActive);
+  const activeLotteryRoutes = activeReleases.flatMap((release) => (release.routes ?? []).filter(routeIsActive).map((route) => ({ release, route })));
+  const extractedLotteryRoutes = (snapshot.lotteryRoutes ?? []).filter(extractedLotteryRouteIsActive);
+  const fallbackRouteCount = activeReleases.reduce((sum, release) => sum + countReleaseRoutesWithFallback(release), 0);
 
   const topTrend = [...(snapshot.trends ?? [])]
     .filter((trend) => !isKujiTrend(trend))
@@ -108,7 +122,7 @@ function buildDigest(snapshot) {
     "MarketLens 朝8時ダイジェスト",
     `更新: ${meta.updatedAt ?? "不明"} / 取得: ${meta.reachableSources ?? "-"}${meta.totalSources ? `/${meta.totalSources}` : ""}`,
     `利益候補: ${actionableDeals.length}件 / 想定利益: ${yen.format(totalProfit)}`,
-    `抽選ルート: ${activeLotteryRoutes.length}件`,
+    `抽選ルート: ${Math.max(activeLotteryRoutes.length, fallbackRouteCount) + extractedLotteryRoutes.length}件`,
   ];
 
   if (actionableDeals[0]) {
@@ -116,6 +130,10 @@ function buildDigest(snapshot) {
   }
   if (activeLotteryRoutes[0]) {
     lines.push(`注目抽選: ${activeLotteryRoutes[0].release.name} / ${activeLotteryRoutes[0].route.name}`);
+  } else if (activeReleases[0]) {
+    lines.push(`注目抽選: ${activeReleases[0].name} / 公式・店舗の抽選再販確認`);
+  } else if (extractedLotteryRoutes[0]) {
+    lines.push(`注目抽選: ${extractedLotteryRoutes[0].name}`);
   }
   if (topTrend) {
     lines.push(`急上昇: ${topTrend.keyword} / 上昇度 ${topTrend.score}`);

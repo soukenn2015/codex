@@ -35,6 +35,144 @@ function extractLinksFromHtml(html, baseUrl) {
   return links;
 }
 
+function extractLotteryDeadline(text) {
+  if (!text) return null;
+  const jp = text.match(/(20\d{2})[\/\-年\.](\d{1,2})[\/\-月\.](\d{1,2})日?/);
+  if (jp) {
+    const [, y, m, d] = jp;
+    const year = Number(y);
+    const currentYear = new Date().getFullYear();
+    if (Number.isFinite(year) && (year < currentYear - 1 || year > currentYear + 2)) return null;
+    return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}T23:59:59+09:00`;
+  }
+  return null;
+}
+
+const lotteryWord = /(抽選|応募|エントリー|lottery|entry|apply|membercard|招待|入店|受付|先着|予約)/i;
+const lotteryPathWord = /(lottery|entry|apply|membercard|campaign|chusen|抽選|応募|reservation|reserve)/i;
+const ignoredLotteryHosts = /(google\.com|x\.com|twitter\.com|facebook\.com|instagram\.com|youtube\.com|snkrdunk\.com)$/i;
+const ignoredLotteryName = /^(調整中|こちら|詳しく|応募リンク|確認)$/i;
+const ignoredAffiliateHosts =
+  /(hb\.afl\.rakuten\.co\.jp|px\.a8\.net|al\.dmm\.com|amzn\.to|bit\.ly|t\.co|linktr\.ee|fc2\.com)$/i;
+const allowedLotteryHosts =
+  /(pokemoncenter-online\.com|pokemon-card\.com|membercard\.jp|p-bandai\.jp|bandai\.co\.jp|dmm\.com|amiami\.jp|yellowsubmarine\.co\.jp|joshinweb\.jp|biccamera\.com|yodobashi\.com|edion\.com|one-piece\.com|square-enix\.com|casio\.com|gshock\.casio\.com|nyuka-now\.com)$/i;
+
+function sourceHasLotteryIntent(source) {
+  if (source.type === "pokemonRelease") return true;
+  const trendType = String(source.trend?.type ?? "");
+  const trendAction = String(source.trend?.action ?? "");
+  const trendContext = String(source.trend?.context ?? "");
+  if (!lotteryWord.test(`${trendType} ${trendAction} ${trendContext}`)) return false;
+  if (/ブログ監視|SNS監視|価格差|時計|公式グッズ/i.test(`${trendType} ${trendContext}`)) return false;
+  const text = [
+    source.keyword,
+    source.trend?.keyword,
+    source.candidate?.trend,
+    source.candidate?.marginSignal,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  return lotteryWord.test(text);
+}
+
+function normalizeRouteName(value, fallback = "抽選ルート") {
+  const name = String(value ?? "")
+    .replace(/\s+/g, " ")
+    .replace(/応募はこちら|詳しくはこちら|詳細はこちら/gi, "")
+    .trim();
+  return name.length >= 2 ? name : fallback;
+}
+
+function tryParseUrl(url) {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
+  }
+}
+
+function extractLotteryRoutesFromSource(source, result) {
+  if (!result?.ok || !sourceHasLotteryIntent(source)) return [];
+  const text = String(result.text ?? "");
+  const links = extractLinksFromHtml(result.html ?? "", result.url ?? source.url);
+  const candidates = [];
+
+  for (const link of links) {
+    const parsed = tryParseUrl(link.url);
+    if (!parsed) continue;
+    if (ignoredLotteryHosts.test(parsed.hostname)) continue;
+    if (ignoredAffiliateHosts.test(parsed.hostname)) continue;
+    if (!allowedLotteryHosts.test(parsed.hostname)) continue;
+    if (parsed.pathname === "/" && !parsed.search && !lotteryWord.test(link.anchorText)) continue;
+    const joined = `${link.anchorText} ${link.url}`;
+    if (!lotteryWord.test(joined) && !lotteryPathWord.test(`${parsed.pathname}${parsed.search}`)) continue;
+    const name = normalizeRouteName(link.anchorText, source.keyword || "抽選ルート");
+    if (ignoredLotteryName.test(name)) continue;
+    const startDate = source.candidate?.startDate
+      ? `${source.candidate.startDate}T00:00:00+09:00`
+      : source.trend?.startDate
+        ? `${source.trend.startDate}T00:00:00+09:00`
+        : null;
+    const parsedDeadlineDate = extractLotteryDeadline(`${link.anchorText} ${text.slice(0, 2400)}`);
+    const fallbackDeadlineDate = source.candidate?.endDate
+      ? `${source.candidate.endDate}T23:59:59+09:00`
+      : source.trend?.endDate
+        ? `${source.trend.endDate}T23:59:59+09:00`
+        : null;
+    const deadlineDate = parsedDeadlineDate || fallbackDeadlineDate;
+    candidates.push({
+      id: `lottery-${normalizeSignalText(`${source.id}-${link.url}`)}`,
+      scope: /大阪|osaka|梅田|なんば|日本橋/i.test(joined) ? "osaka" : "online",
+      priority: /先着|当日|開始|web応募|会員/i.test(joined) ? "high" : "medium",
+      name,
+      source: source.trend?.source ?? source.type ?? "source",
+      action: "応募条件と期間を確認",
+      note: source.trend?.context ?? "外部ソースから抽選導線を抽出",
+      condition: "開始日/終了日/応募方法を確認",
+      sourceUrl: link.url,
+      startDate,
+      deadlineDate,
+      applyUrl: link.url,
+    });
+    if (candidates.length >= 8) break;
+  }
+
+  return candidates;
+}
+
+function shiftDate(date, days) {
+  const next = new Date(date.getTime());
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function formatDateParts(date) {
+  return {
+    y: String(date.getFullYear()),
+    m: String(date.getMonth() + 1),
+    d: String(date.getDate()),
+  };
+}
+
+function resolveSourceUrl(source) {
+  if (source.type !== "pokemonRelease") return source.url;
+  const parsed = tryParseUrl(source.url);
+  if (!parsed || !parsed.hostname.includes("pokemon-card.com")) return source.url;
+
+  const lower = formatDateParts(shiftDate(new Date(), -180));
+  const upper = formatDateParts(shiftDate(new Date(), 270));
+  parsed.searchParams.set("dateLowerY", lower.y);
+  parsed.searchParams.set("dateLowerM", lower.m);
+  parsed.searchParams.set("dateLowerD", lower.d);
+  parsed.searchParams.set("dateUpperY", upper.y);
+  parsed.searchParams.set("dateUpperM", upper.m);
+  parsed.searchParams.set("dateUpperD", upper.d);
+  if (!parsed.searchParams.get("productType")) {
+    parsed.searchParams.set("productType", "expansion");
+  }
+  return parsed.toString();
+}
+
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -988,7 +1126,8 @@ const snapshot = {
 
 snapshot.deals = await loadDealCandidates();
 
-for (const source of config.sources ?? []) {
+for (const rawSource of config.sources ?? []) {
+  const source = { ...rawSource, url: resolveSourceUrl(rawSource) };
   const result = await fetchSource(source);
   const { text, html, ...publicResult } = result;
 
@@ -1009,8 +1148,17 @@ for (const source of config.sources ?? []) {
     }
   }
 
+  const lotteryCandidates = extractLotteryRoutesFromSource(source, result);
+  if (lotteryCandidates.length > 0) {
+    snapshot.lotteryRoutes.push(...lotteryCandidates);
+  }
+
   sourceResults.push(publicResult);
 }
+
+snapshot.lotteryRoutes = Array.from(
+  new Map(snapshot.lotteryRoutes.map((route) => [`${normalizeSignalText(route.name)}|${route.sourceUrl}`, route])).values(),
+);
 
 snapshot.routeVerificationResults = await verifyPokemonRouteTargets(snapshot.pokemonReleases);
 const specializedMarketMap = await collectSpecializedCandidateMarkets(snapshot.discoveryCandidates);

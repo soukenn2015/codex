@@ -50,6 +50,23 @@ BuyLine =
 http://localhost:4173/
 ```
 
+## Share With Friends
+
+最短の配布方法は静的ホスティングです。  
+このリポジトリを GitHub に push 済みなら、次のどれかで公開できます。
+
+1. GitHub Pages  
+2. Netlify  
+3. Vercel
+
+配布前に一度 collector を回して最新 snapshot を生成してください。
+
+```text
+node scripts/collect-marketlens.mjs
+```
+
+その後、`index.html` / `styles.css` / `script.js` / `data/*.json` / `data/*.csv` を含めて公開します。
+
 ## Data Pipeline
 
 MarketLensは固定のSeed dataで起動し、存在する場合は `data/marketlens.snapshot.json` を読み込んで上書きする。
@@ -93,6 +110,18 @@ name,shop,buyPrice,sellPrice,category,releaseUrl
 
 ```text
 node scripts/daily-digest.mjs
+```
+
+collector失敗時に自動再開し、最後は必ずダイジェストを出す実行:
+
+```text
+node scripts/run-marketlens-cycle.mjs
+```
+
+環境変数で再試行回数を調整できます:
+
+```text
+MARKETLENS_RETRIES=5 MARKETLENS_RETRY_DELAY_MS=20000 node scripts/run-marketlens-cycle.mjs
 ```
 
 ## Regression Check
