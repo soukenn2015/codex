@@ -2125,6 +2125,23 @@ function renderActionItems() {
     return;
   }
 
+  const activeDeals = state.deals.filter((deal) => {
+    if (!deal.saleEndDate) return true;
+    const ts = new Date(`${deal.saleEndDate}T23:59:59+09:00`).getTime();
+    return !Number.isNaN(ts) && ts >= Date.now();
+  });
+  const hiddenProfit = activeDeals.length - items.filter((item) => item.kind === "profit").length;
+  const hiddenLottery =
+    pokemonReleases.filter((release) => releaseWatchState(release).kind === "active").length -
+    items.filter((item) => item.kind === "lottery" || item.kind === "upcoming").length;
+  const status = document.createElement("div");
+  status.className = "detail-box";
+  status.hidden = false;
+  status.textContent = `今日見る表示: 利益 ${items.filter((item) => item.kind === "profit").length} / 抽選 ${
+    items.filter((item) => item.kind === "lottery" || item.kind === "upcoming").length
+  } / 非表示 利益 ${Math.max(0, hiddenProfit)} / 抽選 ${Math.max(0, hiddenLottery)}`;
+  elements.actionList.append(status);
+
   for (const item of items) {
     const card = document.createElement("article");
     card.className = `action-card ${item.kind}`;
@@ -2289,6 +2306,8 @@ function renderActionItems() {
         const target = document.querySelector(`[data-detail-id="${item.detailTargetId.replace(/"/g, '\\"')}"]`);
         if (!target) return;
         target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.classList.add("focus-highlight");
+        setTimeout(() => target.classList.remove("focus-highlight"), 1200);
       });
       footer.append(jumpButton);
     }
@@ -2727,6 +2746,13 @@ function renderArchivedCandidates() {
   if (!elements.archiveCandidateList) return;
   elements.archiveCandidateList.replaceChildren();
 
+  const recoveryPriority = {
+    missing_price: 0,
+    stale_price: 1,
+    missing_route: 2,
+    missing_period: 3,
+    ended: 9,
+  };
   const archived = discoveryCandidates
     .filter((candidate) => {
       const validationState = candidateValidationState(candidate);
@@ -2739,7 +2765,11 @@ function renderArchivedCandidates() {
         candidate.confidence === "低"
       );
     })
-    .sort((a, b) => (b.historyRecentHits ?? 0) - (a.historyRecentHits ?? 0))
+    .sort((a, b) => {
+      const p = (recoveryPriority[candidateValidationState(a)] ?? 9) - (recoveryPriority[candidateValidationState(b)] ?? 9);
+      if (p !== 0) return p;
+      return (b.historyRecentHits ?? 0) - (a.historyRecentHits ?? 0);
+    })
     .slice(0, 10);
 
   const summaryCounts = {

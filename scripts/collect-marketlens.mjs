@@ -595,6 +595,7 @@ async function collectSpecializedCandidateMarkets(candidates) {
       const soldStrength = extractedRows
         .map((row) => Number(row.soldSupport ?? 0))
         .sort((a, b) => a - b)[Math.floor(extractedRows.length / 2)];
+      if (soldStrength < 0.15) continue;
       const values = extractedRows.map((row) => row.marketPrice).sort((a, b) => a - b);
       const marketPrice = values[Math.floor(values.length / 2)];
       results.set(candidate.name, {
