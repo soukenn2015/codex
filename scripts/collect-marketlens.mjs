@@ -578,7 +578,7 @@ async function collectSpecializedCandidateMarkets(candidates) {
       const urls = [makeSearchUrl("https://snkrdunk.com/search?keyword=", query), ...makeMercariSoldLikeUrls(query)];
       for (const url of urls) {
         const result = await fetchSource({ id: `market:${candidate.name}:${url}`, url });
-        if (result.ok && result.text) pageBuckets.push({ url, text: result.text });
+        if (result.ok && result.text) pageBuckets.push({ url, text: result.text, fetchedAt: result.fetchedAt });
       }
     }
     const extractedRows = pageBuckets
@@ -601,6 +601,17 @@ async function collectSpecializedCandidateMarkets(candidates) {
         marketPrice,
         marketPriceLabel: `${candidate.name} 実売寄り相場 ${marketPrice.toLocaleString("ja-JP")}円`,
         marketPriceSource: `specialized-search(${extractedRows.length})/sold:${soldStrength.toFixed(2)}`,
+        marketObservedAt: pageBuckets
+          .map((item) => Date.parse(item.fetchedAt || ""))
+          .filter((ts) => Number.isFinite(ts))
+          .sort((a, b) => b - a)[0]
+          ? new Date(
+              pageBuckets
+                .map((item) => Date.parse(item.fetchedAt || ""))
+                .filter((ts) => Number.isFinite(ts))
+                .sort((a, b) => b - a)[0],
+            ).toISOString()
+          : null,
       });
     }
   }
@@ -1032,6 +1043,7 @@ snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
     marketPrice: specialized?.marketPrice ?? estimated?.marketPrice ?? candidate.marketPrice ?? null,
     marketPriceLabel: specialized?.marketPriceLabel ?? estimated?.marketPriceLabel ?? candidate.marketPriceLabel ?? null,
     marketPriceSource: specialized?.marketPriceSource ?? estimated?.marketPriceSource ?? candidate.marketPriceSource ?? null,
+    marketObservedAt: specialized?.marketObservedAt ?? candidate.marketObservedAt ?? null,
     retailPrice: retailEstimated?.retailPrice ?? candidate.retailPrice ?? null,
     retailPriceLabel: retailEstimated?.retailPriceLabel ?? candidate.retailPriceLabel ?? null,
     retailPriceSource: retailEstimated?.retailPriceSource ?? candidate.retailPriceSource ?? null,
