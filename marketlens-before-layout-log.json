@@ -1,0 +1,59 @@
+{
+  "capturedAt": "2026-05-28T03:42:02.336Z",
+  "beforeLayoutLog": {
+    "dealCards": 4,
+    "discoveryCards": 5,
+    "headings": [
+      "MarketLens",
+      "弾別 抽選・相場",
+      "利益候補",
+      "急上昇ワード",
+      "AI検証ボード",
+      "計算条件"
+    ],
+    "horizontalOverflow": false,
+    "mainOrder": [
+      {
+        "className": "topbar",
+        "heading": "MarketLens",
+        "id": null
+      },
+      {
+        "className": "summary-grid",
+        "heading": null,
+        "id": null
+      },
+      {
+        "className": "panel lottery-panel",
+        "heading": "弾別 抽選・相場",
+        "id": "lotterySection"
+      },
+      {
+        "className": "workspace",
+        "heading": "利益候補",
+        "id": null
+      },
+      {
+        "className": "panel discovery-panel",
+        "heading": "AI検証ボード",
+        "id": "discoverySection"
+      },
+      {
+        "className": "panel settings-bottom-panel",
+        "heading": "計算条件",
+        "id": "settingsSection"
+      }
+    ],
+    "routeCards": 4,
+    "summaryLabels": [
+      "今見る候補",
+      "今見る想定利益",
+      "今見る平均利率",
+      "急上昇シグナル"
+    ],
+    "title": "MarketLens",
+    "trendItems": 5,
+    "url": "http://localhost:4173/"
+  },
+  "consoleErrors": []
+}

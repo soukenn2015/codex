@@ -1,0 +1,1192 @@
+{
+  "version": 1,
+  "kujiSpecials": [
+    {
+      "id": "kuji-onepiece-luffy-memory",
+      "title": "一番くじ ワンピース MONKEY.D.LUFFY－冒険の記憶と未来への航路－",
+      "ip": "ONE PIECE",
+      "status": "終了",
+      "releaseDate": "2026-05-02",
+      "salesStartDate": "2026-05-02",
+      "salesEndDate": "2026-05-16",
+      "displayUntil": "2026-05-16",
+      "releaseWindow": "2026年5月2日発売。終了から1週間超過で非表示",
+      "targetPrizes": "ラストワン賞、ルフィ系フィギュア",
+      "watchPoints": "履歴保存のみ。通常表示からは外す",
+      "officialLineup": ["上位ルフィ系フィギュア", "ラストワン賞"],
+      "marketForecast": "終了弾。発売直後の上位賞だけ履歴学習に残し、通常監視からは外す。",
+      "pastMarketBasis": "ONE PIECE系は主人公・ラストワン・MASTERLISE級に初動が寄りやすい。発売1週間後以降は残在庫と成約落ちを優先。",
+      "sourceUrl": "https://magmix.jp/post/351977"
+    },
+    {
+      "id": "kuji-dragonball-goku",
+      "title": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU",
+      "ip": "DRAGON BALL",
+      "status": "発売中/相場確認",
+      "releaseDate": "2026-05-08",
+      "salesStartDate": "2026-05-08",
+      "salesEndDate": "2026-06-05",
+      "displayUntil": "2026-06-05",
+      "releaseWindow": "2026年5月8日発売",
+      "targetPrizes": "ラストワン賞 大猿悟空、A-F賞フィギュア",
+      "watchPoints": "発売日からの日数、残り店舗、成約落ち、オンライン販売開始",
+      "officialLineup": [
+        "A賞 孫悟空 MASTERLISE",
+        "B賞 ブルマ MASTERLISE",
+        "C賞 超サイヤ人孫悟空 MASTERLISE",
+        "D賞 超サイヤ人2孫悟空 MASTERLISE",
+        "E賞 魔人ベジータ MASTERLISE",
+        "F賞 孫悟空 身勝手の極意 MASTERLISE",
+        "ラストワン賞 大猿悟空 SOFVICS"
+      ],
+      "marketForecast": "ラストワン賞 大猿悟空とA-F賞フィギュアだけ重点。大型で送料750円前提、発売3週以降は成約落ちを強めに見る。",
+      "pastMarketBasis": "ドラゴンボール一番くじは主役級・変身形態・大型ラストワンが強い一方、下位賞同梱は値崩れしやすい。",
+      "sourceUrl": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/"
+    },
+    {
+      "id": "kuji-hunter-zoldyck",
+      "title": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY",
+      "ip": "HUNTER×HUNTER",
+      "status": "発売中/強化",
+      "releaseDate": "2026-05-22",
+      "salesStartDate": "2026-05-22",
+      "salesEndDate": "2026-06-12",
+      "displayUntil": "2026-06-12",
+      "releaseWindow": "2026年5月22日発売",
+      "targetPrizes": "ラストワン賞 ミケ、シルバ、キルア、アルカ",
+      "watchPoints": "セブン在庫、ラストワン賞ミケ、上位フィギュアの成約",
+      "officialLineup": [
+        "A賞 キルア＆アルカ ぬいぐるみセット",
+        "B賞 ゼノ=ゾルディック MASTERLISE",
+        "C賞 シルバ=ゾルディック MASTERLISE",
+        "D賞 キルア=ゾルディック MASTERLISE",
+        "E賞 アルカ=ゾルディック/ナニカ MASTERLISE",
+        "F賞 キルアのヨーヨー",
+        "ラストワン賞 ミケ MASTERLISE EXTRA"
+      ],
+      "marketForecast": "ミケ、シルバ、キルア、アルカを重点。大型賞は送料750円前提、セブン在庫が消えた後の成約伸びで判断。",
+      "pastMarketBasis": "HUNTER×HUNTERはキルア系・ゾルディック家・ラストワン大型賞の反応が強い。ぬいぐるみは状態差を重く見る。",
+      "sourceUrl": "https://www.sej.co.jp/products/hhkuji2605.html"
+    },
+    {
+      "id": "kuji-gundam-gquuuuuux-vol4",
+      "title": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4",
+      "ip": "Gundam GQuuuuuuX",
+      "status": "発売中/強化",
+      "releaseDate": "2026-05-22",
+      "salesStartDate": "2026-05-22",
+      "salesEndDate": "2026-06-12",
+      "displayUntil": "2026-06-12",
+      "releaseWindow": "2026年5月22日発売",
+      "targetPrizes": "ラストワン賞 赤いガンダム胸像、上位胸像フィギュア",
+      "watchPoints": "一番くじONLINE、店頭残り、胸像フィギュアの成約",
+      "officialLineup": [
+        "A賞 白いガンダム BUSTISAN",
+        "B賞 GFreD BUSTISAN",
+        "ラストワン賞 赤いガンダム BUSTISAN",
+        "下位賞 アクリル/ビジュアル系グッズ"
+      ],
+      "marketForecast": "赤いガンダム、白いガンダム、GFreDの胸像だけ重点。ガンダム系は放送/話題継続中は強いが、オンライン在庫が残ると鈍る。",
+      "pastMarketBasis": "ガンダム一番くじはMS立体物とラストワンが中心。グッズ下位賞は同梱でも利益計算に入れない。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448"
+    },
+    {
+      "id": "kuji-onepiece-elbaph",
+      "title": "一番くじ ワンピース -エルバフ編- GIANT BASH!!",
+      "ip": "ONE PIECE",
+      "status": "発売前強化",
+      "releaseDate": "2026-07-01",
+      "salesStartDate": "2026-07-01",
+      "salesEndDate": "2026-09-07",
+      "displayUntil": "2026-09-07",
+      "releaseWindow": "Vol.1 2026年7月 / Vol.2 2026年8月。直近1ヶ月外なので今は非表示",
+      "targetPrizes": "ラストワン賞、MASTERLISE系、A-D賞フィギュア",
+      "watchPoints": "発売初週の成約、店舗在庫、オンライン販売開始、再販告知",
+      "officialLineup": ["MASTERLISE EXPIECE系フィギュア", "ラストワン賞", "A-D賞フィギュア"],
+      "marketForecast": "発売前。商品名と賞構成が確定したら特設に出し、発売初週のラストワン/A-D賞だけ予測対象にする。",
+      "pastMarketBasis": "ONE PIECEは新章・大型フィギュア・ラストワンの組み合わせが強い。発売前は期待値、発売後は在庫と初動成約で判定。",
+      "sourceUrl": "https://sf.1kuji.com/onep-elbaph/"
+    },
+    {
+      "id": "kuji-ojamajo-welcome-mahodo",
+      "title": "一番くじ おジャ魔女どれみ～WELCOME MAHO堂～",
+      "ip": "おジャ魔女どれみ",
+      "status": "発売7日以内",
+      "releaseDate": "2026-05-25",
+      "targetPrizes": "上位フィギュア、ラストワン賞、実用雑貨",
+      "watchPoints": "発売直後の上位賞とラストワン賞だけ確認。雑貨中心なら深追いしない。",
+      "officialLineup": ["上位賞", "ラストワン賞", "雑貨系賞"],
+      "marketForecast": "懐かしIPで一定需要。高額化は上位賞とラストワン賞に限定して見る。",
+      "pastMarketBasis": "女性向け・懐かしIPは初動より完売後の未開封上位賞が伸びやすい。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-inu-tono-kurashi-terao",
+      "title": "一番くじちょこっと いぬとの暮らし illustration by てらおかなつみ",
+      "ip": "いぬとの暮らし",
+      "status": "発売7日以内",
+      "releaseDate": "2026-05-26",
+      "targetPrizes": "上位ぬいぐるみ、ラストワン賞、限定イラスト賞",
+      "watchPoints": "単価550円。薄利になりやすいので回転と送料サイズだけ確認。",
+      "officialLineup": ["ぬいぐるみ系", "イラスト雑貨", "ラストワン賞"],
+      "marketForecast": "癒し系・作家系は大化けより回転重視。小型賞なら送料210円候補。",
+      "pastMarketBasis": "小型雑貨系はまとめ売りより単品人気賞だけを拾う。",
+      "sourceUrl": "https://on-line.1kuji.com/Default.aspx"
+    },
+    {
+      "id": "kuji-aikatsu-idol-katsudou",
+      "title": "一番くじ アイカツ！～私のアツいアイドル活動！～",
+      "ip": "アイカツ！",
+      "status": "発売前",
+      "releaseDate": "2026-06-01",
+      "targetPrizes": "上位ビジュアル賞、ラストワン賞、キャラ人気賞",
+      "watchPoints": "オンライン開始直後の上位賞と推しキャラ需要を確認。",
+      "officialLineup": ["上位ビジュアル賞", "キャラグッズ", "ラストワン賞"],
+      "marketForecast": "固定ファンが強い。キャラ差が大きいので上位賞と人気キャラに絞る。",
+      "pastMarketBasis": "アイドルIPは推し需要で一部賞だけ伸びる。下位賞はまとめ売り前提。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-bleach-stirring-souls-vol4",
+      "title": "一番くじ BLEACH Stirring Souls vol.4",
+      "ip": "BLEACH",
+      "status": "発売前",
+      "releaseDate": "2026-06-01",
+      "targetPrizes": "上位フィギュア、ラストワン賞、人気キャラ賞",
+      "watchPoints": "フィギュア系の成約を優先。下位賞は見ない。",
+      "officialLineup": ["上位フィギュア", "キャラビジュアル賞", "ラストワン賞"],
+      "marketForecast": "BLEACHはキャラ人気差が大きい。上位フィギュアとラストワン賞だけ候補。",
+      "pastMarketBasis": "ジャンプ系バトルIPは主役級・ライバル級・ラストワンが中心。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-kirby-pupupu-gourmet",
+      "title": "一番くじ 星のカービィ PUPUPU GOURMET",
+      "ip": "星のカービィ",
+      "status": "発売前",
+      "releaseDate": "2026-06-02",
+      "targetPrizes": "ぬいぐるみ、キッチン雑貨、ラストワン賞",
+      "watchPoints": "カービィは回転が強い。上位ぬいぐるみと実用雑貨を確認。",
+      "officialLineup": ["ぬいぐるみ系", "キッチン/雑貨系", "ラストワン賞"],
+      "marketForecast": "カービィは広く売れやすいが単価は伸びにくい。小型・人気賞・未開封に絞る。",
+      "pastMarketBasis": "カービィ一番くじは上位ぬいぐるみ、実用雑貨、ラストワンが安定。",
+      "sourceUrl": "https://on-line.1kuji.com/Default.aspx"
+    },
+    {
+      "id": "kuji-onepiece-red-hair-pirates",
+      "title": "一番くじ ワンピース 赤髪海賊団",
+      "ip": "ONE PIECE",
+      "status": "発売前強化",
+      "releaseDate": "2026-06-06",
+      "targetPrizes": "シャンクス、ベン・ベックマン、ヤソップ、ラッキー・ルウ、ラストワン賞",
+      "watchPoints": "赤髪海賊団の上位フィギュアとラストワン賞を重点。発売初週の成約を確認。",
+      "officialLineup": ["MASTERLISE EXPIECEフィギュア", "はこにわーるど", "ソフビフィギュア", "ラストワン賞"],
+      "marketForecast": "ワンピース強IPかつ赤髪海賊団。シャンクス関連とラストワン賞は優先監視。",
+      "pastMarketBasis": "ONE PIECEは人気キャラ・大型フィギュア・ラストワンに相場が寄る。雑貨は対象外。",
+      "sourceUrl": "https://one-piece.com/news/79434/index.html"
+    },
+    {
+      "id": "kuji-kusuriya-anime",
+      "title": "一番くじ TVアニメ『薬屋のひとりごと』",
+      "ip": "薬屋のひとりごと",
+      "status": "発売前",
+      "releaseDate": "2026-06-08",
+      "targetPrizes": "猫猫、壬氏、上位ビジュアル賞、ラストワン賞",
+      "watchPoints": "アニメ人気は強いが賞構成次第。上位賞とキャラ人気賞だけ確認。",
+      "officialLineup": ["上位キャラ賞", "ビジュアル賞", "ラストワン賞"],
+      "marketForecast": "女性人気・アニメ人気あり。フィギュア/ビジュアル上位なら候補、雑貨中心なら保留。",
+      "pastMarketBasis": "女性向けアニメIPは人気キャラの上位賞とラストワンに寄せる。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-soccer-japan-2026",
+      "title": "一番くじ サッカー日本代表ver. ～最高の景色を2026～",
+      "ip": "サッカー日本代表",
+      "status": "発売前",
+      "releaseDate": "2026-06-15",
+      "targetPrizes": "代表グッズ、実用賞、ラストワン賞",
+      "watchPoints": "スポーツ系はホビー相場と違う。大会熱と実用性だけ見る。",
+      "officialLineup": ["代表グッズ", "実用賞", "ラストワン賞"],
+      "marketForecast": "大会前の熱量次第。フィギュアではないため優先度は中以下。",
+      "pastMarketBasis": "スポーツ系は短期の話題性が中心。高額化より回転重視。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-dragonball-red-ribbon-ex",
+      "title": "一番くじ ドラゴンボール EX 対決！レッドリボン軍",
+      "ip": "DRAGON BALL",
+      "status": "発売前強化",
+      "releaseDate": "2026-06-16",
+      "targetPrizes": "上位フィギュア、ラストワン賞、レッドリボン軍キャラ",
+      "watchPoints": "ドラゴンボールEXは上位フィギュアだけ重点。発売直後の成約を確認。",
+      "officialLineup": ["上位フィギュア", "レッドリボン軍キャラ賞", "ラストワン賞"],
+      "marketForecast": "ドラゴンボールEXは強め。キャラ選定次第で上位賞が伸びる。",
+      "pastMarketBasis": "ドラゴンボールEXは大型/敵キャラ/主役級フィギュアとラストワンが強い。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-gakuen-idolmaster-part5",
+      "title": "一番くじ 学園アイドルマスター Part5",
+      "ip": "学園アイドルマスター",
+      "status": "発売前",
+      "releaseDate": "2026-06-19",
+      "targetPrizes": "人気アイドル賞、ビジュアル賞、ラストワン賞",
+      "watchPoints": "推し需要が強い。人気キャラの上位賞だけ確認。",
+      "officialLineup": ["アイドル別賞", "ビジュアル賞", "ラストワン賞"],
+      "marketForecast": "アイマス系はキャラ差が大きい。全体ではなく人気キャラ別に見る。",
+      "pastMarketBasis": "アイドルIPは推し別相場。低人気賞はまとめ売り前提。",
+      "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
+    },
+    {
+      "id": "kuji-heroaca-story-continues",
+      "title": "一番くじ 僕のヒーローアカデミア -いつまでも手を差し伸べ続ける物語-",
+      "ip": "僕のヒーローアカデミア",
+      "status": "発売前強化",
+      "releaseDate": "2026-06-20",
+      "targetPrizes": "デク、爆豪、轟、上位フィギュア、ラストワン賞",
+      "watchPoints": "ジャンプ強IP。上位フィギュアとラストワン賞だけ重点。",
+      "officialLineup": ["上位フィギュア", "人気キャラ賞", "ラストワン賞"],
+      "marketForecast": "ヒロアカは上位フィギュアが強い。発売初週だけ価格差確認。",
+      "pastMarketBasis": "ヒロアカはデク/爆豪/轟など主要キャラとラストワンが中心。",
+      "sourceUrl": "https://hobby.watch.impress.co.jp/docs/news/2076810.html"
+    }
+  ],
+  "marketMemory": [
+    {
+      "id": "memory-onepiece-ip",
+      "title": "ワンピースIP監視",
+      "genre": "IP全体 / フィギュア / 時計 / 一番くじ",
+      "status": "強化",
+      "learnedFrom": "一番くじ、フィギュア、限定時計、公式ストア限定グッズ",
+      "signal": "エルバフ編、限定店舗、ノベルティ、上位フィギュア、時計コラボが重なると強い",
+      "history": "商品種別ごとに発売日、販売場所、成約価格、数量限定要素を保存。",
+      "watchNext": "ONE PIECE.com、麦わらストア、一番くじ公式、HOBBY Watch、電撃系ニュース、スニダン相場",
+      "sourceUrl": "https://one-piece.com/news/79661/index.html"
+    },
+    {
+      "id": "memory-dragonball-ip",
+      "title": "ドラゴンボールIP監視",
+      "genre": "IP全体 / MASTERLISE / フィギュア / 一番くじ",
+      "status": "強化",
+      "learnedFrom": "一番くじ、プライズ、フィギュアーツ、MASTERLISE、発売済み弾の相場落ち",
+      "signal": "悟空/ベジータ/フリーザ等の主役級、上位賞、大型フィギュアは強いが劣化も早い",
+      "history": "発売日、オンライン販売日、上位賞/ラストワン賞の成約価格を履歴化。古い弾は通常監視から外す。",
+      "watchNext": "一番くじ公式、プレバン、S.H.Figuarts、電撃オンライン、HOBBY Watch",
+      "sourceUrl": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/"
+    },
+    {
+      "id": "memory-dmm-lottery",
+      "title": "DMM通販抽選",
+      "genre": "抽選 / プレミアホビー",
+      "status": "監視追加",
+      "learnedFrom": "DMM通販の抽選販売、HOBBY Watchの受付開始ニュース",
+      "signal": "定価抽選、BANDAI SPIRITS、人気IP、受付期限ありが重なると見る価値が高い",
+      "history": "対象商品、応募期間、販売価格、発売後相場を保存して次回抽選の優先度に反映。",
+      "watchNext": "DMM通販、HOBBY Watch、Up To Date、電撃ホビーウェブ",
+      "sourceUrl": "https://www.dmm.com/mono/hobby/"
+    },
+    {
+      "id": "memory-collab-watch",
+      "title": "コラボ時計監視",
+      "genre": "時計 / G-SHOCK / アニメIP",
+      "status": "監視追加",
+      "learnedFrom": "ONE PIECE GARRACK、G-SHOCKコラボ、限定生産時計",
+      "signal": "IP人気、数量限定、店舗限定、ノベルティ、国内流通少が重なると見る価値が高い",
+      "history": "発売日、定価、販売場所、在庫、ノベルティ有無、成約価格を時計枠で保存。",
+      "watchNext": "ONE PIECE.com、CASIO/G-SHOCK公式、Up To Date、HOBBY Watch、電撃ホビーウェブ",
+      "sourceUrl": "https://gshock.casio.com/jp/features/collaboration/"
+    },
+    {
+      "id": "memory-tenbailabo-shortage",
+      "title": "品薄・完売ブログ監視",
+      "genre": "ブログ / 品薄 / 完売",
+      "status": "監視追加",
+      "learnedFrom": "転売はかせ＠転売LABOの品薄・完売系記事",
+      "signal": "完売速度、再販予定、抽選条件の変更が同時に出ると初動が強くなりやすい",
+      "history": "記事更新日、対象商品、完売までの時間、再販有無を履歴化して抽選優先度へ反映。",
+      "watchNext": "転売はかせ＠転売LABO、入荷Now、公式ストア告知",
+      "sourceUrl": "https://tenbailabo.com/"
+    },
+    {
+      "id": "memory-emi-sedori-room",
+      "title": "えみのせどり部屋監視",
+      "genre": "ブログ / せどり / 品薄",
+      "status": "監視追加",
+      "learnedFrom": "えみのせどり部屋の品薄/完売投稿",
+      "signal": "発売直後の完売速度と再販間隔が短い商材は初動候補に上げる",
+      "history": "投稿時刻、対象商品、完売報告、再入荷時刻を保存し予想に使う。",
+      "watchNext": "えみのせどり部屋、入荷Now、公式販売ページ",
+      "sourceUrl": "https://x.com/search?q=%E3%81%88%E3%81%BF%E3%81%AE%E3%81%9B%E3%81%A9%E3%82%8A%E9%83%A8%E5%B1%8B&src=typed_query"
+    },
+    {
+      "id": "memory-premium-meal-watch",
+      "title": "3度の飯よりプレミアム監視",
+      "genre": "SNS / プレ値 / 完売",
+      "status": "監視追加",
+      "learnedFrom": "3度の飯よりプレミアムのプレ値投稿",
+      "signal": "抽選直後のプレ値投稿が連続した商材は要注意として先行監視",
+      "history": "投稿頻度、対象商材、プレ値幅、在庫復活タイミングを履歴化。",
+      "watchNext": "3度の飯よりプレミアム、入荷Now、スニダン相場",
+      "sourceUrl": "https://x.com/search?q=%223%E5%BA%A6%E3%81%AE%E9%A3%AF%E3%82%88%E3%82%8A%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0%22&src=typed_query"
+    },
+    {
+      "id": "memory-shinakan-shortage",
+      "title": "しなかん品薄完売ブログ監視",
+      "genre": "ブログ / 品薄 / 完売",
+      "status": "監視追加",
+      "learnedFrom": "品薄完売ブログしなかんの完売投稿",
+      "signal": "完売報告と再販予告が同時に出る商材は抽選優先度を引き上げる",
+      "history": "完売報告の回数、再販予告までの時間、対象商品の相場差を保存。",
+      "watchNext": "しなかん、入荷Now、公式抽選ページ",
+      "sourceUrl": "https://spkey.blog114.fc2.com/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "pokemon-official-abyss-eye",
+      "type": "pokemonRelease",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "keyword": "アビスアイ",
+      "release": {
+        "id": "abyss-eye",
+        "name": "アビスアイ",
+        "product": "拡張パック BOX",
+        "releaseDate": "2026-05-22",
+        "saleStartDate": "2026-05-22",
+        "saleEndDate": "2026-06-30",
+        "retailPrice": 6000,
+        "marketPrice": 13500,
+        "marketLabel": "一般相場 13,500円〜",
+        "marketUpdated": "2026-05-22",
+        "marketVariants": [
+          {
+            "condition": "シュリンクあり",
+            "marketPrice": 13500,
+            "marketLabel": "未開封・シュリンクあり 13,500円〜",
+            "priority": "primary"
+          },
+          {
+            "condition": "シュリンクなし",
+            "marketPrice": 11200,
+            "marketLabel": "シュリンクなし 11,200円目安",
+            "priority": "caution"
+          }
+        ],
+        "conditionPolicy": "ポケカBOXはシュリンクありを基準相場にし、シュリンクなしは減額して別計算。購入時は封入・箱潰れ・再シュリンク疑いを確認。",
+        "sourceUrl": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+        "note": "公式の拡張パック商品情報から取得。発売直後のBOX相場が定価を大きく上回るため、抽選/再販ルートを優先監視。",
+        "routes": [
+          {
+            "scope": "online",
+            "name": "入荷Now アビスアイ（店舗抽選）",
+            "round": "イエローサブマリン各店",
+            "startDate": "2026-05-25T12:00:00+09:00",
+            "deadlineLabel": "店頭抽選受付",
+            "deadlineDate": "2026-05-31T20:00:00+09:00",
+            "priority": "high",
+            "url": "https://nyuka-now.com/archives/157981",
+            "applyUrl": "https://twitter.com/YS_SHINJYUKU"
+          },
+          {
+            "scope": "online",
+            "name": "入荷Now アビスアイ（ホビーサーチ）",
+            "round": "WEB抽選",
+            "startDate": "2026-05-22T17:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-05-24T23:59:00+09:00",
+            "priority": "medium",
+            "url": "https://nyuka-now.com/archives/157981"
+          },
+          {
+            "scope": "online",
+            "name": "入荷Now アビスアイ（ドラゴンスター）",
+            "round": "WEB抽選",
+            "startDate": "2026-05-27T22:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-05-31T23:59:00+09:00",
+            "priority": "high",
+            "url": "https://nyuka-now.com/archives/2459",
+            "applyUrl": "https://dorasuta.membercard.jp/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pokemon-official-mega-dream-ex",
+      "type": "pokemonRelease",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "keyword": "MEGAドリームex",
+      "release": {
+        "id": "mega-dream-ex",
+        "name": "MEGAドリームex",
+        "product": "ハイクラスパック BOX",
+        "releaseDate": "2025-11-28",
+        "saleStartDate": "2025-11-28",
+        "saleEndDate": "2026-06-30",
+        "retailPrice": 5500,
+        "marketPrice": 20000,
+        "marketLabel": "一般相場 20,000円〜",
+        "marketUpdated": "collector",
+        "marketVariants": [
+          {
+            "condition": "シュリンクあり",
+            "marketPrice": 20000,
+            "marketLabel": "未開封・シュリンクあり 20,000円〜",
+            "priority": "primary"
+          },
+          {
+            "condition": "シュリンクなし",
+            "marketPrice": 16600,
+            "marketLabel": "シュリンクなし 16,600円目安",
+            "priority": "caution"
+          }
+        ],
+        "conditionPolicy": "ハイクラスBOXはシュリンク差が大きい。抽選/定価購入はシュリンクあり想定、フリマ購入はシュリンクなしなら買える上限を下げる。",
+        "sourceUrl": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+        "note": "公式のハイクラスパック商品情報から取得。再販後もBOX相場が高い状態のため、定価購入ルートを別枠で監視。",
+        "routes": [
+          {
+            "scope": "online",
+            "name": "入荷Now MEGAドリームex（渋谷ラウンジ）",
+            "round": "WEB抽選",
+            "startDate": "2026-05-19T17:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-05-21T23:59:00+09:00",
+            "priority": "high",
+            "url": "https://nyuka-now.com/archives/154697"
+          },
+          {
+            "scope": "online",
+            "name": "入荷Now MEGAドリームex（ジョーシンアプリ）",
+            "round": "アプリ抽選",
+            "startDate": "2026-03-09T00:00:00+09:00",
+            "deadlineLabel": "アプリ抽選受付",
+            "deadlineDate": "2026-03-12T23:59:00+09:00",
+            "priority": "medium",
+            "url": "https://nyuka-now.com/archives/154697"
+          },
+          {
+            "scope": "osaka",
+            "name": "入荷Now MEGAドリームex（しまむら）",
+            "round": "WEB抽選",
+            "startDate": "2026-02-10T13:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-02-15T23:00:00+09:00",
+            "priority": "low",
+            "url": "https://nyuka-now.com/archives/154697"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pokemon-official-munikisu-zero",
+      "type": "pokemonRelease",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "keyword": "ムニキスゼロ",
+      "release": {
+        "id": "munikisu-zero",
+        "name": "ムニキスゼロ",
+        "product": "拡張パック BOX",
+        "releaseDate": "2026-01-23",
+        "saleStartDate": "2026-01-23",
+        "saleEndDate": "2026-07-23",
+        "retailPrice": 5400,
+        "marketPrice": 9800,
+        "marketLabel": "5ヶ月内公式弾 / 相場 9,800円目安",
+        "marketUpdated": "公式商品情報",
+        "marketVariants": [
+          {
+            "condition": "シュリンクあり",
+            "marketPrice": 9800,
+            "marketLabel": "未開封・シュリンクあり 9,800円目安",
+            "priority": "primary"
+          },
+          {
+            "condition": "シュリンクなし",
+            "marketPrice": 8200,
+            "marketLabel": "シュリンクなし 8,200円目安",
+            "priority": "caution"
+          }
+        ],
+        "conditionPolicy": "5ヶ月内の公式拡張パック。シュリンクあり/なしを分け、再販・招待リクエストが出た時だけ見る。",
+        "sourceUrl": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+        "note": "公式の拡張パック商品情報から取得。発売済み弾なので、再販とシュリンク別相場だけ確認。",
+        "routes": [
+          {
+            "scope": "online",
+            "name": "入荷Now ムニキスゼロ（晴れる屋2通販）",
+            "round": "WEB抽選",
+            "startDate": "2026-01-08T11:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-01-13T15:00:00+09:00",
+            "priority": "medium",
+            "url": "https://nyuka-now.com/archives/156402"
+          },
+          {
+            "scope": "online",
+            "name": "入荷Now ムニキスゼロ（POKEMON CARD LOUNGE）",
+            "round": "WEB抽選",
+            "startDate": "2026-02-13T10:00:00+09:00",
+            "deadlineLabel": "WEB抽選受付",
+            "deadlineDate": "2026-02-15T23:59:00+09:00",
+            "priority": "low",
+            "url": "https://nyuka-now.com/archives/156402"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pokemon-official-ninja-spinner",
+      "type": "pokemonRelease",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "keyword": "ニンジャスピナー",
+      "release": {
+        "id": "ninja-spinner",
+        "name": "ニンジャスピナー",
+        "product": "拡張パック BOX",
+        "releaseDate": "2026-03-13",
+        "saleStartDate": "2026-03-13",
+        "saleEndDate": "2026-09-13",
+        "retailPrice": 5400,
+        "marketPrice": 10500,
+        "marketLabel": "5ヶ月内公式弾 / 相場 10,500円目安",
+        "marketUpdated": "公式商品情報",
+        "marketVariants": [
+          {
+            "condition": "シュリンクあり",
+            "marketPrice": 10500,
+            "marketLabel": "未開封・シュリンクあり 10,500円目安",
+            "priority": "primary"
+          },
+          {
+            "condition": "シュリンクなし",
+            "marketPrice": 8800,
+            "marketLabel": "シュリンクなし 8,800円目安",
+            "priority": "caution"
+          }
+        ],
+        "conditionPolicy": "5ヶ月内の公式拡張パック。シュリンクなしは減額し、定価再販だけ見る。",
+        "sourceUrl": "https://www.pokemon-card.com/products/index.html?dateLowerD=28&dateLowerM=11&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+        "note": "公式の拡張パック商品情報から取得。5ヶ月内なので再販/招待リクエストを監視。",
+        "routes": [
+          {
+            "scope": "online",
+            "name": "入荷Now ニンジャスピナー（セブンネット）",
+            "round": "抽選販売",
+            "startDate": "2026-03-06T15:01:00+09:00",
+            "deadlineLabel": "抽選販売ページ登録",
+            "deadlineDate": "2026-03-06T23:59:00+09:00",
+            "priority": "medium",
+            "url": "https://nyuka-now.com/archives/156404"
+          },
+          {
+            "scope": "online",
+            "name": "入荷Now ニンジャスピナー（イオンスタイル）",
+            "round": "先着/予約",
+            "startDate": "2026-04-21T13:01:00+09:00",
+            "deadlineLabel": "先着販売開始",
+            "deadlineDate": "2026-04-21T23:59:00+09:00",
+            "priority": "medium",
+            "url": "https://nyuka-now.com/archives/156404"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pokemon-official-inferno-x",
+      "type": "pokemonRelease",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=1&dateLowerM=9&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+      "keyword": "インフェルノX",
+      "release": {
+        "id": "inferno-x",
+        "name": "インフェルノX",
+        "product": "拡張パック BOX",
+        "releaseDate": "2025-09-26",
+        "saleStartDate": "2025-09-26",
+        "saleEndDate": "2026-06-30",
+        "retailPrice": 5400,
+        "marketPrice": null,
+        "marketLabel": "BOX相場取得待ち",
+        "marketUpdated": "collector",
+        "marketVariants": [
+          {
+            "condition": "シュリンクあり",
+            "marketPrice": null,
+            "marketLabel": "取得待ち",
+            "priority": "primary"
+          },
+          {
+            "condition": "シュリンクなし",
+            "marketPrice": null,
+            "marketLabel": "取得待ち",
+            "priority": "caution"
+          }
+        ],
+        "conditionPolicy": "終了・保留枠。再販出品を見る場合もシュリンク有無で相場を分け、なしは通常監視へ戻さない。",
+        "sourceUrl": "https://www.pokemon-card.com/products/index.html?dateLowerD=1&dateLowerM=9&dateLowerY=2025&dateUpperD=30&dateUpperM=5&dateUpperY=2026&productType=expansion",
+        "watchStatus": "archive",
+        "archiveReason": "公式拡張パックだが発売から5ヶ月を超過。必要なら終了・保留枠で確認。",
+        "note": "公式商品情報には残すが、5ヶ月超過のため通常監視からは外す。",
+        "routes": [
+          {
+            "scope": "online",
+            "name": "インフェルノX 再販まとめ",
+            "round": "再販監視",
+            "startDate": "2026-05-27T10:00:00+09:00",
+            "deadlineLabel": "再販入荷: 随時更新",
+            "deadlineDate": null,
+            "priority": "medium",
+            "url": "https://snkrdunk.com/articles/30254/"
+          },
+          {
+            "scope": "osaka",
+            "name": "大阪カードショップ再販",
+            "round": "再販監視",
+            "startDate": "2026-05-27T10:00:00+09:00",
+            "deadlineLabel": "X/店頭告知: 随時",
+            "deadlineDate": null,
+            "priority": "low",
+            "url": "https://snkrdunk.com/articles/30254/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dragonquest-40th",
+      "type": "trendCandidate",
+      "url": "https://www.dragonquest.jp/news/detail/4245/",
+      "keyword": "ドラゴンクエスト40周年",
+      "trend": {
+        "keyword": "ドラゴンクエスト40周年",
+        "context": "公式ニュース / 40周年 / コラボ告知 / 限定グッズ",
+        "score": 92,
+        "type": "公式ニュース",
+        "change24h": "公式確認",
+        "source": "公式",
+        "confidence": "高",
+        "action": "公式ニュースからコラボ告知・限定グッズ・予約導線を優先確認"
+      },
+      "candidate": {
+        "name": "ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョン",
+        "trend": "ドラゴンクエスト40周年",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 92,
+        "priceData": "予約段階",
+        "tradeVolume": "発売前",
+        "marginSignal": "コラボ告知直後の初動を優先確認",
+        "reason": "40周年、記念展、コラボ、公式グッズが重なっている。ドラクエはコラボ告知起点で相場が動く可能性が高いため、通常在庫より先にコラボ導線を確認する。",
+        "confidence": "中",
+        "adoptionReason": "公式イベントとコラボ告知が重なり、商材化の可能性が高い。",
+        "missingData": "発売後の成約価格、取引量、送料サイズ",
+        "sourceUrl": "https://www.dragonquest.jp/news/detail/4245/"
+      }
+    },
+    {
+      "id": "hunter-zoldyck-ichiban-kuji",
+      "type": "trendCandidate",
+      "hideFromTrends": true,
+      "hideFromDiscovery": true,
+      "url": "https://www.sej.co.jp/products/hhkuji2605.html",
+      "keyword": "HUNTER×HUNTER",
+      "trend": {
+        "keyword": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY ラストワン賞 ミケ",
+        "context": "セブン-イレブン / 5月22日発売 / ゾルディック家",
+        "score": 92,
+        "type": "発売中",
+        "change24h": "直近",
+        "source": "セブン-イレブン",
+        "confidence": "高",
+        "action": "ミケ、シルバ、キルア、アルカの成約と店舗残りを確認"
+      },
+      "candidate": {
+        "name": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY ラストワン賞 ミケ",
+        "trend": "一番くじ HUNTER×HUNTER ZAOLDYECK FAMILY",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 92,
+        "priceData": "発売直後",
+        "tradeVolume": "確認中",
+        "marginSignal": "ラストワン賞ミケと上位フィギュアを重点確認",
+        "reason": "5月22日発売の直近一番くじ。ゾルディック家テーマでラストワン賞ミケ、上位フィギュアがあり、成約確認の価値が高い。",
+        "confidence": "高",
+        "adoptionReason": "強IP、直近発売、ラストワン賞、上位フィギュアが揃っている。",
+        "missingData": "最新成約価格、店舗在庫、ラストワン賞の残り",
+        "sourceUrl": "https://www.sej.co.jp/products/hhkuji2605.html"
+      }
+    },
+    {
+      "id": "gundam-gquuuuuux-vol4-ichiban-kuji",
+      "type": "trendCandidate",
+      "hideFromTrends": true,
+      "hideFromDiscovery": true,
+      "url": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448",
+      "keyword": "GQuuuuuuX",
+      "trend": {
+        "keyword": "一番くじ 機動戦士Gundam GQuuuuuuX vol.4 ラストワン賞 赤いガンダム胸像",
+        "context": "一番くじONLINE / 5月22日発売 / 胸像フィギュア",
+        "score": 89,
+        "type": "発売中",
+        "change24h": "直近",
+        "source": "一番くじONLINE",
+        "confidence": "高",
+        "action": "赤いガンダム胸像と上位賞の初動成約を確認"
+      },
+      "candidate": {
+        "name": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4 ラストワン賞 赤いガンダム胸像",
+        "trend": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 89,
+        "priceData": "発売直後",
+        "tradeVolume": "確認中",
+        "marginSignal": "ラストワン賞と上位胸像フィギュアを重点確認",
+        "reason": "5月22日発売の直近一番くじ。GQuuuuuuXの勢いと赤いガンダム胸像のラストワン賞があり、初動相場を追う。",
+        "confidence": "中",
+        "adoptionReason": "直近発売、ガンダムIP、胸像フィギュア、オンライン導線が揃っている。",
+        "missingData": "初動成約価格、オンライン残数、店頭在庫",
+        "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448"
+      }
+    },
+    {
+      "id": "dragonball-chronicle-goku",
+      "type": "trendCandidate",
+      "hideFromTrends": true,
+      "hideFromDiscovery": true,
+      "url": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/",
+      "keyword": "一番くじ ドラゴンボール",
+      "trend": {
+        "keyword": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU ラストワン賞 大猿悟空",
+        "context": "5月8日発売 / A-F賞フィギュア / ラストワン大猿悟空",
+        "score": 84,
+        "type": "発売中",
+        "change24h": "継続確認",
+        "source": "ドラゴンボール公式",
+        "confidence": "高",
+        "action": "店頭在庫とラストワン賞の成約推移を別枠で追跡"
+      },
+      "candidate": {
+        "name": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU ラストワン賞 大猿悟空",
+        "trend": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU",
+        "stage": "検証中",
+        "stageKind": "checking",
+        "genreScore": 89,
+        "priceData": "一部あり",
+        "tradeVolume": "確認中",
+        "marginSignal": "ラストワン賞 大猿悟空とA-F賞フィギュアだけ重点",
+        "reason": "ドラゴンボールの一番くじは強いが、発売済みの場合は熱が落ちるのも早い。今後は発売日からの日数と成約落ちを見て通常候補か終了・保留に振り分ける。",
+        "confidence": "中",
+        "adoptionReason": "強IP、店頭販売、MASTERLISEフィギュアの組み合わせ。",
+        "missingData": "最新成約価格、残り店舗、発売日からの日数",
+        "sourceUrl": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/"
+      }
+    },
+    {
+      "id": "dmm-premium-hobby-lottery",
+      "type": "trendCandidate",
+      "hideFromDiscovery": true,
+      "url": "https://hobby.watch.impress.co.jp/docs/news/2044682.html",
+      "keyword": "DMM通販",
+      "trend": {
+        "keyword": "DMM通販 プレミアホビー商品抽選販売",
+        "context": "抽選販売 / BANDAI SPIRITS / プラモ・フィギュア",
+        "score": 79,
+        "type": "抽選",
+        "change24h": "監視追加",
+        "source": "HOBBY Watch",
+        "confidence": "中",
+        "action": "DMM抽選ページを定期確認ルートへ追加"
+      },
+      "candidate": {
+        "name": "DMM通販 プレミアホビー商品抽選販売",
+        "trend": "DMM通販 プレミアホビー商品抽選販売",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 82,
+        "priceData": "抽選開始後",
+        "tradeVolume": "商品別",
+        "marginSignal": "定価抽選の商品だけ対象",
+        "reason": "DMMはホビー抽選の入口として有効。対象商品が広いので、BANDAI SPIRITS、フィギュア、ガンプラ、人気IPだけに絞って見る。",
+        "confidence": "中",
+        "adoptionReason": "抽選販売は定価購入ルートになりやすく、人気商品の利益差が出やすい。",
+        "missingData": "対象商品一覧、応募期限、販売価格、相場",
+        "sourceUrl": "https://www.dmm.com/mono/hobby/"
+      }
+    },
+    {
+      "id": "premium-bandai-figuarts-signal",
+      "type": "trendCandidate",
+      "hideFromDiscovery": true,
+      "url": "https://p-bandai.jp/",
+      "keyword": "S.H.Figuarts",
+      "trend": {
+        "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
+        "context": "受注終了後 / 出品減 / 特撮・アニメ可動フィギュア",
+        "score": 82,
+        "type": "価格差",
+        "change24h": "監視強化",
+        "source": "プレバン",
+        "confidence": "中",
+        "action": "期間中の商品は利益候補へ、終了後の出品減は相場確認へ回す"
+      },
+      "candidate": {
+        "name": "S.H.Figuarts 仮面ライダーギーツ ブーストフォームマークIII",
+        "trend": "プレミアムバンダイ限定 S.H.Figuarts",
+        "stage": "監視入り",
+        "stageKind": "watching",
+        "genreScore": 88,
+        "priceData": "あり",
+        "tradeVolume": "あり",
+        "marginSignal": "送料750円込みでも強い",
+        "reason": "すでに利益候補へ反映済み。AI検証ではなく今日見るもの側で扱う。",
+        "confidence": "高",
+        "adoptionReason": "価格差と取引量が揃っている。",
+        "missingData": "出品数の継続推移",
+        "sourceUrl": "https://p-bandai.jp/"
+      }
+    },
+    {
+      "id": "dragonquest-metallic-haguremetal",
+      "type": "trendCandidate",
+      "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
+      "keyword": "はぐれメタル",
+      "trend": {
+        "keyword": "ドラクエ メタリックモンスターズ在庫薄",
+        "context": "40周年 / コラボ導線 / 小型フィギュア",
+        "score": 85,
+        "type": "公式グッズ",
+        "change24h": "派生確認",
+        "source": "e-STORE",
+        "confidence": "中",
+        "action": "コラボ導線と限定SKUを優先確認し、売価と取引量を見る"
+      },
+      "candidate": {
+        "name": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル",
+        "trend": "ドラクエ メタリックモンスターズ在庫薄",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 84,
+        "priceData": "一部あり",
+        "tradeVolume": "普通",
+        "marginSignal": "コラボ告知と限定SKUの重なりを重視",
+        "reason": "40周年シグナルから派生。ドラクエはコラボ告知や限定SKUが出ると反応が強いため、通常在庫より先に告知導線を優先して採用判断する。",
+        "confidence": "中",
+        "adoptionReason": "ドラクエ40周年、コラボ導線、公式グッズが揃う。",
+        "missingData": "発売後の初動成約、在庫切れ速度、色違い需要",
+        "sourceUrl": "https://store.jp.square-enix.com/category/263/MW36259.html"
+      }
+    },
+    {
+      "id": "dragonquest-metallic-king-slime",
+      "type": "trendCandidate",
+      "hideFromTrends": true,
+      "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
+      "keyword": "メタリックモンスターズ",
+      "trend": {
+        "keyword": "ドラクエ メタリックモンスターズ在庫薄",
+        "context": "40周年 / コラボ導線 / 限定色",
+        "score": 82,
+        "type": "公式グッズ",
+        "change24h": "派生確認",
+        "source": "e-STORE",
+        "confidence": "中",
+        "action": "同シリーズの限定色・コラボSKUを横展開で確認"
+      },
+      "candidate": {
+        "name": "ドラゴンクエスト メタリックモンスターズギャラリー キングスライム ロトブルー系",
+        "trend": "ドラクエ メタリックモンスターズ在庫薄",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 82,
+        "priceData": "発売後取得",
+        "tradeVolume": "確認中",
+        "marginSignal": "限定色とコラボSKUの重なりを重視",
+        "reason": "40周年とメタリックモンスターズ需要から派生。既存利益候補ではないため、コラボSKUの告知と初動成約を見て採用判断する。",
+        "confidence": "中",
+        "adoptionReason": "シリーズ横展開、限定色、コラボSKUの可能性。",
+        "missingData": "具体SKU、定価、発売日、初動成約",
+        "sourceUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/"
+      }
+    },
+    {
+      "id": "pokemon-accessory-storage-signal",
+      "type": "trendCandidate",
+      "url": "https://www.pokemoncenter-online.com/",
+      "keyword": "ポケモンカードゲーム",
+      "trend": {
+        "keyword": "ポケカ周辺サプライ新作",
+        "context": "BOX以外 / デッキケース / プレイマット / 抽選外",
+        "score": 73,
+        "type": "サプライ",
+        "change24h": "監視追加",
+        "source": "ポケモンセンター",
+        "confidence": "中",
+        "action": "BOX抽選枠とは分けて、薄利でも回転するサプライだけ確認"
+      },
+      "candidate": {
+        "name": "ポケモンカードゲーム 限定デッキシールド・プレイマット",
+        "trend": "ポケカ周辺サプライ新作",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 76,
+        "priceData": "発売後取得",
+        "tradeVolume": "商品別",
+        "marginSignal": "4cm以下なら送料210円候補",
+        "reason": "ポケカBOXは専用枠に寄せる一方、サプライは送料が軽く別の利益候補になり得るため追加候補で見る。",
+        "confidence": "中",
+        "adoptionReason": "ポケカ需要、限定柄、送料優位の可能性。",
+        "missingData": "具体柄、定価、初動成約、厚み",
+        "sourceUrl": "https://www.pokemoncenter-online.com/"
+      }
+    },
+    {
+      "id": "onepiece-garrack-watch",
+      "type": "trendCandidate",
+      "url": "https://one-piece.com/news/79661/index.html",
+      "keyword": "GARRACK",
+      "trend": {
+        "keyword": "ONE PIECE コラボ時計・限定グッズ",
+        "context": "麦わらストア限定 / GARRACK / 数量限定ノベルティ",
+        "score": 83,
+        "type": "限定時計",
+        "change24h": "公式確認",
+        "source": "ONE PIECE.com",
+        "confidence": "高",
+        "action": "時計枠でモデル別の定価、在庫、成約を確認"
+      },
+      "candidate": {
+        "name": "GARRACK ONE PIECE スマートウォッチ シャンクスモデル",
+        "trend": "ONE PIECE コラボ時計・限定グッズ",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 86,
+        "priceData": "発売直後",
+        "tradeVolume": "確認中",
+        "marginSignal": "限定店舗とノベルティ有無を重視",
+        "reason": "ワンピースIPの時計コラボ。四皇モデルの中でもキャラ人気と限定性が見込めるため、モデル別に候補化する。",
+        "confidence": "中",
+        "adoptionReason": "強IP、限定販売、コラボ時計、店舗限定イベントが揃っている。",
+        "missingData": "定価、在庫、ノベルティ残数、成約価格",
+        "sourceUrl": "https://one-piece.com/news/79661/index.html"
+      }
+    },
+    {
+      "id": "onepiece-garrack-luffy-watch",
+      "type": "trendCandidate",
+      "hideFromTrends": true,
+      "url": "https://one-piece.com/news/79661/index.html",
+      "keyword": "GARRACK",
+      "trend": {
+        "keyword": "ONE PIECE コラボ時計・限定グッズ",
+        "context": "麦わらストア限定 / GARRACK / 数量限定ノベルティ",
+        "score": 81,
+        "type": "限定時計",
+        "change24h": "モデル別確認",
+        "source": "ONE PIECE.com",
+        "confidence": "中",
+        "action": "四皇モデルをキャラ別に分解して相場を見る"
+      },
+      "candidate": {
+        "name": "GARRACK ONE PIECE スマートウォッチ ルフィモデル",
+        "trend": "ONE PIECE コラボ時計・限定グッズ",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 84,
+        "priceData": "発売直後",
+        "tradeVolume": "確認中",
+        "marginSignal": "主人公モデル・限定販売を重視",
+        "reason": "同じ時計シグナルから、キャラ別に需要差を見たい候補。シャンクスモデルと分けて成約を確認する。",
+        "confidence": "中",
+        "adoptionReason": "主人公人気、限定店舗、ノベルティ条件。",
+        "missingData": "モデル別定価、在庫、未使用成約、ノベルティ有無",
+        "sourceUrl": "https://one-piece.com/news/79661/index.html"
+      }
+    },
+    {
+      "id": "gshock-collaboration-watch",
+      "type": "trendCandidate",
+      "url": "https://gshock.casio.com/jp/products/recommend/",
+      "keyword": "G-SHOCK",
+      "trend": {
+        "keyword": "コラボG-SHOCK / CasiOak新作",
+        "context": "Coca-Cola 140周年 / GA-2100系 / 国内流通",
+        "score": 76,
+        "type": "時計",
+        "change24h": "監視追加",
+        "source": "CASIO",
+        "confidence": "中",
+        "action": "国内正規、限定性、発売直後の未使用相場を確認"
+      },
+      "candidate": {
+        "name": "G-SHOCK × Coca-Cola GA-2100CC-3AJR",
+        "trend": "コラボG-SHOCK / CasiOak新作",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 79,
+        "priceData": "2026年5月発売",
+        "tradeVolume": "確認中",
+        "marginSignal": "コカ・コーラ140周年コラボ",
+        "reason": "G-SHOCKとCoca-Colaの具体モデル。時計はホビー転売と相性が違うため、IP・数量限定・国内販売有無・サイズ送料を別ルールで見る。",
+        "confidence": "中",
+        "adoptionReason": "限定コラボ時計は発売直後に相場差が出ることがある。",
+        "missingData": "国内発売日、定価、販売数量、成約価格",
+        "sourceUrl": "https://gshock.casio.com/jp/products/recommend/"
+      }
+    },
+    {
+      "id": "tenbailabo-shortage-blog",
+      "type": "trendCandidate",
+      "url": "https://tenbailabo.com/",
+      "keyword": "完売",
+      "trend": {
+        "keyword": "品薄・完売ブログ監視",
+        "context": "転売はかせ＠転売LABO / 品薄 / 完売 / 再販",
+        "score": 74,
+        "type": "ブログ監視",
+        "change24h": "更新確認",
+        "source": "転売LABO",
+        "confidence": "中",
+        "action": "完売速度・再販告知・抽選条件の変更を抽出して候補に反映"
+      },
+      "candidate": {
+        "name": "転売はかせ＠転売LABO 品薄完売ウォッチ",
+        "trend": "品薄・完売ブログ監視",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 72,
+        "priceData": "記事ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "完売速度と再販頻度を重視",
+        "reason": "品薄・完売シグナルを早期に拾うため、ブログ監視を追加。単独採用せず他ソースで照合して候補化する。",
+        "confidence": "中",
+        "adoptionReason": "速報性のある完売情報が多く、抽選/再販の事前把握に使える。",
+        "missingData": "成約価格、在庫復活時刻、公式再販の確度",
+        "sourceUrl": "https://tenbailabo.com/"
+      }
+    },
+    {
+      "id": "emi-sedori-room-watch",
+      "type": "trendCandidate",
+      "url": "https://emisresaleroom.com/",
+      "keyword": "えみのせどり部屋",
+      "trend": {
+        "keyword": "えみのせどり部屋 品薄監視",
+        "context": "SNS / 完売 / せどり",
+        "score": 73,
+        "type": "SNS監視",
+        "change24h": "更新確認",
+        "source": "えみのせどり部屋",
+        "confidence": "中",
+        "action": "品薄投稿の商材名と再販時刻を抽出し候補へ反映"
+      },
+      "candidate": {
+        "name": "えみのせどり部屋 品薄ウォッチ",
+        "trend": "えみのせどり部屋 品薄監視",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 71,
+        "priceData": "投稿ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "完売速度と再販告知を重視",
+        "reason": "品薄/完売の速報を早めに拾うため監視追加。単独で採用せず他ソース照合後に候補化する。",
+        "confidence": "中",
+        "adoptionReason": "速報性があり抽選開始前の警戒に使える。",
+        "missingData": "定価、成約価格、販売数量、再販確度",
+        "sourceUrl": "https://emisresaleroom.com/"
+      }
+    },
+    {
+      "id": "premium-meal-watch",
+      "type": "trendCandidate",
+      "url": "http://gentei333.blog108.fc2.com/",
+      "keyword": "プレミアム",
+      "trend": {
+        "keyword": "プレ値SNS監視",
+        "context": "SNS / プレ値 / 完売",
+        "score": 72,
+        "type": "SNS監視",
+        "change24h": "更新確認",
+        "source": "3度の飯よりプレミアム",
+        "confidence": "中",
+        "action": "プレ値投稿の商材を抽出して、抽選/再販監視へ接続"
+      },
+      "candidate": {
+        "name": "3度の飯よりプレミアム 完売ウォッチ",
+        "trend": "プレ値SNS監視",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 70,
+        "priceData": "投稿ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "プレ値幅と完売報告の重なりを重視",
+        "reason": "プレ値報告の早い商材を抽出する監視枠。公式抽選/販売と照合後に候補化する。",
+        "confidence": "中",
+        "adoptionReason": "初動の熱を拾えるため。",
+        "missingData": "定価、成約価格、在庫復活、販売期間",
+        "sourceUrl": "http://gentei333.blog108.fc2.com/"
+      }
+    },
+    {
+      "id": "shinakan-shortage-blog",
+      "type": "trendCandidate",
+      "url": "https://spkey.blog114.fc2.com/",
+      "keyword": "品薄完売ブログ　しなかん！",
+      "trend": {
+        "keyword": "しなかん 品薄完売監視",
+        "context": "ブログ / 完売 / 再販",
+        "score": 75,
+        "type": "ブログ監視",
+        "change24h": "更新確認",
+        "source": "しなかん",
+        "confidence": "中",
+        "action": "完売投稿から商品名と再販予告を抽出して候補化"
+      },
+      "candidate": {
+        "name": "しなかん 品薄完売ウォッチ",
+        "trend": "しなかん 品薄完売監視",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 73,
+        "priceData": "投稿ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "完売速度と再販予告の組み合わせを重視",
+        "reason": "品薄完売ブログを継続監視して初動候補の取りこぼしを減らす。",
+        "confidence": "中",
+        "adoptionReason": "完売速度の早い商材を拾いやすい。",
+        "missingData": "定価、販売店、成約価格、再販確度",
+        "sourceUrl": "https://spkey.blog114.fc2.com/"
+      }
+    },
+    {
+      "id": "kanae-resale-watch",
+      "type": "trendCandidate",
+      "url": "https://x.com/KanaeKanri20674?lang=ja",
+      "keyword": "転売ヤーかなえ",
+      "trend": {
+        "keyword": "転売ヤーかなえ 品薄監視",
+        "context": "SNS / 品薄 / 完売 / 再販",
+        "score": 72,
+        "type": "SNS監視",
+        "change24h": "更新確認",
+        "source": "転売ヤーかなえ",
+        "confidence": "中",
+        "action": "投稿の商材名・再販時刻・応募条件を抽出して候補判定へ反映"
+      },
+      "candidate": {
+        "name": "転売ヤーかなえ 品薄ウォッチ",
+        "trend": "転売ヤーかなえ 品薄監視",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 70,
+        "priceData": "投稿ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "完売速度と再販告知の重なりを重視",
+        "reason": "速報性を補強するSNS監視枠として追加。単独採用せず、公式販売・抽選導線と照合後に候補化する。",
+        "confidence": "中",
+        "adoptionReason": "初動の話題を早めに拾える可能性がある。",
+        "missingData": "公式URL、定価、成約価格、販売期間",
+        "sourceUrl": "https://x.com/KanaeKanri20674?lang=ja"
+      }
+    }
+  ]
+}

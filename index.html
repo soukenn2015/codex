@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MarketLens</title>
+    <link rel="stylesheet" href="./styles.css?v=20260531-48" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="MarketLens navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">M</div>
+          <div>
+            <p class="brand-name">MarketLens</p>
+            <p class="brand-sub">Research AI</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Primary">
+          <button class="nav-item active" type="button" data-section="today" title="Today">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img"><path d="M4 7.5h16M7.5 4v3.5M16.5 4v3.5M6 11h4v4H6zM14 11h4v4h-4zM5.5 7.5h13A1.5 1.5 0 0 1 20 9v10a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19V9a1.5 1.5 0 0 1 1.5-1.5Z"/></svg>
+            </span>
+            <span>Today</span>
+          </button>
+          <button class="nav-item" type="button" data-section="trends" title="Trends">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img"><path d="M4 17.5 9 12l4 3 7-8M15.5 7H20v4.5"/></svg>
+            </span>
+            <span>Trends</span>
+          </button>
+          <button class="nav-item" type="button" data-section="settings" title="Settings">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm8.5 4a7.9 7.9 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a8.6 8.6 0 0 0-1.7-1L16 3.5h-4L11.7 6a8.6 8.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.9 7.9 0 0 0 0 2l-2 1.5 2 3.5 2.4-1c.5.4 1.1.7 1.7 1l.3 2.5h4l.3-2.5c.6-.3 1.2-.6 1.7-1l2.4 1 2-3.5-2-1.5c.1-.3.1-.7.1-1Z"/></svg>
+            </span>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p class="tiny-label">Fee</p>
+          <p class="fee-display"><span id="sidebarFee">5</span>%</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Market intelligence</p>
+            <h1>MarketLens</h1>
+            <p class="data-status" id="dataStatus">Seed data</p>
+          </div>
+          <div class="top-actions">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 20-4.5-4.5M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"/></svg>
+              <input id="searchInput" type="search" placeholder="商品名、タグ、ショップ" autocomplete="off" />
+            </div>
+            <button class="ghost-button data-refresh" id="refreshData" type="button">更新</button>
+            <button class="icon-button" id="themeToggle" type="button" title="ダークモード" aria-label="ダークモード">
+              <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.4-6.4L19.8 4.2M4.2 19.8l1.4-1.4m12.8 0 1.4 1.4M4.2 4.2l1.4 1.4M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
+              <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.1 8.1 0 0 1 8.8 4a8 8 0 1 0 11.2 11.2Z"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <section class="summary-grid" aria-label="Summary">
+          <article class="metric-panel">
+            <span class="metric-label">今見る内訳</span>
+            <strong id="hotCount">0</strong>
+            <span class="metric-note">利益候補 / 抽選ルート</span>
+          </article>
+          <article class="metric-panel">
+            <span class="metric-label">今見る想定利益</span>
+            <strong id="totalProfit">0円</strong>
+            <span class="metric-note">販売中 × 価格差あり</span>
+          </article>
+          <article class="metric-panel">
+            <span class="metric-label">今見る平均利率</span>
+            <strong id="avgMargin">0%</strong>
+            <span class="metric-note">対象候補のみ</span>
+          </article>
+          <article class="metric-panel">
+            <span class="metric-label">急上昇シグナル</span>
+            <strong id="trendCount">0</strong>
+            <span class="metric-note">検出中</span>
+          </article>
+        </section>
+
+        <section class="panel action-panel" id="actionSection" aria-label="Today actions">
+          <div class="panel-header slim">
+            <div>
+              <p class="panel-kicker">Action Queue</p>
+              <h2>今日見るもの</h2>
+            </div>
+          </div>
+          <div class="action-list" id="actionList"></div>
+        </section>
+
+        <section class="panel lottery-panel" id="lotterySection" aria-label="Pokeca lottery routes">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Pokeca</p>
+              <h2>弾別 抽選・相場</h2>
+              <p class="lottery-summary" id="lotterySummary">タイトル発表済みの弾だけ表示</p>
+            </div>
+            <div class="lottery-controls">
+              <div class="segmented" role="group" aria-label="Period filter">
+                <button class="route-segment active" type="button" data-route-filter="all">All</button>
+                <button class="route-segment" type="button" data-route-filter="active">期間中</button>
+                <button class="route-segment" type="button" data-route-filter="upcoming">予定</button>
+              </div>
+              <button class="ghost-button" id="pokecaToggle" type="button" aria-expanded="false">展開</button>
+            </div>
+          </div>
+          <div class="route-list" id="routeList"></div>
+          <div class="archive-route-list" id="archiveRouteList"></div>
+        </section>
+
+        <section class="panel kuji-special-panel" id="kujiSpecialSection" aria-label="Ichiban Kuji special">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Ichiban Kuji</p>
+              <h2>一番くじ特設</h2>
+              <p class="kuji-special-summary" id="kujiSpecialSummary">直近1ヶ月の発売日順</p>
+            </div>
+            <button class="ghost-button" id="kujiSpecialToggle" type="button" aria-expanded="false">展開</button>
+          </div>
+          <div class="kuji-special-list" id="kujiSpecialList"></div>
+        </section>
+
+        <section class="panel deals-panel" id="todaySection" aria-label="Today">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Profit Check</p>
+              <h2>利益候補</h2>
+            </div>
+            <div class="panel-controls">
+              <div class="segmented" role="group" aria-label="Filter">
+                <button class="segment active" type="button" data-filter="all">All</button>
+                <button class="segment" type="button" data-filter="active">販売中</button>
+                <button class="segment" type="button" data-filter="upcoming">予定</button>
+                <button class="segment" type="button" data-filter="recheck">要再確認</button>
+              </div>
+              <label class="sort-control">
+                <span>並び替え</span>
+                <select id="sortSelect">
+                  <option value="profit_desc">利益高い順</option>
+                  <option value="profit_asc">利益低い順</option>
+                  <option value="buyline_desc">買える上限高い順</option>
+                  <option value="deadline_asc">終了近い順</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="deal-list" id="dealList"></div>
+        </section>
+
+        <section class="market-intel-grid" id="marketIntelSection" aria-label="Market intelligence flow">
+          <section class="panel compact-panel" id="trendsSection" aria-label="Trends">
+            <div class="panel-header slim">
+              <div>
+                <p class="panel-kicker">Signals</p>
+                <h2>急上昇</h2>
+              </div>
+            </div>
+            <div class="trend-list" id="trendList"></div>
+          </section>
+
+          <section class="panel discovery-panel" id="discoverySection" aria-label="Trend research candidates" hidden>
+            <div class="panel-header slim">
+              <div>
+                <p class="panel-kicker">AI Check</p>
+                <h2>AI検証ボード</h2>
+              </div>
+            </div>
+            <div class="discovery-list" id="earlySignalList"></div>
+            <div class="discovery-list" id="discoveryList"></div>
+          </section>
+
+        </section>
+
+        <section class="panel settings-bottom-panel" id="settingsSection" aria-label="Settings">
+          <div class="panel-header slim">
+            <div>
+              <p class="panel-kicker">Settings</p>
+              <h2>計算条件</h2>
+            </div>
+          </div>
+          <form class="settings-form" id="settingsForm">
+            <label>
+              <span>手数料</span>
+              <div class="input-suffix">
+                <input id="feeRate" type="number" min="0" max="50" step="0.1" value="5" />
+                <span>%</span>
+              </div>
+            </label>
+            <label>
+              <span>目標利益</span>
+              <div class="input-suffix">
+                <input id="targetProfit" type="number" min="0" step="100" value="1500" />
+                <span>円</span>
+              </div>
+            </label>
+            <label>
+              <span>値下げ余地</span>
+              <div class="input-suffix">
+                <input id="priceBuffer" type="number" min="0" max="30" step="0.5" value="3" />
+                <span>%</span>
+              </div>
+            </label>
+            <label>
+              <span>梱包費</span>
+              <div class="input-suffix">
+                <input id="packingCost" type="number" min="0" step="10" value="80" />
+                <span>円</span>
+              </div>
+            </label>
+          </form>
+          <div class="notification-settings">
+            <div>
+              <p class="settings-label">毎朝8時通知</p>
+              <p id="notificationStatus">ブラウザ通知は未設定です</p>
+            </div>
+            <div class="settings-actions">
+              <button class="ghost-button" id="enableNotifications" type="button">通知を許可</button>
+              <button class="ghost-button" id="testNotification" type="button">テスト</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="dealTemplate">
+      <article class="deal-card">
+        <div class="deal-main">
+          <div class="deal-title-row">
+            <div>
+              <p class="shop-name"></p>
+              <h3></h3>
+            </div>
+            <span class="status-pill"></span>
+          </div>
+          <div class="tag-row"></div>
+        </div>
+        <div class="deal-numbers">
+          <div>
+            <span>購入/定価</span>
+            <strong class="buy-price"></strong>
+          </div>
+          <div>
+            <span>想定売価</span>
+            <strong class="sell-price"></strong>
+          </div>
+          <div>
+            <span>想定利益</span>
+            <strong class="profit"></strong>
+          </div>
+          <div>
+            <span>買える上限</span>
+            <strong class="buy-line"></strong>
+          </div>
+        </div>
+        <div class="deal-footer">
+          <div class="cost-line"></div>
+          <div class="deal-actions">
+            <a class="ghost-button deal-link" target="_blank" rel="noreferrer">発売元</a>
+            <a class="ghost-button market-link" target="_blank" rel="noreferrer">相場</a>
+            <button class="ghost-button detail-toggle" type="button">詳細</button>
+          </div>
+        </div>
+        <div class="detail-box" hidden></div>
+      </article>
+    </template>
+
+    <template id="routeTemplate">
+      <article class="route-card">
+        <div class="route-top">
+          <div>
+            <p class="route-source"></p>
+            <h3></h3>
+          </div>
+          <span class="route-pill"></span>
+        </div>
+        <p class="route-note"></p>
+        <div class="route-meta"></div>
+        <div class="release-numbers">
+          <div>
+            <span>定価</span>
+            <strong class="release-retail"></strong>
+          </div>
+          <div>
+            <span>スニダン参考</span>
+            <strong class="release-market"></strong>
+          </div>
+          <div>
+            <span>想定利益</span>
+            <strong class="release-profit"></strong>
+          </div>
+          <div>
+            <span>買える上限</span>
+            <strong class="release-buyline"></strong>
+          </div>
+        </div>
+        <div class="release-routes"></div>
+        <a class="route-link" target="_blank" rel="noreferrer">
+          <span>確認</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </article>
+    </template>
+
+    <script src="./script.js?v=20260531-48"></script>
+  </body>
+</html>

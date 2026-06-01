@@ -1,0 +1,82 @@
+{
+  "capturedAt": "2026-05-28T03:47:06.618Z",
+  "finalLayoutLog": {
+    "actionCards": [
+      {
+        "label": "応募",
+        "title": "アビスアイ",
+        "value": "想定利益 +￥6,130"
+      },
+      {
+        "label": "応募",
+        "title": "アビスアイ",
+        "value": "想定利益 +￥6,130"
+      },
+      {
+        "label": "応募",
+        "title": "MEGAドリームex",
+        "value": "想定利益 +￥12,610"
+      },
+      {
+        "label": "利益",
+        "title": "S.H.Figuarts 仮面ライダーギーツ ブーストフォームマークIII",
+        "value": "想定利益 +￥2,274"
+      },
+      {
+        "label": "再確認",
+        "title": "一番くじ ラストワン賞 フィギュア",
+        "value": "想定利益 +￥1,038"
+      }
+    ],
+    "discoveryGridColumns": "246px 246px",
+    "headings": [
+      "MarketLens",
+      "今日見るもの",
+      "弾別 抽選・相場",
+      "利益候補",
+      "市場の異変ログ",
+      "AI検証ボード",
+      "計算条件"
+    ],
+    "horizontalOverflow": false,
+    "mainOrder": [
+      {
+        "className": "topbar",
+        "heading": "MarketLens",
+        "id": null
+      },
+      {
+        "className": "summary-grid",
+        "heading": null,
+        "id": null
+      },
+      {
+        "className": "panel action-panel",
+        "heading": "今日見るもの",
+        "id": "actionSection"
+      },
+      {
+        "className": "panel lottery-panel",
+        "heading": "弾別 抽選・相場",
+        "id": "lotterySection"
+      },
+      {
+        "className": "panel deals-panel",
+        "heading": "利益候補",
+        "id": "todaySection"
+      },
+      {
+        "className": "market-intel-grid",
+        "heading": "市場の異変ログ",
+        "id": "marketIntelSection"
+      },
+      {
+        "className": "panel settings-bottom-panel",
+        "heading": "計算条件",
+        "id": "settingsSection"
+      }
+    ],
+    "marketGridColumns": "542px"
+  },
+  "consoleErrors": []
+}
