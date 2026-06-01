@@ -1202,7 +1202,7 @@ function updateDataStatus(label) {
   const backlog = candidateValidationBacklog();
   const backlogText =
     backlog.total > 0
-      ? ` / 未確定 ${backlog.total}（期間${backlog.missingPeriod} 価格${backlog.missingPrice} 導線${backlog.missingRoute}）`
+      ? ` / 未確定 ${backlog.total}（期間${backlog.missingPeriod} 価格${backlog.missingPrice} 鮮度${backlog.stalePrice} 導線${backlog.missingRoute}）`
       : "";
   const source =
     state.dataMeta.status === "partial" && state.dataMeta.reachableSources != null && state.dataMeta.totalSources != null
@@ -1215,19 +1215,22 @@ function updateDataStatus(label) {
 function candidateValidationBacklog() {
   let missingPeriod = 0;
   let missingPrice = 0;
+  let stalePrice = 0;
   let missingRoute = 0;
   for (const candidate of discoveryCandidates) {
     if (candidate.stageKind !== "candidate") continue;
     const status = candidateValidationState(candidate);
     if (status === "missing_period") missingPeriod += 1;
     if (status === "missing_price") missingPrice += 1;
+    if (status === "stale_price") stalePrice += 1;
     if (status === "missing_route") missingRoute += 1;
   }
   return {
     missingPeriod,
     missingPrice,
+    stalePrice,
     missingRoute,
-    total: missingPeriod + missingPrice + missingRoute,
+    total: missingPeriod + missingPrice + stalePrice + missingRoute,
   };
 }
 
@@ -1857,6 +1860,7 @@ function candidateValidationState(candidate) {
   if (!periodKnown) return "missing_period";
   if (!periodActive) return "ended";
   if (!hasPrice) return "missing_price";
+  if (marketFreshnessLabel(candidate.marketObservedAt) === "要更新") return "stale_price";
   if (!hasRoute) return "missing_route";
   return "ready";
 }
@@ -2093,6 +2097,7 @@ function buildTodayEmptyReasons() {
   const activeRoutes = pokemonReleases
     .flatMap((release) => releaseRoutes(release))
     .filter((route) => routePeriod(route).kind !== "ended").length;
+  const staleMarket = discoveryCandidates.filter((candidate) => candidateValidationState(candidate) === "stale_price").length;
   const detailLinkedDeals = activeDeals.filter((deal) => hasDetailTarget(dealDetailTargetId(deal))).length;
   const visibleReleases = pokemonReleases.filter((release) => releaseWatchState(release).kind === "active");
   const detailLinkedReleases = visibleReleases.filter((release) => hasDetailTarget(releaseDetailTargetId(release))).length;
@@ -2100,6 +2105,7 @@ function buildTodayEmptyReasons() {
     `利益候補 対象 ${actionableDeals.length}/${activeDeals.length}`,
     `利益未達 ${belowProfit}`,
     `信頼度低 ${lowConfidence}`,
+    `相場要更新 ${staleMarket}`,
     `抽選ルート 対象 ${activeRoutes}`,
     `詳細紐付け 利益 ${detailLinkedDeals}/${activeDeals.length} / 抽選 ${detailLinkedReleases}/${visibleReleases.length}`,
     `急上昇由来は今日見るものへ直接昇格しないルール`,
@@ -2675,6 +2681,7 @@ function archiveReasonForCandidate(candidate) {
   if (state === "ended") return "期間終了";
   if (state === "missing_period") return "期間不足";
   if (state === "missing_price") return "価格不足";
+  if (state === "stale_price") return "相場鮮度不足";
   if (state === "missing_route") return "導線不足";
   if (candidate.confidence === "低") return "信頼度低";
   return "優先度外";
@@ -2685,6 +2692,7 @@ function archiveRecoveryHint(candidate) {
   if (state === "ended") return "復帰なし（新規シグナル待ち）";
   if (state === "missing_period") return "開始日/終了日の取得で復帰";
   if (state === "missing_price") return "定価/相場の取得で復帰";
+  if (state === "stale_price") return "相場の再取得で復帰";
   if (state === "missing_route") return "応募/販売導線の取得で復帰";
   if (candidate.confidence === "低") return "他ソース一致で復帰";
   return "条件再充足で復帰";
@@ -2701,12 +2709,37 @@ function renderArchivedCandidates() {
         validationState === "ended" ||
         validationState === "missing_period" ||
         validationState === "missing_price" ||
+        validationState === "stale_price" ||
         validationState === "missing_route" ||
         candidate.confidence === "低"
       );
     })
     .sort((a, b) => (b.historyRecentHits ?? 0) - (a.historyRecentHits ?? 0))
     .slice(0, 10);
+
+  const summaryCounts = {
+    ended: 0,
+    missingPeriod: 0,
+    missingPrice: 0,
+    stalePrice: 0,
+    missingRoute: 0,
+    lowConfidence: 0,
+  };
+  for (const candidate of discoveryCandidates) {
+    const state = candidateValidationState(candidate);
+    if (state === "ended") summaryCounts.ended += 1;
+    if (state === "missing_period") summaryCounts.missingPeriod += 1;
+    if (state === "missing_price") summaryCounts.missingPrice += 1;
+    if (state === "stale_price") summaryCounts.stalePrice += 1;
+    if (state === "missing_route") summaryCounts.missingRoute += 1;
+    if (candidate.confidence === "低") summaryCounts.lowConfidence += 1;
+  }
+
+  const summary = document.createElement("div");
+  summary.className = "detail-box";
+  summary.hidden = false;
+  summary.textContent = `内訳: 期間終了 ${summaryCounts.ended} / 期間不足 ${summaryCounts.missingPeriod} / 価格不足 ${summaryCounts.missingPrice} / 相場鮮度不足 ${summaryCounts.stalePrice} / 導線不足 ${summaryCounts.missingRoute} / 信頼度低 ${summaryCounts.lowConfidence}`;
+  elements.archiveCandidateList.append(summary);
 
   if (archived.length === 0) {
     const empty = document.createElement("div");
