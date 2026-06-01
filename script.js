@@ -805,6 +805,13 @@ const state = {
     source: "seed",
     updatedAt: null,
     status: "seed",
+    reachableSources: null,
+    totalSources: null,
+    manualDeals: null,
+    verifiedCandidateRouteTargets: null,
+    totalCandidateRouteTargets: null,
+    candidateRouteFailures: null,
+    candidateKpi: null,
     previousOverview: null,
     historyRuns: [],
   },
@@ -1320,6 +1327,10 @@ function applyResearchSnapshot(snapshot) {
     reachableSources: snapshot.metadata?.reachableSources ?? null,
     totalSources: snapshot.metadata?.totalSources ?? null,
     manualDeals: snapshot.metadata?.manualDeals ?? null,
+    verifiedCandidateRouteTargets: snapshot.metadata?.verifiedCandidateRouteTargets ?? null,
+    totalCandidateRouteTargets: snapshot.metadata?.totalCandidateRouteTargets ?? null,
+    candidateRouteFailures: snapshot.metadata?.candidateRouteFailures ?? null,
+    candidateKpi: snapshot.metadata?.candidateKpi ?? null,
     previousOverview: state.dataMeta?.previousOverview ?? null,
     historyRuns: state.dataMeta?.historyRuns ?? [],
   };
@@ -1350,7 +1361,18 @@ function updateDataStatus(label) {
       ? `${state.dataMeta.source} partial ${state.dataMeta.reachableSources}/${state.dataMeta.totalSources}`
       : state.dataMeta.source;
   const deals = state.dataMeta.manualDeals ? ` / deals ${state.dataMeta.manualDeals}` : "";
-  elements.dataStatus.textContent = label ?? `Data: ${source}${deals} / ${formatUpdatedAt(state.dataMeta.updatedAt)}${backlogText}`;
+  const routeKpiText =
+    state.dataMeta.verifiedCandidateRouteTargets != null && state.dataMeta.totalCandidateRouteTargets != null
+      ? ` / 候補導線 ${state.dataMeta.verifiedCandidateRouteTargets}/${state.dataMeta.totalCandidateRouteTargets}`
+      : "";
+  const candidateKpi = state.dataMeta.candidateKpi;
+  const candidateKpiText =
+    candidateKpi && Number.isFinite(candidateKpi.total)
+      ? ` / 候補 ${candidateKpi.ready ?? 0}/${candidateKpi.total} 準備完了`
+      : "";
+  elements.dataStatus.textContent =
+    label ??
+    `Data: ${source}${deals}${candidateKpiText}${routeKpiText} / ${formatUpdatedAt(state.dataMeta.updatedAt)}${backlogText}`;
 }
 
 function candidateValidationBacklog() {
@@ -1441,7 +1463,20 @@ async function loadResearchSnapshot({ rerender = false } = {}) {
     updateDataStatus();
     if (rerender) renderAll();
   } catch {
-    state.dataMeta = { source: "seed", updatedAt: null, status: "seed", previousOverview: null, historyRuns: [] };
+    state.dataMeta = {
+      source: "seed",
+      updatedAt: null,
+      status: "seed",
+      reachableSources: null,
+      totalSources: null,
+      manualDeals: null,
+      verifiedCandidateRouteTargets: null,
+      totalCandidateRouteTargets: null,
+      candidateRouteFailures: null,
+      candidateKpi: null,
+      previousOverview: null,
+      historyRuns: [],
+    };
     updateDataStatus("Data: seed / snapshotなし");
     if (rerender) renderAll();
   } finally {
@@ -2227,11 +2262,12 @@ function candidateValidationState(candidate) {
   const periodActive = candidate.endDate ? isDateActive(candidate.endDate) : true;
   const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
   const hasRoute = Boolean(candidate.sourceUrl);
+  const routeAlive = candidate.routeAlive !== false;
   if (!periodKnown) return "missing_period";
   if (!periodActive) return "ended";
   if (!hasPrice) return "missing_price";
+  if (!hasRoute || !routeAlive) return "missing_route";
   if (marketFreshnessLabel(candidate.marketObservedAt) === "要更新") return "stale_price";
-  if (!hasRoute) return "missing_route";
   return "ready";
 }
 

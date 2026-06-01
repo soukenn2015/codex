@@ -1162,6 +1162,131 @@ function buildRouteVerification(route, result) {
   };
 }
 
+function candidateRouteTargetUrl(candidate) {
+  const raw = String(candidate?.sourceUrl ?? "").trim();
+  if (!raw) return null;
+  const parsed = tryParseUrl(raw);
+  if (!parsed) return null;
+  if (!["http:", "https:"].includes(parsed.protocol)) return null;
+  return parsed.toString();
+}
+
+function buildCandidateRouteVerification(candidate, result) {
+  const targetUrl = candidateRouteTargetUrl(candidate);
+  const issues = [];
+  const labelParts = [];
+  if (!targetUrl) issues.push("導線URL未設定");
+  if (targetUrl && (routeTargetIsGeneric(targetUrl) || isSearchLikeUrl(targetUrl))) {
+    issues.push("導線が汎用ページ");
+  }
+  if (result && !result.ok) {
+    issues.push(`接続失敗 ${result.status}`);
+  }
+  if (result?.ok) {
+    labelParts.push(`接続 ${verificationDateLabel(result.fetchedAt)}`);
+  }
+
+  const status = !targetUrl ? "missing" : result?.ok ? (issues.length === 0 ? "verified" : "review") : "missing";
+  return {
+    status,
+    alive: Boolean(result?.ok),
+    checkedAt: result?.fetchedAt ?? null,
+    sourceStatus: result ? String(result.status) : "not-fetched",
+    finalUrl: result?.url ?? targetUrl,
+    summary: labelParts.join(" / ") || "接続未確認",
+    issues,
+  };
+}
+
+async function verifyCandidateRouteTargets(candidates) {
+  const routeResults = new Map();
+  const targetUrls = [
+    ...new Set(
+      candidates
+        .map((candidate) => candidateRouteTargetUrl(candidate))
+        .filter(Boolean),
+    ),
+  ];
+
+  for (const url of targetUrls) {
+    const result = await fetchSource({ id: `candidate-route:${url}`, url });
+    routeResults.set(url, result);
+  }
+
+  const enrichedCandidates = candidates.map((candidate) => {
+    const targetUrl = candidateRouteTargetUrl(candidate);
+    const verification = buildCandidateRouteVerification(candidate, targetUrl ? routeResults.get(targetUrl) : null);
+    return {
+      ...candidate,
+      routeAlive: verification.alive,
+      routeStatus: verification.sourceStatus,
+      routeCheckedAt: verification.checkedAt,
+      routeFinalUrl: verification.finalUrl,
+      routeVerification: verification,
+    };
+  });
+
+  const publicResults = [...routeResults.values()].map((result) => {
+    const { text, html, ...publicResult } = result;
+    return publicResult;
+  });
+
+  return { candidates: enrichedCandidates, results: publicResults };
+}
+
+function summarizeCandidateKpi(candidates) {
+  const target = candidates.filter((candidate) => candidate.stageKind === "candidate");
+  const total = target.length;
+  let ready = 0;
+  let missingPeriod = 0;
+  let missingPrice = 0;
+  let missingRoute = 0;
+  let blogSns = 0;
+  let routeChecked = 0;
+  let routeAlive = 0;
+  let withProductName = 0;
+
+  for (const candidate of target) {
+    const periodKnown = Boolean(candidate.startDate && candidate.endDate);
+    const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
+    const hasRoute = Boolean(candidate?.sourceUrl);
+    const isRouteAlive = candidate.routeAlive !== false;
+    const hasName = String(candidate?.name ?? "").trim().length >= 2;
+    const channel = String(candidate?.sourceChannel ?? "");
+
+    if (channel === "blog" || channel === "sns") blogSns += 1;
+    if (hasName) withProductName += 1;
+    if (candidate.routeCheckedAt) routeChecked += 1;
+    if (hasRoute && isRouteAlive) routeAlive += 1;
+
+    if (!periodKnown) {
+      missingPeriod += 1;
+      continue;
+    }
+    if (!hasPrice) {
+      missingPrice += 1;
+      continue;
+    }
+    if (!hasRoute || !isRouteAlive) {
+      missingRoute += 1;
+      continue;
+    }
+    ready += 1;
+  }
+
+  return {
+    total,
+    ready,
+    missingPeriod,
+    missingPrice,
+    missingRoute,
+    blogSns,
+    withProductName,
+    routeChecked,
+    routeAlive,
+  };
+}
+
 async function verifyPokemonRouteTargets(releases) {
   const routeResults = new Map();
   const pageResults = new Map();
@@ -1621,6 +1746,11 @@ snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
   };
 });
 
+const candidateRouteVerification = await verifyCandidateRouteTargets(snapshot.discoveryCandidates);
+snapshot.discoveryCandidates = candidateRouteVerification.candidates;
+snapshot.candidateRouteVerificationResults = candidateRouteVerification.results;
+const candidateKpi = summarizeCandidateKpi(snapshot.discoveryCandidates);
+
 const okCount = sourceResults.filter((result) => result.ok).length;
 snapshot.metadata.status = okCount === sourceResults.length ? "collected" : "partial";
 snapshot.metadata.reachableSources = okCount;
@@ -1628,6 +1758,11 @@ snapshot.metadata.totalSources = sourceResults.length;
 snapshot.metadata.manualDeals = snapshot.deals.length;
 snapshot.metadata.verifiedRouteTargets = snapshot.routeVerificationResults.filter((result) => result.ok).length;
 snapshot.metadata.totalRouteTargets = snapshot.routeVerificationResults.length;
+snapshot.metadata.verifiedCandidateRouteTargets = snapshot.candidateRouteVerificationResults.filter((result) => result.ok).length;
+snapshot.metadata.totalCandidateRouteTargets = snapshot.candidateRouteVerificationResults.length;
+snapshot.metadata.candidateRouteFailures =
+  snapshot.metadata.totalCandidateRouteTargets - snapshot.metadata.verifiedCandidateRouteTargets;
+snapshot.metadata.candidateKpi = candidateKpi;
 snapshot.productLearning = yearlyLearning;
 snapshot.metadata.learningProducts1y = yearlyLearning.length;
 
