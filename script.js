@@ -1358,7 +1358,12 @@ function savePredictionLearning() {
 function predictionLearningKey(ip, special = null) {
   const text = [special?.title, special?.targetPrizes, special?.marketForecast, special?.pastMarketBasis].filter(Boolean).join(" ");
   const sizeBucket = /大型|SOFVICS|BUSTISAN|胸像|送料750/i.test(text) ? "large" : "standard";
-  return `${ip}::${sizeBucket}`;
+  const categoryBucket = /ぬいぐるみ|マスコット|雑貨|キッチン/i.test(text)
+    ? "goods"
+    : /フィギュア|MASTERLISE|EXPIECE|SOFVICS|BUSTISAN|胸像/i.test(text)
+      ? "figure"
+      : "mixed";
+  return `${ip}::${sizeBucket}::${categoryBucket}`;
 }
 
 function applyPredictionLearning(ip, baseMedian, special = null) {
