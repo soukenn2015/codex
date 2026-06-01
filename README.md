@@ -102,3 +102,9 @@ node scripts/daily-digest.mjs
 ```text
 node scripts/regression-check.mjs
 ```
+
+UI判定ロジックの軽量回帰チェック:
+
+```text
+node scripts/ui-regression-check.mjs
+```
