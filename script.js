@@ -1341,9 +1341,9 @@ function saveNotificationSettings() {
 
 function readPredictionLearning() {
   try {
-    return JSON.parse(localStorage.getItem("marketlens-prediction-learning") || '{"records":[],"offsetByIp":{}}');
+    return JSON.parse(localStorage.getItem("marketlens-prediction-learning") || '{"records":[],"offsetByKey":{}}');
   } catch {
-    return { records: [], offsetByIp: {} };
+    return { records: [], offsetByKey: {} };
   }
 }
 
@@ -1355,18 +1355,27 @@ function savePredictionLearning() {
   }
 }
 
-function applyPredictionLearning(ip, baseMedian) {
-  const offset = Number(state.predictionLearning?.offsetByIp?.[ip] ?? 0);
+function predictionLearningKey(ip, special = null) {
+  const text = [special?.title, special?.targetPrizes, special?.marketForecast, special?.pastMarketBasis].filter(Boolean).join(" ");
+  const sizeBucket = /大型|SOFVICS|BUSTISAN|胸像|送料750/i.test(text) ? "large" : "standard";
+  return `${ip}::${sizeBucket}`;
+}
+
+function applyPredictionLearning(ip, baseMedian, special = null) {
+  const key = predictionLearningKey(ip, special);
+  const offset = Number(state.predictionLearning?.offsetByKey?.[key] ?? 0);
   return Math.max(500, Math.round(baseMedian + offset));
 }
 
-function predictionLearningSummary(ip) {
+function predictionLearningSummary(ip, special = null) {
+  const key = predictionLearningKey(ip, special);
   const records = Array.isArray(state.predictionLearning?.records) ? state.predictionLearning.records : [];
-  const scoped = records.filter((item) => item.ip === ip);
-  const offset = Number(state.predictionLearning?.offsetByIp?.[ip] ?? 0);
+  const scoped = records.filter((item) => item.keyGroup === key);
+  const offset = Number(state.predictionLearning?.offsetByKey?.[key] ?? 0);
   return {
     samples: scoped.length,
     offset,
+    key,
   };
 }
 
@@ -1384,12 +1393,14 @@ function overallPredictionMetrics() {
 
 function recordPredictionResult(special, predictedMedian, actualMarketPrice) {
   if (!special?.id || !Number.isFinite(predictedMedian) || !Number.isFinite(actualMarketPrice)) return;
-  const key = `${special.id}:${special.releaseDate ?? "na"}:${actualMarketPrice}`;
+  const keyGroup = predictionLearningKey(special.ip ?? "unknown", special);
+  const key = `${special.id}:${special.releaseDate ?? "na"}:${actualMarketPrice}:${keyGroup}`;
   const records = Array.isArray(state.predictionLearning.records) ? state.predictionLearning.records : [];
   if (records.some((item) => item.key === key)) return;
   const error = actualMarketPrice - predictedMedian;
   records.push({
     key,
+    keyGroup,
     id: special.id,
     ip: special.ip ?? "unknown",
     predictedMedian,
@@ -1397,14 +1408,13 @@ function recordPredictionResult(special, predictedMedian, actualMarketPrice) {
     error,
     recordedAt: new Date().toISOString(),
   });
-  const ip = special.ip ?? "unknown";
-  const byIp = records.filter((item) => item.ip === ip).slice(-12);
-  const avgError = byIp.length > 0 ? byIp.reduce((sum, item) => sum + item.error, 0) / byIp.length : 0;
+  const byKey = records.filter((item) => item.keyGroup === keyGroup).slice(-12);
+  const avgError = byKey.length > 0 ? byKey.reduce((sum, item) => sum + item.error, 0) / byKey.length : 0;
   state.predictionLearning = {
     records: records.slice(-200),
-    offsetByIp: {
-      ...(state.predictionLearning?.offsetByIp ?? {}),
-      [ip]: Math.round(avgError),
+    offsetByKey: {
+      ...(state.predictionLearning?.offsetByKey ?? {}),
+      [keyGroup]: Math.round(avgError),
     },
   };
   savePredictionLearning();
@@ -3083,8 +3093,8 @@ function buildKujiPrediction(special) {
         : "今は薄い。話題化か完売シグナルが出るまで通常監視で十分。";
 
   const basePredictedMedian = Math.round(1800 + score * 95);
-  const predictedMedian = applyPredictionLearning(special.ip ?? "unknown", basePredictedMedian);
-  const learning = predictionLearningSummary(special.ip ?? "unknown");
+  const predictedMedian = applyPredictionLearning(special.ip ?? "unknown", basePredictedMedian, special);
+  const learning = predictionLearningSummary(special.ip ?? "unknown", special);
   const predictedLow = Math.max(500, Math.round(predictedMedian * 0.82));
   const predictedHigh = Math.round(predictedMedian * 1.18);
   const actualMarketPrice = Number.isFinite(special.actualMarketPrice)
