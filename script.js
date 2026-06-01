@@ -2299,6 +2299,14 @@ function renderActionItems() {
 }
 
 function buildProvisionalDeals() {
+  const validationPriority = {
+    missing_price: 0,
+    stale_price: 1,
+    missing_route: 2,
+    missing_period: 3,
+    ended: 9,
+    ready: 9,
+  };
   return discoveryCandidates
     .filter((candidate) => candidate.stageKind === "candidate")
     .filter((candidate) => !isKujiCandidate(candidate))
@@ -2308,6 +2316,9 @@ function buildProvisionalDeals() {
     .filter((candidate) => candidateValidationState(candidate) !== "ready")
     .filter((candidate) => !candidateProfitSummary(candidate).known)
     .sort((a, b) => {
+      const stateDiff =
+        (validationPriority[candidateValidationState(a)] ?? 9) - (validationPriority[candidateValidationState(b)] ?? 9);
+      if (stateDiff !== 0) return stateDiff;
       const scoreDiff = (b.genreScore ?? 0) - (a.genreScore ?? 0);
       if (scoreDiff !== 0) return scoreDiff;
       return (a.startDate ?? "").localeCompare(b.startDate ?? "");
@@ -2430,12 +2441,27 @@ function renderProvisionalCandidateCard(candidate, container) {
 
   const tags = document.createElement("div");
   tags.className = "tag-row";
+  const validationState = candidateValidationState(candidate);
+  const validationTagText =
+    validationState === "missing_price"
+      ? "価格不足"
+      : validationState === "stale_price"
+        ? "相場要更新"
+        : validationState === "missing_route"
+          ? "導線不足"
+          : validationState === "missing_period"
+            ? "期間不足"
+            : "要確認";
   for (const tagText of [`信頼度 ${candidate.confidence}`, `関連度 ${candidate.genreScore}`, candidate.marginSignal]) {
     const tag = document.createElement("span");
     tag.className = "tag";
     tag.textContent = tagText;
     tags.append(tag);
   }
+  const validationTag = document.createElement("span");
+  validationTag.className = "tag";
+  validationTag.textContent = `検証 ${validationTagText}`;
+  tags.append(validationTag);
 
   const note = document.createElement("p");
   note.className = "route-note";
@@ -2446,7 +2472,6 @@ function renderProvisionalCandidateCard(candidate, container) {
   side.className = "detail-box";
   side.hidden = false;
   const profitSummary = candidateProfitSummary(candidate);
-  const validationState = candidateValidationState(candidate);
   const validationLabel =
     validationState === "missing_period"
       ? "期間不足"
