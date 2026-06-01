@@ -1290,6 +1290,27 @@ h3 {
   line-height: 1.55;
 }
 
+.action-insight {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.action-insight-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.action-insight-line strong {
+  color: var(--text);
+  font-weight: 760;
+}
+
 .action-condition-list {
   display: grid;
   gap: 6px;

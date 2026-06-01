@@ -1083,9 +1083,6 @@ const elements = {
   priceBuffer: document.querySelector("#priceBuffer"),
   packingCost: document.querySelector("#packingCost"),
   sidebarFee: document.querySelector("#sidebarFee"),
-  aiSummaryTitle: document.querySelector("#aiSummaryTitle"),
-  aiSummaryBody: document.querySelector("#aiSummaryBody"),
-  aiSummaryMeta: document.querySelector("#aiSummaryMeta"),
   navItems: document.querySelectorAll(".nav-item"),
   routeSegments: document.querySelectorAll(".route-segment"),
   sections: {
@@ -1978,12 +1975,20 @@ function trendDisplayPhase(trend) {
   return "watch";
 }
 
+function isGenericTrendTitle(title) {
+  const normalized = String(title ?? "").toLowerCase().trim();
+  if (!normalized) return true;
+  const genericTitles = new Set(["品薄", "品薄完売", "プレ値sns", "プレ値"]);
+  if (genericTitles.has(normalized)) return true;
+  if (/(抽選|再販).*(速報|情報|まとめ)/u.test(normalized)) return true;
+  if (/監視|ウォッチ/u.test(normalized) && normalized.length <= 12) return true;
+  return false;
+}
+
 function shouldDisplayTrend(trend) {
   if (isKujiTrend(trend)) return false;
   const title = displayTrendKeyword(trend.keyword).toLowerCase();
-  if (!title) return false;
-  const genericTitles = new Set(["品薄", "品薄完売", "プレ値sns", "プレ値"]);
-  if (genericTitles.has(title)) return false;
+  if (isGenericTrendTitle(title)) return false;
   return Boolean(trendDisplayPhase(trend));
 }
 
@@ -1998,9 +2003,7 @@ function trendPhaseLabel(trend) {
 function isEarlySignalTrend(trend) {
   if (isKujiTrend(trend)) return false;
   const title = displayTrendKeyword(trend.keyword).toLowerCase();
-  if (!title) return false;
-  const genericTitles = new Set(["品薄", "品薄完売", "プレ値sns", "プレ値"]);
-  if (genericTitles.has(title)) return false;
+  if (isGenericTrendTitle(title)) return false;
   if (!trendHasMomentum(trend)) return false;
   const startTs = trendStartMs(trend);
   const endTs = trendEndMs(trend);
@@ -2097,11 +2100,93 @@ function candidatePromotionReason(candidate, profitSummary) {
   return "期間中の候補";
 }
 
-function shouldPromoteCandidateToToday(candidate) {
-  if (candidate.stageKind !== "candidate") return false;
-  if (isKujiCandidate(candidate)) return false;
+function buildKujiSpecialCandidates() {
+  const now = Date.now();
+  return kujiSpecials
+    .filter((special) => {
+      const startTs = parseFlexibleTs(special.salesStartDate ?? special.releaseDate, { defaultTime: "start" });
+      const endTs = parseFlexibleTs(special.salesEndDate ?? special.displayUntil, { defaultTime: "end" });
+      if (Number.isFinite(endTs) && endTs < now) return false;
+      if (Number.isFinite(startTs)) {
+        const leadDays = (startTs - now) / 86_400_000;
+        if (leadDays < -7) return false;
+        if (leadDays > 180) return false;
+      }
+      return /一番くじ|1kuji|kuji/i.test(special.title ?? "");
+    })
+    .map((special) => {
+      const officialLineup = Array.isArray(special.officialLineup) ? special.officialLineup.join(" / ") : "";
+      return {
+        id: `kuji-candidate:${special.id}`,
+        stageKind: "candidate",
+        stage: "候補",
+        name: special.title,
+        trend: special.title,
+        confidence: /発売前|強化|発売中/.test(special.status ?? "") ? "高" : "中",
+        genreScore: 86,
+        historyRecentHits: 3,
+        marginSignal: "一番くじ発売前監視",
+        reason:
+          special.marketForecast ||
+          "一番くじ発売前の監視枠。発売日・抽選開始日・終了日の更新時に優先確認。",
+        startDate: special.salesStartDate ?? special.releaseDate ?? null,
+        endDate: special.salesEndDate ?? special.displayUntil ?? null,
+        sourceUrl: special.sourceUrl ?? "",
+        retailPrice: null,
+        marketPrice: null,
+        marketPriceSource: null,
+        marketObservedAt: null,
+        priceData: officialLineup || special.targetPrizes || "公式ラインナップ",
+        tradeVolume: special.watchPoints || "発売前監視",
+        missingData: "公式価格,相場価格,送料サイズ",
+        adoptionReason: special.targetPrizes || "発売前の強化候補",
+        category: "kuji",
+      };
+    });
+}
+
+function getUnifiedCandidates() {
+  const map = new Map();
+  for (const candidate of discoveryCandidates) {
+    map.set(candidate.name, candidate);
+  }
+  for (const candidate of buildKujiSpecialCandidates()) {
+    if (!map.has(candidate.name)) {
+      map.set(candidate.name, candidate);
+    }
+  }
+  return [...map.values()];
+}
+
+function shouldTrackKujiCandidate(candidate) {
+  if (!isKujiCandidate(candidate)) return false;
   if (candidate.endDate && !isDateActive(candidate.endDate)) return false;
   if (!isConcreteCandidate(candidate)) return false;
+  if (candidate.confidence === "低") return false;
+  const startTs = parseFlexibleTs(candidate.startDate, { defaultTime: "start" });
+  if (Number.isFinite(startTs)) {
+    const leadDays = (startTs - Date.now()) / 86_400_000;
+    if (leadDays < -7) return false;
+    return leadDays <= 180;
+  }
+  return true;
+}
+
+function isInNowWindowByDate(startDate, endDate) {
+  const bounds = layerWindowBounds();
+  const startTs = parseFlexibleTs(startDate, { defaultTime: "start" });
+  if (Number.isFinite(startTs) && startTs >= bounds.nowStart && startTs <= bounds.nowEnd) return true;
+  const endTs = parseFlexibleTs(endDate, { defaultTime: "end" });
+  if (Number.isFinite(endTs) && endTs >= bounds.nowStart && endTs <= bounds.nowEnd) return true;
+  return false;
+}
+
+function shouldPromoteCandidateToToday(candidate) {
+  if (candidate.stageKind !== "candidate") return false;
+  if (isKujiCandidate(candidate) && !shouldTrackKujiCandidate(candidate)) return false;
+  if (candidate.endDate && !isDateActive(candidate.endDate)) return false;
+  if (!isConcreteCandidate(candidate)) return false;
+  if (!isInNowWindowByDate(candidate.startDate, candidate.endDate)) return false;
   const candidateName = normalizeSignalText(candidate.name);
   const genericNames = new Set(["品薄", "品薄完売", "プレ値", "プレ値sns"]);
   if (genericNames.has(candidateName)) return false;
@@ -2166,6 +2251,92 @@ function itemPeriodRank(item) {
   if (item.periodKind === "active") return 0;
   if (item.periodKind === "upcoming") return 1;
   return 2;
+}
+
+function isPokemonLikeItem(item) {
+  const text = [item?.title, item?.meta, item?.body, item?.value].filter(Boolean).join(" ");
+  return /ポケモン|ポケカ|拡張パック|未開封|シュリンク/i.test(text);
+}
+
+function isKujiLikeItem(item) {
+  const text = [item?.title, item?.meta, item?.body, item?.value].filter(Boolean).join(" ");
+  return /一番くじ|1kuji|kuji/i.test(text);
+}
+
+function buildSelectionReason(item) {
+  if (item.kind === "lottery") {
+    const total = item.routes?.length ?? 0;
+    const done = item.routes?.filter((route) => route.done).length ?? 0;
+    return `${done}/${total}ルート応募済み、期限内の抽選導線を優先追跡`;
+  }
+  if (item.kind === "profit") {
+    return "販売中かつ利益条件を満たしており、即判断対象";
+  }
+  if (item.kind === "recheck") {
+    return "価格は取れているが目標利益未達のため、再確認対象";
+  }
+  if (item.kind === "signal") {
+    return item.value?.includes("想定利益")
+      ? "相場が取れており、今日の監視候補として優先"
+      : "相場補完前だが期間中のため、先行監視対象";
+  }
+  return compactReasonText(item.why, "更新情報を確認");
+}
+
+function buildSelectionSummary(item) {
+  if (isKujiLikeItem(item)) {
+    const startLabel = String(item.meta ?? "").match(/開始\s[0-9]{2}\/[0-9]{2}/)?.[0] ?? "開始日確認中";
+    const endLabel = String(item.meta ?? "").match(/終了\s[0-9]{2}\/[0-9]{2}/)?.[0] ?? "終了日確認中";
+    return `${item.value} / ${startLabel} / ${endLabel}`;
+  }
+  if (item.kind === "lottery") {
+    const total = item.routes?.length ?? 0;
+    const done = item.routes?.filter((route) => route.done).length ?? 0;
+    const hasPokemon = isPokemonLikeItem(item);
+    const variant = item.variantSummary?.[0];
+    if (hasPokemon && variant) {
+      return `${done}/${total}ルート応募済み / ${variant.marketText} / ${variant.profitText}`;
+    }
+    return `${done}/${total}ルート応募済み / ${compactReasonText(item.body, "抽選ルートを確認")}`;
+  }
+  if (item.kind === "profit" || item.kind === "recheck") {
+    return `${item.value} / ${compactReasonText(item.body, "価格情報を確認")}`;
+  }
+  if (item.kind === "signal") {
+    return item.value?.includes("想定利益")
+      ? `${item.value} / ${compactReasonText(item.body, "価格差候補を監視")}`
+      : `${item.value} / ${compactReasonText(item.meta, "価格補完待ち")}`;
+  }
+  return compactReasonText(item.body, "更新情報を確認");
+}
+
+function buildWatchCondition(item) {
+  const hasPokemon = isPokemonLikeItem(item);
+  if (hasPokemon) {
+    return "5ヶ月内の公式拡張パックを対象。シュリンクあり/なしを分け、再販・招待リクエスト時に優先確認。";
+  }
+  if (isKujiLikeItem(item)) {
+    return "発売前から監視し、発売日・抽選開始日・終了日が確定した時点で今日見るもの/利益候補を優先確認。";
+  }
+  if (item.kind === "lottery") {
+    return "応募期限・再販通知・店舗告知の更新時に確認。";
+  }
+  if (item.kind === "profit") {
+    return "価格差が維持されている間は販売終了まで監視。";
+  }
+  if (item.kind === "recheck") {
+    return "相場上振れか仕入れ値低下が出た時に再計算。";
+  }
+  return "開始/終了日と相場更新を確認して昇格判断。";
+}
+
+function attachSelectionNarrative(item) {
+  return {
+    ...item,
+    selectionReason: buildSelectionReason(item),
+    selectionSummary: buildSelectionSummary(item),
+    watchCondition: buildWatchCondition(item),
+  };
 }
 
 function buildActionItems() {
@@ -2390,7 +2561,7 @@ function buildActionItems() {
       order: 3,
     }));
 
-  const candidateItems = discoveryCandidates
+  const candidateItems = getUnifiedCandidates()
     .filter((candidate) => shouldPromoteCandidateToToday(candidate))
     .map((candidate) => {
       const periodKind = candidateActionPeriodKind(candidate);
@@ -2411,10 +2582,10 @@ function buildActionItems() {
         evidence: candidatePromotionReason(candidate, profitSummary),
         deadline: deadlineText(candidate.endDate, "期限確認"),
         deadlineSort: parseFlexibleTs(candidate.endDate, { defaultTime: "end" }) ?? Number.MAX_SAFE_INTEGER,
-        why: candidate.reason,
+        why: profitSummary.known ? "利益計算済みのため確認優先" : "価格・相場の補完後に昇格判断",
         title: candidate.name,
         meta: `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(candidate.endDate, "未取得")}`,
-        body: profitSummary.known ? profitSummary.value : `不足: ${shortMissingSummary(candidate, "価格データ")}`,
+        body: profitSummary.known ? profitSummary.value : "利益試算待ち",
         value: profitSummary.known ? profitSummary.value : "利益試算待ち",
         url: candidate.sourceUrl ?? "",
         linkText: "確認",
@@ -2453,7 +2624,7 @@ function buildActionItems() {
     }
     if (detailTargetId.startsWith("candidate:")) {
       const name = detailTargetId.slice("candidate:".length);
-      return discoveryCandidates.some((candidate) => candidate.name === name);
+      return getUnifiedCandidates().some((candidate) => candidate.name === name);
     }
     if (detailTargetId.startsWith("extracted-route:")) {
       const routeId = detailTargetId.slice("extracted-route:".length);
@@ -2463,6 +2634,7 @@ function buildActionItems() {
   };
 
   return [...topLotteryItems, ...topProfitItems, ...topCandidateItems, ...topRecheckItems]
+    .map((item) => attachSelectionNarrative(item))
     .filter((item) => hasDetailTargetData(item.detailTargetId))
     .sort(byUrgency)
     .slice(0, 36);
@@ -2590,6 +2762,21 @@ function renderActionItems() {
     body.className = "route-note";
     body.textContent = item.body;
 
+    const insight = document.createElement("div");
+    insight.className = "action-insight";
+    for (const [label, text] of [
+      ["選定理由", item.selectionReason],
+      ["概要", item.selectionSummary],
+      ["監視条件", item.watchCondition],
+    ]) {
+      const line = document.createElement("p");
+      line.className = "action-insight-line";
+      const strong = document.createElement("strong");
+      strong.textContent = `${label}: `;
+      line.append(strong, document.createTextNode(text || "確認中"));
+      insight.append(line);
+    }
+
     const variantList = document.createElement("div");
     variantList.className = "action-condition-list";
     for (const variant of item.variantSummary ?? []) {
@@ -2681,7 +2868,7 @@ function renderActionItems() {
     checkLabel.append(checkbox, checkText);
     footer.append(checkLabel);
 
-    card.append(top, facts, body);
+    card.append(top, facts, body, insight);
     if ((item.variantSummary ?? []).length > 0) {
       card.append(variantList);
     }
@@ -3094,7 +3281,8 @@ function flowBucketForItem(item) {
   if (item.section === "外れた候補") return "memo";
   const bucket = layerBucketByStartTs(item.startTs);
   if (bucket !== "none") return bucket;
-  if (item.periodKind === "active") return "now";
+  const bounds = layerWindowBounds();
+  if (isFiniteTs(item.endTs) && item.endTs >= bounds.nowStart && item.endTs <= bounds.nowEnd) return "now";
   return "none";
 }
 
@@ -3204,9 +3392,9 @@ function buildProvisionalDeals() {
     ended: 9,
     ready: 9,
   };
-  return discoveryCandidates
+  return getUnifiedCandidates()
     .filter((candidate) => candidate.stageKind === "candidate")
-    .filter((candidate) => !isKujiCandidate(candidate))
+    .filter((candidate) => !isKujiCandidate(candidate) || shouldTrackKujiCandidate(candidate))
     .filter((candidate) => isConcreteCandidate(candidate))
     .filter((candidate) => candidate.confidence !== "低")
     .filter((candidate) => !candidate.endDate || isDateActive(candidate.endDate))
@@ -3488,7 +3676,7 @@ function renderDeals() {
     }
   }
 
-  const promotedCandidates = discoveryCandidates
+  const promotedCandidates = getUnifiedCandidates()
     .filter((candidate) => shouldPromoteCandidateToToday(candidate))
     .filter((candidate) => !provisionalDeals.some((item) => item.name === candidate.name));
   if (promotedCandidates.length > 0) {
@@ -3502,6 +3690,7 @@ function renderDeals() {
 }
 
 function renderSummary(deals = getFilteredDeals()) {
+  const activeDeals = deals.filter((deal) => dealAvailability(deal).kind === "active");
   const actionableDeals = deals.filter((deal) => {
     const calc = calculateDeal(deal);
     return isActionableDeal(deal, calc);
@@ -3511,9 +3700,8 @@ function renderSummary(deals = getFilteredDeals()) {
   const visibleTrends = trends.filter(shouldDisplayTrend);
   const backlog = candidateValidationBacklog();
   const profitReady = actionableDeals.length;
-  const activeReleases = getVisiblePokemonReleases();
+  const recheckDeals = activeDeals.filter((deal) => dealFilterState(deal).kind === "recheck");
   const actionableByProfit = deals.filter((deal) => isActionableDeal(deal, calculateDeal(deal)));
-  const releaseTargets = getVisiblePokemonReleases().flatMap((release) => getActiveRoutes(release));
   const releaseTargetNames = getVisiblePokemonReleases()
     .map((release) => release.name)
     .filter(Boolean);
@@ -3528,11 +3716,13 @@ function renderSummary(deals = getFilteredDeals()) {
   const previousRouteSet = new Set((previousOverview?.activeRouteKeys ?? []).map((item) => item.key));
   const newlyStartedRoutes = overview.activeRouteKeys.filter((item) => !previousRouteSet.has(item.key)).slice(0, 3);
   const topProducts = [
+    ...activeDeals.map((deal) => deal.name),
     ...actionableByProfit.map((deal) => deal.name),
     ...releaseTargetNames,
     ...extractedTargets.slice(0, 4).map((route) => route?.name).filter(Boolean),
   ]
     .filter(Boolean)
+    .filter((name, index, arr) => arr.indexOf(name) === index)
     .slice(0, 3);
 
   const changes = [];
@@ -3548,7 +3738,7 @@ function renderSummary(deals = getFilteredDeals()) {
     topProducts.length > 0
       ? `今日は ${topProducts.join("、")} が中心です。`
       : "今日は大きな商品移動が少なく、次の開始枠を待っている状態です。";
-  const activitySentence = `利益候補 ${overview.profitReady}件、抽選ルート ${overview.activeLotteryRoutes}件、急上昇 ${overview.visibleTrends}件を追跡しています。`;
+  const activitySentence = `利益候補は 利益成立 ${overview.profitReady}件 / 要再確認 ${recheckDeals.length}件、抽選ルート ${overview.activeLotteryRoutes}件、急上昇 ${overview.visibleTrends}件を追跡しています。`;
   const changeSentence =
     changes.length > 0
       ? `前回からは ${changes.join("、")} の変化がありました。`
@@ -3563,32 +3753,38 @@ function renderSummary(deals = getFilteredDeals()) {
     overview.backlogTotal > 0
       ? `未確定は ${overview.backlogTotal}件で、期間・価格・導線の不足を埋めると上位に昇格します。`
       : "未確定の詰まりは少なく、実行寄りの状態です。";
-  const urgentEndTargets = [...actionableByProfit]
-    .filter((deal) => deal.saleEndDate && isDateActive(deal.saleEndDate))
-    .sort(
-      (a, b) =>
-        (parseFlexibleTs(a.saleEndDate, { defaultTime: "end" }) ?? Number.MAX_SAFE_INTEGER) -
-        (parseFlexibleTs(b.saleEndDate, { defaultTime: "end" }) ?? Number.MAX_SAFE_INTEGER),
-    )
-    .slice(0, 2)
-    .map((deal) => deal.name);
+  const urgentEndEntries = [];
+  for (const deal of activeDeals) {
+    const endTs = parseFlexibleTs(deal.saleEndDate, { defaultTime: "end" });
+    if (!Number.isFinite(endTs) || endTs < Date.now()) continue;
+    urgentEndEntries.push({ name: deal.name, endTs });
+  }
+  for (const release of getVisiblePokemonReleases()) {
+    for (const route of getActiveRoutes(release)) {
+      const endTs = parseFlexibleTs(routeEffectiveDeadline(route, release), { defaultTime: "end" });
+      if (!Number.isFinite(endTs) || endTs < Date.now()) continue;
+      urgentEndEntries.push({ name: `${release.name} / ${displayRouteName(route)}`, endTs });
+    }
+  }
+  for (const route of getActiveExtractedLotteryRoutes()) {
+    const endTs = parseFlexibleTs(routeEffectiveDeadline(route), { defaultTime: "end" });
+    if (!Number.isFinite(endTs) || endTs < Date.now()) continue;
+    urgentEndEntries.push({ name: displayRouteName(route), endTs });
+  }
+  const urgentEndTargets = urgentEndEntries
+    .sort((a, b) => a.endTs - b.endTs)
+    .map((item) => item.name)
+    .filter((name, index, arr) => arr.indexOf(name) === index)
+    .slice(0, 3);
   const urgencySentence =
     urgentEndTargets.length > 0
       ? `終了が近いのは ${urgentEndTargets.join("、")} です。`
       : "終了が迫る対象は少なく、抽選側の確認を優先できます。";
-  const body = [topicSentence, activitySentence, changeSentence, routeSentence, backlogSentence]
-    .filter(Boolean)
-    .join(" ");
   const longBody = [topicSentence, activitySentence, changeSentence, routeSentence, urgencySentence, backlogSentence]
     .filter(Boolean)
     .join(" ");
   state.dataMeta.overviewNarrative = longBody;
 
-  if (elements.aiSummaryTitle) elements.aiSummaryTitle.textContent = "全体まとめ";
-  if (elements.aiSummaryBody) elements.aiSummaryBody.textContent = body;
-  if (elements.aiSummaryMeta) {
-    elements.aiSummaryMeta.textContent = `ポケカ ${activeReleases.length}件 / 抽選 ${overview.activeLotteryRoutes}件`;
-  }
   elements.sidebarFee.textContent = state.settings.feeRate.toString();
   writeOverviewState(overview);
 }
