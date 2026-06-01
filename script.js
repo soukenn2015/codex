@@ -800,6 +800,7 @@ const state = {
     packingCost: 80,
   },
   notifications: readNotificationSettings(),
+  predictionLearning: readPredictionLearning(),
   dataMeta: {
     source: "seed",
     updatedAt: null,
@@ -902,6 +903,20 @@ function isVisibleDiscoveryCandidate(candidate) {
   );
 }
 
+function isOverlappingWithActionable(candidateName) {
+  const key = normalizeSignalText(candidateName);
+  if (!key) return false;
+  const inDeals = state.deals.some((deal) => {
+    const name = normalizeSignalText(deal.name);
+    return name && (name.includes(key) || key.includes(name));
+  });
+  const inReleases = pokemonReleases.some((release) => {
+    const name = normalizeSignalText(release.name);
+    return name && (name.includes(key) || key.includes(name));
+  });
+  return inDeals || inReleases;
+}
+
 function priorityFromRoute(route, status) {
   if (status.kind === "active" && route.priority === "high") return "高";
   if (status.kind === "active") return "中";
@@ -930,6 +945,7 @@ const elements = {
   lotterySummary: document.querySelector("#lotterySummary"),
   pokecaToggle: document.querySelector("#pokecaToggle"),
   trendList: document.querySelector("#trendList"),
+  archiveCandidateList: document.querySelector("#archiveCandidateList"),
   template: document.querySelector("#dealTemplate"),
   routeTemplate: document.querySelector("#routeTemplate"),
   searchInput: document.querySelector("#searchInput"),
@@ -1296,6 +1312,77 @@ function saveNotificationSettings() {
   }
 }
 
+function readPredictionLearning() {
+  try {
+    return JSON.parse(localStorage.getItem("marketlens-prediction-learning") || '{"records":[],"offsetByIp":{}}');
+  } catch {
+    return { records: [], offsetByIp: {} };
+  }
+}
+
+function savePredictionLearning() {
+  try {
+    localStorage.setItem("marketlens-prediction-learning", JSON.stringify(state.predictionLearning));
+  } catch {
+    // Learning persistence is optional.
+  }
+}
+
+function applyPredictionLearning(ip, baseMedian) {
+  const offset = Number(state.predictionLearning?.offsetByIp?.[ip] ?? 0);
+  return Math.max(500, Math.round(baseMedian + offset));
+}
+
+function predictionLearningSummary(ip) {
+  const records = Array.isArray(state.predictionLearning?.records) ? state.predictionLearning.records : [];
+  const scoped = records.filter((item) => item.ip === ip);
+  const offset = Number(state.predictionLearning?.offsetByIp?.[ip] ?? 0);
+  return {
+    samples: scoped.length,
+    offset,
+  };
+}
+
+function overallPredictionMetrics() {
+  const records = Array.isArray(state.predictionLearning?.records) ? state.predictionLearning.records : [];
+  if (records.length === 0) return { count: 0, mae: null, mape: null };
+  const mae = records.reduce((sum, item) => sum + Math.abs(item.error ?? 0), 0) / records.length;
+  const mapeBase = records.filter((item) => Number.isFinite(item.predictedMedian) && item.predictedMedian > 0);
+  const mape =
+    mapeBase.length > 0
+      ? (mapeBase.reduce((sum, item) => sum + Math.abs((item.error ?? 0) / item.predictedMedian), 0) / mapeBase.length) * 100
+      : null;
+  return { count: records.length, mae, mape };
+}
+
+function recordPredictionResult(special, predictedMedian, actualMarketPrice) {
+  if (!special?.id || !Number.isFinite(predictedMedian) || !Number.isFinite(actualMarketPrice)) return;
+  const key = `${special.id}:${special.releaseDate ?? "na"}:${actualMarketPrice}`;
+  const records = Array.isArray(state.predictionLearning.records) ? state.predictionLearning.records : [];
+  if (records.some((item) => item.key === key)) return;
+  const error = actualMarketPrice - predictedMedian;
+  records.push({
+    key,
+    id: special.id,
+    ip: special.ip ?? "unknown",
+    predictedMedian,
+    actualMarketPrice,
+    error,
+    recordedAt: new Date().toISOString(),
+  });
+  const ip = special.ip ?? "unknown";
+  const byIp = records.filter((item) => item.ip === ip).slice(-12);
+  const avgError = byIp.length > 0 ? byIp.reduce((sum, item) => sum + item.error, 0) / byIp.length : 0;
+  state.predictionLearning = {
+    records: records.slice(-200),
+    offsetByIp: {
+      ...(state.predictionLearning?.offsetByIp ?? {}),
+      [ip]: Math.round(avgError),
+    },
+  };
+  savePredictionLearning();
+}
+
 function routeApplyKey(release, route) {
   return [
     release.id,
@@ -1571,7 +1658,11 @@ function trendDisplayPhase(trend) {
   if (startTs && startTs > now) {
     const leadHours = (startTs - now) / 3_600_000;
     const leadDays = (startTs - now) / 86_400_000;
-    if (leadDays < trendEarlyWindowMinDays) return null;
+    if (leadDays < trendEarlyWindowMinDays) {
+      if (leadDays >= trendFocusWindowMinDays) return "focus";
+      if (leadDays >= 0) return "immediate";
+      return null;
+    }
     if (leadHours < trendMinLeadHours && (trend.score ?? 0) < 88 && (trend.historyRecentHits ?? 0) < 6) return null;
     if (leadDays > trendFutureWindowDays) return null;
     return "early";
@@ -1589,6 +1680,14 @@ function shouldDisplayTrend(trend) {
   const genericTitles = new Set(["品薄", "品薄完売", "プレ値sns", "プレ値"]);
   if (genericTitles.has(title)) return false;
   return Boolean(trendDisplayPhase(trend));
+}
+
+function trendPhaseLabel(trend) {
+  const phase = trendDisplayPhase(trend);
+  if (phase === "early") return "先行";
+  if (phase === "focus") return "重点";
+  if (phase === "immediate") return "直前";
+  return "監視";
 }
 
 function isEarlySignalTrend(trend) {
@@ -1805,7 +1904,8 @@ function buildActionItems() {
       const scopes = [...new Set(sortedRoutes.map((route) => route.scope))].join(" / ");
 
       lotteryItems.push({
-        kind: activeRoutes.length > 0 ? "lottery" : "upcoming",
+      kind: activeRoutes.length > 0 ? "lottery" : "upcoming",
+      originLabel: "抽選ルート",
         label: activeRoutes.length > 0 ? `応募 ${activeRoutes.length}` : "抽選前",
         checkLabel: doneCount === sortedRoutes.length ? "全て応募済み" : "まとめて応募済み",
         actionKey: release.id,
@@ -1861,6 +1961,7 @@ function buildActionItems() {
     .filter(({ deal, calc }) => isActionableDeal(deal, calc))
     .map(({ deal, calc }) => ({
       kind: "profit",
+      originLabel: "利益候補",
       label: "利益",
       checkLabel: "確認済み",
       actionKey: dealActionKey(deal, "profit"),
@@ -1890,6 +1991,7 @@ function buildActionItems() {
     .filter(({ availability, priceSignal }) => availability.kind === "active" && priceSignal.kind === "recheck")
     .map(({ deal, calc }) => ({
       kind: "recheck",
+      originLabel: "再確認",
       label: "再確認",
       checkLabel: "確認済み",
       actionKey: dealActionKey(deal, "recheck"),
@@ -1957,11 +2059,15 @@ function buildTodayEmptyReasons() {
   const activeRoutes = pokemonReleases
     .flatMap((release) => releaseRoutes(release))
     .filter((route) => routePeriod(route).kind !== "ended").length;
+  const detailLinkedDeals = activeDeals.filter((deal) => hasDetailTarget(dealDetailTargetId(deal))).length;
+  const visibleReleases = pokemonReleases.filter((release) => releaseWatchState(release).kind === "active");
+  const detailLinkedReleases = visibleReleases.filter((release) => hasDetailTarget(releaseDetailTargetId(release))).length;
   return [
     `利益候補 対象 ${actionableDeals.length}/${activeDeals.length}`,
     `利益未達 ${belowProfit}`,
     `信頼度低 ${lowConfidence}`,
     `抽選ルート 対象 ${activeRoutes}`,
+    `詳細紐付け 利益 ${detailLinkedDeals}/${activeDeals.length} / 抽選 ${detailLinkedReleases}/${visibleReleases.length}`,
     `急上昇由来は今日見るものへ直接昇格しないルール`,
   ];
 }
@@ -2003,6 +2109,7 @@ function renderActionItems() {
     const facts = document.createElement("div");
     facts.className = "action-facts";
     for (const [text, kind] of [
+      [`由来 ${item.originLabel ?? "実行候補"}`, "deadline"],
       [`優先度 ${item.priority}`, item.priority === "高" ? "high" : item.priority === "中" ? "medium" : "low"],
       [`信頼度 ${item.confidence}`, item.confidence === "高" ? "high" : item.confidence === "中" ? "medium" : "low"],
       [item.deadline, "deadline"],
@@ -2494,6 +2601,7 @@ function renderTrends() {
 
   const visibleTrends = trends
     .filter(shouldDisplayTrend)
+    .filter((trend) => !isOverlappingWithActionable(displayTrendKeyword(trend.keyword)))
     .sort((a, b) => (trendStartTimestamp(a) ?? Number.MAX_SAFE_INTEGER) - (trendStartTimestamp(b) ?? Number.MAX_SAFE_INTEGER));
 
   for (const trend of visibleTrends) {
@@ -2508,7 +2616,7 @@ function renderTrends() {
     const scoreValue = document.createElement("strong");
 
     title.textContent = displayTrendKeyword(trend.keyword);
-    meta.textContent = `信頼度 ${trend.confidence} / ${trend.type} / 開始 ${formatDateOnly(
+    meta.textContent = `フェーズ ${trendPhaseLabel(trend)} / 信頼度 ${trend.confidence} / ${trend.type} / 開始 ${formatDateOnly(
       trend.startDate,
       "開始日未取得",
     )} / 終了 ${formatDateOnly(trend.endDate, "終了日未取得")} / ${trend.context}`;
@@ -2522,6 +2630,74 @@ function renderTrends() {
     content.append(title, meta, action);
     node.append(content, score);
     elements.trendList.append(node);
+  }
+}
+
+function archiveReasonForCandidate(candidate) {
+  const state = candidateValidationState(candidate);
+  if (state === "ended") return "期間終了";
+  if (state === "missing_period") return "期間不足";
+  if (state === "missing_price") return "価格不足";
+  if (state === "missing_route") return "導線不足";
+  if (candidate.confidence === "低") return "信頼度低";
+  return "優先度外";
+}
+
+function archiveRecoveryHint(candidate) {
+  const state = candidateValidationState(candidate);
+  if (state === "ended") return "復帰なし（新規シグナル待ち）";
+  if (state === "missing_period") return "開始日/終了日の取得で復帰";
+  if (state === "missing_price") return "定価/相場の取得で復帰";
+  if (state === "missing_route") return "応募/販売導線の取得で復帰";
+  if (candidate.confidence === "低") return "他ソース一致で復帰";
+  return "条件再充足で復帰";
+}
+
+function renderArchivedCandidates() {
+  if (!elements.archiveCandidateList) return;
+  elements.archiveCandidateList.replaceChildren();
+
+  const archived = discoveryCandidates
+    .filter((candidate) => {
+      const validationState = candidateValidationState(candidate);
+      return (
+        validationState === "ended" ||
+        validationState === "missing_period" ||
+        validationState === "missing_price" ||
+        validationState === "missing_route" ||
+        candidate.confidence === "低"
+      );
+    })
+    .sort((a, b) => (b.historyRecentHits ?? 0) - (a.historyRecentHits ?? 0))
+    .slice(0, 10);
+
+  if (archived.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "detail-box";
+    empty.hidden = false;
+    empty.textContent = "外れた候補はありません。";
+    elements.archiveCandidateList.append(empty);
+    return;
+  }
+
+  for (const candidate of archived) {
+    const node = document.createElement("article");
+    node.className = "trend-item";
+    const content = document.createElement("div");
+    const title = document.createElement("strong");
+    const meta = document.createElement("span");
+    const action = document.createElement("small");
+    const recovery = document.createElement("small");
+    title.textContent = candidate.name;
+    meta.textContent = `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(
+      candidate.endDate,
+      "未取得",
+    )} / 信頼度 ${candidate.confidence}`;
+    action.textContent = `除外理由: ${archiveReasonForCandidate(candidate)}`;
+    recovery.textContent = `復帰条件: ${archiveRecoveryHint(candidate)}`;
+    content.append(title, meta, action, recovery);
+    node.append(content);
+    elements.archiveCandidateList.append(node);
   }
 }
 
@@ -2551,8 +2727,9 @@ function renderDiscoveryCandidates() {
   elements.discoveryList.replaceChildren();
 
   const visibleCandidates = discoveryCandidates.filter(isVisibleDiscoveryCandidate);
+  const laneFilteredCandidates = visibleCandidates.filter((candidate) => !isOverlappingWithActionable(candidate.name));
 
-  if (visibleCandidates.length === 0) {
+  if (laneFilteredCandidates.length === 0) {
     const empty = document.createElement("div");
     empty.className = "detail-box";
     empty.hidden = false;
@@ -2562,7 +2739,7 @@ function renderDiscoveryCandidates() {
     return;
   }
 
-  for (const candidate of visibleCandidates) {
+  for (const candidate of laneFilteredCandidates) {
     const node = document.createElement("article");
     node.className = "discovery-card";
 
@@ -2726,11 +2903,33 @@ function buildKujiPrediction(special) {
         ? "候補には残す。賞構成と初動成約が揃うまで買い判断は保留。"
         : "今は薄い。話題化か完売シグナルが出るまで通常監視で十分。";
 
+  const basePredictedMedian = Math.round(1800 + score * 95);
+  const predictedMedian = applyPredictionLearning(special.ip ?? "unknown", basePredictedMedian);
+  const learning = predictionLearningSummary(special.ip ?? "unknown");
+  const predictedLow = Math.max(500, Math.round(predictedMedian * 0.82));
+  const predictedHigh = Math.round(predictedMedian * 1.18);
+  const actualMarketPrice = Number.isFinite(special.actualMarketPrice)
+    ? special.actualMarketPrice
+    : Number.isFinite(special.marketPrice)
+      ? special.marketPrice
+      : null;
+  const error = Number.isFinite(actualMarketPrice) ? actualMarketPrice - predictedMedian : null;
+  const errorRate = Number.isFinite(error) && predictedMedian > 0 ? (error / predictedMedian) * 100 : null;
+
   return {
     score,
     grade,
     kind,
     conclusion,
+    predictedLow,
+    basePredictedMedian,
+    predictedMedian,
+    learningSamples: learning.samples,
+    learningOffset: learning.offset,
+    predictedHigh,
+    actualMarketPrice,
+    error,
+    errorRate,
     factors: [
       ["過去相場", pastLabel],
       ["現在反応", reactionLabel],
@@ -2764,7 +2963,18 @@ function createKujiPredictionBox(prediction) {
 
   const conclusion = document.createElement("p");
   conclusion.className = "kuji-prediction-conclusion";
-  conclusion.textContent = prediction.conclusion;
+  const predicted = `予想レンジ ${yen.format(prediction.predictedLow)} - ${yen.format(prediction.predictedHigh)}（中央値 ${yen.format(
+    prediction.predictedMedian,
+  )}）`;
+  const learning = ` / 学習補正 ${prediction.learningOffset >= 0 ? "+" : ""}${yen.format(
+    prediction.learningOffset,
+  )} / 学習件数 ${prediction.learningSamples}`;
+  const actual = Number.isFinite(prediction.actualMarketPrice)
+    ? ` / 実測 ${yen.format(prediction.actualMarketPrice)} / 誤差 ${prediction.error >= 0 ? "+" : ""}${yen.format(
+        prediction.error,
+      )} (${prediction.errorRate >= 0 ? "+" : ""}${prediction.errorRate.toFixed(1)}%)`
+    : " / 実測待ち";
+  conclusion.textContent = `${prediction.conclusion} ${predicted}${learning}${actual}`;
 
   box.append(top, grid, conclusion);
   return box;
@@ -2800,10 +3010,13 @@ function renderKujiSpecials() {
       return releaseTime > now;
     }).length;
     const hiddenCount = kujiSpecials.length - visibleSpecials.length;
+    const metrics = overallPredictionMetrics();
     elements.kujiSpecialSummary.textContent = [
       `表示 ${visibleSpecials.length}件`,
       activeCount ? `発売7日以内 ${activeCount}件` : "",
       upcomingCount ? `1ヶ月先まで ${upcomingCount}件` : "",
+      metrics.count > 0 ? `予想精度 MAE ${yen.format(Math.round(metrics.mae ?? 0))}` : "",
+      metrics.count > 0 && Number.isFinite(metrics.mape) ? `MAPE ${metrics.mape.toFixed(1)}%` : "",
       hiddenCount ? `期間外 ${hiddenCount}件は非表示` : "",
     ]
       .filter(Boolean)
@@ -2833,7 +3046,11 @@ function renderKujiSpecials() {
     status.textContent = special.status;
     top.append(heading, status);
 
-    const prediction = createKujiPredictionBox(buildKujiPrediction(special));
+    const predictionData = buildKujiPrediction(special);
+    if (Number.isFinite(predictionData.actualMarketPrice)) {
+      recordPredictionResult(special, predictionData.predictedMedian, predictionData.actualMarketPrice);
+    }
+    const prediction = createKujiPredictionBox(predictionData);
 
     const rows = document.createElement("div");
     rows.className = "kuji-special-rows";
@@ -3505,6 +3722,7 @@ function bindEvents() {
 function renderAll() {
   renderRoutes();
   renderTrends();
+  renderArchivedCandidates();
   renderKujiSpecials();
   renderDiscoveryCandidates();
   renderMarketMemory();

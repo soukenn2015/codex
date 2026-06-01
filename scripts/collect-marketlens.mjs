@@ -334,16 +334,23 @@ function detectOfficialSignals(text) {
     ["コラボ", /コラボ|キャンペーン/],
     ["記念コンテンツ", /記念コンテンツ|記念/],
     ["発売予定", /発売|予約|販売/],
+    ["X話題", /x\.com|twitter|ポスト|リポスト|いいね|トレンド/i],
+    ["可愛い系", /ちいかわ|すみっコ|サンリオ|カービィ|マスコット|ぬいぐるみ|キーホルダー|かわいい|可愛い/i],
   ];
   return signalRules.filter(([, pattern]) => pattern.test(text)).map(([label]) => label);
 }
 
-function calculateOfficialScore(source, result, signals) {
+function calculateOfficialScore(source, result, signals, text = "") {
   if (!result.ok || !result.keywordFound) return Math.min(source.trend?.score ?? 50, 50);
   const base = source.trend?.score ?? 62;
   const bonus = Math.min(9, signals.length * 2);
   const searchPenalty = isSearchLikeUrl(result.url || source.url) ? 8 : 0;
-  return Math.min(95, Math.max(45, base + bonus - searchPenalty));
+  const socialText = [source?.trend?.type, source?.trend?.context, source?.candidate?.reason, text].join(" ");
+  const xBuzzBoost = /x\.com|twitter|sns監視|リアルタイム|トレンド/i.test(socialText) ? 6 : 0;
+  const cuteMascotBoost = /ちいかわ|すみっコ|サンリオ|カービィ|マスコット|ぬいぐるみ|キーホルダー|かわいい|可愛い/i.test(socialText)
+    ? 5
+    : 0;
+  return Math.min(98, Math.max(45, base + bonus + xBuzzBoost + cuteMascotBoost - searchPenalty));
 }
 
 function inferMonitoringEndDate(source, newsDate, signals) {
@@ -368,7 +375,7 @@ function parseOfficialTrendCandidate(source, result) {
     toIsoDateFromJapanese(extractFirst(text, [/(\d{4}年\d{1,2}月\d{1,2}日)/])) ?? result.fetchedAt.slice(0, 10);
   const signals = detectOfficialSignals(text);
   const signalText = signals.length > 0 ? signals.join(" / ") : trend.context ?? "公式ニュース";
-  const score = calculateOfficialScore(source, result, signals);
+  const score = calculateOfficialScore(source, result, signals, text);
   const confidence = officialSourceConfidence(source, result);
   const endDate = inferMonitoringEndDate(source, newsDate, signals);
   const retailPrice = canUseRetailExtraction(source, candidate, signals, result.url)
