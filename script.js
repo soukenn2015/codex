@@ -1861,6 +1861,16 @@ function candidateValidationState(candidate) {
   return "ready";
 }
 
+function marketFreshnessLabel(observedAt) {
+  if (!observedAt) return "未取得";
+  const ts = new Date(observedAt).getTime();
+  if (Number.isNaN(ts)) return "未取得";
+  const ageDays = (Date.now() - ts) / 86_400_000;
+  if (ageDays <= 1) return "新しい";
+  if (ageDays <= 3) return "通常";
+  return "要更新";
+}
+
 function itemPeriodRank(item) {
   if (item.periodKind === "active") return 0;
   if (item.periodKind === "upcoming") return 1;
@@ -2447,6 +2457,7 @@ function renderProvisionalCandidateCard(candidate, container) {
     candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
     candidate.marketPriceSource ? `相場ソース: ${candidate.marketPriceSource}` : "",
     candidate.marketObservedAt ? `相場取得: ${formatDateTime(candidate.marketObservedAt, "未取得")}` : "",
+    `相場鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
     `不足: ${candidateMissingReasons(candidate).join(" / ") || "数値再取得"}`,
     `取得先: ${candidateResearchTargets(candidate).join(" / ")}`,
     `検証状態: ${validationLabel}`,
