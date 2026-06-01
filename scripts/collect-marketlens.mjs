@@ -486,6 +486,24 @@ function makeMercariSoldLikeUrls(query) {
   ];
 }
 
+function extractCandidateProductLinksFromSearchHtml(html, baseUrl) {
+  if (!html) return [];
+  const links = extractLinksFromHtml(html, baseUrl);
+  const scored = links
+    .map((item) => {
+      const url = String(item.url ?? "");
+      let score = 0;
+      if (/jp\.mercari\.com\/item\/m/i.test(url)) score += 6;
+      if (/snkrdunk\.com\/products\//i.test(url)) score += 6;
+      if (/sold|売り切れ|成約/.test((item.anchorText ?? "").toLowerCase())) score += 3;
+      if (/search|keyword|articles/.test(url)) score -= 4;
+      return { url, score };
+    })
+    .filter((item) => item.score >= 4)
+    .sort((a, b) => b.score - a.score);
+  return [...new Set(scored.map((item) => item.url))].slice(0, 2);
+}
+
 function candidateMarketQueries(candidate) {
   const name = candidate?.name ?? "";
   const queries = [];
@@ -578,7 +596,16 @@ async function collectSpecializedCandidateMarkets(candidates) {
       const urls = [makeSearchUrl("https://snkrdunk.com/search?keyword=", query), ...makeMercariSoldLikeUrls(query)];
       for (const url of urls) {
         const result = await fetchSource({ id: `market:${candidate.name}:${url}`, url });
-        if (result.ok && result.text) pageBuckets.push({ url, text: result.text, fetchedAt: result.fetchedAt });
+        if (result.ok && result.text) {
+          pageBuckets.push({ url, text: result.text, fetchedAt: result.fetchedAt });
+          const detailLinks = extractCandidateProductLinksFromSearchHtml(result.html, result.url || url);
+          for (const detailUrl of detailLinks) {
+            const detailResult = await fetchSource({ id: `market-detail:${candidate.name}:${detailUrl}`, url: detailUrl });
+            if (detailResult.ok && detailResult.text) {
+              pageBuckets.push({ url: detailUrl, text: detailResult.text, fetchedAt: detailResult.fetchedAt });
+            }
+          }
+        }
       }
     }
     const extractedRows = pageBuckets
