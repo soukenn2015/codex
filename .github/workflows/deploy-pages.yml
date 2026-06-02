@@ -35,7 +35,7 @@ jobs:
 
       - name: Collect market data
         run: |
-          timeout 300s node scripts/collect-marketlens.mjs || echo "Collector skipped; deploying with existing snapshot."
+          timeout 90s node scripts/collect-marketlens.mjs || echo "Collector skipped; deploying with existing snapshot."
 
       - name: Update cachebuster
         run: node scripts/update-cachebuster.mjs
