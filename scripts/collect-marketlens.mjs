@@ -1171,12 +1171,26 @@ function candidateRouteTargetUrl(candidate) {
   return parsed.toString();
 }
 
+function candidateRouteIsUsable(targetUrl) {
+  return Boolean(targetUrl) && !routeTargetIsGeneric(targetUrl) && !isSearchLikeUrl(targetUrl);
+}
+
+function candidateMarketFreshnessState(observedAt) {
+  if (!observedAt) return "missing";
+  const ts = new Date(observedAt).getTime();
+  if (Number.isNaN(ts)) return "missing";
+  const ageDays = (Date.now() - ts) / 86_400_000;
+  if (ageDays <= 3) return "fresh";
+  return "stale";
+}
+
 function buildCandidateRouteVerification(candidate, result) {
   const targetUrl = candidateRouteTargetUrl(candidate);
   const issues = [];
   const labelParts = [];
+  const routeUsable = candidateRouteIsUsable(targetUrl);
   if (!targetUrl) issues.push("導線URL未設定");
-  if (targetUrl && (routeTargetIsGeneric(targetUrl) || isSearchLikeUrl(targetUrl))) {
+  if (targetUrl && !routeUsable) {
     issues.push("導線が汎用ページ");
   }
   if (result && !result.ok) {
@@ -1186,10 +1200,12 @@ function buildCandidateRouteVerification(candidate, result) {
     labelParts.push(`接続 ${verificationDateLabel(result.fetchedAt)}`);
   }
 
-  const status = !targetUrl ? "missing" : result?.ok ? (issues.length === 0 ? "verified" : "review") : "missing";
+  const alive = Boolean(result?.ok) && routeUsable;
+  const status = !targetUrl ? "missing" : alive ? (issues.length === 0 ? "verified" : "review") : "missing";
   return {
     status,
-    alive: Boolean(result?.ok),
+    alive,
+    usable: routeUsable,
     checkedAt: result?.fetchedAt ?? null,
     sourceStatus: result ? String(result.status) : "not-fetched",
     finalUrl: result?.url ?? targetUrl,
@@ -1198,8 +1214,24 @@ function buildCandidateRouteVerification(candidate, result) {
   };
 }
 
+async function fetchUrlResults(urls, idPrefix, concurrency = 6) {
+  const results = new Map();
+  for (let index = 0; index < urls.length; index += concurrency) {
+    const batch = urls.slice(index, index + concurrency);
+    const batchResults = await Promise.all(
+      batch.map(async (url) => {
+        const result = await fetchSource({ id: `${idPrefix}:${url}`, url });
+        return [url, result];
+      }),
+    );
+    for (const [url, result] of batchResults) {
+      results.set(url, result);
+    }
+  }
+  return results;
+}
+
 async function verifyCandidateRouteTargets(candidates) {
-  const routeResults = new Map();
   const targetUrls = [
     ...new Set(
       candidates
@@ -1207,11 +1239,7 @@ async function verifyCandidateRouteTargets(candidates) {
         .filter(Boolean),
     ),
   ];
-
-  for (const url of targetUrls) {
-    const result = await fetchSource({ id: `candidate-route:${url}`, url });
-    routeResults.set(url, result);
-  }
+  const routeResults = await fetchUrlResults(targetUrls, "candidate-route");
 
   const enrichedCandidates = candidates.map((candidate) => {
     const targetUrl = candidateRouteTargetUrl(candidate);
@@ -1219,6 +1247,7 @@ async function verifyCandidateRouteTargets(candidates) {
     return {
       ...candidate,
       routeAlive: verification.alive,
+      routeUsable: verification.usable,
       routeStatus: verification.sourceStatus,
       routeCheckedAt: verification.checkedAt,
       routeFinalUrl: verification.finalUrl,
@@ -1240,6 +1269,7 @@ function summarizeCandidateKpi(candidates) {
   let ready = 0;
   let missingPeriod = 0;
   let missingPrice = 0;
+  let stalePrice = 0;
   let missingRoute = 0;
   let blogSns = 0;
   let routeChecked = 0;
@@ -1251,13 +1281,15 @@ function summarizeCandidateKpi(candidates) {
     const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
     const hasRoute = Boolean(candidate?.sourceUrl);
     const isRouteAlive = candidate.routeAlive !== false;
+    const isRouteUsable = candidate.routeUsable !== false && candidateRouteIsUsable(candidateRouteTargetUrl(candidate));
     const hasName = String(candidate?.name ?? "").trim().length >= 2;
     const channel = String(candidate?.sourceChannel ?? "");
+    const freshnessState = candidateMarketFreshnessState(candidate.marketObservedAt);
 
     if (channel === "blog" || channel === "sns") blogSns += 1;
     if (hasName) withProductName += 1;
     if (candidate.routeCheckedAt) routeChecked += 1;
-    if (hasRoute && isRouteAlive) routeAlive += 1;
+    if (hasRoute && isRouteUsable && isRouteAlive) routeAlive += 1;
 
     if (!periodKnown) {
       missingPeriod += 1;
@@ -1267,8 +1299,12 @@ function summarizeCandidateKpi(candidates) {
       missingPrice += 1;
       continue;
     }
-    if (!hasRoute || !isRouteAlive) {
+    if (!hasRoute || !isRouteUsable || !isRouteAlive) {
       missingRoute += 1;
+      continue;
+    }
+    if (freshnessState === "stale") {
+      stalePrice += 1;
       continue;
     }
     ready += 1;
@@ -1279,6 +1315,7 @@ function summarizeCandidateKpi(candidates) {
     ready,
     missingPeriod,
     missingPrice,
+    stalePrice,
     missingRoute,
     blogSns,
     withProductName,

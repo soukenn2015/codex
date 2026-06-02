@@ -2263,10 +2263,14 @@ function candidateValidationState(candidate) {
   const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
   const hasRoute = Boolean(candidate.sourceUrl);
   const routeAlive = candidate.routeAlive !== false;
+  const routeUsable =
+    candidate.routeUsable !== false &&
+    !routeTargetIsGeneric(candidate.sourceUrl ?? "") &&
+    !routeTargetIsSearchLike(candidate.sourceUrl ?? "");
   if (!periodKnown) return "missing_period";
   if (!periodActive) return "ended";
   if (!hasPrice) return "missing_price";
-  if (!hasRoute || !routeAlive) return "missing_route";
+  if (!hasRoute || !routeUsable || !routeAlive) return "missing_route";
   if (marketFreshnessLabel(candidate.marketObservedAt) === "要更新") return "stale_price";
   return "ready";
 }
@@ -4668,6 +4672,16 @@ function routeTargetIsGeneric(url) {
       parsed.hostname === "www.pokemoncenter-online.com" ||
       /snkrdunk\.com$/.test(parsed.hostname)
     );
+  } catch {
+    return true;
+  }
+}
+
+function routeTargetIsSearchLike(url) {
+  if (!url) return true;
+  try {
+    const parsed = new URL(url);
+    return /[?&](q|query|keyword|search)=/i.test(parsed.search) || /\/search/i.test(parsed.pathname);
   } catch {
     return true;
   }
