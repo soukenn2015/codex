@@ -1264,7 +1264,9 @@ function requestJson(path) {
     request.open("GET", `${path}?t=${Date.now()}`);
     request.responseType = "json";
     request.onload = () => {
-      if (request.status >= 200 && request.status < 300) {
+      const hasBody = typeof request.responseText === "string" && request.responseText.trim().length > 0;
+      const isLocalFileSuccess = request.status === 0 && hasBody;
+      if ((request.status >= 200 && request.status < 300) || isLocalFileSuccess) {
         resolve(request.response ?? JSON.parse(request.responseText));
         return;
       }
@@ -2263,10 +2265,11 @@ function candidateValidationState(candidate) {
   const hasPrice = Number.isFinite(candidate?.retailPrice) || Number.isFinite(candidate?.marketPrice);
   const hasRoute = Boolean(candidate.sourceUrl);
   const routeAlive = candidate.routeAlive !== false;
+  const routeUrl = candidate.routeFinalUrl ?? candidate.sourceUrl ?? "";
   const routeUsable =
     candidate.routeUsable !== false &&
-    !routeTargetIsGeneric(candidate.sourceUrl ?? "") &&
-    !routeTargetIsSearchLike(candidate.sourceUrl ?? "");
+    !routeTargetIsGeneric(routeUrl) &&
+    !routeTargetIsSearchLike(routeUrl);
   if (!periodKnown) return "missing_period";
   if (!periodActive) return "ended";
   if (!hasPrice) return "missing_price";
@@ -3227,6 +3230,7 @@ function collectLayerRowsByBucket(bucketName) {
   const priorityRank = { 高: 0, 中: 1, 低: 2 };
   return buildFlowIndexItems()
     .filter((item) => flowBucketForItem(item) === bucketName)
+    .filter((item) => !(bucketName === "memo" && item.section === "外れた候補"))
     .map((item) => ({
       name: item.title,
       rank: (priorityRank[item.priority] ?? 1) * 10 + (sectionRank[item.section] ?? 9),
@@ -3262,20 +3266,19 @@ function collectFlowLayerRows() {
   const nowRows = collectNowLayerRows();
   const soonRows = collectTwoWeekLayerRows();
   const memoRows = collectSixMonthLayerRows();
+  const archived = archivedCandidatesForLayer();
   const nowNames = nowRows.slice(0, 3).map((row) => row.name).filter(Boolean);
   const soonNames = soonRows.slice(0, 3).map((row) => row.name).filter(Boolean);
   const memoNames = memoRows
-    .filter((row) => row.kind !== "archive")
     .slice(0, 2)
     .map((row) => row.name)
     .filter(Boolean);
-  const archived = memoRows.filter((row) => row.kind === "archive");
   const rows = [];
   const overviewText =
     state.dataMeta.overviewNarrative ??
     (nowNames.length > 0
-      ? `今日は ${nowNames.join("、")} が中心です。応募や価格確認は正本カードから進めます。`
-      : "今日は大きな更新が少ないため、次の開始枠を優先監視しています。");
+      ? `今日は ${nowNames.join("、")} を優先して見ます。`
+      : "今日は目立つ更新が少ないため、次の開始枠を先に押さえる日です。");
 
   rows.push({
     summary: true,
@@ -3289,8 +3292,8 @@ function collectFlowLayerRows() {
     ts: Date.now(),
     text:
       soonNames.length > 0
-        ? `近日チェックは ${soonNames.join("、")} です。開始前に不足情報を埋めます。`
-        : "近日チェックは少なめです。新規収集の更新待ちです。",
+        ? `このあと動きそうなのは ${soonNames.join("、")} です。開始前に日付と導線を固めます。`
+        : "近日チェックは少なめで、直近は今動いている対象の確認を優先できます。",
   });
   rows.push({
     summary: true,
@@ -3298,15 +3301,15 @@ function collectFlowLayerRows() {
     ts: Date.now(),
     text:
       memoNames.length > 0
-        ? `先読みでは ${memoNames.join("、")} を追跡中です。時期が来たら自動で上位へ移します。`
-        : "先読みは静かな状態です。中長期候補の収集を継続します。",
+        ? `少し先では ${memoNames.join("、")} を先回りで追っています。時期が近づいたら上段へ上げます。`
+        : "先読みは薄めで、次の有力候補を拾うための監視を続けています。",
   });
   if (archived.length > 0) {
     rows.push({
       summary: true,
       rank: 3,
       ts: Date.now(),
-      text: `外れ候補は ${archived.length} 件です。復帰条件を満たしたものから戻します。`,
+      text: `外れ候補は ${archived.length} 件あり、再販や抽選再開が見えたものから下段の外れた候補へ戻して確認します。`,
     });
   }
   return rows;
@@ -3435,7 +3438,7 @@ function renderProvisionalCandidateCard(candidate, container) {
   const headingWrap = document.createElement("div");
   const source = document.createElement("p");
   source.className = "shop-name";
-  source.textContent = `仮利益候補 / ${formatDateOnly(candidate.startDate, "開始日未取得")}-${formatDateOnly(candidate.endDate, "終了日未取得")}`;
+  source.textContent = `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(candidate.endDate, "未取得")}`;
   const title = document.createElement("h3");
   title.textContent = candidate.name;
   headingWrap.append(source, title);
@@ -3447,30 +3450,17 @@ function renderProvisionalCandidateCard(candidate, container) {
   const tags = document.createElement("div");
   tags.className = "tag-row";
   const validationState = candidateValidationState(candidate);
-  const validationTagText =
-    validationState === "missing_price"
-      ? "価格不足"
-      : validationState === "stale_price"
-        ? "相場要更新"
-        : validationState === "missing_route"
-          ? "導線不足"
-          : validationState === "missing_period"
-            ? "期間不足"
-            : "要確認";
-  for (const tagText of [`信頼度 ${candidate.confidence}`, `関連度 ${candidate.genreScore}`, candidate.marginSignal]) {
+  for (const tagText of [`信頼度 ${candidate.confidence}`, candidate.marginSignal, candidateActionPeriodKind(candidate) === "active" ? "期間中" : "開始前"]) {
+    if (!tagText) continue;
     const tag = document.createElement("span");
     tag.className = "tag";
     tag.textContent = tagText;
     tags.append(tag);
   }
-  const validationTag = document.createElement("span");
-  validationTag.className = "tag";
-  validationTag.textContent = `検証 ${validationTagText}`;
-  tags.append(validationTag);
 
   const note = document.createElement("p");
   note.className = "route-note";
-  note.textContent = compactReasonText(candidate.reason, "更新情報を確認");
+  note.textContent = compactReasonText(candidate.adoptionReason ?? candidate.reason, "更新情報を確認");
   main.append(titleRow, tags, note);
 
   const side = document.createElement("div");
@@ -3488,15 +3478,15 @@ function renderProvisionalCandidateCard(candidate, container) {
             ? "期間終了"
             : "準備完了";
   const lines = [
+    `開始: ${formatDateOnly(candidate.startDate, "未取得")}`,
+    `終了: ${formatDateOnly(candidate.endDate, "未取得")}`,
     `利益状態: ${profitSummary.value}`,
     candidate.retailPrice ? `公式価格: ${yen.format(candidate.retailPrice)}` : "",
     candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
-    candidate.marketPriceSource ? `相場ソース: ${candidate.marketPriceSource}` : "",
-    candidate.marketObservedAt ? `相場取得: ${formatDateTime(candidate.marketObservedAt, "未取得")}` : "",
     `相場鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
-    `不足: ${candidateMissingReasons(candidate).join(" / ") || "数値再取得"}`,
-    `取得先: ${candidateResearchTargets(candidate).join(" / ")}`,
-    `検証状態: ${validationLabel}`,
+    `不足情報: ${candidateMissingReasons(candidate).join(" / ") || "なし"}`,
+    `確認状況: ${validationLabel}`,
+    `理由: ${compactReasonText(candidate.reason, "更新情報を確認")}`,
   ];
   setDetailLines(side, lines);
 
@@ -3517,7 +3507,7 @@ function renderPromotedCandidateDetailCard(candidate, container) {
   const heading = document.createElement("div");
   const source = document.createElement("p");
   source.className = "shop-name";
-  source.textContent = `候補詳細 / 開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(candidate.endDate, "未取得")}`;
+  source.textContent = `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(candidate.endDate, "未取得")}`;
   const title = document.createElement("h3");
   title.textContent = candidate.name;
   heading.append(source, title);
@@ -3536,26 +3526,29 @@ function renderPromotedCandidateDetailCard(candidate, container) {
   side.className = "detail-box";
   side.hidden = false;
   const profitSummary = candidateProfitSummary(candidate);
+  const validationState = candidateValidationState(candidate);
   setDetailLines(side, [
+    `開始: ${formatDateOnly(candidate.startDate, "未取得")}`,
+    `終了: ${formatDateOnly(candidate.endDate, "未取得")}`,
     `利益状態: ${profitSummary.value}`,
+    candidate.retailPrice ? `公式価格: ${yen.format(candidate.retailPrice)}` : "",
     candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
-    candidate.marketPriceSource ? `相場ソース: ${candidate.marketPriceSource}` : "",
     `相場鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
-    `不足: ${candidateMissingReasons(candidate).join(" / ") || "なし"}`,
-    `取得先: ${candidateResearchTargets(candidate).join(" / ")}`,
-    `検証状態: ${
-      candidateValidationState(candidate) === "ready"
+    `不足情報: ${candidateMissingReasons(candidate).join(" / ") || "なし"}`,
+    `確認状況: ${
+      validationState === "ready"
         ? "準備完了"
-        : candidateValidationState(candidate) === "missing_price"
+        : validationState === "missing_price"
           ? "価格不足"
-          : candidateValidationState(candidate) === "missing_period"
+          : validationState === "missing_period"
             ? "期間不足"
-            : candidateValidationState(candidate) === "missing_route"
+            : validationState === "missing_route"
               ? "導線不足"
-              : candidateValidationState(candidate) === "stale_price"
+              : validationState === "stale_price"
                 ? "相場要更新"
                 : "要確認"
     }`,
+    `理由: ${compactReasonText(candidate.reason, "更新情報を確認")}`,
   ]);
 
   const footer = document.createElement("div");
@@ -3675,20 +3668,32 @@ function renderSummary(deals = getFilteredDeals()) {
       ? `今日は ${topProducts.join("、")} が中心です。`
       : "今日は大きな商品移動が少なく、次の開始枠を待っている状態です。";
   const activitySentence = `利益候補は 利益成立 ${overview.profitReady}件 / 要再確認 ${recheckDeals.length}件、抽選ルート ${overview.activeLotteryRoutes}件、急上昇 ${overview.visibleTrends}件を追跡しています。`;
+  const urgentStartNames = newlyStartedRoutes.map((item) => item.label).filter(Boolean);
+  const soonTargets = buildFlowIndexItems()
+    .filter((item) => flowBucketForItem(item) === "soon")
+    .map((item) => item.title)
+    .filter(Boolean)
+    .filter((name, index, arr) => arr.indexOf(name) === index)
+    .slice(0, 3);
+  const backlogTargets = buildProvisionalDeals()
+    .slice(0, 3)
+    .map((candidate) => `${candidate.name}（${candidateMissingReasons(candidate).slice(0, 2).join("・")}）`)
+    .filter(Boolean);
   const changeSentence =
     changes.length > 0
       ? `前回からは ${changes.join("、")} の変化がありました。`
       : previousOverview
         ? "前回からの件数変化は小さく、構成はほぼ維持されています。"
         : "";
-  const routeSentence =
-    newlyStartedRoutes.length > 0
-      ? `新しく始まった抽選は ${newlyStartedRoutes.map((item) => item.label).join("、")} です。`
+  const routeSentence = urgentStartNames.length > 0 ? `新しく動き始めたのは ${urgentStartNames.join("、")} です。` : "";
+  const soonSentence =
+    soonTargets.length > 0
+      ? `次に備えて見るのは ${soonTargets.join("、")} で、開始前のうちに日付と導線を固めたい状態です。`
       : "";
   const backlogSentence =
-    overview.backlogTotal > 0
-      ? `未確定は ${overview.backlogTotal}件で、期間・価格・導線の不足を埋めると上位に昇格します。`
-      : "未確定の詰まりは少なく、実行寄りの状態です。";
+    backlogTargets.length > 0
+      ? `まだ詰め切れていないのは ${backlogTargets.join("、")} あたりで、不足情報が埋まれば上段へ上がります。`
+      : "未確定の詰まりは少なく、すぐ見に行く対象が中心です。";
   const urgentEndEntries = [];
   for (const deal of activeDeals) {
     const endTs = parseFlexibleTs(deal.saleEndDate, { defaultTime: "end" });
@@ -3716,7 +3721,7 @@ function renderSummary(deals = getFilteredDeals()) {
     urgentEndTargets.length > 0
       ? `終了が近いのは ${urgentEndTargets.join("、")} です。`
       : "終了が迫る対象は少なく、抽選側の確認を優先できます。";
-  const longBody = [topicSentence, activitySentence, changeSentence, routeSentence, urgencySentence, backlogSentence]
+  const longBody = [topicSentence, routeSentence, soonSentence, activitySentence, urgencySentence, backlogSentence, changeSentence]
     .filter(Boolean)
     .join(" ");
   state.dataMeta.overviewNarrative = longBody;
