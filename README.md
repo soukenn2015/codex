@@ -59,7 +59,7 @@ https://soukenn2015.github.io/codex/
 ```
 
 GitHub Pages は `.github/workflows/deploy-pages.yml` で自動デプロイする。
-毎日 8:00 / 20:00 JST の2回、GitHub Actions が collector を実行して `data/marketlens.snapshot.json` と `data/marketlens.history.json` を更新し、公開ページへ反映する。
+毎日 8:00 / 20:00 JST の2回、GitHub Actions が collector を実行して `data/marketlens.snapshot.json`、`data/marketlens.history.json`、`data/marketlens.public-history.json` を更新する。
 
 手動更新したい場合は GitHub Actions の `Deploy MarketLens to GitHub Pages` を `workflow_dispatch` で実行する。
 
@@ -84,9 +84,13 @@ node scripts/collect-marketlens.mjs
 
 公開版では GitHub Actions が定期的に collector を実行する。collector 実行後は cachebuster を更新し、古い `script.js` / `styles.css` が残りにくい状態でデプロイする。
 
+GitHub Pages に載せる公開成果物は `public/` に分けて作る。公開側は `marketlens.snapshot.json` と軽量な `marketlens.public-history.json` だけを読む。フル履歴の `marketlens.history.json` は学習用としてリポジトリに保持するが、公開ページには載せない。
+
 `source-config.json` の `marketMemory` は、過去の話題性・相場・販売導線を蓄積する裏側の学習データ。画面には出さず、次回以降の優先度判断に使う。
 
-collectorは毎回、最新表示用の `data/marketlens.snapshot.json` に加えて、履歴用の `data/marketlens.history.json` に取得結果を追記する。保存対象は、利益候補、急上昇、AI検証候補、一番くじ特設、学習メモ、ポケカ弾別、取得ソース結果。
+collectorは毎回、最新表示用の `data/marketlens.snapshot.json` に加えて、履歴用の `data/marketlens.history.json` に取得結果を追記する。履歴は学習用に圧縮し、主に急上昇、商品候補、過去学習スコアを保存する。
+
+公開ページの前回比較用には、直近数回分だけを圧縮した `data/marketlens.public-history.json` を使う。
 
 フリマ/ECの価格差候補は `data/deal-candidates.csv` に追加する。collector実行時に `deals` としてsnapshotへ取り込まれ、画面側で手数料5%、送料210/750円、梱包費、値下げ余地込みの利益計算が走る。
 

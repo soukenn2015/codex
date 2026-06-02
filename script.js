@@ -1455,7 +1455,9 @@ async function loadResearchSnapshot({ rerender = false } = {}) {
   try {
     const [snapshot, history] = await Promise.all([
       requestJson("./data/marketlens.snapshot.json"),
-      requestJson("./data/marketlens.history.json").catch(() => null),
+      requestJson("./data/marketlens.public-history.json").catch(() =>
+        requestJson("./data/marketlens.history.json").catch(() => null),
+      ),
     ]);
     applyResearchSnapshot(snapshot);
     const runs = Array.isArray(history?.runs) ? history.runs : [];

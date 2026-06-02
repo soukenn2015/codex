@@ -4,6 +4,7 @@ const configUrl = new URL("../data/source-config.json", import.meta.url);
 const dealInputUrl = new URL("../data/deal-candidates.csv", import.meta.url);
 const outputUrl = new URL("../data/marketlens.snapshot.json", import.meta.url);
 const historyUrl = new URL("../data/marketlens.history.json", import.meta.url);
+const publicHistoryUrl = new URL("../data/marketlens.public-history.json", import.meta.url);
 
 const config = JSON.parse(await readFile(configUrl, "utf8"));
 
@@ -1458,6 +1459,53 @@ function buildYearlyProductLearning(historyRuns) {
   }));
 }
 
+function compactSnapshotForHistory(snapshot) {
+  return {
+    metadata: {
+      updatedAt: snapshot?.metadata?.updatedAt ?? null,
+      status: snapshot?.metadata?.status ?? null,
+      reachableSources: snapshot?.metadata?.reachableSources ?? null,
+      totalSources: snapshot?.metadata?.totalSources ?? null,
+    },
+    trends: snapshot?.trends ?? [],
+    discoveryCandidates: snapshot?.discoveryCandidates ?? [],
+    productLearning: snapshot?.productLearning ?? [],
+  };
+}
+
+function compactHistoryRun(run) {
+  return {
+    id: run?.id,
+    savedAt: run?.savedAt,
+    snapshot: compactSnapshotForHistory(run?.snapshot ?? {}),
+  };
+}
+
+function buildPublicHistory(historyRuns) {
+  return {
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    runs: historyRuns.slice(-3).map((run) => {
+      const snap = run.snapshot ?? {};
+      return {
+        id: run.id,
+        savedAt: run.savedAt,
+        snapshot: {
+          metadata: {
+            updatedAt: snap.metadata?.updatedAt ?? null,
+            status: snap.metadata?.status ?? null,
+          },
+          deals: snap.deals ?? [],
+          trends: snap.trends ?? [],
+          discoveryCandidates: snap.discoveryCandidates ?? [],
+          lotteryRoutes: snap.lotteryRoutes ?? [],
+          pokemonReleases: snap.pokemonReleases ?? [],
+        },
+      };
+    }),
+  };
+}
+
 function estimateCandidateMarketPrice(snapshot, historyRuns, candidate) {
   if (Number.isFinite(candidate.marketPrice)) {
     return {
@@ -1581,7 +1629,8 @@ const history = await readJsonFile(historyUrl, {
   version: 1,
   runs: [],
 });
-const historyRuns = history.runs ?? [];
+history.runs = (history.runs ?? []).slice(-365).map(compactHistoryRun);
+const historyRuns = history.runs;
 const yearlyLearning = buildYearlyProductLearning(historyRuns);
 const yearlyLearningMap = new Map(yearlyLearning.map((item) => [item.key, item]));
 const snapshot = {
@@ -1810,9 +1859,10 @@ history.updatedAt = snapshot.metadata.updatedAt;
 history.runs.push({
   id: snapshot.metadata.updatedAt,
   savedAt: new Date().toISOString(),
-  snapshot,
+  snapshot: compactSnapshotForHistory(snapshot),
 });
 
 await writeFile(historyUrl, `${JSON.stringify(history, null, 2)}\n`);
+await writeFile(publicHistoryUrl, `${JSON.stringify(buildPublicHistory(history.runs), null, 2)}\n`);
 
 console.log(`MarketLens snapshot written: ${okCount}/${sourceResults.length} sources reachable`);
