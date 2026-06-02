@@ -1188,7 +1188,8 @@ function buildCandidateRouteVerification(candidate, result) {
   const targetUrl = candidateRouteTargetUrl(candidate);
   const issues = [];
   const labelParts = [];
-  const routeUsable = candidateRouteIsUsable(targetUrl);
+  const resolvedUrl = result?.url ?? targetUrl;
+  const routeUsable = candidateRouteIsUsable(resolvedUrl);
   if (!targetUrl) issues.push("導線URL未設定");
   if (targetUrl && !routeUsable) {
     issues.push("導線が汎用ページ");
@@ -1208,7 +1209,7 @@ function buildCandidateRouteVerification(candidate, result) {
     usable: routeUsable,
     checkedAt: result?.fetchedAt ?? null,
     sourceStatus: result ? String(result.status) : "not-fetched",
-    finalUrl: result?.url ?? targetUrl,
+    finalUrl: resolvedUrl,
     summary: labelParts.join(" / ") || "接続未確認",
     issues,
   };

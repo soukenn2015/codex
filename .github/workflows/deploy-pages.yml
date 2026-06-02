@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 23 * * *"
+    - cron: "0 11 * * *"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -24,6 +27,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Collect market data
+        run: node scripts/collect-marketlens.mjs
+
+      - name: Update cachebuster
+        run: node scripts/update-cachebuster.mjs
+
+      - name: Run checks
+        run: |
+          node --check script.js
+          node --check scripts/collect-marketlens.mjs
+          node scripts/ui-regression-check.mjs
+          node scripts/regression-check.mjs
+
+      - name: Persist generated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/marketlens.snapshot.json data/marketlens.history.json index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh MarketLens data [skip ci]"
+            git push
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

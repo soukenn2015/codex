@@ -1354,10 +1354,10 @@ function formatUpdatedAt(value) {
 function updateDataStatus(label) {
   if (!elements.dataStatus) return;
   const backlog = candidateValidationBacklog();
-  const backlogText =
-    backlog.total > 0
-      ? ` / 未確定 ${backlog.total}（期間${backlog.missingPeriod} 価格${backlog.missingPrice} 鮮度${backlog.stalePrice} 導線${backlog.missingRoute}）`
-      : "";
+  if (label) {
+    elements.dataStatus.textContent = label.replace(/^Data:\s*/i, "");
+    return;
+  }
   const source =
     state.dataMeta.status === "partial" && state.dataMeta.reachableSources != null && state.dataMeta.totalSources != null
       ? `${state.dataMeta.source} partial ${state.dataMeta.reachableSources}/${state.dataMeta.totalSources}`
@@ -1372,9 +1372,9 @@ function updateDataStatus(label) {
     candidateKpi && Number.isFinite(candidateKpi.total)
       ? ` / 候補 ${candidateKpi.ready ?? 0}/${candidateKpi.total} 準備完了`
       : "";
-  elements.dataStatus.textContent =
-    label ??
-    `Data: ${source}${deals}${candidateKpiText}${routeKpiText} / ${formatUpdatedAt(state.dataMeta.updatedAt)}${backlogText}`;
+  const backlogText = backlog.total > 0 ? ` / 未確定 ${backlog.total}件` : "";
+  elements.dataStatus.textContent = `最終更新 ${formatUpdatedAt(state.dataMeta.updatedAt)}${backlogText}`;
+  elements.dataStatus.title = `${source}${deals}${candidateKpiText}${routeKpiText}`;
 }
 
 function candidateValidationBacklog() {
@@ -3726,7 +3726,7 @@ function renderSummary(deals = getFilteredDeals()) {
     .join(" ");
   state.dataMeta.overviewNarrative = longBody;
 
-  elements.sidebarFee.textContent = state.settings.feeRate.toString();
+  if (elements.sidebarFee) elements.sidebarFee.textContent = state.settings.feeRate.toString();
   writeOverviewState(overview);
 }
 

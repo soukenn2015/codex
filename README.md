@@ -52,20 +52,23 @@ http://localhost:4173/
 
 ## Share With Friends
 
-最短の配布方法は静的ホスティングです。  
-このリポジトリを GitHub に push 済みなら、次のどれかで公開できます。
+公開URL:
 
-1. GitHub Pages  
-2. Netlify  
-3. Vercel
+```text
+https://soukenn2015.github.io/codex/
+```
 
-配布前に一度 collector を回して最新 snapshot を生成してください。
+GitHub Pages は `.github/workflows/deploy-pages.yml` で自動デプロイする。
+毎日 8:00 / 20:00 JST の2回、GitHub Actions が collector を実行して `data/marketlens.snapshot.json` と `data/marketlens.history.json` を更新し、公開ページへ反映する。
+
+手動更新したい場合は GitHub Actions の `Deploy MarketLens to GitHub Pages` を `workflow_dispatch` で実行する。
+
+ローカルで確認する場合だけ、次を実行する。
 
 ```text
 node scripts/collect-marketlens.mjs
+node scripts/update-cachebuster.mjs
 ```
-
-その後、`index.html` / `styles.css` / `script.js` / `data/*.json` / `data/*.csv` を含めて公開します。
 
 ## Data Pipeline
 
@@ -78,6 +81,8 @@ node scripts/collect-marketlens.mjs
 ```
 
 ブラウザ側の「更新」ボタンは、生成済みの `marketlens.snapshot.json` を再読み込みする。外部サイトへの直接アクセスはNode側のcollectorで行う。
+
+公開版では GitHub Actions が定期的に collector を実行する。collector 実行後は cachebuster を更新し、古い `script.js` / `styles.css` が残りにくい状態でデプロイする。
 
 `source-config.json` の `marketMemory` は、過去の話題性・相場・販売導線を蓄積する裏側の学習データ。画面には出さず、次回以降の優先度判断に使う。
 
