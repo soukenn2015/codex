@@ -456,7 +456,7 @@ let marketMemory = [
     status: "監視追加",
     learnedFrom: "DMM通販の抽選販売、HOBBY Watchの受付開始ニュース",
     signal: "定価抽選、BANDAI SPIRITS、人気IP、受付期限ありが重なると見る価値が高い",
-    history: "対象商品、応募期間、販売価格、発売後相場を保存して次回抽選の優先度に反映。",
+    history: "対象商品、応募期間、販売価格、発売後相場を保存して次回抽選の注目度に反映。",
     watchNext: "DMM通販、HOBBY Watch、Up To Date、電撃ホビーウェブ",
     sourceUrl: "https://www.dmm.com/mono/hobby/",
   },
@@ -481,7 +481,7 @@ let lotteryRoutes = [
     name: "ポケモンセンターオンライン",
     source: "公式通販",
     action: "スタッフボイスと抽選ページを定期確認",
-    note: "新商品や人気BOXは抽選、第2回抽選、受注販売の対象になりやすい最優先ルート。",
+    note: "新商品や人気BOXは抽選、第2回抽選、受注販売の対象になりやすい主要ルート。",
     condition: "会員登録 / 1人1BOX制限に注意",
     sourceUrl: "https://snkrdunk.com/articles/20315/",
   },
@@ -610,7 +610,7 @@ let pokemonReleases = [
     marketLabel: "一般相場 13,500円〜",
     marketUpdated: "2026-05-22",
     sourceUrl: "https://snkrdunk.com/articles/32287/",
-    note: "発売直後のBOX相場が定価を大きく上回る。抽選/再販ルートを優先監視。",
+    note: "発売直後のBOX相場が定価を大きく上回る。抽選/再販ルートを重点監視。",
     routes: [
       {
         scope: "online",
@@ -1060,6 +1060,15 @@ const elements = {
   layerNowList: document.querySelector("#layerNowList"),
   layer2wList: document.querySelector("#layer2wList"),
   layer6mList: document.querySelector("#layer6mList"),
+  researchSection: document.querySelector("#researchSection"),
+  researchNowList: document.querySelector("#researchNowList"),
+  researchSoonList: document.querySelector("#researchSoonList"),
+  researchMemoList: document.querySelector("#researchMemoList"),
+  researchHoldList: document.querySelector("#researchHoldList"),
+  researchNowCount: document.querySelector("#researchNowCount"),
+  researchSoonCount: document.querySelector("#researchSoonCount"),
+  researchMemoCount: document.querySelector("#researchMemoCount"),
+  researchHoldCount: document.querySelector("#researchHoldCount"),
   dealList: document.querySelector("#dealList"),
   discoveryList: document.querySelector("#discoveryList"),
   earlySignalList: document.querySelector("#earlySignalList"),
@@ -1093,8 +1102,8 @@ const elements = {
   navItems: document.querySelectorAll(".nav-item"),
   routeSegments: document.querySelectorAll(".route-segment"),
   sections: {
-    today: document.querySelector("#actionSection"),
-    trends: document.querySelector("#marketIntelSection"),
+    today: document.querySelector("#layerSection"),
+    trends: document.querySelector("#researchSection"),
     settings: document.querySelector("#lotterySection"),
   },
 };
@@ -1156,7 +1165,7 @@ function candidateProfitSummary(candidate) {
       known: true,
       reliable: true,
       value: `想定利益 ${signedYen(candidateCalc.profit)}`,
-      body: `最大仕入れ価格 ${yen.format(Math.max(0, candidateCalc.buyLine))} / 公式価格 ${yen.format(candidate.retailPrice)}`,
+      body: `許容上限 ${yen.format(Math.max(0, candidateCalc.buyLine))} / 公式価格 ${yen.format(candidate.retailPrice)}`,
       evidence: compactEvidence(candidate.marketPriceLabel || candidate.retailPriceLabel) || "候補データの価格から試算",
       reasons: [],
       targets: [],
@@ -1165,7 +1174,7 @@ function candidateProfitSummary(candidate) {
   if (candidateCalc && !reliableCandidateProfit) {
     const reasons = [];
     if (isHistoryMedian) reasons.push("履歴補完の相場");
-    if (isStale || isMissingObservedAt) reasons.push("相場鮮度不足");
+    if (isStale || isMissingObservedAt) reasons.push("相場更新待ち");
     if (ratioTooHigh) reasons.push("相場比率が異常");
     return {
       known: false,
@@ -1185,7 +1194,7 @@ function candidateProfitSummary(candidate) {
       known: true,
       reliable: true,
       value: `想定利益 ${signedYen(calc.profit)}`,
-      body: `最大仕入れ価格 ${yen.format(Math.max(0, calc.buyLine))} / 発売元 ${dealReleaseSourceName(matchedDeal)}`,
+      body: `許容上限 ${yen.format(Math.max(0, calc.buyLine))} / 発売元 ${dealReleaseSourceName(matchedDeal)}`,
       evidence: "既存の利益候補データと一致",
       reasons: [],
       targets: [dealReleaseSourceName(matchedDeal), "メルカリ相場"].filter(Boolean),
@@ -1262,12 +1271,12 @@ function requestJson(path) {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
     request.open("GET", `${path}?t=${Date.now()}`);
-    request.responseType = "json";
+    request.responseType = "text";
     request.onload = () => {
-      const hasBody = typeof request.responseText === "string" && request.responseText.trim().length > 0;
+      const hasBody = request.responseText.trim().length > 0;
       const isLocalFileSuccess = request.status === 0 && hasBody;
       if ((request.status >= 200 && request.status < 300) || isLocalFileSuccess) {
-        resolve(request.response ?? JSON.parse(request.responseText));
+        resolve(JSON.parse(request.responseText));
         return;
       }
       reject(new Error(`HTTP ${request.status}`));
@@ -1758,8 +1767,8 @@ function dealAvailability(deal) {
 }
 
 function dealPriceSignal(deal, calc) {
-  if (deal.priceSignal === "recheck") return { label: "要再確認", kind: "recheck" };
-  if (calc.profit < state.settings.targetProfit) return { label: "要再確認", kind: "recheck" };
+  if (deal.priceSignal === "recheck") return { label: "相場更新待ち", kind: "recheck" };
+  if (calc.profit < state.settings.targetProfit) return { label: "価格待ち", kind: "recheck" };
   return { label: "価格差あり", kind: "gap" };
 }
 
@@ -2068,6 +2077,48 @@ function isConcreteCandidate(candidate) {
   return true;
 }
 
+function cleanResearchTitle(value) {
+  const text = String(value ?? "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*(価格|ジャンル|発売日|参考|オンライン販売|その他)[:：].*$/u, "")
+    .replace(/』が販売.*$/u, "")
+    .replace(/\s*この記事を書いた人.*$/u, "")
+    .replace(/』と異なる商品.*$/u, "")
+    .trim();
+  const half = Math.floor(text.length / 2);
+  for (let size = 8; size <= half; size += 1) {
+    const left = text.slice(0, size).trim();
+    const right = text.slice(size).trim();
+    if (left && left === right) return left;
+  }
+  return text;
+}
+
+function hasSpecificProductName(value) {
+  const text = cleanResearchTitle(value);
+  if (!text) return false;
+  if (/』が販売|販売開始となります|販売先リンク|次の記事|転売・副業|[=＝]{3,}|#[^\s]+/.test(text)) return false;
+  if (/一括検索|販売状況|Yahoo!ショッピング|楽天市場|Amazon\(アマゾン\)|限定グッズ|★/.test(text)) return false;
+  if (/^(ポケカ|ポケモンカードゲーム\s*転売)$/i.test(text)) return false;
+  if (/^ポケモンカードゲーム\s*((MEGA|スカーレット[＆&]バイオレット|ソード[＆&]シールド)\s*)?(拡張パック|ハイクラスパック|強化拡張パック)$/i.test(text)) return false;
+  if (/^\s*(xbox360|xbox one|xbox series [xs]|playstation 5|ps5|nintendo switch|switch)\s*$/i.test(text)) return false;
+  if (/^プレミアムバンダイ限定\s*S\.H\.Figuarts$/i.test(text)) return false;
+  if (/g-shock/i.test(text) && !/(ga|dw|gw|gm|gma|gst|mtg|mrg|g)-?\d{2,}/i.test(text)) return false;
+  const productMarkers =
+    /一番くじ|ポケモンカードゲーム|ポケカ|garrack|ga-\d|dw-\d|gw-\d|ドラゴンクエスト.*(メタリック|オルゴール|ロト|スライム|はぐれメタル|ゴーレム)|メタリックモンスターズ|メタリックアイテムズ|s\.h\.figuarts|フィギュアーツ|portrait\.of\.pirates|ねんどろいど|figma|ガンプラ|hg\b|rg\b|mg\b|超合金|デッキシールド|プレイマット/i;
+  if (productMarkers.test(text)) return true;
+  if (/[A-Z]{2,}[-_ ]?\d{2,}/.test(text)) return true;
+  if (/(予約解禁|予約開始|販売開始|発売開始|本日|入荷|再入荷|再販|抽選開始|速報|まとめ|!!|！{2,})/.test(text)) return false;
+  return false;
+}
+
+function isSpecificResearchCandidate(candidate) {
+  if (!isConcreteCandidate(candidate)) return false;
+  const name = String(candidate?.name ?? "");
+  if (hasSpecificProductName(name)) return true;
+  return false;
+}
+
 function splitMissingParts(value) {
   return String(value ?? "")
     .split(/[、,／/]/)
@@ -2223,6 +2274,7 @@ function shouldPromoteCandidateToToday(candidate) {
   if (isKujiCandidate(candidate) && !shouldTrackKujiCandidate(candidate)) return false;
   if (candidate.endDate && !isDateActive(candidate.endDate)) return false;
   if (!isConcreteCandidate(candidate)) return false;
+  if (!isSpecificResearchCandidate(candidate)) return false;
   if (!isInNowWindowByDate(candidate.startDate, candidate.endDate)) return false;
   const candidateName = normalizeSignalText(candidate.name);
   const genericNames = new Set(["品薄", "品薄完売", "プレ値", "プレ値sns"]);
@@ -2481,7 +2533,7 @@ function buildActionItems() {
       meta: `期間 ${formatDateOnly(deal.saleStartDate, "随時")}-${formatDateOnly(deal.saleEndDate, "継続")} / 参照元 ${dealReleaseSourceName(
         deal,
       )}`,
-      body: `最大仕入れ価格 ${yen.format(Math.max(0, calc.buyLine))} / 発売元 ${dealReleaseSourceName(deal)}`,
+      body: `許容上限 ${yen.format(Math.max(0, calc.buyLine))} / 発売元 ${dealReleaseSourceName(deal)}`,
       value: `想定利益 ${signedYen(calc.profit)}`,
       url: deal.releaseUrl ?? deal.sourceUrl,
       linkText: "発売元",
@@ -2539,7 +2591,7 @@ function buildActionItems() {
         evidence: candidatePromotionReason(candidate, profitSummary),
         deadline: deadlineText(candidate.endDate, "期限確認"),
         deadlineSort: parseFlexibleTs(candidate.endDate, { defaultTime: "end" }) ?? Number.MAX_SAFE_INTEGER,
-        why: profitSummary.known ? "利益計算済みのため確認優先" : "価格・相場の補完後に昇格判断",
+        why: profitSummary.known ? "利益計算済みのため先に確認" : "価格・相場の補完後に昇格判断",
         title: candidate.name,
         meta: `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(candidate.endDate, "未取得")}`,
         body: profitSummary.known ? profitSummary.value : "利益試算待ち",
@@ -2619,8 +2671,8 @@ function buildTodayEmptyReasons() {
   return [
     `利益候補 対象 ${actionableDeals.length}/${activeDeals.length}`,
     `利益未達 ${belowProfit}`,
-    `信頼度低 ${lowConfidence}`,
-    `相場要更新 ${staleMarket}`,
+    `低評価 ${lowConfidence}`,
+    `相場更新待ち ${staleMarket}`,
     `抽選ルート 対象 ${activeRoutes}`,
     `詳細紐付け 利益 ${detailLinkedDeals}/${activeDeals.length} / 抽選 ${detailLinkedReleases}/${visibleReleases.length}`,
     `急上昇由来も条件一致なら今日見るものへ昇格`,
@@ -2642,11 +2694,11 @@ function buildHiddenActionReasonLines(visibleItems) {
     const priceSignal = dealPriceSignal(deal, calc);
     let reason = "";
     if ((deal.confidence ?? "中") === "低") {
-      reason = "信頼度低";
+      reason = "低評価";
     } else if (priceSignal.kind !== "gap") {
       reason = `利益条件未達（${dealRecheckReason(deal, calc)}）`;
     } else {
-      reason = "優先度外";
+      reason = "注目度外";
     }
     lines.push(`${deal.name}: ${reason}`);
   }
@@ -2660,7 +2712,7 @@ function buildHiddenActionReasonLines(visibleItems) {
       lines.push(`${release.name}: 有効な抽選ルートなし`);
       continue;
     }
-    lines.push(`${release.name}: 優先度外`);
+    lines.push(`${release.name}: 注目度外`);
   }
 
   return lines.slice(0, 6);
@@ -2704,8 +2756,8 @@ function renderActionItems() {
     const facts = document.createElement("div");
     facts.className = "action-facts";
     for (const [text, kind] of [
-      [`優先度 ${item.priority}`, item.priority === "高" ? "high" : item.priority === "中" ? "medium" : "low"],
-      [`信頼度 ${item.confidence}`, item.confidence === "高" ? "high" : item.confidence === "中" ? "medium" : "low"],
+      [`注目度 ${item.priority}`, item.priority === "高" ? "high" : item.priority === "中" ? "medium" : "low"],
+      [`裏付け ${item.confidence}`, item.confidence === "高" ? "high" : item.confidence === "中" ? "medium" : "low"],
       [item.deadline, "deadline"],
     ]) {
       const fact = document.createElement("span");
@@ -2881,8 +2933,10 @@ function layerStatusLabel(row) {
   if (row.statusLabel) return row.statusLabel;
   if (row.kind === "profit") return "利益";
   if (row.kind === "lottery") return "抽選";
+  if (row.kind === "kuji") return "一番くじ";
   if (row.kind === "recheck") return "再確認";
   if (row.kind === "signal") return "急上昇";
+  if (row.kind === "hold") return "保留";
   if (row.kind === "archive") return "除外";
   return "監視";
 }
@@ -2891,8 +2945,10 @@ function layerStatusClass(row) {
   if (row.statusClass) return row.statusClass;
   if (row.kind === "profit") return "profit";
   if (row.kind === "lottery") return "lottery";
+  if (row.kind === "kuji") return "signal";
   if (row.kind === "recheck") return "recheck";
   if (row.kind === "signal") return "signal";
+  if (row.kind === "hold") return "archive";
   if (row.kind === "archive") return "archive";
   return "watch";
 }
@@ -2938,8 +2994,7 @@ function renderLayerRows(container, rows, emptyText, maxRows = 8) {
       const badges = document.createElement("div");
       badges.className = "layer-row-badges";
       badges.append(createLayerBadge(layerStatusLabel(row), `status-${layerStatusClass(row)}`));
-      badges.append(createLayerBadge(`優先 ${row.priority ?? "中"}`, "priority"));
-      badges.append(createLayerBadge(`信頼 ${row.confidence ?? "中"}`, "confidence"));
+      badges.append(createLayerBadge(`注目度 ${row.attention ?? 3}/5`, "priority"));
       badges.append(createLayerBadge(`開始 ${formatTsDateOnly(row.startTs, "未取得")}`, "date"));
       badges.append(createLayerBadge(`終了 ${formatTsDateOnly(row.endTs, "未取得")}`, "date"));
       badges.append(createLayerBadge(`残り ${remainingDaysLabelFromTs(row.endTs)}`, "deadline"));
@@ -3084,162 +3139,470 @@ function archiveDetailTargetId(candidate) {
   return `archive:${normalizeSignalText(candidate.name)}`;
 }
 
-function buildFlowIndexItems() {
-  const now = Date.now();
+function clampAttention(value) {
+  return Math.min(5, Math.max(1, Math.round(value)));
+}
+
+function periodLayerLabel(layer) {
+  if (layer === "now") return "今すぐ";
+  if (layer === "soon") return "近日";
+  if (layer === "memo") return "先読み";
+  return "保留";
+}
+
+function displayWaitState(value) {
+  if (value === "missing_price") return "価格待ち";
+  if (value === "missing_route") return "リンク待ち";
+  if (value === "missing_period") return "日程待ち";
+  if (value === "stale_price") return "相場更新待ち";
+  return "";
+}
+
+function formatYenPlain(value, fallback = "未取得") {
+  return Number.isFinite(value) ? yen.format(Math.round(value)) : fallback;
+}
+
+function formatPriceRange(low, high, fallback = "未取得") {
+  const cleanLow = Number.isFinite(low) ? Math.round(low) : null;
+  const cleanHigh = Number.isFinite(high) ? Math.round(high) : null;
+  if (cleanLow === null && cleanHigh === null) return fallback;
+  if (cleanLow !== null && cleanHigh !== null) {
+    if (Math.abs(cleanHigh - cleanLow) < 100) return yen.format(cleanHigh);
+    return `${yen.format(Math.min(cleanLow, cleanHigh))}〜${yen.format(Math.max(cleanLow, cleanHigh))}`;
+  }
+  return yen.format(cleanLow ?? cleanHigh);
+}
+
+function formatSignedRange(low, high, fallback = "計算待ち") {
+  const cleanLow = Number.isFinite(low) ? Math.round(low) : null;
+  const cleanHigh = Number.isFinite(high) ? Math.round(high) : null;
+  if (cleanLow === null && cleanHigh === null) return fallback;
+  if (cleanLow !== null && cleanHigh !== null) {
+    if (Math.abs(cleanHigh - cleanLow) < 100) return signedYen(cleanHigh);
+    const ordered = [Math.min(cleanLow, cleanHigh), Math.max(cleanLow, cleanHigh)];
+    return `${signedYen(ordered[0])}〜${signedYen(ordered[1])}`;
+  }
+  return signedYen(cleanLow ?? cleanHigh);
+}
+
+function profitForSellPrice(retailPrice, sellPrice, category = "unknown") {
+  if (!Number.isFinite(retailPrice) || !Number.isFinite(sellPrice)) return null;
+  const fee = Math.round(sellPrice * (state.settings.feeRate / 100));
+  const buffer = Math.round(sellPrice * (state.settings.priceBuffer / 100));
+  const shipping = shippingRules[category]?.shipping ?? shippingRules.unknown.shipping;
+  return sellPrice - fee - retailPrice - shipping - state.settings.packingCost - buffer;
+}
+
+function researchLayerFromPeriod({ startTs = null, endTs = null, periodKind = "upcoming", hold = false } = {}) {
+  if (hold || periodKind === "ended") return "hold";
+  if (periodKind === "active") return "now";
+  const bucket = layerBucketByStartTs(startTs);
+  if (bucket !== "none") return bucket;
+  const bounds = layerWindowBounds();
+  if (isFiniteTs(endTs) && endTs >= bounds.nowStart && endTs <= bounds.nowEnd) return "now";
+  return hold ? "hold" : "memo";
+}
+
+function attentionLevel({ layer = "memo", profit = null, score = null, routeCount = 0, waitCount = 0, endTs = null } = {}) {
+  let level = 3;
+  if (layer === "now") level += 1;
+  if (layer === "memo") level -= 1;
+  if (layer === "hold") level -= 2;
+  if (Number.isFinite(profit)) {
+    if (profit >= state.settings.targetProfit * 2) level += 1;
+    else if (profit >= state.settings.targetProfit) level += 0.5;
+    else if (profit < 0) level -= 1;
+  }
+  if (Number.isFinite(score)) {
+    if (score >= 85) level += 1;
+    else if (score < 55) level -= 1;
+  }
+  if (routeCount > 0) level += 0.5;
+  if (waitCount > 0) level -= 0.8;
+  if (isFiniteTs(endTs) && endTs >= Date.now() && endTs - Date.now() <= 2 * LAYER_DAY_MS) level += 0.7;
+  return clampAttention(level);
+}
+
+function uniqueResearchTags(tags) {
+  const seen = new Set();
+  return tags
+    .filter(Boolean)
+    .map((tag) => (typeof tag === "string" ? { label: tag } : tag))
+    .filter((tag) => {
+      if (!tag.label || seen.has(tag.label)) return false;
+      seen.add(tag.label);
+      return true;
+    });
+}
+
+function getDealByDetailId(detailTargetId) {
+  return state.deals.find((deal) => dealDetailTargetId(deal) === detailTargetId) ?? null;
+}
+
+function getReleaseByDetailId(detailTargetId) {
+  return pokemonReleases.find((release) => releaseDetailTargetId(release) === detailTargetId) ?? null;
+}
+
+function getCandidateByDetailId(detailTargetId) {
+  const name = String(detailTargetId ?? "").replace(/^candidate:/, "");
+  return getUnifiedCandidates().find((candidate) => candidate.name === name) ?? null;
+}
+
+function priceRowsForDeal(deal) {
+  const calc = calculateDeal(deal);
+  const lowSell = Math.round(deal.sellPrice * 0.96);
+  const highSell = Math.round(deal.sellPrice * 1.04);
+  const lowProfit = profitForSellPrice(deal.buyPrice, lowSell, deal.category);
+  const highProfit = profitForSellPrice(deal.buyPrice, highSell, deal.category);
+  return {
+    rows: [
+      { label: "定価", value: formatYenPlain(deal.buyPrice) },
+      { label: "相場", value: formatPriceRange(lowSell, highSell) },
+      { label: "利益目安", value: formatSignedRange(lowProfit, highProfit), className: calc.profit >= 0 ? "profit" : "negative" },
+    ],
+    profit: calc.profit,
+  };
+}
+
+function priceRowsForRelease(release) {
+  const variants = Array.isArray(release.marketVariants) ? release.marketVariants : [];
+  const marketPrices = variants.map((variant) => variant.marketPrice).filter(Number.isFinite);
+  const variantProfits = variants.map((variant) => variantProfit(release, variant)).filter(Number.isFinite);
+  const calc = calculateRelease(release);
+  const marketPrice = getReleaseMarketPrice(release);
+  return {
+    rows: [
+      { label: "定価", value: formatYenPlain(release.retailPrice) },
+      {
+        label: "相場",
+        value:
+          marketPrices.length > 0
+            ? formatPriceRange(Math.min(...marketPrices), Math.max(...marketPrices))
+            : formatYenPlain(marketPrice),
+      },
+      {
+        label: "利益目安",
+        value:
+          variantProfits.length > 0
+            ? formatSignedRange(Math.min(...variantProfits), Math.max(...variantProfits))
+            : calc.profit === null
+              ? "計算待ち"
+              : signedYen(calc.profit),
+        className: calc.profit !== null && calc.profit < 0 ? "negative" : "profit",
+      },
+    ],
+    profit: calc.profit,
+  };
+}
+
+function priceRowsForCandidate(candidate) {
+  const calc = calculateCandidateMarketProfit(candidate);
+  const lowMarket = Number.isFinite(candidate?.marketPrice) ? Math.round(candidate.marketPrice * 0.95) : null;
+  const highMarket = Number.isFinite(candidate?.marketPrice) ? Math.round(candidate.marketPrice * 1.05) : null;
+  const lowProfit = profitForSellPrice(candidate?.retailPrice, lowMarket, candidate?.category);
+  const highProfit = profitForSellPrice(candidate?.retailPrice, highMarket, candidate?.category);
+  return {
+    rows: [
+      { label: "定価", value: formatYenPlain(candidate?.retailPrice) },
+      { label: "相場", value: formatPriceRange(lowMarket, highMarket) },
+      {
+        label: "利益目安",
+        value: calc ? formatSignedRange(lowProfit, highProfit) : "計算待ち",
+        className: calc && calc.profit < 0 ? "negative" : "profit",
+      },
+    ],
+    profit: calc?.profit ?? null,
+  };
+}
+
+function priceRowsForTrend(trend) {
+  return {
+    rows: [
+      { label: "定価", value: "確認中" },
+      { label: "相場", value: "確認中" },
+      { label: "利益目安", value: "計算前", className: "profit" },
+    ],
+    profit: null,
+  };
+}
+
+function researchItemMatchesQuery(item) {
+  const query = state.query.trim().toLowerCase();
+  if (!query) return true;
+  const haystack = [item.title, item.tags?.map((tag) => tag.label).join(" "), item.reason, item.nextInfo, item.meta]
+    .join(" ")
+    .toLowerCase();
+  return haystack.includes(query);
+}
+
+function researchItemFromDeal(deal) {
+  const availability = dealAvailability(deal);
+  const priceSignal = dealPriceSignal(deal, calculateDeal(deal));
+  const startTs = parseStartTs(deal.saleStartDate);
+  const endTs = parseEndTs(deal.saleEndDate);
+  const hold = availability.kind === "ended";
+  const layer = researchLayerFromPeriod({ startTs, endTs, periodKind: availability.kind, hold });
+  const pricing = priceRowsForDeal(deal);
+  const waitTags = priceSignal.kind === "recheck" ? [{ label: "相場更新待ち", tone: "wait" }] : [];
+  const attention = attentionLevel({ layer, profit: pricing.profit, score: deal.confidence === "高" ? 85 : 70, waitCount: waitTags.length, endTs });
+  return {
+    canonicalId: dealDetailTargetId(deal),
+    detailTargetId: dealDetailTargetId(deal),
+    kind: "profit",
+    layer,
+    title: deal.name,
+    startTs,
+    endTs,
+    attention,
+    sortValue: pricing.profit ?? 0,
+    done: Boolean(state.actionDone[dealActionKey(deal, "profit")]),
+    tags: uniqueResearchTags([
+      { label: deal.category === "large" ? "大型" : deal.category === "thin" ? "小型" : "販売" },
+      { label: availability.label, tone: "state" },
+      { label: periodLayerLabel(layer), tone: "period" },
+      ...waitTags,
+      ...(deal.tags ?? []).slice(0, 2),
+    ]),
+    priceRows: pricing.rows,
+    reason: compactReasonText(deal.reason, "定価・相場・日付を確認"),
+    nextInfo: priceSignal.kind === "gap" ? "公式販売ページ / 相場 / 販売終了日" : "相場更新 / 公式販売ページ / 状態確認",
+    actions: [
+      { label: "公式", url: deal.releaseUrl ?? deal.sourceUrl },
+      { label: "相場", url: deal.marketUrl && !/^https?:\/\/jp\.mercari\.com\/?$/.test(deal.marketUrl.trim()) ? deal.marketUrl : mercariSearchUrl(deal.name) },
+    ],
+    check: { key: dealActionKey(deal, "profit"), type: "deal", label: "確認済み" },
+    sourceRank: 2,
+  };
+}
+
+function researchItemFromAction(action) {
+  const release = getReleaseByDetailId(action.detailTargetId);
+  const deal = getDealByDetailId(action.detailTargetId);
+  const candidate = getCandidateByDetailId(action.detailTargetId);
+  const startTs = isFiniteTs(action.startSort) ? action.startSort : parseStartTs(candidate?.startDate);
+  const endTs =
+    isFiniteTs(action.deadlineSort) && action.deadlineSort < Number.MAX_SAFE_INTEGER
+      ? action.deadlineSort
+      : parseEndTs(candidate?.endDate);
+  const layer = researchLayerFromPeriod({ startTs, endTs, periodKind: action.periodKind });
+  const pricing = release ? priceRowsForRelease(release) : deal ? priceRowsForDeal(deal) : candidate ? priceRowsForCandidate(candidate) : { rows: [], profit: null };
+  const isLottery = action.kind === "lottery" || action.actionType === "lotteryGroup" || action.actionType === "lotteryRoute";
+  const attention = attentionLevel({
+    layer,
+    profit: pricing.profit,
+    score: candidate?.genreScore ?? (isLottery ? 82 : null),
+    routeCount: action.routes?.length ?? 0,
+    endTs,
+  });
+  return {
+    canonicalId: action.detailTargetId,
+    detailTargetId: action.detailTargetId,
+    kind: isLottery ? "lottery" : action.kind === "profit" ? "profit" : action.kind === "recheck" ? "profit" : "signal",
+    layer,
+    title: action.title,
+    startTs,
+    endTs,
+    attention,
+    sortValue: pricing.profit ?? 0,
+    done: action.done,
+    tags: uniqueResearchTags([
+      release ? "ポケカ" : "",
+      isLottery ? "抽選" : "",
+      deal ? "販売" : "",
+      candidate && isKujiCandidate(candidate) ? "一番くじ" : "",
+      candidate && !isKujiCandidate(candidate) ? "話題" : "",
+      { label: action.label, tone: "state" },
+      { label: periodLayerLabel(layer), tone: "period" },
+    ]),
+    priceRows: pricing.rows,
+    reason: compactReasonText(action.why || action.evidence, "日付・リンク・相場を確認"),
+    nextInfo: release
+      ? `応募 ${action.routes?.length ?? 0}件 / シュリンク相場 / 店頭条件`
+      : deal
+        ? "公式販売ページ / 相場 / 販売終了日"
+        : "公式価格 / 販売リンク / 相場",
+    actions: [{ label: action.linkText ?? (isLottery ? "応募" : "確認"), url: action.url }],
+    routes: (action.routes ?? []).map((route) => ({
+      key: route.key,
+      name: route.name,
+      meta: [route.scope, route.applicationMethod, `開始 ${formatDateOnly(route.startDate, "随時")}`, `終了 ${formatDateOnly(route.deadlineDate, route.deadlineLabel ?? "継続")}`]
+        .filter(Boolean)
+        .join(" / "),
+      done: Boolean(route.done),
+      url: route.url,
+      linkText: "応募",
+    })),
+    check: !isLottery ? { key: action.actionKey, type: action.actionType, label: action.checkLabel ?? "確認済み" } : null,
+    routeKeys: action.routeKeys,
+    sourceRank: 0,
+  };
+}
+
+function researchItemFromCandidate(candidate, { hold = false } = {}) {
+  const title = cleanResearchTitle(candidate.name);
+  const startTs = parseStartTs(candidate.startDate);
+  const endTs = parseEndTs(candidate.endDate);
+  const validationState = candidateValidationState(candidate);
+  const specificProduct = isSpecificResearchCandidate(candidate);
+  if (!specificProduct) return null;
+  const layer = researchLayerFromPeriod({
+    startTs,
+    endTs,
+    periodKind: candidateActionPeriodKind(candidate),
+    hold: hold || validationState === "ended" || candidate.confidence === "低",
+  });
+  const pricing = priceRowsForCandidate(candidate);
+  const waitTag = displayWaitState(validationState);
+  const attention = attentionLevel({
+    layer,
+    profit: pricing.profit,
+    score: candidate.genreScore,
+    waitCount: waitTag ? 1 : 0,
+    endTs,
+  });
+  return {
+    canonicalId: hold ? archiveDetailTargetId(candidate) : `candidate:${candidate.name}`,
+    detailTargetId: hold ? archiveDetailTargetId(candidate) : `candidate:${candidate.name}`,
+    kind: layer === "hold" ? "hold" : isKujiCandidate(candidate) ? "kuji" : "signal",
+    layer,
+    title,
+    startTs,
+    endTs,
+    attention,
+    sortValue: pricing.profit ?? candidate.genreScore ?? 0,
+    done: Boolean(state.actionDone[`candidate:${candidate.name}`]),
+    tags: uniqueResearchTags([
+      isKujiCandidate(candidate) ? "一番くじ" : "話題",
+      candidate.category === "watch" ? "時計" : "",
+      candidate.category === "pokemon_box" ? "ポケカ" : "",
+      { label: candidateActionPeriodKind(candidate) === "active" ? "期間中" : "発売前", tone: "state" },
+      { label: periodLayerLabel(layer), tone: "period" },
+      waitTag ? { label: waitTag, tone: "wait" } : "",
+    ]),
+    priceRows: pricing.rows,
+    reason: compactReasonText(candidate.reason ?? candidate.adoptionReason, "話題・日付・リンクを確認"),
+    nextInfo: waitTag
+      ? `${waitTag} / ${candidateResearchTargets(candidate).slice(0, 2).join(" / ")}`
+      : "公式価格 / 販売リンク / 相場",
+    actions: [{ label: "確認", url: candidate.sourceUrl }],
+    check: hold ? null : { key: `candidate:${candidate.name}`, type: "candidate", label: "確認済み" },
+    sourceRank: hold ? 5 : 3,
+  };
+}
+
+function researchItemFromTrend(trend) {
+  const title = cleanResearchTitle(displayTrendKeyword(trend.keyword));
+  const specificProduct = hasSpecificProductName(title);
+  if (!specificProduct) return null;
+  const startTs = trendStartMs(trend);
+  const endTs = trendEndMs(trend);
+  const layer = researchLayerFromPeriod({ startTs, endTs, periodKind: startTs && startTs > Date.now() ? "upcoming" : "active" });
+  const pricing = priceRowsForTrend(trend);
+  const attention = attentionLevel({ layer, score: trend.score, endTs });
+  return {
+    canonicalId: trendDetailTargetId(trend),
+    detailTargetId: trendDetailTargetId(trend),
+    kind: "signal",
+    layer,
+    title,
+    startTs,
+    endTs,
+    attention,
+    sortValue: trend.score ?? 0,
+    tags: uniqueResearchTags(["話題", trend.type, { label: periodLayerLabel(layer), tone: "period" }]),
+    priceRows: pricing.rows,
+    reason: compactReasonText(trend.context || trend.action, "話題の動きを確認"),
+    nextInfo: "公式価格 / 販売リンク / 相場",
+    actions: [],
+    sourceRank: 4,
+  };
+}
+
+function preferredResearchItem(next, current) {
+  if (!current) return next;
+  const layerRank = { now: 0, soon: 1, memo: 2, hold: 3 };
+  const nextLayer = layerRank[next.layer] ?? 9;
+  const currentLayer = layerRank[current.layer] ?? 9;
+  if (nextLayer !== currentLayer) return nextLayer < currentLayer ? next : current;
+  const nextRank = next.sourceRank ?? 9;
+  const currentRank = current.sourceRank ?? 9;
+  if (nextRank !== currentRank) return nextRank < currentRank ? next : current;
+  if ((next.attention ?? 0) !== (current.attention ?? 0)) return (next.attention ?? 0) > (current.attention ?? 0) ? next : current;
+  return (next.sortValue ?? 0) > (current.sortValue ?? 0) ? next : current;
+}
+
+function buildResearchItems({ respectQuery = true } = {}) {
   const items = [];
-
-  for (const item of buildActionItems()) {
-    const startTs = isFiniteTs(item.startSort) ? item.startSort : null;
-    const endTs =
-      isFiniteTs(item.deadlineSort) && item.deadlineSort < Number.MAX_SAFE_INTEGER ? item.deadlineSort : null;
-    items.push({
-      section: "今日見るもの",
-      kind: item.kind === "upcoming" ? "lottery" : item.kind,
-      title: item.title,
-      priority: item.priority ?? "中",
-      confidence: item.confidence ?? "中",
-      periodKind: item.periodKind ?? "active",
-      startTs,
-      endTs,
-      reason: item.why ?? "",
-      detailTargetId: item.detailTargetId ?? null,
-      meta: `${item.label} / ${item.deadline}`,
-    });
+  for (const action of buildActionItems()) items.push(researchItemFromAction(action));
+  for (const deal of state.deals) items.push(researchItemFromDeal(deal));
+  for (const candidate of buildProvisionalDeals()) items.push(researchItemFromCandidate(candidate));
+  for (const candidate of getUnifiedCandidates().filter((candidate) => shouldPromoteCandidateToToday(candidate))) {
+    items.push(researchItemFromCandidate(candidate));
   }
-
-  for (const deal of getFilteredDeals()) {
-    const calc = calculateDeal(deal);
-    const filterState = dealFilterState(deal);
-    const availability = dealAvailability(deal);
-    items.push({
-      section: "利益候補",
-      kind: filterState.kind === "recheck" ? "recheck" : "profit",
-      title: deal.name,
-      priority: priorityFromDeal(calc, filterState.kind === "recheck" ? "recheck" : "profit"),
-      confidence: deal.confidence ?? "中",
-      periodKind: availability.kind,
-      startTs: parseStartTs(deal.saleStartDate),
-      endTs: parseEndTs(deal.saleEndDate),
-      reason: deal.reason ?? dealRecheckReason(deal, calc),
-      detailTargetId: dealDetailTargetId(deal),
-      meta: `利益状態 ${filterState.label}`,
-      value: `想定利益 ${signedYen(calc.profit)}`,
-      valueClass: calc.profit >= 0 ? "positive" : "negative",
-    });
+  for (const trend of trends.filter(shouldDisplayTrend).filter((trend) => !isOverlappingWithActionable(displayTrendKeyword(trend.keyword)))) {
+    items.push(researchItemFromTrend(trend));
   }
+  for (const candidate of archivedCandidatesForLayer()) items.push(researchItemFromCandidate(candidate, { hold: true }));
 
-  for (const candidate of buildProvisionalDeals()) {
-    const periodKind = candidateActionPeriodKind(candidate);
-    const profit = candidateProfitSummary(candidate);
-    items.push({
-      section: "利益候補",
-      kind: "signal",
-      title: candidate.name,
-      priority: candidateActionPriority(candidate),
-      confidence: candidate.confidence ?? "中",
-      periodKind,
-      startTs: parseStartTs(candidate.startDate),
-      endTs: parseEndTs(candidate.endDate),
-      reason: candidate.reason ?? "",
-      detailTargetId: `candidate:${candidate.name}`,
-      meta: `利益状態 ${profit.value}`,
-      value: profit.value,
-      valueClass: /-\s*¥|-\d/.test(profit.value ?? "") ? "negative" : "positive",
-    });
-  }
-
-  const visibleTrends = trends
-    .filter(shouldDisplayTrend)
-    .filter((trend) => !isOverlappingWithActionable(displayTrendKeyword(trend.keyword)));
-  for (const trend of visibleTrends) {
-    const startTs = trendStartMs(trend);
-    items.push({
-      section: "急上昇",
-      kind: "signal",
-      title: displayTrendKeyword(trend.keyword),
-      priority: (trend.score ?? 0) >= 85 ? "高" : "中",
-      confidence: trend.confidence ?? "中",
-      periodKind: startTs && startTs > now ? "upcoming" : "active",
-      startTs,
-      endTs: trendEndMs(trend),
-      reason: trend.context || trend.type || "話題増加",
-      detailTargetId: trendDetailTargetId(trend),
-      meta: `上昇度 ${trend.score ?? "-"}`,
-      value: `上昇度 ${trend.score ?? "-"}`,
-      valueClass: "positive",
-    });
-  }
-
-  for (const candidate of archivedCandidatesForLayer()) {
-    const archiveTs = parseEndTs(candidate.endDate) ?? parseStartTs(candidate.startDate) ?? Date.now();
-    items.push({
-      section: "外れた候補",
-      kind: "archive",
-      title: candidate.name,
-      priority: "低",
-      confidence: candidate.confidence ?? "低",
-      periodKind: "ended",
-      startTs: parseStartTs(candidate.startDate),
-      endTs: archiveTs,
-      reason: archiveReasonForCandidate(candidate),
-      detailTargetId: archiveDetailTargetId(candidate),
-      meta: `復帰条件 ${archiveRecoveryHint(candidate)}`,
-      value: archiveReasonForCandidate(candidate),
-      valueClass: "negative",
-    });
-  }
-
-  const sectionRank = { "今日見るもの": 0, "利益候補": 1, "急上昇": 2, "外れた候補": 3 };
-  const priorityRank = { 高: 0, 中: 1, 低: 2 };
   const deduped = new Map();
-
-  for (const item of items) {
-    if (!item.detailTargetId) continue;
-    const current = deduped.get(item.detailTargetId);
-    if (!current) {
-      deduped.set(item.detailTargetId, item);
-      continue;
-    }
-
-    const currentScore =
-      (sectionRank[current.section] ?? 9) * 100 +
-      (priorityRank[current.priority] ?? 1) * 10 +
-      (current.periodKind === "active" ? 0 : current.periodKind === "upcoming" ? 1 : 2);
-    const nextScore =
-      (sectionRank[item.section] ?? 9) * 100 +
-      (priorityRank[item.priority] ?? 1) * 10 +
-      (item.periodKind === "active" ? 0 : item.periodKind === "upcoming" ? 1 : 2);
-
-    if (nextScore < currentScore) {
-      deduped.set(item.detailTargetId, item);
-    }
+  for (const item of items.filter((entry) => entry?.title && entry.detailTargetId)) {
+    const current = deduped.get(item.canonicalId);
+    deduped.set(item.canonicalId, preferredResearchItem(item, current));
   }
+  const byTitle = new Map();
+  for (const item of deduped.values()) {
+    const titleKey = normalizeSignalText(item.title);
+    if (!titleKey) continue;
+    byTitle.set(titleKey, preferredResearchItem(item, byTitle.get(titleKey)));
+  }
+  const filtered = [...byTitle.values()].filter((item) => !respectQuery || researchItemMatchesQuery(item));
+  return filtered.sort(researchItemSort);
+}
 
-  return [...deduped.values()];
+function researchItemSort(a, b) {
+  const layerRank = { now: 0, soon: 1, memo: 2, hold: 3 };
+  const layerDiff = (layerRank[a.layer] ?? 9) - (layerRank[b.layer] ?? 9);
+  if (layerDiff !== 0) return layerDiff;
+  if (Boolean(a.done) !== Boolean(b.done)) return Number(a.done) - Number(b.done);
+  if ((b.attention ?? 0) !== (a.attention ?? 0)) return (b.attention ?? 0) - (a.attention ?? 0);
+  const aDate = a.layer === "now" ? a.endTs ?? a.startTs : a.startTs ?? a.endTs;
+  const bDate = b.layer === "now" ? b.endTs ?? b.startTs : b.startTs ?? b.endTs;
+  const dateDiff = (aDate ?? Number.MAX_SAFE_INTEGER) - (bDate ?? Number.MAX_SAFE_INTEGER);
+  if (dateDiff !== 0) return dateDiff;
+  return (b.sortValue ?? 0) - (a.sortValue ?? 0);
+}
+
+function buildFlowIndexItems() {
+  return buildResearchItems({ respectQuery: true }).map((item) => ({
+    section: periodLayerLabel(item.layer),
+    kind: item.kind === "hold" ? "archive" : item.kind,
+    title: item.title,
+    attention: item.attention,
+    periodLayer: item.layer,
+    startTs: item.startTs,
+    endTs: item.endTs,
+    reason: item.reason,
+    detailTargetId: item.detailTargetId,
+    meta: item.tags.map((tag) => tag.label).slice(0, 4).join(" / "),
+    value: item.priceRows.find((row) => row.label === "利益目安")?.value ?? "",
+    valueClass: /-¥|-\d/.test(item.priceRows.find((row) => row.label === "利益目安")?.value ?? "") ? "negative" : "positive",
+  }));
 }
 
 function flowBucketForItem(item) {
-  if (item.section === "外れた候補") return "memo";
-  const bucket = layerBucketByStartTs(item.startTs);
-  if (bucket !== "none") return bucket;
-  const bounds = layerWindowBounds();
-  if (isFiniteTs(item.endTs) && item.endTs >= bounds.nowStart && item.endTs <= bounds.nowEnd) return "now";
+  if (item.periodLayer === "now" || item.periodLayer === "soon" || item.periodLayer === "memo") return item.periodLayer;
   return "none";
 }
 
 function collectLayerRowsByBucket(bucketName) {
-  const sectionRank = { "今日見るもの": 0, "利益候補": 1, "急上昇": 2, "外れた候補": 3 };
-  const priorityRank = { 高: 0, 中: 1, 低: 2 };
   return buildFlowIndexItems()
     .filter((item) => flowBucketForItem(item) === bucketName)
-    .filter((item) => !(bucketName === "memo" && item.section === "外れた候補"))
     .map((item) => ({
       name: item.title,
-      rank: (priorityRank[item.priority] ?? 1) * 10 + (sectionRank[item.section] ?? 9),
+      rank: 5 - (item.attention ?? 3),
       ts: item.startTs ?? item.endTs ?? Date.now(),
       kind: item.kind,
-      priority: item.priority,
-      confidence: item.confidence,
+      attention: item.attention,
       startTs: item.startTs,
       endTs: item.endTs,
       title: item.title,
@@ -3268,7 +3631,7 @@ function collectFlowLayerRows() {
   const nowRows = collectNowLayerRows();
   const soonRows = collectTwoWeekLayerRows();
   const memoRows = collectSixMonthLayerRows();
-  const archived = archivedCandidatesForLayer();
+  const holdItems = buildResearchItems({ respectQuery: true }).filter((item) => item.layer === "hold");
   const nowNames = nowRows.slice(0, 3).map((row) => row.name).filter(Boolean);
   const soonNames = soonRows.slice(0, 3).map((row) => row.name).filter(Boolean);
   const memoNames = memoRows
@@ -3279,7 +3642,7 @@ function collectFlowLayerRows() {
   const overviewText =
     state.dataMeta.overviewNarrative ??
     (nowNames.length > 0
-      ? `今日は ${nowNames.join("、")} を優先して見ます。`
+      ? `今日は ${nowNames.join("、")} を中心に見ます。`
       : "今日は目立つ更新が少ないため、次の開始枠を先に押さえる日です。");
 
   rows.push({
@@ -3295,7 +3658,7 @@ function collectFlowLayerRows() {
     text:
       soonNames.length > 0
         ? `このあと動きそうなのは ${soonNames.join("、")} です。開始前に日付と導線を固めます。`
-        : "近日チェックは少なめで、直近は今動いている対象の確認を優先できます。",
+        : "近日チェックは少なめで、直近は今動いている対象を中心に確認できます。",
   });
   rows.push({
     summary: true,
@@ -3306,15 +3669,215 @@ function collectFlowLayerRows() {
         ? `少し先では ${memoNames.join("、")} を先回りで追っています。時期が近づいたら上段へ上げます。`
         : "先読みは薄めで、次の有力候補を拾うための監視を続けています。",
   });
-  if (archived.length > 0) {
+  if (holdItems.length > 0) {
     rows.push({
       summary: true,
       rank: 3,
       ts: Date.now(),
-      text: `外れ候補は ${archived.length} 件あり、再販や抽選再開が見えたものから下段の外れた候補へ戻して確認します。`,
+      text: `保留・除外は ${holdItems.length} 件あり、再販や抽選再開が見えたものから上段へ戻して確認します。`,
     });
   }
   return rows;
+}
+
+function setResearchCount(element, count) {
+  if (element) element.textContent = `${count}件`;
+}
+
+function renderResearchEmpty(container, text) {
+  const empty = document.createElement("div");
+  empty.className = "detail-box";
+  empty.hidden = false;
+  empty.textContent = text;
+  container.append(empty);
+}
+
+function appendResearchTags(container, tags, layer, attention) {
+  const tagList = uniqueResearchTags([...tags, { label: periodLayerLabel(layer), tone: "period" }]);
+  for (const tag of tagList) {
+    const node = document.createElement("span");
+    node.className = `research-tag ${tag.tone ?? ""}`.trim();
+    node.textContent = tag.label;
+    container.append(node);
+  }
+}
+
+function appendResearchActions(container, item) {
+  const actionWrap = document.createElement("div");
+  actionWrap.className = "research-actions";
+
+  const main = document.createElement("div");
+  main.className = "research-actions-main";
+  for (const action of item.actions ?? []) {
+    if (!action.url) continue;
+    const link = document.createElement("a");
+    link.className = "ghost-button";
+    link.textContent = action.label;
+    if (setSafeLink(link, action.url, `${item.title} ${action.label}`)) {
+      main.append(link);
+    }
+  }
+  actionWrap.append(main);
+
+  if (item.check) {
+    const label = document.createElement("label");
+    label.className = "research-check";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = Boolean(item.done);
+    checkbox.dataset.actionKey = item.check.key;
+    checkbox.dataset.actionType = item.check.type;
+    if (item.routeKeys) {
+      checkbox.dataset.routeKeys = item.routeKeys.join("||");
+    }
+    const text = document.createElement("span");
+    text.textContent = item.check.label;
+    label.append(checkbox, text);
+    actionWrap.append(label);
+  }
+
+  if (main.children.length > 0 || item.check) {
+    container.append(actionWrap);
+  }
+}
+
+function appendResearchRoutes(container, routes = []) {
+  if (routes.length === 0) return;
+  const routeList = document.createElement("div");
+  routeList.className = "research-routes";
+  for (const route of routes) {
+    const row = document.createElement("div");
+    row.className = "research-route";
+    row.classList.toggle("done", Boolean(route.done));
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = Boolean(route.done);
+    checkbox.dataset.routeActionKey = route.key;
+
+    const text = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = route.name;
+    const meta = document.createElement("span");
+    meta.textContent = route.meta;
+    text.append(title, meta);
+
+    row.append(checkbox, text);
+    if (route.url) {
+      const link = document.createElement("a");
+      link.textContent = route.linkText ?? "応募";
+      if (setSafeLink(link, route.url, `${route.name}を開く`)) {
+        row.append(link);
+      }
+    }
+    routeList.append(row);
+  }
+  container.append(routeList);
+}
+
+function renderResearchCard(item, container) {
+  const card = document.createElement("article");
+  card.className = `research-card kind-${item.kind}`;
+  card.classList.toggle("done", Boolean(item.done));
+  card.dataset.detailId = item.detailTargetId;
+
+  const top = document.createElement("div");
+  top.className = "research-card-top";
+  const titleWrap = document.createElement("div");
+  const title = document.createElement("h3");
+  title.textContent = item.title;
+  titleWrap.append(title);
+  const attention = document.createElement("span");
+  attention.className = `research-attention level-${item.attention}`;
+  attention.textContent = `注目度 ${item.attention}/5`;
+  top.append(titleWrap, attention);
+
+  const tags = document.createElement("div");
+  tags.className = "research-tags";
+  appendResearchTags(tags, item.tags ?? [], item.layer, item.attention);
+
+  const dates = document.createElement("div");
+  dates.className = "research-dates";
+  for (const text of [
+    `開始 ${formatTsDateOnly(item.startTs, "未取得")}`,
+    `終了 ${formatTsDateOnly(item.endTs, "未取得")}`,
+    `残り ${remainingDaysLabelFromTs(item.endTs)}`,
+  ]) {
+    const node = document.createElement("span");
+    node.textContent = text;
+    dates.append(node);
+  }
+
+  const priceGrid = document.createElement("div");
+  priceGrid.className = "research-prices";
+  for (const row of item.priceRows ?? []) {
+    const box = document.createElement("div");
+    box.className = `research-price ${row.className ?? ""}`.trim();
+    const label = document.createElement("span");
+    label.textContent = row.label;
+    const value = document.createElement("strong");
+    value.textContent = row.value;
+    box.append(label, value);
+    priceGrid.append(box);
+  }
+
+  const reason = document.createElement("p");
+  reason.className = "research-note";
+  const reasonStrong = document.createElement("strong");
+  reasonStrong.textContent = "理由: ";
+  reason.append(reasonStrong, document.createTextNode(item.reason));
+
+  const next = document.createElement("p");
+  next.className = "research-next";
+  const nextStrong = document.createElement("strong");
+  nextStrong.textContent = "次に見る: ";
+  next.append(nextStrong, document.createTextNode(item.nextInfo || "日付 / 価格 / リンク"));
+
+  card.append(top, tags, dates);
+  if (priceGrid.children.length > 0) card.append(priceGrid);
+  card.append(reason, next);
+  appendResearchRoutes(card, item.routes);
+  appendResearchActions(card, item);
+  container.append(card);
+}
+
+function renderResearchLayer(container, countElement, items, emptyText) {
+  if (!container) return;
+  container.replaceChildren();
+  setResearchCount(countElement, items.length);
+  if (items.length === 0) {
+    renderResearchEmpty(container, emptyText);
+    return;
+  }
+  for (const item of items) renderResearchCard(item, container);
+}
+
+function renderResearchDetails() {
+  const items = buildResearchItems({ respectQuery: true });
+  renderResearchLayer(
+    elements.researchNowList,
+    elements.researchNowCount,
+    items.filter((item) => item.layer === "now"),
+    "今すぐ見る対象はありません。",
+  );
+  renderResearchLayer(
+    elements.researchSoonList,
+    elements.researchSoonCount,
+    items.filter((item) => item.layer === "soon"),
+    "近日チェック対象はありません。",
+  );
+  renderResearchLayer(
+    elements.researchMemoList,
+    elements.researchMemoCount,
+    items.filter((item) => item.layer === "memo"),
+    "先読みメモ対象はありません。",
+  );
+  renderResearchLayer(
+    elements.researchHoldList,
+    elements.researchHoldCount,
+    items.filter((item) => item.layer === "hold"),
+    "保留・除外対象はありません。",
+  );
 }
 
 function renderLayerBoard() {
@@ -3384,7 +3947,7 @@ function renderDealCard(deal, container) {
   status.classList.add(filterState.kind);
 
   const tags = node.querySelector(".tag-row");
-  for (const tag of [availability.label, priceSignal.label, `信頼度 ${deal.confidence ?? "中"}`, ...deal.tags]) {
+  for (const tag of [availability.label, priceSignal.label, `裏付け ${deal.confidence ?? "中"}`, ...deal.tags]) {
     const tagNode = document.createElement("span");
     tagNode.className = "tag";
     tagNode.textContent = tag;
@@ -3452,7 +4015,7 @@ function renderProvisionalCandidateCard(candidate, container) {
   const tags = document.createElement("div");
   tags.className = "tag-row";
   const validationState = candidateValidationState(candidate);
-  for (const tagText of [`信頼度 ${candidate.confidence}`, candidate.marginSignal, candidateActionPeriodKind(candidate) === "active" ? "期間中" : "開始前"]) {
+  for (const tagText of [`裏付け ${candidate.confidence}`, candidate.marginSignal, candidateActionPeriodKind(candidate) === "active" ? "期間中" : "開始前"]) {
     if (!tagText) continue;
     const tag = document.createElement("span");
     tag.className = "tag";
@@ -3471,11 +4034,11 @@ function renderProvisionalCandidateCard(candidate, container) {
   const profitSummary = candidateProfitSummary(candidate);
   const validationLabel =
     validationState === "missing_period"
-      ? "期間不足"
+      ? "日程待ち"
       : validationState === "missing_price"
-        ? "価格不足"
+        ? "価格待ち"
         : validationState === "missing_route"
-          ? "導線不足"
+          ? "リンク待ち"
           : validationState === "ended"
             ? "期間終了"
             : "準備完了";
@@ -3541,13 +4104,13 @@ function renderPromotedCandidateDetailCard(candidate, container) {
       validationState === "ready"
         ? "準備完了"
         : validationState === "missing_price"
-          ? "価格不足"
+          ? "価格待ち"
           : validationState === "missing_period"
-            ? "期間不足"
+            ? "日程待ち"
             : validationState === "missing_route"
-              ? "導線不足"
+              ? "リンク待ち"
               : validationState === "stale_price"
-                ? "相場要更新"
+                ? "相場更新待ち"
                 : "要確認"
     }`,
     `理由: ${compactReasonText(candidate.reason, "更新情報を確認")}`,
@@ -3593,7 +4156,7 @@ function renderDeals() {
     const section = appendDealSection(
       elements.dealList,
       "利益候補一覧",
-      `全 ${deals.length}件 / 利益条件達成 ${activeProfitDeals.length}件 / 要再確認 ${activeRecheckDeals.length}件`,
+      `全 ${deals.length}件 / 利益条件達成 ${activeProfitDeals.length}件 / 価格待ち ${activeRecheckDeals.length}件`,
     );
     for (const deal of deals) {
       renderDealCard(deal, section);
@@ -3669,7 +4232,7 @@ function renderSummary(deals = getFilteredDeals()) {
     topProducts.length > 0
       ? `今日は ${topProducts.join("、")} が中心です。`
       : "今日は大きな商品移動が少なく、次の開始枠を待っている状態です。";
-  const activitySentence = `利益候補は 利益成立 ${overview.profitReady}件 / 要再確認 ${recheckDeals.length}件、抽選ルート ${overview.activeLotteryRoutes}件、急上昇 ${overview.visibleTrends}件を追跡しています。`;
+  const activitySentence = `利益候補は 利益成立 ${overview.profitReady}件 / 価格待ち ${recheckDeals.length}件、抽選ルート ${overview.activeLotteryRoutes}件、急上昇 ${overview.visibleTrends}件を追跡しています。`;
   const urgentStartNames = newlyStartedRoutes.map((item) => item.label).filter(Boolean);
   const soonTargets = buildFlowIndexItems()
     .filter((item) => flowBucketForItem(item) === "soon")
@@ -3678,8 +4241,9 @@ function renderSummary(deals = getFilteredDeals()) {
     .filter((name, index, arr) => arr.indexOf(name) === index)
     .slice(0, 3);
   const backlogTargets = buildProvisionalDeals()
+    .filter(isSpecificResearchCandidate)
     .slice(0, 3)
-    .map((candidate) => `${candidate.name}（${candidateMissingReasons(candidate).slice(0, 2).join("・")}）`)
+    .map((candidate) => `${cleanResearchTitle(candidate.name)}（${candidateMissingReasons(candidate).slice(0, 2).join("・")}）`)
     .filter(Boolean);
   const changeSentence =
     changes.length > 0
@@ -3722,7 +4286,7 @@ function renderSummary(deals = getFilteredDeals()) {
   const urgencySentence =
     urgentEndTargets.length > 0
       ? `終了が近いのは ${urgentEndTargets.join("、")} です。`
-      : "終了が迫る対象は少なく、抽選側の確認を優先できます。";
+      : "終了が迫る対象は少なく、抽選側を中心に確認できます。";
   const longBody = [topicSentence, routeSentence, soonSentence, activitySentence, urgencySentence, backlogSentence, changeSentence]
     .filter(Boolean)
     .join(" ");
@@ -3841,7 +4405,7 @@ function renderTrends() {
     const scoreValue = document.createElement("strong");
 
     title.textContent = displayTrendKeyword(trend.keyword);
-    meta.textContent = `フェーズ ${trendPhaseLabel(trend)} / 信頼度 ${trend.confidence} / ${trend.type} / 開始 ${formatDateOnly(
+    meta.textContent = `フェーズ ${trendPhaseLabel(trend)} / 裏付け ${trend.confidence} / ${trend.type} / 開始 ${formatDateOnly(
       trend.startDate,
       "開始日未取得",
     )} / 終了 ${formatDateOnly(trend.endDate, "終了日未取得")} / ${trend.context}`;
@@ -3861,12 +4425,12 @@ function renderTrends() {
 function archiveReasonForCandidate(candidate) {
   const state = candidateValidationState(candidate);
   if (state === "ended") return "期間終了";
-  if (state === "missing_period") return "期間不足";
-  if (state === "missing_price") return "価格不足";
-  if (state === "stale_price") return "相場鮮度不足";
-  if (state === "missing_route") return "導線不足";
-  if (candidate.confidence === "低") return "信頼度低";
-  return "優先度外";
+  if (state === "missing_period") return "日程待ち";
+  if (state === "missing_price") return "価格待ち";
+  if (state === "stale_price") return "相場更新待ち";
+  if (state === "missing_route") return "リンク待ち";
+  if (candidate.confidence === "低") return "低評価";
+  return "注目度外";
 }
 
 function archiveRecoveryHint(candidate) {
@@ -3932,7 +4496,7 @@ function renderArchivedCandidates() {
   const summary = document.createElement("div");
   summary.className = "detail-box";
   summary.hidden = false;
-  summary.textContent = `内訳: 期間終了 ${summaryCounts.ended} / 期間不足 ${summaryCounts.missingPeriod} / 価格不足 ${summaryCounts.missingPrice} / 相場鮮度不足 ${summaryCounts.stalePrice} / 導線不足 ${summaryCounts.missingRoute} / 信頼度低 ${summaryCounts.lowConfidence}`;
+  summary.textContent = `内訳: 期間終了 ${summaryCounts.ended} / 日程待ち ${summaryCounts.missingPeriod} / 価格待ち ${summaryCounts.missingPrice} / 相場更新待ち ${summaryCounts.stalePrice} / リンク待ち ${summaryCounts.missingRoute} / 低評価 ${summaryCounts.lowConfidence}`;
   elements.archiveCandidateList.append(summary);
 
   if (archived.length === 0) {
@@ -3957,7 +4521,7 @@ function renderArchivedCandidates() {
     meta.textContent = `開始 ${formatDateOnly(candidate.startDate, "未取得")} / 終了 ${formatDateOnly(
       candidate.endDate,
       "未取得",
-    )} / 信頼度 ${candidate.confidence}`;
+    )} / 裏付け ${candidate.confidence}`;
     action.textContent = `除外理由: ${archiveReasonForCandidate(candidate)}`;
     recovery.textContent = `復帰条件: ${archiveRecoveryHint(candidate)}`;
     content.append(title, meta, action, recovery);
@@ -4029,7 +4593,7 @@ function renderDiscoveryCandidates() {
     const proof = document.createElement("div");
     proof.className = "discovery-proof";
     for (const [label, value] of [
-      ["信頼度", candidate.confidence],
+      ["裏付け", candidate.confidence],
       ["開始日", formatDateOnly(candidate.startDate, "開始日未取得")],
       ["終了日", formatDateOnly(candidate.endDate, "終了日未取得")],
       ["採用理由", candidate.adoptionReason],
@@ -4167,13 +4731,13 @@ function buildKujiPrediction(special) {
   const mainReason = [pastLabel, topPrize, momentumLabel].filter(Boolean).join(" / ");
   const whyLine =
     grade === "強い弾"
-      ? `${mainReason} が揃い、実行候補として優先。`
+      ? `${mainReason} が揃い、実行候補として注目。`
       : grade === "先読み"
-        ? `${mainReason} はあるが、供給と価格の裏取り待ち。`
+        ? `${mainReason} はあるが、供給と価格の確認待ち。`
         : `${mainReason} は弱く、現時点では見送り。`;
   const conclusion =
     grade === "強い弾"
-      ? "強い弾判定。発売前30日〜発売後7日の間で実行優先。"
+      ? "強い弾判定。発売前30日〜発売後7日の間で実行候補。"
       : grade === "先読み"
         ? "先読み判定。必要情報が揃えば実行候補へ昇格。"
         : "薄い判定。履歴保持のみ。";
@@ -4500,7 +5064,7 @@ function renderMarketMemory() {
 }
 
 function priorityLabel(priority) {
-  if (priority === "high") return "最優先";
+  if (priority === "high") return "最注目";
   if (priority === "medium") return "確認";
   return "低頻度";
 }
@@ -5045,8 +5609,7 @@ function readSettings() {
   state.settings.targetProfit = Number(elements.targetProfit.value) || 0;
   state.settings.priceBuffer = Number(elements.priceBuffer.value) || 0;
   state.settings.packingCost = Number(elements.packingCost.value) || 0;
-  renderDeals();
-  renderActionItems();
+  renderResearchDetails();
   renderLayerBoard();
 }
 
@@ -5060,12 +5623,14 @@ function handleNav(event) {
 function bindEvents() {
   elements.searchInput.addEventListener("input", (event) => {
     state.query = event.target.value;
-    renderDeals();
+    renderResearchDetails();
+    renderLayerBoard();
   });
 
   elements.sortSelect.addEventListener("change", (event) => {
     state.sortMode = event.target.value;
-    renderDeals();
+    renderResearchDetails();
+    renderLayerBoard();
   });
 
   elements.themeToggle.addEventListener("click", () => {
@@ -5094,7 +5659,7 @@ function bindEvents() {
     button.addEventListener("click", () => {
       state.routeFilter = button.dataset.routeFilter;
       elements.routeSegments.forEach((item) => item.classList.toggle("active", item === button));
-      renderRoutes();
+      renderResearchDetails();
       renderLayerBoard();
     });
   });
@@ -5102,14 +5667,14 @@ function bindEvents() {
   elements.pokecaToggle?.addEventListener("click", () => {
     state.pokecaCollapsed = !state.pokecaCollapsed;
     savePokecaCollapsed();
-    renderRoutes();
+    renderResearchDetails();
     renderLayerBoard();
   });
 
   elements.kujiSpecialToggle?.addEventListener("click", () => {
     state.kujiCollapsed = !state.kujiCollapsed;
     saveKujiCollapsed();
-    renderKujiSpecials();
+    renderResearchDetails();
     renderLayerBoard();
   });
 
@@ -5119,17 +5684,16 @@ function bindEvents() {
     state.appliedRoutes[checkbox.dataset.applyKey] = checkbox.checked;
     saveAppliedRoutes();
     checkbox.closest(".release-route")?.classList.toggle("applied", checkbox.checked);
-    renderActionItems();
+    renderResearchDetails();
     renderLayerBoard();
   });
 
-  elements.actionList.addEventListener("change", (event) => {
+  elements.researchSection?.addEventListener("change", (event) => {
     const routeCheckbox = event.target.closest("[data-route-action-key]");
     if (routeCheckbox) {
       state.appliedRoutes[routeCheckbox.dataset.routeActionKey] = routeCheckbox.checked;
       saveAppliedRoutes();
-      renderRoutes();
-      renderActionItems();
+      renderResearchDetails();
       renderLayerBoard();
       return;
     }
@@ -5143,17 +5707,46 @@ function bindEvents() {
         state.appliedRoutes[routeKey] = checkbox.checked;
       }
       saveAppliedRoutes();
-      renderRoutes();
     } else if (checkbox.dataset.actionType === "lottery") {
       state.appliedRoutes[checkbox.dataset.actionKey] = checkbox.checked;
       saveAppliedRoutes();
-      renderRoutes();
     } else {
       state.actionDone[checkbox.dataset.actionKey] = checkbox.checked;
       saveActionDone();
     }
 
-    renderActionItems();
+    renderResearchDetails();
+    renderLayerBoard();
+  });
+
+  elements.actionList.addEventListener("change", (event) => {
+    const routeCheckbox = event.target.closest("[data-route-action-key]");
+    if (routeCheckbox) {
+      state.appliedRoutes[routeCheckbox.dataset.routeActionKey] = routeCheckbox.checked;
+      saveAppliedRoutes();
+      renderResearchDetails();
+      renderLayerBoard();
+      return;
+    }
+
+    const checkbox = event.target.closest("[data-action-key]");
+    if (!checkbox) return;
+
+    if (checkbox.dataset.actionType === "lotteryGroup") {
+      const routeKeys = (checkbox.dataset.routeKeys ?? "").split("||").filter(Boolean);
+      for (const routeKey of routeKeys) {
+        state.appliedRoutes[routeKey] = checkbox.checked;
+      }
+      saveAppliedRoutes();
+    } else if (checkbox.dataset.actionType === "lottery") {
+      state.appliedRoutes[checkbox.dataset.actionKey] = checkbox.checked;
+      saveAppliedRoutes();
+    } else {
+      state.actionDone[checkbox.dataset.actionKey] = checkbox.checked;
+      saveActionDone();
+    }
+
+    renderResearchDetails();
     renderLayerBoard();
   });
 
@@ -5165,14 +5758,8 @@ function bindEvents() {
 }
 
 function renderAll() {
-  renderRoutes();
-  renderTrends();
-  renderArchivedCandidates();
-  renderKujiSpecials();
-  renderDiscoveryCandidates();
-  renderMarketMemory();
-  renderDeals();
-  renderActionItems();
+  renderSummary(state.deals);
+  renderResearchDetails();
   renderLayerBoard();
   updateNotificationStatus();
 }

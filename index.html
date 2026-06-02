@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MarketLens</title>
-    <link rel="stylesheet" href="./styles.css?v=202606020943" />
+    <link rel="stylesheet" href="./styles.css?v=202606021056" />
   </head>
   <body>
     <div class="app-shell">
@@ -18,17 +18,17 @@
         </div>
 
         <nav class="nav-list" aria-label="Primary">
-          <button class="nav-item active" type="button" data-section="today" title="Today">
+          <button class="nav-item active" type="button" data-section="today" title="Flow">
             <span class="nav-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" role="img"><path d="M4 7.5h16M7.5 4v3.5M16.5 4v3.5M6 11h4v4H6zM14 11h4v4h-4zM5.5 7.5h13A1.5 1.5 0 0 1 20 9v10a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19V9a1.5 1.5 0 0 1 1.5-1.5Z"/></svg>
             </span>
-            <span>Today</span>
+            <span>Flow</span>
           </button>
-          <button class="nav-item" type="button" data-section="trends" title="Trends">
+          <button class="nav-item" type="button" data-section="trends" title="Details">
             <span class="nav-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" role="img"><path d="M4 17.5 9 12l4 3 7-8M15.5 7H20v4.5"/></svg>
             </span>
-            <span>Trends</span>
+            <span>Details</span>
           </button>
           <button class="nav-item internal-nav-item" type="button" data-section="settings" title="Settings" hidden>
             <span class="nav-icon" aria-hidden="true">
@@ -91,7 +91,58 @@
           </div>
         </section>
 
-        <section class="panel action-panel" id="actionSection" aria-label="Today action details">
+        <section class="panel research-panel" id="researchSection" aria-label="Research details">
+          <div class="panel-header slim">
+            <div>
+              <p class="panel-kicker">Research Details</p>
+              <h2>リサーチ詳細</h2>
+            </div>
+          </div>
+          <div class="research-layers">
+            <section class="research-layer" aria-label="今すぐ見る">
+              <div class="research-layer-header">
+                <div>
+                  <h3>今すぐ見る（0〜2日）</h3>
+                  <p>今日から2日以内に動く応募・販売・確認対象。</p>
+                </div>
+                <span id="researchNowCount">0件</span>
+              </div>
+              <div class="research-card-list" id="researchNowList"></div>
+            </section>
+            <section class="research-layer" aria-label="近日チェック">
+              <div class="research-layer-header">
+                <div>
+                  <h3>近日チェック（3〜14日）</h3>
+                  <p>開始前に日付・リンク・相場を固める対象。</p>
+                </div>
+                <span id="researchSoonCount">0件</span>
+              </div>
+              <div class="research-card-list" id="researchSoonList"></div>
+            </section>
+            <section class="research-layer" aria-label="先読みメモ">
+              <div class="research-layer-header">
+                <div>
+                  <h3>先読みメモ（15日〜6ヶ月）</h3>
+                  <p>発売前・抽選前・コラボ予兆を薄く追う対象。</p>
+                </div>
+                <span id="researchMemoCount">0件</span>
+              </div>
+              <div class="research-card-list" id="researchMemoList"></div>
+            </section>
+            <section class="research-layer" aria-label="保留・除外">
+              <div class="research-layer-header">
+                <div>
+                  <h3>保留・除外</h3>
+                  <p>日程・価格・リンク待ち、または終了した対象。</p>
+                </div>
+                <span id="researchHoldCount">0件</span>
+              </div>
+              <div class="research-card-list" id="researchHoldList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel action-panel" id="actionSection" aria-label="Today action details" hidden>
           <div class="panel-header slim">
             <div>
               <p class="panel-kicker">Action Queue</p>
@@ -101,7 +152,7 @@
           <div class="action-list" id="actionList"></div>
         </section>
 
-        <section class="panel lottery-panel" id="lotterySection" aria-label="Pokeca lottery routes">
+        <section class="panel lottery-panel" id="lotterySection" aria-label="Pokeca lottery routes" hidden>
           <div class="panel-header">
             <div>
               <p class="panel-kicker">Pokeca</p>
@@ -116,7 +167,7 @@
           <div class="archive-route-list" id="archiveRouteList"></div>
         </section>
 
-        <section class="panel kuji-special-panel" id="kujiSpecialSection" aria-label="Ichiban Kuji special">
+        <section class="panel kuji-special-panel" id="kujiSpecialSection" aria-label="Ichiban Kuji special" hidden>
           <div class="panel-header">
             <div>
               <p class="panel-kicker">Ichiban Kuji</p>
@@ -128,7 +179,7 @@
           <div class="kuji-special-list" id="kujiSpecialList"></div>
         </section>
 
-        <section class="panel deals-panel" id="todaySection" aria-label="Today">
+        <section class="panel deals-panel" id="todaySection" aria-label="Today" hidden>
           <div class="panel-header">
             <div>
               <p class="panel-kicker">Profit Check</p>
@@ -140,7 +191,7 @@
                 <select id="sortSelect">
                   <option value="profit_desc">利益高い順</option>
                   <option value="profit_asc">利益低い順</option>
-                  <option value="buyline_desc">最大仕入れ価格高い順</option>
+                  <option value="buyline_desc">定価高い順</option>
                   <option value="deadline_asc">終了近い順</option>
                 </select>
               </label>
@@ -149,7 +200,7 @@
           <div class="deal-list" id="dealList"></div>
         </section>
 
-        <section class="market-intel-grid" id="marketIntelSection" aria-label="Market intelligence flow">
+        <section class="market-intel-grid" id="marketIntelSection" aria-label="Market intelligence flow" hidden>
           <section class="panel compact-panel" id="trendsSection" aria-label="Trends">
             <div class="panel-header slim">
               <div>
@@ -248,19 +299,19 @@
         </div>
         <div class="deal-numbers">
           <div>
-            <span>購入/定価</span>
+            <span>定価</span>
             <strong class="buy-price"></strong>
           </div>
           <div>
-            <span>想定売価</span>
+            <span>相場</span>
             <strong class="sell-price"></strong>
           </div>
           <div>
-            <span>想定利益</span>
+            <span>利益目安</span>
             <strong class="profit"></strong>
           </div>
           <div>
-            <span>最大仕入れ価格</span>
+            <span>許容上限</span>
             <strong class="buy-line"></strong>
           </div>
         </div>
@@ -292,15 +343,15 @@
             <strong class="release-retail"></strong>
           </div>
           <div>
-            <span>スニダン参考</span>
+            <span>相場</span>
             <strong class="release-market"></strong>
           </div>
           <div>
-            <span>想定利益</span>
+            <span>利益目安</span>
             <strong class="release-profit"></strong>
           </div>
           <div>
-            <span>最大仕入れ価格</span>
+            <span>許容上限</span>
             <strong class="release-buyline"></strong>
           </div>
         </div>
@@ -312,6 +363,6 @@
       </article>
     </template>
 
-    <script src="./script.js?v=202606020943"></script>
+    <script src="./script.js?v=202606021056"></script>
   </body>
 </html>
