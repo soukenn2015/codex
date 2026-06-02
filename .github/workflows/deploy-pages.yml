@@ -34,7 +34,8 @@ jobs:
           node-version: "22"
 
       - name: Collect market data
-        run: node scripts/collect-marketlens.mjs
+        run: |
+          timeout 300s node scripts/collect-marketlens.mjs || echo "Collector skipped; deploying with existing snapshot."
 
       - name: Update cachebuster
         run: node scripts/update-cachebuster.mjs
