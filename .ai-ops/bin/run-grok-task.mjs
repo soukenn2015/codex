@@ -97,6 +97,7 @@ function taskPrompt(task, cwd) {
     task.mode === "review"
       ? "Do not modify any file. Report findings only."
       : "Modify only allowed paths. Stop if the objective requires any forbidden or unlisted path.",
+    "Keep the response short and finish within the turn budget.",
     "Final response must state: summary, changed files, verification, unresolved risks.",
   ].join("\n\n");
 }
@@ -179,6 +180,10 @@ const outputFailed =
   output?.type === "invalid_json" ||
   output?.subtype === "error" ||
   output?.is_error === true;
+const resumableCancelled =
+  output?.stopReason === "Cancelled" &&
+  typeof (output?.sessionId ?? output?.session_id) === "string" &&
+  String(output?.text ?? "").trim().length === 0;
 
 const accepted =
   result.status === 0 &&
@@ -202,6 +207,11 @@ const report = {
   outsideAllowed,
   verificationResults,
   sessionId: output?.sessionId ?? output?.session_id ?? null,
+  resumeSuggested: resumableCancelled,
+  nextStep:
+    resumableCancelled
+      ? "Copy sessionId into task.resumeSessionId, optionally raise maxTurns, and rerun the same task."
+      : null,
   response: output,
   stderr: result.stderr,
 };

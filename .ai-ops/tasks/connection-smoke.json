@@ -6,6 +6,6 @@
   "allowedPaths": [],
   "forbiddenPaths": ["**"],
   "verification": ["git branch --show-current", "git rev-parse HEAD", "git status --short"],
-  "maxTurns": 4,
+  "maxTurns": 8,
   "timeoutMs": 300000
 }
