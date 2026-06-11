@@ -39,7 +39,8 @@ function textMetrics(value) {
 }
 
 function tail(value, maxLines = 20, maxBytes = 2_000) {
-  const lines = String(value ?? "").trim().split(/\r?\n/).filter(Boolean);
+  const clean = String(value ?? "").replace(/\u001b\[[0-9;]*m/g, "");
+  const lines = clean.trim().split(/\r?\n/).filter(Boolean);
   let output = lines.slice(-maxLines).join("\n");
   while (Buffer.byteLength(output) > maxBytes && output.length > 0) output = output.slice(100);
   return output;
@@ -299,6 +300,7 @@ const verificationSummary = verificationResults.map((verification, index) => {
 
 const grokStdout = result.stdout ?? "";
 const grokStderr = result.stderr ?? "";
+const grokFailed = result.status !== 0 || Boolean(result.error) || outputFailed;
 const rawCombined = [
   "===== GROK STDOUT =====",
   grokStdout,
@@ -329,6 +331,7 @@ const compactReport = {
   nextStep: resumableCancelled
     ? "Rerun the same task with --resume-latest; no sessionId copy is required."
     : null,
+  grokFailureTail: grokFailed ? tail(grokStderr, 12, 1_200) : null,
   finalReport: finalReport.text,
   finalReportTruncated: finalReport.truncated,
   runDir,

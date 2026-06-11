@@ -26,7 +26,7 @@ Running Grok Build sends the task prompt and any repository files it reads to th
 
 The runner is blocking, not a live TUI monitor. It waits for Grok Build to finish, stores the full output, and prints only a compact handoff for Codex. Results are written under `.ai-ops/runs/<task-id>/<timestamp>/` and are ignored by Git:
 
-- `codex-input.txt`: the only file Codex should read by default.
+- `codex-input.txt`: the only file Codex should read by default; failed runs include a bounded Grok stderr tail.
 - `metrics.json`: byte, line, and rough token counts.
 - `grok-stdout.log` and `grok-stderr.log`: full Grok Build output for exceptional debugging only.
 - `verification-*.log`: full test output for failures or targeted investigation only.
