@@ -1,0 +1,50 @@
+{
+  "id": "recover-mercari-jpy-probes",
+  "mode": "implement",
+  "baseCommit": "e8e3ae24266eb2208a8e74e48587f8d2dad76c6a",
+  "objective": "Reconstruct the two missing read-only Mercari JPY probe scripts from the repository contracts and existing Mercari modules: scripts/marketlens-probe-mercari-jpy.mjs and scripts/marketlens-probe-mercari-browser-price.mjs. They must never write snapshots, histories, priceSnapshots, observed_market_price, BuyLine, or generated JSON. The Jina probe must use a small configurable limit, delay, timeout, optional search skip, stop immediately on HTTP 429, and emit only a concise JSON summary plus bounded per-target classifications. The Playwright probe must be non-login and headless by default, use a small configurable target list, stop immediately on CAPTCHA, blocked, or login-required outcomes, and emit a concise JSON summary. Reuse existing parsing and browser helpers where available. Do not run network probes. Do not install dependencies. Do not alter product behavior.",
+  "current_location": "価格観測レイヤーの調査ツール復旧",
+  "overall_progress": "現在推定 63%",
+  "scope_progress": "調査ツール復旧: 着手\n全体進度: 据え置き",
+  "limit_status": "未提示",
+  "current_purpose": "欠落したread-only Mercari JPY probeをGrok専用worktreeで再構成する。",
+  "recommended_model": "Codex 5.5 medium",
+  "token_policy": "標準",
+  "read_targets": [
+    "codex-input.txt",
+    "metrics.json",
+    "git diff --stat",
+    "許可された2ファイルの限定diff"
+  ],
+  "do_not_read": [
+    "Grok生ログ",
+    "thought",
+    "TUI全文",
+    "成功ログ全文",
+    "stderr全文",
+    "diff全文",
+    "GrokセッションJSONL"
+  ],
+  "risk_level": "中",
+  "marketlens_body_change": false,
+  "allowedPaths": [
+    "scripts/marketlens-probe-mercari-jpy.mjs",
+    "scripts/marketlens-probe-mercari-browser-price.mjs"
+  ],
+  "forbiddenPaths": [
+    "data/**",
+    "public-share/**",
+    "script.js",
+    "index.html",
+    "styles.css",
+    "scripts/collect-marketlens.mjs",
+    "scripts/postprocess-marketlens-snapshot.mjs"
+  ],
+  "verification": [
+    "node --check scripts/marketlens-probe-mercari-jpy.mjs",
+    "node --check scripts/marketlens-probe-mercari-browser-price.mjs",
+    "git status --short"
+  ],
+  "maxTurns": 10,
+  "timeoutMs": 600000
+}
