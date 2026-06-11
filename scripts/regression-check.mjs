@@ -1,5 +1,8 @@
 import { readFile } from "node:fs/promises";
-import { explorationTaskMatchesProduct } from "./marketlens-exploration-affinity.mjs";
+import {
+  explorationTaskMatchesProduct,
+  selectProductExplorationTasks,
+} from "./marketlens-exploration-affinity.mjs";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 
@@ -34,6 +37,26 @@ async function main() {
   );
   assert(explorationTaskMatchesProduct({ brand: "G-SHOCK" }, product), "明示brandが一致しません");
   assert(explorationTaskMatchesProduct({ series: "GA-2100" }, product), "明示seriesが一致しません");
+  assert(
+    explorationTaskMatchesProduct({ topic: "Ｇ－ＳＨＯＣＫ　ＧＡ－２１００ＣＣ－３ＡＪＲ 再販" }, product),
+    "全角の商品名を含むtopicが一致しません",
+  );
+
+  const selectedTasks = selectProductExplorationTasks(
+    [
+      { id: "category-only", query: "高級腕時計 新作", targetCategory: "watch" },
+      { id: "loose-brand", query: "G-SHOCK 周年モデル", targetCategory: "watch" },
+      { id: "name", query: "G-SHOCK GA-2100CC-3AJR 在庫" },
+      { id: "brand", brand: "G-SHOCK" },
+      { id: "series", series: "GA-2100" },
+      { id: "other-series", series: "DW-5600", targetCategory: "watch" },
+    ],
+    product,
+  );
+  assert(
+    selectedTasks.map((task) => task.id).join(",") === "name,brand,series",
+    `探索タスクの絞り込み結果が不正です: ${selectedTasks.map((task) => task.id).join(",")}`,
+  );
 
   const raw = await readFile(snapshotPath, "utf8");
   const snapshot = JSON.parse(raw);

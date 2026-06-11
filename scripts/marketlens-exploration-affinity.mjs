@@ -1,11 +1,11 @@
-function defaultNormalize(value) {
+export function normalizeExplorationAffinityText(value) {
   return String(value ?? "")
     .normalize("NFKC")
     .toLowerCase()
     .replace(/[\s\p{P}\p{S}]+/gu, "");
 }
 
-export function explorationTaskMatchesProduct(task, product, normalize = defaultNormalize) {
+export function explorationTaskMatchesProduct(task, product, normalize = normalizeExplorationAffinityText) {
   const productName = normalize(product?.canonicalName);
   const taskText = normalize([task?.query, task?.topic, task?.series, task?.brand].filter(Boolean).join(" "));
   if (productName && taskText.includes(productName)) return true;
@@ -17,4 +17,8 @@ export function explorationTaskMatchesProduct(task, product, normalize = default
   const productSeries = normalize(product?.series);
   const taskSeries = normalize(task?.series);
   return productSeries.length >= 4 && taskSeries === productSeries;
+}
+
+export function selectProductExplorationTasks(tasks, product, limit = 4) {
+  return (tasks ?? []).filter((task) => explorationTaskMatchesProduct(task, product)).slice(0, limit);
 }
