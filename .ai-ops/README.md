@@ -24,16 +24,32 @@ Running Grok Build sends the task prompt and any repository files it reads to th
 
 ## Result handling
 
-Results are written under `.ai-ops/runs/<task-id>/<timestamp>/result.json` and are ignored by Git. Accept a task only when all of these are true:
+The runner is blocking, not a live TUI monitor. It waits for Grok Build to finish, stores the full output, and prints only a compact handoff for Codex. Results are written under `.ai-ops/runs/<task-id>/<timestamp>/` and are ignored by Git:
+
+- `codex-input.txt`: the only file Codex should read by default.
+- `metrics.json`: byte, line, and rough token counts.
+- `grok-stdout.log` and `grok-stderr.log`: full Grok Build output for exceptional debugging only.
+- `verification-*.log`: full test output for failures or targeted investigation only.
+- `result.json`: complete audit record, including the raw parsed response.
+
+The latest raw and compact outputs are also mirrored to `/tmp/grok-build-run.log` and `/tmp/codex-input.txt`. Compare them with:
+
+```sh
+node .ai-ops/bin/measure-text.mjs /tmp/grok-build-run.log /tmp/codex-input.txt
+```
+
+Do not stream or paste TUI output into Codex. Do not read `result.json`, raw logs, full test output, or Grok session files unless the compact report identifies a failure that requires them. Use `--full-output` only for runner debugging.
+
+Accept a task only when all of these are true:
 
 - `ok` is `true`.
 - `changedFiles` contains only `allowedPaths`.
 - `forbiddenChanges` and `outsideAllowed` are empty.
-- Every `verificationResults` entry has exit code `0` and did not time out.
-- Codex has reviewed the diff before reproducing or adopting it.
+- Every compact `verification` entry has exit code `0` and did not time out.
+- Codex has reviewed `git diff --stat` and only the necessary path-limited diff before reproducing or adopting it.
 
 For an explicit continuation, rerun the same command with `--resume-latest`. The runner reads the exact `sessionId` from the latest saved result. Never use ambiguous `-c` continuation.
 
-Do not copy terminal JSON into Codex. After a run, tell Codex only that the task finished; Codex reads `.ai-ops/runs/<task-id>/` directly.
+Do not copy terminal JSON into Codex. After a run, tell Codex only that the task finished; Codex reads `codex-input.txt` directly.
 
 On invalid JSON, timeout, permission failure, or path violation, leave the disposable worktree unadopted and make no change to the recovery branch.
