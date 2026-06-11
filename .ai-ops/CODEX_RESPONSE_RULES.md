@@ -1,6 +1,6 @@
 # Codex日本語ヘッダー運用
 
-MarketLensに関するCodex返答とGrok監督ランナーの`codex-input.txt`は、repo rootの`AGENTS.md`にある短縮ヘッダールールに従う。
+MarketLensに関するCodex返答と`codex-input.txt`は、repo rootの`AGENTS.md`にある短縮ヘッダールールに従う。
 
 既定の冒頭表示は次の最小形式とする。
 
@@ -25,23 +25,26 @@ MarketLensに関するCodex返答とGrok監督ランナーの`codex-input.txt`�
 
 ```text
 次に使うモデル:
-* 【モデル名】
+* 【モデル名 / reasoning effort】
 * 理由: 【1文】
 ```
 
-ランナーはモデルを推測せず、Codexが判断した`recommended_model`などの短い値を表示・保存するだけにする。`.mjs`へモデル判断ロジックは入れない。
+ランナーはモデルを推測せず、Codexが判断した短い値を表示・保存するだけにする。`.mjs`へモデル判断ロジックは入れない。
 
 ## モデルと消費ペース
 
-モデル選択は「最安」ではなく、5時間で約30往復、平均約3pt以内を維持しながら完成速度と事故防止を最大化するために行う。
+モデル選択は「最安」ではなく、5時間で約50往復、平均約3pt前後を維持しながら完成速度と事故防止を最大化するために行う。
 
 | 作業 | 推奨モデル | 採用・自走 |
 |---|---|---|
-| metrics、diff stat、定型PASS、ヘッダー確認 | Codex 5.4 low | 自走可、採用判断不可 |
-| 文書、運用md、1〜2ファイル限定レビュー | Codex 5.4 medium | 自走可、本体採用不可 |
-| Grok指示、圧縮報告、小diff | Codex 5.5 low | 危険領域なしなら自走可 |
-| 実装採用、複数ファイル、監督ランナー実動作、中リスク | Codex 5.5 medium | 採用判断後に自走可 |
-| 価格、public、AI、保存、collect/postprocess、原因不明障害、セキュリティ | Codex 5.5 high寄り | 危険領域専用、停止条件付き |
-| 5.5 medium/highが使えない限定レビュー | Codex 5.4 xhigh | 例外のみ、常用不可 |
+| metrics、diff stat、定型PASS、ヘッダー確認、短いmd確認 | Codex 5.4 mini low | 最軽量で自走可 |
+| Cursor返答の軽確認、短いCursor指示、軽微なmd修正 | Codex 5.4 mini medium | 軽い判断、採用判断不可 |
+| md矛盾確認、限定diffの意味確認、返答の怪しさ確認 | Codex 5.4 mini high | 軽量深掘り、採用判断不可 |
+| 5.5前の一次調査、本体に触らない運用ルール精査 | Codex 5.4 mini xhigh | 深掘り可、通す判断はしない |
+| docs整理、1〜2ファイル限定レビュー、運用md確認 | Codex 5.4 low / medium / high | 軽量レビュー枠 |
+| 5.5を温存したい非危険領域の深掘り代替 | Codex 5.4 xhigh | 例外のみ、常用不可 |
+| Cursorへの実装指示、軽い採用判断、小さい本体変更確認 | Codex 5.5 low | 標準の軽量枠 |
+| 実装採用判断、複数ファイル、商品取得、UI分類、`.ai-ops`実動作変更 | Codex 5.5 medium | 標準の判断枠 |
+| 価格、BuyLine、`priceSnapshots`、`observed_market_price`、`jpyCandidate`、`browser_observed_candidate`、public公開、AI統合、保存仕様、collect/postprocess、原因不明障害、セキュリティ | Codex 5.5 high / xhigh | 危険領域専用 |
 
-軽い作業は0〜1pt、標準作業は1〜3pt、重い判断は3〜6ptを目安とする。戻せる作業は軽くし、概念汚染・漏洩・保存事故につながる作業は重くする。5.4で足りる作業は積極的に5.4を使い、危険領域だけを必要十分に重くする。
+軽い作業は0〜1pt、標準作業は1〜3pt、重い判断は3〜6ptを目安とする。戻せる作業は軽くし、概念汚染・漏洩・保存事故につながる作業は重くする。5.4 mini は軽作業・定型確認・限定調査に使い、5.4 mini xhigh は 5.5 を使う前の軽量深掘りに限る。`5.4 mini xhigh` を `5.5 medium/high` の最終採用判断の代替にしない。
