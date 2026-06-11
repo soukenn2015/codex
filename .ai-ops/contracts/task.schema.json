@@ -21,6 +21,45 @@
       "type": "string",
       "minLength": 10
     },
+    "current_location": {
+      "type": "string",
+      "minLength": 3
+    },
+    "overall_progress": {
+      "type": "string",
+      "pattern": "^(現在推定 |現在 )?(100|[0-9]{1,2})%$"
+    },
+    "scope_progress": {
+      "type": "string",
+      "minLength": 3
+    },
+    "current_purpose": {
+      "type": "string",
+      "minLength": 3
+    },
+    "recommended_model": {
+      "type": "string",
+      "minLength": 3
+    },
+    "token_policy": {
+      "enum": ["軽め", "標準", "慎重"]
+    },
+    "read_targets": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "do_not_read": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "risk_level": {
+      "enum": ["低", "中", "高"]
+    },
+    "marketlens_body_change": {
+      "type": "boolean"
+    },
     "allowedPaths": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 },

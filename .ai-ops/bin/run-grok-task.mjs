@@ -25,6 +25,15 @@ const defaultForbiddenKeywords = [
   "メルカリ相場",
   "市場価格",
 ];
+const defaultDoNotRead = [
+  "Grok生ログ",
+  "thought",
+  "TUI全文",
+  "成功テストログ",
+  "stderr全文",
+  "diff全文",
+  "GrokセッションJSONL",
+];
 
 function fail(message, details = {}) {
   process.stderr.write(`${JSON.stringify({ ok: false, message, ...details }, null, 2)}\n`);
@@ -94,10 +103,89 @@ function validateTask(task) {
        task.forbiddenKeywords.some((value) => typeof value !== "string" || !value.trim()))) {
     fail("task.forbiddenKeywords must be an array of non-empty strings");
   }
+  for (const key of ["read_targets", "do_not_read"]) {
+    if (task[key] !== undefined &&
+        (!Array.isArray(task[key]) || task[key].some((value) => typeof value !== "string" || !value.trim()))) {
+      fail(`task.${key} must be an array of non-empty strings`);
+    }
+  }
+  for (const key of ["current_location", "overall_progress", "scope_progress", "current_purpose", "recommended_model"]) {
+    if (task[key] !== undefined && (typeof task[key] !== "string" || !task[key].trim())) {
+      fail(`task.${key} must be a non-empty string`);
+    }
+  }
+  if (task.overall_progress !== undefined && !/^(現在推定 |現在 )?(100|[0-9]{1,2})%$/.test(task.overall_progress)) {
+    fail("task.overall_progress must be one integer percentage, optionally prefixed by 現在 or 現在推定");
+  }
+  if (task.scope_progress !== undefined &&
+      !task.scope_progress.includes("据え置き") &&
+      !/(100|[0-9]{1,2})%\s*→\s*(100|[0-9]{1,2})%/.test(task.scope_progress)) {
+    fail("task.scope_progress must contain A% → B% or 据え置き");
+  }
+  if (task.token_policy !== undefined && !["軽め", "標準", "慎重"].includes(task.token_policy)) {
+    fail("task.token_policy must be 軽め, 標準, or 慎重");
+  }
+  if (task.risk_level !== undefined && !["低", "中", "高"].includes(task.risk_level)) {
+    fail("task.risk_level must be 低, 中, or 高");
+  }
+  if (task.marketlens_body_change !== undefined && typeof task.marketlens_body_change !== "boolean") {
+    fail("task.marketlens_body_change must be boolean");
+  }
   if (!Number.isInteger(task.maxTurns) || task.maxTurns < 1 || task.maxTurns > 20) fail("task.maxTurns is invalid");
   for (const command of task.verification) {
     if (!/^(git|node|npm)\b/.test(command)) fail(`unsupported verification command: ${command}`);
   }
+}
+
+function operationMetadata(task) {
+  return {
+    current_location: task.current_location ?? "8 運用基盤 › Grok Build監督",
+    overall_progress: task.overall_progress ?? "現在推定 63%",
+    scope_progress: task.scope_progress ?? "Grok監督: 据え置き\n全体進度: 据え置き",
+    current_purpose: task.current_purpose ?? "Grok監督タスクを安全に実行し、圧縮結果を確認する。",
+    recommended_model: task.recommended_model ?? (task.mode === "implement" ? "Codex 5.5 medium" : "Codex 5.5 low"),
+    token_policy: task.token_policy ?? (task.mode === "implement" ? "標準" : "軽め"),
+    read_targets: task.read_targets ?? ["codex-input.txt", "metrics.json", "git diff --stat", "必要時の限定diff"],
+    do_not_read: task.do_not_read ?? defaultDoNotRead,
+    risk_level: task.risk_level ?? (task.mode === "implement" ? "中" : "低"),
+    marketlens_body_change: task.marketlens_body_change ?? task.mode === "implement",
+  };
+}
+
+function japaneseHeader(metadata) {
+  return [
+    "【MarketLens 現在地】",
+    "",
+    "現在地:",
+    metadata.current_location,
+    "",
+    "全体進度:",
+    metadata.overall_progress,
+    "",
+    "今回進度:",
+    metadata.scope_progress,
+    "",
+    "今回の目的:",
+    metadata.current_purpose,
+    "",
+    "推奨モデル:",
+    metadata.recommended_model,
+    "",
+    "トークン方針:",
+    metadata.token_policy,
+    "",
+    "確認対象:",
+    metadata.read_targets.join("、"),
+    "",
+    "読まないもの:",
+    metadata.do_not_read.join("、"),
+    "",
+    "危険度:",
+    metadata.risk_level,
+    "",
+    "本体変更:",
+    metadata.marketlens_body_change ? "あり" : "なし",
+  ].join("\n");
 }
 
 function globRegex(glob) {
@@ -268,6 +356,7 @@ try {
   fail("task JSON could not be read", { error: String(error.message ?? error) });
 }
 validateTask(task);
+const operation = operationMetadata(task);
 
 const resolvedResumeSessionId = task.resumeSessionId ?? (resumeLatest ? latestSessionId(task.id) : null);
 if (resumeLatest && !resolvedResumeSessionId) fail(`no previous session found for ${task.id}`);
@@ -368,6 +457,7 @@ const accepted =
 
 const report = {
   ok: accepted,
+  ...operation,
   task,
   resolvedBase,
   taskCwd,
@@ -436,6 +526,7 @@ writeFileSync(rawOutputPath, rawCombined);
 const finalReport = bounded(output?.text);
 const compactReport = {
   ok: accepted,
+  ...operation,
   taskId: task.id,
   mode: task.mode,
   exitCode: result.status,
@@ -462,9 +553,11 @@ const compactReport = {
   finalReportTruncated: finalReport.truncated,
   runDir,
 };
-const compactText = `${JSON.stringify(compactReport, null, 2)}\n`;
+const headerText = japaneseHeader(operation);
+const compactText = `${headerText}\n\n${JSON.stringify(compactReport, null, 2)}\n`;
 const metrics = {
   taskId: task.id,
+  ...operation,
   grokStdout: textMetrics(grokStdout),
   grokStderr: textMetrics(grokStderr),
   grokTotal: textMetrics(rawCombined),

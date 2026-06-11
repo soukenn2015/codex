@@ -31,3 +31,33 @@ Do not change layer classification, ordering, limits, or supporting UI structure
 - candidate priority, display order, and the meaning of price assistance
 
 Information completeness is display-only confirmation material. It must not become a score, rank, filter, sort key, layer condition, action condition, or snapshot field.
+
+## Codex返答冒頭ルール
+
+MarketLensに関するCodexの返答は、本文より前に必ず次の日本語ヘッダーを表示する。ラベルの英語化、省略、進度の幅表示は禁止する。
+
+```text
+【MarketLens 現在地】
+
+現在地:
+全体進度:
+今回進度:
+今回の目的:
+推奨モデル:
+トークン方針:
+確認対象:
+読まないもの:
+危険度:
+本体変更:
+```
+
+- 全体進度は単一の整数%で表示し、根拠が弱い場合は「推定」と明記する。
+- 今回進度は原則として「対象スコープ A% → B%」と「全体進度 A% → B%」を表示する。変化しない場合は「据え置き」とする。
+- 運用整備だけで全体進度を大きく上げない。進度を変えた場合は本文で理由を1文だけ説明する。
+- Grokへの指示作成と圧縮結果確認はCodex 5.5 lowを基本とする。実装採用、複数ファイル確認、`.ai-ops`挙動変更はCodex 5.5 mediumを基本とする。
+- 価格、BuyLine、snapshot、public公開、AI統合、保存仕様、collect/postprocess、原因不明障害はCodex 5.5 high寄りへ上げる。5.5 low固定と毎回5.5 highの両方を禁止する。
+- 5.4 mediumは範囲限定レビューや文書確認の節約枠、5.4 xhighは5.5 medium/highを使えない場合の代替に限る。
+- トークン方針は「軽め」「標準」「慎重」のいずれかとし、危険度と対象領域に合わせる。
+- 優先して読むものは`codex-input.txt`、`metrics.json`、必要時の`result.json`、`git diff --stat`、`git diff --shortstat`、必要なパスだけの限定diffとする。
+- Grok生ログ、thought、TUI全文、成功テストログ、stderr全文、diff全文、GrokセッションJSONLは原則読まない。`STATUS: BLOCKED`または同一失敗2回目だけ、圧縮されたエラー末尾の拡張を許可する。
+- 「本体変更」は、商品取得、UI、価格、AI、public公開、collect/postprocessなどMarketLens製品コードへ触るかを「あり」「なし」で明示する。
