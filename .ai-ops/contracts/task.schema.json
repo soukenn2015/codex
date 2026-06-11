@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://marketlens.local/ai-ops/task.schema.json",
-  "title": "MarketLens Grok Task",
+  "title": "MarketLens Grok Build Task",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "mode", "baseCommit", "objective", "allowedPaths", "forbiddenPaths", "verification", "maxTurns"],
@@ -52,4 +52,3 @@
     }
   }
 }
-

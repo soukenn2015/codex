@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "../..");
 const taskPath = path.resolve(process.argv[2] ?? "");
+const resumeLatest = process.argv.includes("--resume-latest");
 const grokBin = process.env.GROK_BIN || "/Users/user/.grok/bin/grok";
 
 function fail(message, details = {}) {
@@ -80,9 +81,32 @@ function changedFiles(cwd) {
     .map((file) => file.includes(" -> ") ? file.split(" -> ").at(-1) : file);
 }
 
+function latestSessionId(taskId) {
+  const taskRunDir = path.join(repoRoot, ".ai-ops", "runs", taskId);
+  let runNames = [];
+  try {
+    runNames = readdirSync(taskRunDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort()
+      .reverse();
+  } catch {
+    return null;
+  }
+  for (const runName of runNames) {
+    try {
+      const report = JSON.parse(readFileSync(path.join(taskRunDir, runName, "result.json"), "utf8"));
+      if (typeof report.sessionId === "string" && report.sessionId) return report.sessionId;
+    } catch {
+      // Ignore incomplete or malformed historical run output.
+    }
+  }
+  return null;
+}
+
 function taskPrompt(task, cwd) {
   return [
-    "You are a delegated MarketLens worker controlled by Codex.",
+    "You are Grok Build, a delegated MarketLens worker controlled by Codex.",
     `Mode: ${task.mode}`,
     `Working directory: ${cwd}`,
     `Base commit: ${task.baseCommit}`,
@@ -102,7 +126,7 @@ function taskPrompt(task, cwd) {
   ].join("\n\n");
 }
 
-if (!process.argv[2]) fail("usage: node .ai-ops/bin/run-grok-task.mjs <task.json>");
+if (!process.argv[2]) fail("usage: node .ai-ops/bin/run-grok-task.mjs <task.json> [--resume-latest]");
 
 let task;
 try {
@@ -111,6 +135,9 @@ try {
   fail("task JSON could not be read", { error: String(error.message ?? error) });
 }
 validateTask(task);
+
+const resolvedResumeSessionId = task.resumeSessionId ?? (resumeLatest ? latestSessionId(task.id) : null);
+if (resumeLatest && !resolvedResumeSessionId) fail(`no previous session found for ${task.id}`);
 
 const resolvedBase = git(["rev-parse", "--verify", `${task.baseCommit}^{commit}`]);
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -148,7 +175,7 @@ const args = [
 for (const pattern of task.forbiddenPaths) {
   args.push("--deny", `Edit(${pattern})`, "--deny", `Write(${pattern})`);
 }
-if (task.resumeSessionId) args.push("--resume", task.resumeSessionId);
+if (resolvedResumeSessionId) args.push("--resume", resolvedResumeSessionId);
 
 const timeoutMs = task.timeoutMs ?? 1_200_000;
 const result = run(grokBin, args, { cwd: taskCwd, timeout: timeoutMs });
@@ -207,10 +234,11 @@ const report = {
   outsideAllowed,
   verificationResults,
   sessionId: output?.sessionId ?? output?.session_id ?? null,
+  resumedSessionId: resolvedResumeSessionId,
   resumeSuggested: resumableCancelled,
   nextStep:
     resumableCancelled
-      ? "Copy sessionId into task.resumeSessionId, optionally raise maxTurns, and rerun the same task."
+      ? "Rerun the same task with --resume-latest; no sessionId copy is required."
       : null,
   response: output,
   stderr: result.stderr,

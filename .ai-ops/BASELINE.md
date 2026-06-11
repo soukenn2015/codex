@@ -4,7 +4,7 @@ Recovery starting point: `36a2b4db7a8ed2633bb503bd2720ff42aa0220a8`
 
 Historical pre-recovery snapshot: `346a9386801a4db86a7f13a822e407a0563b4978`
 
-The original Documents worktree and the existing Grok worktree are frozen evidence. Do not reset, clean, delete, or synchronize them. Recovery happens only on `marketlens-recovery-v1` and disposable Grok task worktrees.
+The original Documents worktree and the existing Grok Build worktree are frozen evidence. Do not reset, clean, delete, or synchronize them. Recovery happens only on `marketlens-recovery-v1` and disposable Grok Build task worktrees.
 
 ## Adopted
 

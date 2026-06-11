@@ -1,0 +1,11 @@
+{
+  "id": "review-exploration-task-affinity",
+  "mode": "review",
+  "baseCommit": "965898c",
+  "objective": "Review the completed exploration-task affinity fix. Confirm that category-only matching is removed, exact product-name and explicit brand or series matching remain, and the regression test covers unrelated same-category tasks. Report bugs or missing tests only. Do not modify files.",
+  "allowedPaths": [],
+  "forbiddenPaths": ["**"],
+  "verification": ["node --check scripts/marketlens-exploration-affinity.mjs", "node --check scripts/collect-marketlens.mjs", "node scripts/regression-check.mjs", "git status --short"],
+  "maxTurns": 10,
+  "timeoutMs": 600000
+}

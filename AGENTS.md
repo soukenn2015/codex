@@ -1,6 +1,6 @@
 # MarketLens Agent Rules
 
-Codex is the only operator allowed to integrate changes into the canonical branch. Grok and other agents work only inside task-specific worktrees created by `.ai-ops/bin/run-grok-task.mjs`.
+Codex is the only operator allowed to integrate changes into the canonical branch. Grok Build and other delegated agents work only inside task-specific worktrees created by `.ai-ops/bin/run-grok-task.mjs`.
 
 ## Required behavior
 
@@ -31,4 +31,3 @@ Do not change layer classification, ordering, limits, or supporting UI structure
 - candidate priority, display order, and the meaning of price assistance
 
 Information completeness is display-only confirmation material. It must not become a score, rank, filter, sort key, layer condition, action condition, or snapshot field.
-
