@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { explorationTaskMatchesProduct } from "./marketlens-exploration-affinity.mjs";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 
@@ -13,6 +14,27 @@ function isIsoDate(value) {
 }
 
 async function main() {
+  const product = {
+    canonicalName: "G-SHOCK GA-2100CC-3AJR",
+    brand: "G-SHOCK",
+    series: "GA-2100",
+    category: "watch",
+  };
+  assert(
+    !explorationTaskMatchesProduct({ query: "高級腕時計 新作", targetCategory: "watch" }, product),
+    "同カテゴリだけの探索タスクが商品へ混入しています",
+  );
+  assert(
+    !explorationTaskMatchesProduct({ query: "G-SHOCK 周年モデル", targetCategory: "watch" }, product),
+    "query内のbrand文字列だけで探索タスクが商品へ混入しています",
+  );
+  assert(
+    explorationTaskMatchesProduct({ query: "G-SHOCK GA-2100CC-3AJR 在庫" }, product),
+    "正式商品名を含む探索タスクが一致しません",
+  );
+  assert(explorationTaskMatchesProduct({ brand: "G-SHOCK" }, product), "明示brandが一致しません");
+  assert(explorationTaskMatchesProduct({ series: "GA-2100" }, product), "明示seriesが一致しません");
+
   const raw = await readFile(snapshotPath, "utf8");
   const snapshot = JSON.parse(raw);
 
@@ -61,4 +83,3 @@ main().catch((error) => {
   console.error(`Regression check failed: ${error.message}`);
   process.exitCode = 1;
 });
-

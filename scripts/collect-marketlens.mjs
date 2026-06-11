@@ -16,6 +16,7 @@ import {
   resolveXQueueLimit,
   resolveXReaderLimit,
 } from "./marketlens-limits.mjs";
+import { explorationTaskMatchesProduct } from "./marketlens-exploration-affinity.mjs";
 
 const configUrl = new URL("../data/source-config.json", import.meta.url);
 const registryUrl = new URL("../data/source-registry.json", import.meta.url);
@@ -4373,17 +4374,8 @@ function buildExplorationTasks(snapshot, registryEntries, yearlyLearning) {
 }
 
 function productExplorationTasks(snapshot, product) {
-  const nameKey = normalizeProductKey(product.canonicalName);
   return (snapshot.explorationTasks ?? [])
-    .filter((task) => {
-      const joined = `${task.query ?? ""} ${task.topic ?? ""} ${task.series ?? ""} ${task.brand ?? ""}`;
-      return (
-        normalizeSignalText(joined).includes(nameKey) ||
-        (product.brand && joined.includes(product.brand)) ||
-        (product.series && joined.includes(product.series)) ||
-        task.targetCategory === product.category
-      );
-    })
+    .filter((task) => explorationTaskMatchesProduct(task, product, normalizeSignalText))
     .slice(0, 4);
 }
 

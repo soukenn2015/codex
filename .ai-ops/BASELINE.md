@@ -44,5 +44,5 @@ The original Documents worktree and the existing Grok worktree are frozen eviden
 - Real LLM execution is unconfirmed; current product theses and overview are heuristic.
 - The old snapshot registry summary and `data/source-registry.json` disagree.
 - Most heuristic price theses collapse to the same value and are not valid resale predictions.
-- Product exploration tasks currently attach unrelated tasks by category fallback.
+- The old working copy attached unrelated exploration tasks by category fallback; recovery requires exact product-name or explicit brand/series affinity.
 - The old working copy had an undefined `learning` reference in `buildPredictedPriceSnapshots`; recovery commit `36a2b4d` resolves it without changing price eligibility.
