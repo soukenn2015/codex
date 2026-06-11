@@ -45,6 +45,9 @@ function validateTask(task) {
     }
   }
   if (!Number.isInteger(task.maxTurns) || task.maxTurns < 1 || task.maxTurns > 20) fail("task.maxTurns is invalid");
+  for (const command of task.verification) {
+    if (!/^(git|node|npm)\b/.test(command)) fail(`unsupported verification command: ${command}`);
+  }
 }
 
 function globRegex(glob) {
@@ -160,14 +163,31 @@ try {
   output = { type: "invalid_json", raw: result.stdout };
 }
 
+const verificationResults = task.verification.map((command) => {
+  const verification = run("/bin/zsh", ["-lc", command], { cwd: taskCwd, timeout: 120_000 });
+  return {
+    command,
+    exitCode: verification.status,
+    timedOut: verification.error?.code === "ETIMEDOUT",
+    stdout: verification.stdout,
+    stderr: verification.stderr,
+  };
+});
+const verificationFailed = verificationResults.some((verification) => verification.exitCode !== 0 || verification.timedOut);
+const outputFailed =
+  output?.type === "error" ||
+  output?.type === "invalid_json" ||
+  output?.subtype === "error" ||
+  output?.is_error === true;
+
 const accepted =
   result.status === 0 &&
   !result.error &&
-  output?.type !== "error" &&
-  output?.type !== "invalid_json" &&
+  !outputFailed &&
   forbiddenChanges.length === 0 &&
   outsideAllowed.length === 0 &&
-  !reviewChanged;
+  !reviewChanged &&
+  !verificationFailed;
 
 const report = {
   ok: accepted,
@@ -180,11 +200,11 @@ const report = {
   changedFiles: after,
   forbiddenChanges,
   outsideAllowed,
-  sessionId: output?.sessionId ?? null,
+  verificationResults,
+  sessionId: output?.sessionId ?? output?.session_id ?? null,
   response: output,
   stderr: result.stderr,
 };
 writeFileSync(path.join(runDir, "result.json"), `${JSON.stringify(report, null, 2)}\n`);
 process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 process.exit(accepted ? 0 : 1);
-
