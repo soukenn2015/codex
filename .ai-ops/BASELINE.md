@@ -45,5 +45,4 @@ The original Documents worktree and the existing Grok worktree are frozen eviden
 - The old snapshot registry summary and `data/source-registry.json` disagree.
 - Most heuristic price theses collapse to the same value and are not valid resale predictions.
 - Product exploration tasks currently attach unrelated tasks by category fallback.
-- `buildPredictedPriceSnapshots` contains an undefined `learning` reference in the old working copy.
-
+- The old working copy had an undefined `learning` reference in `buildPredictedPriceSnapshots`; recovery commit `36a2b4d` resolves it without changing price eligibility.
