@@ -57,9 +57,8 @@ MarketLensに関するCodexの返答は、本文より前に必ず次の日本�
 - 今回進度は原則として「対象スコープ A% → B%」と「全体進度 A% → B%」を表示する。変化しない場合は「据え置き」とする。
 - 運用整備だけで全体進度を大きく上げない。進度を変えた場合は本文で理由を1文だけ説明する。
 - 制限情報がない場合は「未提示」とする。ユーザーが「現在 A,B / 実装後 C,D」と示した場合、左を週制限、右を5時間制限の残量として「週制限 A% → C%」「5時間制限 B% → D%」と減少ptを表示する。
-- Grokへの指示作成と圧縮結果確認はCodex 5.5 lowを基本とする。実装採用、複数ファイル確認、`.ai-ops`挙動変更はCodex 5.5 mediumを基本とする。
-- 価格、BuyLine、snapshot、public公開、AI統合、保存仕様、collect/postprocess、原因不明障害はCodex 5.5 high寄りへ上げる。5.5 low固定と毎回5.5 highの両方を禁止する。
-- 5.4 mediumは範囲限定レビューや文書確認の節約枠、5.4 xhighは5.5 medium/highを使えない場合の代替に限る。
+- モデルは単純な節約ではなく、5時間で約30往復、1往復平均約3pt以内を目安に、完成速度と事故防止を含めて選ぶ。
+- 軽い作業は0〜1pt、標準作業は1〜3pt、重い判断は3〜6ptを目安とし、危険領域だけ必要な重さを許容する。
 - トークン方針は「軽め」「標準」「慎重」のいずれかとし、危険度と対象領域に合わせる。
 - 優先して読むものは`codex-input.txt`、`metrics.json`、必要時の`result.json`、`git diff --stat`、`git diff --shortstat`、必要なパスだけの限定diffとする。
 - Grok生ログ、thought、TUI全文、成功テストログ、stderr全文、diff全文、GrokセッションJSONLは原則読まない。`STATUS: BLOCKED`または同一失敗2回目だけ、圧縮されたエラー末尾の拡張を許可する。
@@ -67,12 +66,22 @@ MarketLensに関するCodexの返答は、本文より前に必ず次の日本�
 
 ## Codex裁量モデル選択ルール
 
-- Grokへの通常の指示作成はCodex 5.5 low。価格、public公開、AI、保存仕様を含む指示は5.5 medium以上へ上げる。
-- 圧縮報告、metrics、diff stat、変更なしPASSの単純確認はCodex 5.4 lowまたは5.5 low。
-- 実装採用、複数ファイル、FINDINGSあり、`.ai-ops`挙動変更、商品取得・UI分類・文書整合はCodex 5.5 medium。
-- 価格、BuyLine、`priceSnapshots`、`observed_market_price`、`jpyCandidate`、`browser_observed_candidate`、public公開、AI統合・判断・要約、collect/postprocess、保存仕様、セキュリティ、原因不明障害はCodex 5.5 high寄り。残量だけを理由にlowへ落とさない。
-- Codex 5.4 mediumは文書確認、`.ai-ops`小修正、1〜2ファイルの範囲限定レビューに使う。5.4 xhighは5.5 medium/highを使えない場合だけにする。
-- 制限がどちらも70%以上なら通常、どちらか50〜69%ならやや節約、30〜49%なら強めに節約、30%未満なら極力節約とする。ただし危険領域の品質を下げない。
-- 1回で週制限または5時間制限が5pt以上減った場合、次回は少なくとも「やや節約」とし、5.5 mediumは採用判断へ限定する。
-- ユーザーがモデルを指定した場合は優先する。迷う場合は5.5 medium、明らかな単純確認は5.4 lowを選ぶ。
-- 危険領域でmedium/highへ上げる場合、または制限節約でモデルを下げる場合は、理由を本文に1文だけ書く。
+- Codex 5.4 low: metrics、ログサイズ、diff stat、ヘッダー、定型PASSなどの単純確認。最軽量で自走可だが、実装採用判断には使わない。
+- Codex 5.4 medium: 文書、`AGENTS.md`、`.ai-ops`運用文書の軽微修正、1〜2ファイルの限定レビュー。自走可だが、危険領域や本体採用判断には使わない。
+- Codex 5.5 low: Grokへの次スコープ指示、圧縮報告、小さいdiff、軽いPASS確認。標準の軽量枠として自走可。危険領域に入れば昇格する。
+- Codex 5.5 medium: 実装採用、複数ファイル、`.ai-ops`実動作変更、商品取得・リンク同定・UI分類などの中リスク確認。条件付き自走とし、毎回常用しない。
+- Codex 5.5 high: 価格、BuyLine、`priceSnapshots`、`observed_market_price`、`jpyCandidate`、`browser_observed_candidate`、public公開、AI統合、保存仕様、collect/postprocess、セキュリティ、原因不明障害。危険領域専用で連発せず、原則停止条件を置く。
+- Codex 5.4 xhigh: 原則使わない。5.5 medium/highを使えず、5.4 low/mediumでは不安な限定レビューの代替だけにする。消費抑制目的では常用しない。
+- PASS、小diff、危険領域なし、FINDINGS/RISKSが軽微なら自走可。中リスクは5.5 mediumで採用判断後に自走を続ける。危険領域は自走不可または停止条件付きとする。
+- MarketLens本体の小さいUI・文言変更はGrok実装と5.5 low確認で進め、採用判断が必要なら5.5 mediumへ上げる。商品取得・リンク同定・候補追加導線はGrok実装後に5.5 mediumで採用判断する。
+- BLOCKED、原因不明、テスト失敗は5.5 medium以上とし、必要時だけ5.5 highへ上げる。
+- モデル選択に迷う場合は失敗コストで決める。容易に戻せる作業は軽くし、概念汚染、漏洩、保存事故につながる作業は重くする。
+- ユーザーがモデルを指定した場合は優先する。モデルを重くした理由、または消費ペース維持のため軽くした理由は本文に1文だけ書く。
+
+## 5時間30往復の運用基準
+
+- 5時間制限は1往復平均約3pt以内を目安とし、軽い往復を5.4 low/5.5 lowへ寄せて重い判断の予算を確保する。
+- 5.5 mediumは採用判断、中リスク、複数ファイルに限定する。5.5 highは危険領域専用とし、連続使用を避ける。
+- Grokに実装を委任し、Codexは`codex-input.txt`、`metrics.json`、`git diff --stat`、`git diff --shortstat`、必要な限定diffを読む。
+- 生ログ、thought、TUI全文、成功ログ全文、stderr全文、diff全文、GrokセッションJSONLは読まない。
+- 現在の残量はヘッダーで都度扱い、恒久ルールへ固定しない。残量低下時も危険領域の判断品質は下げない。
