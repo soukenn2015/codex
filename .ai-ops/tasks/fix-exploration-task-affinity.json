@@ -1,0 +1,11 @@
+{
+  "id": "fix-exploration-task-affinity",
+  "mode": "implement",
+  "baseCommit": "346a9386801a4db86a7f13a822e407a0563b4978",
+  "objective": "Add a focused regression test and fix productExplorationTasks so unrelated products do not inherit tasks solely because targetCategory matches. Preserve exact product-name matching and narrowly justified brand or series matching. Do not alter pricing, BuyLine, candidate ordering, or layer behavior.",
+  "allowedPaths": ["scripts/collect-marketlens.mjs", "scripts/regression-check.mjs"],
+  "forbiddenPaths": ["data/**", "public-share/**", "script.js", "index.html", "styles.css", "scripts/marketlens-buyline.mjs"],
+  "verification": ["node --check scripts/collect-marketlens.mjs", "node scripts/regression-check.mjs"],
+  "maxTurns": 8,
+  "timeoutMs": 900000
+}

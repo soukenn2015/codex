@@ -1,0 +1,12 @@
+{
+  "id": "connection-smoke",
+  "mode": "review",
+  "baseCommit": "346a9386801a4db86a7f13a822e407a0563b4978",
+  "objective": "Report the current branch, HEAD, git status, and summarize the P1 and D6 frozen rules. Do not suggest or make implementation changes.",
+  "allowedPaths": [],
+  "forbiddenPaths": ["**"],
+  "verification": ["git branch --show-current", "git rev-parse HEAD", "git status --short"],
+  "maxTurns": 4,
+  "timeoutMs": 300000
+}
+

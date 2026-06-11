@@ -1,0 +1,12 @@
+{
+  "id": "baseline-review",
+  "mode": "review",
+  "baseCommit": "346a9386801a4db86a7f13a822e407a0563b4978",
+  "objective": "Review .ai-ops/BASELINE.md against the repository and report only missing classifications, contradictory classifications, or safety gaps. Do not modify files and do not redesign the product.",
+  "allowedPaths": [],
+  "forbiddenPaths": ["**"],
+  "verification": ["git status --short", "git diff --stat"],
+  "maxTurns": 6,
+  "timeoutMs": 600000
+}
+

@@ -1,0 +1,10 @@
+.DS_Store
+.tools/
+node_modules/
+public-share/
+data/raw-archive/
+data/source-registry.json
+data/marketlens.partial.snapshot.json
+.ai-ops/runs/
+.ai-ops/worktrees/
+
