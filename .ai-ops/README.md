@@ -4,7 +4,7 @@ Codex is the only operator of the recovery branch. Grok Build is a delegated wor
 
 Codexの返答と`codex-input.txt`は、`AGENTS.md`の「Codex返答冒頭ルール」および`.ai-ops/CODEX_RESPONSE_RULES.md`に従い、日本語の現在地・進度・モデル・トークン方針ヘッダーから開始します。
 
-現在のrepo全体進度と位置は`.ai-ops/STATUS.json`をCodexが作業結果に応じて更新します。コード内の固定進度や過去の例文は使用しません。週制限・5時間制限が未提示なら「制限状況: 未提示」とし、前後値がある場合だけ残量と増減ptを表示します。
+現在のrepo全体進度と位置は`.ai-ops/STATUS.json`をCodexが判断材料として更新します。ランナーは状態・モデル・危険度・制限を推測せず、Codexがタスクへ設定した短い値を表示・保存するだけです。
 
 ## Review task
 

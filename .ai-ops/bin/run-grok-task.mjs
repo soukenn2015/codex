@@ -13,7 +13,6 @@ const fullOutput = process.argv.includes("--full-output");
 const grokBin = process.env.GROK_BIN || "/Users/user/.grok/bin/grok";
 const compactOutputPath = "/tmp/codex-input.txt";
 const rawOutputPath = "/tmp/grok-build-run.log";
-const statusPath = path.join(repoRoot, ".ai-ops", "STATUS.json");
 const defaultForbiddenKeywords = [
   "git commit",
   "git push",
@@ -118,14 +117,6 @@ function validateTask(task) {
   if (task.limit_status !== undefined && (typeof task.limit_status !== "string" || !task.limit_status.trim())) {
     fail("task.limit_status must be a non-empty string");
   }
-  if (task.overall_progress !== undefined && !/^(現在推定 |現在 )?(100|[0-9]{1,2})%$/.test(task.overall_progress)) {
-    fail("task.overall_progress must be one integer percentage, optionally prefixed by 現在 or 現在推定");
-  }
-  if (task.scope_progress !== undefined &&
-      !task.scope_progress.includes("据え置き") &&
-      !/(100|[0-9]{1,2})%\s*→\s*(100|[0-9]{1,2})%/.test(task.scope_progress)) {
-    fail("task.scope_progress must contain A% → B% or 据え置き");
-  }
   if (task.token_policy !== undefined && !["軽め", "標準", "慎重"].includes(task.token_policy)) {
     fail("task.token_policy must be 軽め, 標準, or 慎重");
   }
@@ -135,97 +126,25 @@ function validateTask(task) {
   if (task.marketlens_body_change !== undefined && typeof task.marketlens_body_change !== "boolean") {
     fail("task.marketlens_body_change must be boolean");
   }
-  const limitKeys = ["weekly_limit_before", "weekly_limit_after", "five_hour_limit_before", "five_hour_limit_after"];
-  for (const key of limitKeys) {
-    if (task[key] !== undefined && (!Number.isInteger(task[key]) || task[key] < 0 || task[key] > 100)) {
-      fail(`task.${key} must be an integer from 0 to 100`);
-    }
-  }
-  const suppliedLimitValues = limitKeys.filter((key) => task[key] !== undefined);
-  if (suppliedLimitValues.length > 0 && suppliedLimitValues.length !== limitKeys.length) {
-    fail("all weekly and five-hour limit before/after values are required together");
-  }
   if (!Number.isInteger(task.maxTurns) || task.maxTurns < 1 || task.maxTurns > 20) fail("task.maxTurns is invalid");
   for (const command of task.verification) {
     if (!/^(git|node|npm)\b/.test(command)) fail(`unsupported verification command: ${command}`);
   }
 }
 
-function loadRepoStatus() {
-  try {
-    const status = JSON.parse(readFileSync(statusPath, "utf8"));
-    if (typeof status.current_location !== "string" ||
-        !/^(現在推定 |現在 )?(100|[0-9]{1,2})%$/.test(String(status.overall_progress ?? ""))) {
-      fail(".ai-ops/STATUS.json has invalid current_location or overall_progress");
-    }
-    return status;
-  } catch (error) {
-    fail(".ai-ops/STATUS.json could not be read", { error: String(error.message ?? error) });
-  }
-}
-
-function computedLimitStatus(task) {
-  if (task.limit_status) return task.limit_status;
-  if (task.weekly_limit_before === undefined) return "未提示";
-  const weeklyDelta = task.weekly_limit_after - task.weekly_limit_before;
-  const fiveHourDelta = task.five_hour_limit_after - task.five_hour_limit_before;
-  const signed = (value) => value === 0 ? "±0pt" : `${value > 0 ? "+" : ""}${value}pt`;
-  return [
-    `週制限: ${task.weekly_limit_before}% → ${task.weekly_limit_after}%（${signed(weeklyDelta)}）`,
-    `5時間制限: ${task.five_hour_limit_before}% → ${task.five_hour_limit_after}%（${signed(fiveHourDelta)}）`,
-  ].join("\n");
-}
-
-function taskProfile(task) {
-  const text = `${task.objective}\n${task.allowedPaths.join("\n")}`;
-  const dangerous = /(価格|buyline|pricesnapshots|observed_market_price|jpycandidate|browser_observed_candidate|public|公開|ai統合|ai判断|ai要約|collect|postprocess|保存仕様|security|セキュリティ|原因不明)/i.test(text);
-  const simple = /(metrics|wc -c|diff --stat|diff --shortstat|定型|ヘッダー|変更なし|connection|smoke)/i.test(text);
-  const operationsOnly = task.allowedPaths.every((file) => file.startsWith(".ai-ops/") || file === "AGENTS.md");
-  const bodyChange = task.marketlens_body_change ?? (task.mode === "implement" && !operationsOnly);
-  return { dangerous, simple, operationsOnly, bodyChange };
-}
-
-function limitPressure(task) {
-  if (task.weekly_limit_after === undefined) return "unknown";
-  const minimumRemaining = Math.min(task.weekly_limit_after, task.five_hour_limit_after);
-  const weeklyDrop = task.weekly_limit_before - task.weekly_limit_after;
-  const fiveHourDrop = task.five_hour_limit_before - task.five_hour_limit_after;
-  if (minimumRemaining < 30) return "extreme";
-  if (minimumRemaining < 50 || weeklyDrop >= 5 || fiveHourDrop >= 5) return "strong";
-  if (minimumRemaining < 70) return "moderate";
-  return "normal";
-}
-
-function modelRecommendation(task, profile) {
-  if (task.recommended_model) return task.recommended_model;
-  if (profile.dangerous) return "Codex 5.5 high寄り";
-  if (task.mode === "implement" || !profile.operationsOnly) return "Codex 5.5 medium";
-  if (["moderate", "strong", "extreme"].includes(limitPressure(task))) return "Codex 5.4 low";
-  if (profile.simple) return "Codex 5.4 low";
-  return "Codex 5.5 low";
-}
-
-function tokenPolicy(task, profile) {
-  if (task.token_policy) return task.token_policy;
-  if (profile.dangerous) return "慎重";
-  if (task.mode === "implement" || !profile.operationsOnly) return "標準";
-  return "軽め";
-}
-
-function operationMetadata(task, repoStatus) {
-  const profile = taskProfile(task);
+function operationMetadata(task) {
   return {
-    current_location: task.current_location ?? repoStatus.current_location,
-    overall_progress: task.overall_progress ?? repoStatus.overall_progress,
+    current_location: task.current_location ?? "未指定",
+    overall_progress: task.overall_progress ?? "未指定",
     scope_progress: task.scope_progress ?? "対象スコープ: 据え置き\n全体進度: 据え置き",
-    limit_status: computedLimitStatus(task),
+    limit_status: task.limit_status ?? "未提示",
     current_purpose: task.current_purpose ?? task.objective,
-    recommended_model: modelRecommendation(task, profile),
-    token_policy: tokenPolicy(task, profile),
+    recommended_model: task.recommended_model ?? "未指定",
+    token_policy: task.token_policy ?? "標準",
     read_targets: task.read_targets ?? ["codex-input.txt", "metrics.json", "git diff --stat", "必要時の限定diff"],
     do_not_read: task.do_not_read ?? defaultDoNotRead,
-    risk_level: task.risk_level ?? (profile.dangerous ? "高" : task.mode === "implement" ? "中" : "低"),
-    marketlens_body_change: profile.bodyChange,
+    risk_level: task.risk_level ?? "未指定",
+    marketlens_body_change: task.marketlens_body_change ?? false,
   };
 }
 
@@ -436,8 +355,7 @@ try {
   fail("task JSON could not be read", { error: String(error.message ?? error) });
 }
 validateTask(task);
-const repoStatus = loadRepoStatus();
-const operation = operationMetadata(task, repoStatus);
+const operation = operationMetadata(task);
 
 const resolvedResumeSessionId = task.resumeSessionId ?? (resumeLatest ? latestSessionId(task.id) : null);
 if (resumeLatest && !resolvedResumeSessionId) fail(`no previous session found for ${task.id}`);
