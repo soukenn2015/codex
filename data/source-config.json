@@ -13,7 +13,10 @@
       "releaseWindow": "2026年5月2日発売。終了から1週間超過で非表示",
       "targetPrizes": "ラストワン賞、ルフィ系フィギュア",
       "watchPoints": "履歴保存のみ。通常表示からは外す",
-      "officialLineup": ["上位ルフィ系フィギュア", "ラストワン賞"],
+      "officialLineup": [
+        "上位ルフィ系フィギュア",
+        "ラストワン賞"
+      ],
       "marketForecast": "終了弾。発売直後の上位賞だけ履歴学習に残し、通常監視からは外す。",
       "pastMarketBasis": "ONE PIECE系は主人公・ラストワン・MASTERLISE級に初動が寄りやすい。発売1週間後以降は残在庫と成約落ちを優先。",
       "sourceUrl": "https://magmix.jp/post/351977"
@@ -102,7 +105,11 @@
       "releaseWindow": "Vol.1 2026年7月 / Vol.2 2026年8月。直近1ヶ月外なので今は非表示",
       "targetPrizes": "ラストワン賞、MASTERLISE系、A-D賞フィギュア",
       "watchPoints": "発売初週の成約、店舗在庫、オンライン販売開始、再販告知",
-      "officialLineup": ["MASTERLISE EXPIECE系フィギュア", "ラストワン賞", "A-D賞フィギュア"],
+      "officialLineup": [
+        "MASTERLISE EXPIECE系フィギュア",
+        "ラストワン賞",
+        "A-D賞フィギュア"
+      ],
       "marketForecast": "発売前。商品名と賞構成が確定したら特設に出し、発売初週のラストワン/A-D賞だけ予測対象にする。",
       "pastMarketBasis": "ONE PIECEは新章・大型フィギュア・ラストワンの組み合わせが強い。発売前は期待値、発売後は在庫と初動成約で判定。",
       "sourceUrl": "https://sf.1kuji.com/onep-elbaph/"
@@ -115,7 +122,11 @@
       "releaseDate": "2026-05-25",
       "targetPrizes": "上位フィギュア、ラストワン賞、実用雑貨",
       "watchPoints": "発売直後の上位賞とラストワン賞だけ確認。雑貨中心なら深追いしない。",
-      "officialLineup": ["上位賞", "ラストワン賞", "雑貨系賞"],
+      "officialLineup": [
+        "上位賞",
+        "ラストワン賞",
+        "雑貨系賞"
+      ],
       "marketForecast": "懐かしIPで一定需要。高額化は上位賞とラストワン賞に限定して見る。",
       "pastMarketBasis": "女性向け・懐かしIPは初動より完売後の未開封上位賞が伸びやすい。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -128,7 +139,11 @@
       "releaseDate": "2026-05-26",
       "targetPrizes": "上位ぬいぐるみ、ラストワン賞、限定イラスト賞",
       "watchPoints": "単価550円。薄利になりやすいので回転と送料サイズだけ確認。",
-      "officialLineup": ["ぬいぐるみ系", "イラスト雑貨", "ラストワン賞"],
+      "officialLineup": [
+        "ぬいぐるみ系",
+        "イラスト雑貨",
+        "ラストワン賞"
+      ],
       "marketForecast": "癒し系・作家系は大化けより回転重視。小型賞なら送料210円候補。",
       "pastMarketBasis": "小型雑貨系はまとめ売りより単品人気賞だけを拾う。",
       "sourceUrl": "https://on-line.1kuji.com/Default.aspx"
@@ -141,7 +156,11 @@
       "releaseDate": "2026-06-01",
       "targetPrizes": "上位ビジュアル賞、ラストワン賞、キャラ人気賞",
       "watchPoints": "オンライン開始直後の上位賞と推しキャラ需要を確認。",
-      "officialLineup": ["上位ビジュアル賞", "キャラグッズ", "ラストワン賞"],
+      "officialLineup": [
+        "上位ビジュアル賞",
+        "キャラグッズ",
+        "ラストワン賞"
+      ],
       "marketForecast": "固定ファンが強い。キャラ差が大きいので上位賞と人気キャラに絞る。",
       "pastMarketBasis": "アイドルIPは推し需要で一部賞だけ伸びる。下位賞はまとめ売り前提。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -154,7 +173,11 @@
       "releaseDate": "2026-06-01",
       "targetPrizes": "上位フィギュア、ラストワン賞、人気キャラ賞",
       "watchPoints": "フィギュア系の成約を優先。下位賞は見ない。",
-      "officialLineup": ["上位フィギュア", "キャラビジュアル賞", "ラストワン賞"],
+      "officialLineup": [
+        "上位フィギュア",
+        "キャラビジュアル賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "BLEACHはキャラ人気差が大きい。上位フィギュアとラストワン賞だけ候補。",
       "pastMarketBasis": "ジャンプ系バトルIPは主役級・ライバル級・ラストワンが中心。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -167,7 +190,11 @@
       "releaseDate": "2026-06-02",
       "targetPrizes": "ぬいぐるみ、キッチン雑貨、ラストワン賞",
       "watchPoints": "カービィは回転が強い。上位ぬいぐるみと実用雑貨を確認。",
-      "officialLineup": ["ぬいぐるみ系", "キッチン/雑貨系", "ラストワン賞"],
+      "officialLineup": [
+        "ぬいぐるみ系",
+        "キッチン/雑貨系",
+        "ラストワン賞"
+      ],
       "marketForecast": "カービィは広く売れやすいが単価は伸びにくい。小型・人気賞・未開封に絞る。",
       "pastMarketBasis": "カービィ一番くじは上位ぬいぐるみ、実用雑貨、ラストワンが安定。",
       "sourceUrl": "https://on-line.1kuji.com/Default.aspx"
@@ -180,7 +207,12 @@
       "releaseDate": "2026-06-06",
       "targetPrizes": "シャンクス、ベン・ベックマン、ヤソップ、ラッキー・ルウ、ラストワン賞",
       "watchPoints": "赤髪海賊団の上位フィギュアとラストワン賞を重点。発売初週の成約を確認。",
-      "officialLineup": ["MASTERLISE EXPIECEフィギュア", "はこにわーるど", "ソフビフィギュア", "ラストワン賞"],
+      "officialLineup": [
+        "MASTERLISE EXPIECEフィギュア",
+        "はこにわーるど",
+        "ソフビフィギュア",
+        "ラストワン賞"
+      ],
       "marketForecast": "ワンピース強IPかつ赤髪海賊団。シャンクス関連とラストワン賞は優先監視。",
       "pastMarketBasis": "ONE PIECEは人気キャラ・大型フィギュア・ラストワンに相場が寄る。雑貨は対象外。",
       "sourceUrl": "https://one-piece.com/news/79434/index.html"
@@ -193,7 +225,11 @@
       "releaseDate": "2026-06-08",
       "targetPrizes": "猫猫、壬氏、上位ビジュアル賞、ラストワン賞",
       "watchPoints": "アニメ人気は強いが賞構成次第。上位賞とキャラ人気賞だけ確認。",
-      "officialLineup": ["上位キャラ賞", "ビジュアル賞", "ラストワン賞"],
+      "officialLineup": [
+        "上位キャラ賞",
+        "ビジュアル賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "女性人気・アニメ人気あり。フィギュア/ビジュアル上位なら候補、雑貨中心なら保留。",
       "pastMarketBasis": "女性向けアニメIPは人気キャラの上位賞とラストワンに寄せる。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -206,7 +242,11 @@
       "releaseDate": "2026-06-15",
       "targetPrizes": "代表グッズ、実用賞、ラストワン賞",
       "watchPoints": "スポーツ系はホビー相場と違う。大会熱と実用性だけ見る。",
-      "officialLineup": ["代表グッズ", "実用賞", "ラストワン賞"],
+      "officialLineup": [
+        "代表グッズ",
+        "実用賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "大会前の熱量次第。フィギュアではないため優先度は中以下。",
       "pastMarketBasis": "スポーツ系は短期の話題性が中心。高額化より回転重視。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -219,7 +259,11 @@
       "releaseDate": "2026-06-16",
       "targetPrizes": "上位フィギュア、ラストワン賞、レッドリボン軍キャラ",
       "watchPoints": "ドラゴンボールEXは上位フィギュアだけ重点。発売直後の成約を確認。",
-      "officialLineup": ["上位フィギュア", "レッドリボン軍キャラ賞", "ラストワン賞"],
+      "officialLineup": [
+        "上位フィギュア",
+        "レッドリボン軍キャラ賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "ドラゴンボールEXは強め。キャラ選定次第で上位賞が伸びる。",
       "pastMarketBasis": "ドラゴンボールEXは大型/敵キャラ/主役級フィギュアとラストワンが強い。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -232,7 +276,11 @@
       "releaseDate": "2026-06-19",
       "targetPrizes": "人気アイドル賞、ビジュアル賞、ラストワン賞",
       "watchPoints": "推し需要が強い。人気キャラの上位賞だけ確認。",
-      "officialLineup": ["アイドル別賞", "ビジュアル賞", "ラストワン賞"],
+      "officialLineup": [
+        "アイドル別賞",
+        "ビジュアル賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "アイマス系はキャラ差が大きい。全体ではなく人気キャラ別に見る。",
       "pastMarketBasis": "アイドルIPは推し別相場。低人気賞はまとめ売り前提。",
       "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductList.aspx?cat=&dpcnt=24&fpfl=0&img=2&pno=1&sellType=1&sfl=0&shop=0&sort=10&udns=0"
@@ -245,7 +293,11 @@
       "releaseDate": "2026-06-20",
       "targetPrizes": "デク、爆豪、轟、上位フィギュア、ラストワン賞",
       "watchPoints": "ジャンプ強IP。上位フィギュアとラストワン賞だけ重点。",
-      "officialLineup": ["上位フィギュア", "人気キャラ賞", "ラストワン賞"],
+      "officialLineup": [
+        "上位フィギュア",
+        "人気キャラ賞",
+        "ラストワン賞"
+      ],
       "marketForecast": "ヒロアカは上位フィギュアが強い。発売初週だけ価格差確認。",
       "pastMarketBasis": "ヒロアカはデク/爆豪/轟など主要キャラとラストワンが中心。",
       "sourceUrl": "https://hobby.watch.impress.co.jp/docs/news/2076810.html"
@@ -409,6 +461,18 @@
             "applyUrl": "https://dorasuta.membercard.jp/"
           }
         ]
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemon-card.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -476,6 +540,18 @@
             "url": "https://nyuka-now.com/archives/154697"
           }
         ]
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemon-card.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -533,6 +609,18 @@
             "url": "https://nyuka-now.com/archives/156402"
           }
         ]
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemon-card.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -590,6 +678,18 @@
             "url": "https://nyuka-now.com/archives/156404"
           }
         ]
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemon-card.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -649,6 +749,18 @@
             "url": "https://snkrdunk.com/articles/30254/"
           }
         ]
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemon-card.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -680,6 +792,18 @@
         "adoptionReason": "公式イベントとコラボ告知が重なり、商材化の可能性が高い。",
         "missingData": "発売後の成約価格、取引量、送料サイズ",
         "sourceUrl": "https://www.dragonquest.jp/news/detail/4245/"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "dragonquest.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -713,6 +837,18 @@
         "adoptionReason": "強IP、直近発売、ラストワン賞、上位フィギュアが揃っている。",
         "missingData": "最新成約価格、店舗在庫、ラストワン賞の残り",
         "sourceUrl": "https://www.sej.co.jp/products/hhkuji2605.html"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "sej.co.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -746,6 +882,18 @@
         "adoptionReason": "直近発売、ガンダムIP、胸像フィギュア、オンライン導線が揃っている。",
         "missingData": "初動成約価格、オンライン残数、店頭在庫",
         "sourceUrl": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "on-line.1kuji.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -779,6 +927,18 @@
         "adoptionReason": "強IP、店頭販売、MASTERLISEフィギュアの組み合わせ。",
         "missingData": "最新成約価格、残り店舗、発売日からの日数",
         "sourceUrl": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "sf.1kuji.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -811,6 +971,18 @@
         "adoptionReason": "抽選販売は定価購入ルートになりやすく、人気商品の利益差が出やすい。",
         "missingData": "対象商品一覧、応募期限、販売価格、相場",
         "sourceUrl": "https://www.dmm.com/mono/hobby/"
+      },
+      "seed": true,
+      "lane": "news",
+      "priority": "high",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "hobby.watch.impress.co.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -843,6 +1015,18 @@
         "adoptionReason": "価格差と取引量が揃っている。",
         "missingData": "出品数の継続推移",
         "sourceUrl": "https://p-bandai.jp/"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "p-bandai.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -874,6 +1058,18 @@
         "adoptionReason": "ドラクエ40周年、コラボ導線、公式グッズが揃う。",
         "missingData": "発売後の初動成約、在庫切れ速度、色違い需要",
         "sourceUrl": "https://store.jp.square-enix.com/category/263/MW36259.html"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "store.jp.square-enix.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -906,6 +1102,18 @@
         "adoptionReason": "シリーズ横展開、限定色、コラボSKUの可能性。",
         "missingData": "具体SKU、定価、発売日、初動成約",
         "sourceUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "store.jp.square-enix.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -937,6 +1145,18 @@
         "adoptionReason": "ポケカ需要、限定柄、送料優位の可能性。",
         "missingData": "具体柄、定価、初動成約、厚み",
         "sourceUrl": "https://www.pokemoncenter-online.com/"
+      },
+      "seed": true,
+      "lane": "lottery",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "pokemoncenter-online.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -969,6 +1189,18 @@
         "adoptionReason": "ポケカ抽選の速報検知を補強。",
         "missingData": "対象商品名、公式応募リンク、期間、定価、相場",
         "sourceUrl": "https://x.com/pokecachan"
+      },
+      "seed": true,
+      "lane": "sns",
+      "priority": "high",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "x.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1001,6 +1233,18 @@
         "adoptionReason": "再販導線の検知速度を上げる。",
         "missingData": "商品別URL、応募期限、販売価格、相場",
         "sourceUrl": "https://x.com/PokeGetoinfoMain"
+      },
+      "seed": true,
+      "lane": "sns",
+      "priority": "high",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "x.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1033,6 +1277,62 @@
         "adoptionReason": "ポケカ抽選導線の取りこぼし削減。",
         "missingData": "商品名、応募リンク、開始/終了、価格、相場",
         "sourceUrl": "https://x.com/pokecamatomeru"
+      },
+      "seed": true,
+      "lane": "sns",
+      "priority": "high",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "x.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
+      }
+    },
+    {
+      "id": "oroshinohito-signal",
+      "type": "trendCandidate",
+      "url": "https://x.com/oroshinohito?s=21",
+      "keyword": "ホビー発売・抽選速報",
+      "trend": {
+        "keyword": "ホビー発売・抽選速報",
+        "context": "X速報 / 商品名 / 販売先 / 価格",
+        "score": 84,
+        "type": "SNS速報",
+        "change24h": "監視追加",
+        "source": "@oroshinohito",
+        "confidence": "中",
+        "action": "商品名・販売先・価格の具体情報を優先抽出"
+      },
+      "candidate": {
+        "name": "ホビー発売・抽選速報（@oroshinohito）",
+        "trend": "ホビー発売・抽選速報",
+        "stage": "追加候補",
+        "stageKind": "candidate",
+        "genreScore": 82,
+        "priceData": "速報ベース",
+        "tradeVolume": "要確認",
+        "marginSignal": "商品名・販売先・価格が揃う速報を重視",
+        "reason": "商品名、販売日、価格、販売先の具体記述がある速報ソースとして監視。公式ページと直リンクを照合して候補化する。",
+        "confidence": "中",
+        "adoptionReason": "具体的な商品発売・抽選情報の検知速度を上げる。",
+        "missingData": "商品別直リンク、開始/終了、定価、相場",
+        "sourceUrl": "https://x.com/oroshinohito?s=21",
+        "sourceChannel": "sns"
+      },
+      "seed": true,
+      "lane": "sns",
+      "priority": "high",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "x.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1064,6 +1364,18 @@
         "adoptionReason": "強IP、限定販売、コラボ時計、店舗限定イベントが揃っている。",
         "missingData": "定価、在庫、ノベルティ残数、成約価格",
         "sourceUrl": "https://one-piece.com/news/79661/index.html"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "one-piece.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -1096,6 +1408,18 @@
         "adoptionReason": "主人公人気、限定店舗、ノベルティ条件。",
         "missingData": "モデル別定価、在庫、未使用成約、ノベルティ有無",
         "sourceUrl": "https://one-piece.com/news/79661/index.html"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "one-piece.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -1127,6 +1451,18 @@
         "adoptionReason": "限定コラボ時計は発売直後に相場差が出ることがある。",
         "missingData": "国内発売日、定価、販売数量、成約価格",
         "sourceUrl": "https://gshock.casio.com/jp/products/recommend/"
+      },
+      "seed": true,
+      "lane": "official",
+      "priority": "high",
+      "expansionPolicy": "article_plus_official_links",
+      "followDomains": [
+        "gshock.casio.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 10
       }
     },
     {
@@ -1158,6 +1494,18 @@
         "adoptionReason": "速報性のある完売情報が多く、抽選/再販の事前把握に使える。",
         "missingData": "成約価格、在庫復活時刻、公式再販の確度",
         "sourceUrl": "https://tenbailabo.com/"
+      },
+      "seed": true,
+      "lane": "blog",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "tenbailabo.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1189,6 +1537,18 @@
         "adoptionReason": "速報性があり抽選開始前の警戒に使える。",
         "missingData": "定価、成約価格、販売数量、再販確度",
         "sourceUrl": "https://emisresaleroom.com/"
+      },
+      "seed": true,
+      "lane": "blog",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "emisresaleroom.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1220,6 +1580,18 @@
         "adoptionReason": "初動の熱を拾えるため。",
         "missingData": "定価、成約価格、在庫復活、販売期間",
         "sourceUrl": "http://gentei333.blog108.fc2.com/"
+      },
+      "seed": true,
+      "lane": "blog",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "gentei333.blog108.fc2.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1251,6 +1623,18 @@
         "adoptionReason": "完売速度の早い商材を拾いやすい。",
         "missingData": "定価、販売店、成約価格、再販確度",
         "sourceUrl": "https://spkey.blog114.fc2.com/"
+      },
+      "seed": true,
+      "lane": "blog",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "spkey.blog114.fc2.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     },
     {
@@ -1282,6 +1666,54 @@
         "adoptionReason": "初動の話題を早めに拾える可能性がある。",
         "missingData": "公式URL、定価、成約価格、販売期間",
         "sourceUrl": "https://x.com/KanaeKanri20674?lang=ja"
+      },
+      "seed": true,
+      "lane": "sns",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "x.com"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
+      }
+    },
+    {
+      "id": "moviewalker-movie-bonus-news",
+      "type": "sourceProbe",
+      "url": "https://press.moviewalker.jp/news/",
+      "keyword": "映画特典・劇場グッズ",
+      "seed": true,
+      "lane": "news",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "press.moviewalker.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
+      }
+    },
+    {
+      "id": "toho-theater-news",
+      "type": "sourceProbe",
+      "url": "https://www.tohotheater.jp/news/",
+      "keyword": "劇場限定グッズ・映画特典",
+      "seed": true,
+      "lane": "official",
+      "priority": "medium",
+      "expansionPolicy": "article_links",
+      "followDomains": [
+        "tohotheater.jp"
+      ],
+      "crawlBudget": {
+        "recentLimit": 50,
+        "detailLimit": 20,
+        "externalFollowLimit": 6
       }
     }
   ]

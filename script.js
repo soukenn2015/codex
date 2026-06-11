@@ -3775,7 +3775,28 @@ function appendResearchRoutes(container, routes = []) {
   container.append(routeList);
 }
 
+function deriveCompletenessForView(item) {
+  const gaps = [];
+  const tagText = (item.tags ?? []).map((tag) => tag.label ?? tag).join(" ");
+  const contextText = `${tagText} ${item.reason ?? ""} ${item.nextInfo ?? ""}`;
+  const priceRows = item.priceRows ?? [];
+  const retailRow = priceRows.find((row) => row.label === "定価");
+  const marketRow = priceRows.find((row) => row.label === "相場");
+  const weakValue = (row) => !row || /未取得|確認中|計算前|計算待ち/.test(String(row.value ?? ""));
+
+  if (!isFiniteTs(item.startTs) || !isFiniteTs(item.endTs)) gaps.push("日程不足");
+  if (!/抽選|販売|発売|一番くじ/.test(contextText)) gaps.push("販売方法不足");
+  if (weakValue(retailRow)) gaps.push("定価不足");
+  if (weakValue(marketRow)) gaps.push("出口参考不足");
+  if (!(item.routes ?? []).some((route) => route.url) && !(item.actions ?? []).some((action) => action.url)) {
+    gaps.push("確認先不足");
+  }
+
+  return { gaps };
+}
+
 function renderResearchCard(item, container) {
+  const completeness = deriveCompletenessForView(item);
   const card = document.createElement("article");
   card.className = `research-card kind-${item.kind}`;
   card.classList.toggle("done", Boolean(item.done));
@@ -3836,6 +3857,14 @@ function renderResearchCard(item, container) {
   card.append(top, tags, dates);
   if (priceGrid.children.length > 0) card.append(priceGrid);
   card.append(reason, next);
+  if (completeness.gaps.length > 0) {
+    const material = document.createElement("p");
+    material.className = "research-note";
+    const materialStrong = document.createElement("strong");
+    materialStrong.textContent = "確認材料: ";
+    material.append(materialStrong, document.createTextNode(completeness.gaps.slice(0, 4).join(" / ")));
+    card.append(material);
+  }
   appendResearchRoutes(card, item.routes);
   appendResearchActions(card, item);
   container.append(card);

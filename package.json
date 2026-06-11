@@ -1,0 +1,17 @@
+{
+  "name": "2026-06-08-c444245e",
+  "version": "1.0.0",
+  "description": "ホビー市場の抽選・再販・価格差候補を見て、BuyLineと保守利益をすぐ判断する個人用リサーチAIプロトタイプ。",
+  "main": "script.js",
+  "scripts": {
+    "check": "node --check scripts/collect-marketlens.mjs && node --check scripts/postprocess-marketlens-snapshot.mjs && node --check scripts/marketlens-observation.mjs && node --check scripts/marketlens-observation-cycle.mjs && node --check scripts/marketlens-mercari-reader.mjs && node --check scripts/marketlens-yahoo-realtime-reader.mjs && node --check scripts/marketlens-x-reader.mjs && node --check marketlens-overview.js",
+    "test": "node scripts/regression-check.mjs && node scripts/ui-regression-check.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}

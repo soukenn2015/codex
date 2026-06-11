@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
+const uiScriptPath = new URL("../script.js", import.meta.url);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -36,8 +37,17 @@ function candidateValidationState(candidate) {
 }
 
 async function main() {
-  const snapshot = JSON.parse(await readFile(snapshotPath, "utf8"));
+  const [snapshotRaw, uiSource] = await Promise.all([readFile(snapshotPath, "utf8"), readFile(uiScriptPath, "utf8")]);
+  const snapshot = JSON.parse(snapshotRaw);
   const candidates = Array.isArray(snapshot.discoveryCandidates) ? snapshot.discoveryCandidates : [];
+
+  assert(uiSource.includes("function deriveCompletenessForView(item)"), "D6-A表示時派生関数がありません");
+  assert(uiSource.includes('materialStrong.textContent = "確認材料: ";'), "D6-A確認材料が表示されません");
+  assert(!uiSource.includes("item.completeness ="), "D6-A派生値をitemへ保存しています");
+  const buildResearchSource = uiSource.match(/function buildResearchItems\([\s\S]*?\n}\n\nfunction researchItemSort/)?.[0] ?? "";
+  const researchSortSource = uiSource.match(/function researchItemSort\([\s\S]*?\n}\n\nfunction buildFlowIndexItems/)?.[0] ?? "";
+  assert(!buildResearchSource.includes("deriveCompletenessForView"), "D6-A派生値が候補生成に使われています");
+  assert(!researchSortSource.includes("deriveCompletenessForView"), "D6-A派生値が並び順に使われています");
 
   const states = new Map();
   for (const c of candidates) {
@@ -77,4 +87,3 @@ main().catch((e) => {
   console.error(`UI regression check failed: ${e.message}`);
   process.exitCode = 1;
 });
-
