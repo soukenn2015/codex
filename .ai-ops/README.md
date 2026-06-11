@@ -2,7 +2,7 @@
 
 Codex is the only operator of the recovery branch. Grok Build is a delegated worker and may run only through `.ai-ops/bin/run-grok-task.mjs`. The executable is named `grok`, while the selected model is always `grok-build`.
 
-Codexの返答と`codex-input.txt`は、`AGENTS.md`の「Codex返答冒頭ルール」および`.ai-ops/CODEX_RESPONSE_RULES.md`に従い、日本語の現在地・進度・モデル・トークン方針ヘッダーから開始します。
+Codexの返答と`codex-input.txt`は、`AGENTS.md`の「Codex返答冒頭ルール」および`.ai-ops/CODEX_RESPONSE_RULES.md`に従い、短縮版の日本語ヘッダーから開始します。
 
 現在のrepo全体進度と位置は`.ai-ops/STATUS.json`をCodexが判断材料として更新します。ランナーは状態・モデル・危険度・制限を推測せず、Codexがタスクへ設定した短い値を表示・保存するだけです。
 
