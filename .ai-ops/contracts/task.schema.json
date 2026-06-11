@@ -33,6 +33,30 @@
       "type": "string",
       "minLength": 3
     },
+    "limit_status": {
+      "type": "string",
+      "minLength": 2
+    },
+    "weekly_limit_before": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "weekly_limit_after": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "five_hour_limit_before": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "five_hour_limit_after": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
     "current_purpose": {
       "type": "string",
       "minLength": 3
