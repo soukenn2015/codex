@@ -45,6 +45,7 @@ Accept a task only when all of these are true:
 - `ok` is `true`.
 - `changedFiles` contains only `allowedPaths`.
 - `forbiddenChanges` and `outsideAllowed` are empty.
+- `forbiddenDiffFiles`, `outsideAllowedDiffFiles`, and `dangerousKeywordViolations` are empty. These checks inspect diff targets and added lines, including untracked files.
 - Every compact `verification` entry has exit code `0` and did not time out.
 - Codex has reviewed `git diff --stat` and only the necessary path-limited diff before reproducing or adopting it.
 

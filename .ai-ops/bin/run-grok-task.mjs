@@ -13,6 +13,18 @@ const fullOutput = process.argv.includes("--full-output");
 const grokBin = process.env.GROK_BIN || "/Users/user/.grok/bin/grok";
 const compactOutputPath = "/tmp/codex-input.txt";
 const rawOutputPath = "/tmp/grok-build-run.log";
+const defaultForbiddenKeywords = [
+  "git commit",
+  "git push",
+  "git reset",
+  "git clean",
+  "相場",
+  "実勢価格",
+  "フリマ相場",
+  "観測相場",
+  "メルカリ相場",
+  "市場価格",
+];
 
 function fail(message, details = {}) {
   process.stderr.write(`${JSON.stringify({ ok: false, message, ...details }, null, 2)}\n`);
@@ -54,6 +66,10 @@ function bounded(value, maxBytes = 4_000) {
   return { text: `${output.trimEnd()}\n[truncated; see result.json]`, truncated: true };
 }
 
+function unique(values) {
+  return [...new Set(values)];
+}
+
 function git(args, cwd = repoRoot) {
   const result = run("git", args, { cwd });
   if (result.status !== 0) fail(`git ${args.join(" ")} failed`, { stderr: result.stderr.trim() });
@@ -72,6 +88,11 @@ function validateTask(task) {
     if (!Array.isArray(task[key]) || task[key].some((value) => typeof value !== "string" || !value.trim())) {
       fail(`task.${key} must be an array of non-empty strings`);
     }
+  }
+  if (task.forbiddenKeywords !== undefined &&
+      (!Array.isArray(task.forbiddenKeywords) ||
+       task.forbiddenKeywords.some((value) => typeof value !== "string" || !value.trim()))) {
+    fail("task.forbiddenKeywords must be an array of non-empty strings");
   }
   if (!Number.isInteger(task.maxTurns) || task.maxTurns < 1 || task.maxTurns > 20) fail("task.maxTurns is invalid");
   for (const command of task.verification) {
@@ -109,6 +130,50 @@ function changedFiles(cwd) {
     .map((file) => file.includes(" -> ") ? file.split(" -> ").at(-1) : file);
 }
 
+function diffFiles(cwd) {
+  const trackedDiffFiles = git(["diff", "--no-renames", "--name-only", "HEAD", "--"], cwd)
+    .split("\n")
+    .filter(Boolean);
+  return unique([...trackedDiffFiles, ...changedFiles(cwd)]).sort();
+}
+
+function addedDiffTextByFile(cwd, files) {
+  const result = new Map();
+  const patch = git(["diff", "--no-ext-diff", "--no-color", "--unified=0", "HEAD", "--"], cwd);
+  let currentFile = null;
+  for (const line of patch.split("\n")) {
+    if (line.startsWith("+++ b/")) {
+      currentFile = line.slice(6);
+      continue;
+    }
+    if (currentFile && line.startsWith("+") && !line.startsWith("+++")) {
+      result.set(currentFile, `${result.get(currentFile) ?? ""}${line.slice(1)}\n`);
+    }
+  }
+  for (const file of files) {
+    const tracked = run("git", ["ls-files", "--error-unmatch", "--", file], { cwd });
+    if (tracked.status === 0 || result.has(file)) continue;
+    try {
+      result.set(file, readFileSync(path.join(cwd, file), "utf8"));
+    } catch {
+      // Binary, deleted, or unreadable untracked files are still covered by path checks.
+    }
+  }
+  return result;
+}
+
+function keywordViolations(cwd, files, keywords) {
+  const addedText = addedDiffTextByFile(cwd, files);
+  const violations = [];
+  for (const [file, text] of addedText) {
+    const lowerText = text.toLocaleLowerCase("en-US");
+    for (const keyword of keywords) {
+      if (lowerText.includes(keyword.toLocaleLowerCase("en-US"))) violations.push({ file, keyword });
+    }
+  }
+  return violations;
+}
+
 function latestSessionId(taskId) {
   const taskRunDir = path.join(repoRoot, ".ai-ops", "runs", taskId);
   let runNames = [];
@@ -130,6 +195,39 @@ function latestSessionId(taskId) {
     }
   }
   return null;
+}
+
+function latestReport(taskId) {
+  const taskRunDir = path.join(repoRoot, ".ai-ops", "runs", taskId);
+  try {
+    const runNames = readdirSync(taskRunDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort()
+      .reverse();
+    for (const runName of runNames) {
+      try {
+        return JSON.parse(readFileSync(path.join(taskRunDir, runName, "result.json"), "utf8"));
+      } catch {
+        // Skip the current incomplete run and malformed historical output.
+      }
+    }
+  } catch {
+    // No historical run exists.
+  }
+  return null;
+}
+
+function failureSignature(value) {
+  const clean = String(value ?? "")
+    .replace(/\u001b\[[0-9;]*m/g, "")
+    .replace(/\d{4}-\d{2}-\d{2}T\S+/g, "")
+    .replace(/[0-9a-f]{8}-[0-9a-f-]{27,}/gi, "<id>");
+  return unique(clean.split(/\r?\n/)
+    .map((line) => line.trim().replace(/\s+/g, " "))
+    .filter((line) => /error|forbidden|timed out|timeout/i.test(line)))
+    .join("\n")
+    .slice(-2_000);
 }
 
 function taskPrompt(task, cwd) {
@@ -215,8 +313,13 @@ if (resolvedResumeSessionId) args.push("--resume", resolvedResumeSessionId);
 const timeoutMs = task.timeoutMs ?? 1_200_000;
 const result = run(grokBin, args, { cwd: taskCwd, timeout: timeoutMs });
 const after = changedFiles(taskCwd);
+const changedDiffFiles = diffFiles(taskCwd);
 const forbiddenChanges = after.filter((file) => matchesAny(file, task.forbiddenPaths));
 const outsideAllowed = after.filter((file) => !matchesAny(file, task.allowedPaths));
+const forbiddenDiffFiles = changedDiffFiles.filter((file) => matchesAny(file, task.forbiddenPaths));
+const outsideAllowedDiffFiles = changedDiffFiles.filter((file) => !matchesAny(file, task.allowedPaths));
+const forbiddenKeywords = unique([...defaultForbiddenKeywords, ...(task.forbiddenKeywords ?? [])]);
+const dangerousKeywordViolations = keywordViolations(taskCwd, changedDiffFiles, forbiddenKeywords);
 const reviewChanged = task.mode === "review" && after.length > 0;
 
 let output = null;
@@ -244,6 +347,7 @@ const outputFailed =
   output?.type === "invalid_json" ||
   output?.subtype === "error" ||
   output?.is_error === true;
+const statusBlocked = /^STATUS:\s*BLOCKED\b/im.test(String(output?.text ?? ""));
 const resumableCancelled =
   output?.stopReason === "Cancelled" &&
   typeof (output?.sessionId ?? output?.session_id) === "string" &&
@@ -255,6 +359,10 @@ const accepted =
   !outputFailed &&
   forbiddenChanges.length === 0 &&
   outsideAllowed.length === 0 &&
+  forbiddenDiffFiles.length === 0 &&
+  outsideAllowedDiffFiles.length === 0 &&
+  dangerousKeywordViolations.length === 0 &&
+  !statusBlocked &&
   !reviewChanged &&
   !verificationFailed;
 
@@ -269,6 +377,10 @@ const report = {
   changedFiles: after,
   forbiddenChanges,
   outsideAllowed,
+  diffFiles: changedDiffFiles,
+  forbiddenDiffFiles,
+  outsideAllowedDiffFiles,
+  dangerousKeywordViolations,
   diffStat,
   diffShortStat,
   verificationResults,
@@ -301,6 +413,15 @@ const verificationSummary = verificationResults.map((verification, index) => {
 const grokStdout = result.stdout ?? "";
 const grokStderr = result.stderr ?? "";
 const grokFailed = result.status !== 0 || Boolean(result.error) || outputFailed;
+const previousReport = latestReport(task.id);
+const currentFailureSignature = failureSignature(grokStderr);
+const repeatedFailure = Boolean(
+  grokFailed &&
+  currentFailureSignature &&
+  previousReport?.ok === false &&
+  failureSignature(previousReport.stderr) === currentFailureSignature
+);
+const failureTailBytes = statusBlocked || repeatedFailure ? 6_000 : 1_200;
 const rawCombined = [
   "===== GROK STDOUT =====",
   grokStdout,
@@ -322,6 +443,10 @@ const compactReport = {
   changedFiles: after,
   forbiddenChanges,
   outsideAllowed,
+  diffFiles: changedDiffFiles,
+  forbiddenDiffFiles,
+  outsideAllowedDiffFiles,
+  dangerousKeywordViolations,
   diffStat,
   diffShortStat,
   verification: verificationSummary,
@@ -331,7 +456,8 @@ const compactReport = {
   nextStep: resumableCancelled
     ? "Rerun the same task with --resume-latest; no sessionId copy is required."
     : null,
-  grokFailureTail: grokFailed ? tail(grokStderr, 12, 1_200) : null,
+  diagnosticExpansion: statusBlocked ? "status_blocked" : repeatedFailure ? "same_failure_twice" : null,
+  grokFailureTail: grokFailed || statusBlocked ? tail(grokStderr, 40, failureTailBytes) : null,
   finalReport: finalReport.text,
   finalReportTruncated: finalReport.truncated,
   runDir,
@@ -347,6 +473,15 @@ const metrics = {
   verificationStdoutTotal: textMetrics(verificationResults.map((item) => item.stdout).join("\n")),
   verificationStderrTotal: textMetrics(verificationResults.map((item) => item.stderr).join("\n")),
   codexInput: textMetrics(compactText),
+  grok_total_bytes: Buffer.byteLength(rawCombined),
+  codex_input_bytes: Buffer.byteLength(compactText),
+  reduction_ratio: Buffer.byteLength(rawCombined) > 0
+    ? Number((1 - Buffer.byteLength(compactText) / Buffer.byteLength(rawCombined)).toFixed(4))
+    : 0,
+  estimated_tokens: {
+    grok_total: Math.ceil(Buffer.byteLength(rawCombined) / 4),
+    codex_input: Math.ceil(Buffer.byteLength(compactText) / 4),
+  },
   approximation: "UTF-8 bytes divided by 4; use only as a rough comparison.",
 };
 writeFileSync(path.join(runDir, "codex-input.txt"), compactText);
