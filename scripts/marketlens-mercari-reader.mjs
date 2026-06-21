@@ -1,3 +1,7 @@
+import { existsSync } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { LIMITS, resolveMarketplaceBrowserObservationLimit } from "./marketlens-limits.mjs";
 import { buildJinaReaderUrl } from "./marketlens-x-reader.mjs";
 
@@ -12,6 +16,12 @@ const PERMANENT_FAILURE_ERRORS = new Set(["login_required", "blocked"]);
 const RETRYABLE_FAILURE_ERRORS = new Set(["timeout", "parse_failed", "no_results", "empty_response"]);
 const MAX_MARKETPLACE_OBSERVATION_FAILED_RETRIES = 2;
 const MAX_LISTING_CANDIDATES = 8;
+const MARKETPLACE_BROWSER_RENDER_FALLBACK =
+  process.env.MARKETLENS_MARKETPLACE_BROWSER_RENDER_FALLBACK !== "0";
+const CODEX_RUNTIME_NODE_MODULES = path.join(
+  os.homedir(),
+  ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules",
+);
 
 function compactText(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
@@ -85,6 +95,28 @@ function normalizeMercariItemUrl(url = "") {
   return normalized;
 }
 
+async function importOptionalPlaywright() {
+  const normalizeModule = (module) => module?.chromium ? module : module?.default ?? null;
+  try {
+    return normalizeModule(await import("playwright"));
+  } catch {
+    const configuredNodeModules = compactText(process.env.MARKETLENS_PLAYWRIGHT_NODE_MODULES ?? "");
+    const candidates = [
+      configuredNodeModules ? path.join(configuredNodeModules, "playwright/index.js") : "",
+      path.join(CODEX_RUNTIME_NODE_MODULES, "playwright/index.js"),
+    ].filter(Boolean);
+    for (const candidate of candidates) {
+      if (!existsSync(candidate)) continue;
+      try {
+        return normalizeModule(await import(pathToFileURL(candidate).href));
+      } catch {
+        // Try the next candidate.
+      }
+    }
+    return null;
+  }
+}
+
 function cleanListingTitle(title = "") {
   return compactText(title).replace(/のサムネイル$/u, "").slice(0, 180);
 }
@@ -152,6 +184,8 @@ function queueItemFromTarget(target = {}, overrides = {}) {
     failedCount: Number(overrides.failedCount ?? target.failedCount ?? 0) || 0,
     lastError: overrides.lastError ?? target.lastError ?? null,
     lastAttemptAt: overrides.lastAttemptAt ?? target.lastAttemptAt ?? null,
+    browserRenderAttemptedAt: overrides.browserRenderAttemptedAt ?? target.browserRenderAttemptedAt ?? null,
+    browserRenderLastError: overrides.browserRenderLastError ?? target.browserRenderLastError ?? null,
     reason: overrides.reason ?? target.reason ?? null,
   };
 }
@@ -160,8 +194,19 @@ function isPermanentSkipReason(reason = "") {
   return ["permanent_login_required", "permanent_blocked", "permanent_failed_retries"].includes(String(reason ?? ""));
 }
 
+function isLoginRequiredQueueItem(existing = {}) {
+  return existing.lastError === "login_required" || existing.skipReason === "permanent_login_required";
+}
+
+function shouldRetryLoginRequiredWithBrowser(existing = {}) {
+  return MARKETPLACE_BROWSER_RENDER_FALLBACK && isLoginRequiredQueueItem(existing) && !existing.browserRenderAttemptedAt;
+}
+
 function resolveQueueStatusFromExisting(existing = {}, stableObservedKeys, recheckKeys, key) {
   if (recheckKeys.has(key)) {
+    if (shouldRetryLoginRequiredWithBrowser(existing)) {
+      return { status: "pending", reason: "browser_render_retry_login_required", skipReason: null };
+    }
     if (existing.status === "skipped" && isPermanentSkipReason(existing.skipReason)) {
       return { status: "skipped", reason: existing.reason ?? "permanent_skip", skipReason: existing.skipReason };
     }
@@ -176,6 +221,9 @@ function resolveQueueStatusFromExisting(existing = {}, stableObservedKeys, reche
   }
   if (stableObservedKeys.has(key)) {
     return { status: "browser_observed", reason: existing.reason ?? "already_observed", skipReason: null };
+  }
+  if (shouldRetryLoginRequiredWithBrowser(existing)) {
+    return { status: "pending", reason: "browser_render_retry_login_required", skipReason: null };
   }
   if (existing.status === "skipped" && isPermanentSkipReason(existing.skipReason)) {
     return { status: "skipped", reason: existing.reason ?? "permanent_skip", skipReason: existing.skipReason };
@@ -255,6 +303,10 @@ export function buildMarketplaceObservationQueue(snapshot = {}) {
       status = "skipped";
       skipReason = "missing_search_url";
       reason = "invalid_target";
+    } else if (isLowQualityMarketplaceQuery(target)) {
+      status = "skipped";
+      skipReason = "low_quality_marketplace_query";
+      reason = "invalid_marketplace_query";
     } else if (existing.id) {
       const resolved = resolveQueueStatusFromExisting(existing, stableObservedKeys, recheckKeys, key);
       status = resolved.status;
@@ -278,6 +330,8 @@ export function buildMarketplaceObservationQueue(snapshot = {}) {
         failedCount: existing.failedCount ?? 0,
         lastError: existing.lastError ?? target.lastError ?? null,
         lastAttemptAt: existing.lastAttemptAt ?? target.lastAttemptAt ?? null,
+        browserRenderAttemptedAt: existing.browserRenderAttemptedAt ?? target.browserRenderAttemptedAt ?? null,
+        browserRenderLastError: existing.browserRenderLastError ?? target.browserRenderLastError ?? null,
       }),
     );
   }
@@ -300,6 +354,8 @@ export function buildMarketplaceObservationQueue(snapshot = {}) {
       const left = statusOrder[a.status] ?? 9;
       const right = statusOrder[b.status] ?? 9;
       if (left !== right) return left - right;
+      const priority = marketplaceQueuePriority(a) - marketplaceQueuePriority(b);
+      if (priority !== 0) return priority;
       return String(a.productName ?? "").localeCompare(String(b.productName ?? ""), "ja");
     });
 
@@ -344,6 +400,41 @@ function titleMatchesQuery(title = "", query = "") {
   return tokens.some((token) => text.includes(token));
 }
 
+function marketplaceQueuePriority(item = {}) {
+  const query = compactText(item.query ?? item.productName ?? "");
+  const productName = compactText(item.productName ?? "");
+  let score = 0;
+
+  if (item.reason === "browser_render_retry_login_required") score -= 30;
+  if (item.reason === "recheck_unknown_currency") score -= 20;
+  if (/BOX|ボックス|ロケット団|ポケモン|ガンダム|ドラゴンボール|一番くじ|ラストワン|MASTERLISE|G-SHOCK|GARMIN|スマートウォッチ/iu.test(query)) {
+    score -= 16;
+  }
+  if (query.length > 48) score += 18;
+  if (productName.length > 60) score += 12;
+  if (/している|ラインナップ|関連記事|購入する|となっている|どこから見ても|第\d+弾|商品で共通|ご注目/iu.test(query)) {
+    score += 24;
+  }
+  if (/賞/u.test(query) && /フィギュア|ぬいぐるみ|ラストワン|MASTERLISE/iu.test(query)) {
+    score -= 10;
+  }
+  return score;
+}
+
+function isLowQualityMarketplaceQuery(target = {}) {
+  const query = compactText(target.query ?? target.productName ?? "");
+  const productName = compactText(target.productName ?? "");
+  if (!query) return true;
+  if (query.length > 90 || productName.length > 90) return true;
+  if (/している|ラインナップ|関連記事|購入する|となっている|どこから見ても|商品で共通|ご注目|試着できます|イベントが開催|新作モデル\s*\d{4}年/iu.test(query)) {
+    return true;
+  }
+  if (/^[A-ZＡ-Ｚ]賞.*(?:まで|表情|パーツ替え|ラインナップ)/u.test(query)) {
+    return true;
+  }
+  return false;
+}
+
 export function parseMercariSearchMarkdown(raw = "", query = "", observedAt = "") {
   const warnings = [];
   const failure = detectFetchFailure(raw);
@@ -370,6 +461,7 @@ export function parseMercariSearchMarkdown(raw = "", query = "", observedAt = ""
     const itemUrl = normalizeMercariItemUrl(match[3] ?? "");
     if (!title || price.value == null || !itemUrl || seenUrls.has(itemUrl)) continue;
     seenUrls.add(itemUrl);
+    const visibleTextSnippet = compactText(`${match[1] ?? ""} ${title}`).slice(0, 500);
     listingCandidates.push({
       value: price.value,
       currency: price.currency,
@@ -380,6 +472,25 @@ export function parseMercariSearchMarkdown(raw = "", query = "", observedAt = ""
       shippingIncluded: null,
       status: "on_sale",
       observedAt: observedAt || null,
+      sourceMode: "jina_reader_search",
+      jpyCandidate:
+        price.currency === "JPY"
+          ? {
+              amount: price.value,
+              currency: "JPY",
+              source: "jina_reader_search_markdown",
+              sourceUrl: itemUrl,
+              fetchedAt: observedAt || null,
+              rawText: visibleTextSnippet,
+              jpyRawPriceText: price.rawPriceText,
+              selectorEvidence: "markdown item link with JPY price",
+              visibleTextSnippet,
+              statusCandidate: "on_sale",
+              confidence: price.priceParseConfidence,
+              exclusionReason: null,
+              buyLineEligible: false,
+            }
+          : undefined,
     });
     if (listingCandidates.length >= MAX_LISTING_CANDIDATES) break;
   }
@@ -409,6 +520,149 @@ export function parseMercariSearchMarkdown(raw = "", query = "", observedAt = ""
     parseWarnings: warnings,
     confidence,
   };
+}
+
+function parseMercariBrowserLinkText(linkText = "") {
+  const text = compactText(linkText);
+  const match = text.match(/(?:現在\s*)?(¥|￥)\s*([\d,]+)/u);
+  if (!match) return null;
+  const value = parseNumericToken(match[2]);
+  if (value == null) return null;
+  const title = cleanListingTitle(text.replace(match[0], ""));
+  return {
+    value,
+    currency: "JPY",
+    rawPriceText: match[0],
+    priceParseConfidence: 0.95,
+    title,
+  };
+}
+
+function parseMercariBrowserRenderedRows(rows = [], query = "", observedAt = "") {
+  const listingCandidates = [];
+  const seenUrls = new Set();
+  const warnings = [];
+
+  for (const row of rows) {
+    const itemUrl = normalizeMercariItemUrl(row.href ?? "");
+    if (!itemUrl || seenUrls.has(itemUrl)) continue;
+    const parsed = parseMercariBrowserLinkText(row.text ?? "");
+    if (!parsed) {
+      warnings.push("browser_link_price_missing");
+      continue;
+    }
+    const title = cleanListingTitle(parsed.title || row.title || row.alt || "");
+    if (!title) {
+      warnings.push("browser_link_title_missing");
+      continue;
+    }
+    seenUrls.add(itemUrl);
+    const status = /売り切れ|sold/i.test(String(row.text ?? "")) ? "sold" : "on_sale";
+    const visibleTextSnippet = compactText(row.text ?? "").slice(0, 500);
+    listingCandidates.push({
+      value: parsed.value,
+      currency: parsed.currency,
+      rawPriceText: parsed.rawPriceText,
+      priceParseConfidence: parsed.priceParseConfidence,
+      title,
+      itemUrl,
+      shippingIncluded: null,
+      status,
+      observedAt: observedAt || null,
+      sourceMode: "browser_rendered_search",
+      jpyCandidate:
+        status === "on_sale"
+          ? {
+              amount: parsed.value,
+              currency: "JPY",
+              source: "playwright_search_page",
+              sourceUrl: itemUrl,
+              fetchedAt: observedAt || null,
+              rawText: visibleTextSnippet,
+              jpyRawPriceText: parsed.rawPriceText,
+              selectorEvidence: "a[href*='/item/m']",
+              visibleTextSnippet,
+              statusCandidate: status,
+              confidence: parsed.priceParseConfidence,
+              exclusionReason: null,
+              buyLineEligible: false,
+            }
+          : undefined,
+    });
+    if (listingCandidates.length >= MAX_LISTING_CANDIDATES) break;
+  }
+
+  if (!listingCandidates.length) {
+    return {
+      observationStatus: rows.length > 0 ? "parse_failed" : "no_results",
+      listingCandidates: [],
+      soldCandidates: [],
+      parseWarnings: rows.length > 0 ? [...new Set(warnings)] : ["browser_render_no_item_urls"],
+      confidence: rows.length > 0 ? 0.25 : 0.2,
+    };
+  }
+
+  const parseWarnings = [...new Set(["browser_render_fallback", ...warnings])];
+  const confidence = computeMarketplaceObservationConfidence({
+    query,
+    listingCandidates,
+    observationStatus: "succeeded",
+    parseWarnings,
+  });
+  return {
+    observationStatus: "succeeded",
+    listingCandidates,
+    soldCandidates: [],
+    parseWarnings,
+    confidence,
+  };
+}
+
+async function fetchMercariSearchWithBrowser(browser, searchUrl, timeoutMs = 15000) {
+  const page = await browser.newPage({
+    locale: "ja-JP",
+    timezoneId: "Asia/Tokyo",
+    userAgent:
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    viewport: { width: 1280, height: 900 },
+  });
+  try {
+    const response = await page.goto(searchUrl, {
+      waitUntil: "domcontentloaded",
+      timeout: timeoutMs,
+    });
+    await page.waitForTimeout(Math.min(7000, Math.max(2500, Math.floor(timeoutMs / 3))));
+    const rendered = await page.evaluate(() => {
+      const rows = [...document.querySelectorAll("a[href*='/item/m']")]
+        .map((node) => ({
+          href: node.href,
+          text: (node.textContent ?? "").replace(/\s+/g, " ").trim(),
+          title: node.getAttribute("aria-label") ?? "",
+          alt: node.querySelector("img")?.getAttribute("alt") ?? "",
+        }))
+        .filter((row) => row.href)
+        .slice(0, 30);
+      const pageText = (document.body?.innerText ?? "").slice(0, 2000);
+      return { rows, pageText, title: document.title };
+    });
+    const text = `${rendered.title}\n${rendered.pageText}`;
+    const failure = detectFetchFailure(text);
+    return {
+      ok: true,
+      status: response?.status() ?? 0,
+      rows: rendered.rows,
+      failure,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      status: 0,
+      rows: [],
+      failure: { kind: error?.name === "TimeoutError" ? "timeout" : "parse_failed", warnings: [String(error?.message ?? error)] },
+    };
+  } finally {
+    await page.close();
+  }
 }
 
 export function computeMarketplaceObservationConfidence({
@@ -568,11 +822,41 @@ export async function collectMarketplaceObservationSignals({
 
   const incomingSignals = [];
   const observedAt = new Date().toISOString();
+  let playwrightModule = null;
+  let browser = null;
+  let browserFallbackAttempted = 0;
+  let browserFallbackSucceeded = 0;
+  let browserFallbackUnavailable = false;
 
-  if (enabled && normalizedLimit > 0) {
+  async function ensureBrowserFallback() {
+    if (!MARKETPLACE_BROWSER_RENDER_FALLBACK) return null;
+    if (browser) return browser;
+    if (browserFallbackUnavailable) return null;
+    playwrightModule = playwrightModule ?? (await importOptionalPlaywright());
+    if (!playwrightModule?.chromium) {
+      browserFallbackUnavailable = true;
+      return null;
+    }
+    browser = await playwrightModule.chromium.launch({
+      headless: process.env.MARKETLENS_MARKETPLACE_BROWSER_HEADLESS !== "0",
+    });
+    return browser;
+  }
+
+  async function closeBrowserFallback() {
+    if (!browser) return;
+    await browser.close();
+    browser = null;
+  }
+
+  try {
+    if (enabled && normalizedLimit > 0) {
     const pendingTargets = initialQueue
       .filter((item) => item.status === "pending" && item.searchUrl && item.query)
       .sort((a, b) => {
+        const aPriority = marketplaceQueuePriority(a);
+        const bPriority = marketplaceQueuePriority(b);
+        if (aPriority !== bPriority) return aPriority - bPriority;
         const aRecheck = a.reason === "recheck_unknown_currency" ? 0 : 1;
         const bRecheck = b.reason === "recheck_unknown_currency" ? 0 : 1;
         if (aRecheck !== bRecheck) return aRecheck - bRecheck;
@@ -605,12 +889,40 @@ export async function collectMarketplaceObservationSignals({
       }
 
       const parsed = parseMercariSearchMarkdown(fetched.body, target.query, observedAt);
-      const observationStatus = parsed.observationStatus ?? "parse_failed";
+      let finalParsed = parsed;
+      let browserRenderAttemptedForTarget = false;
+      if (["login_required", "no_results", "parse_failed"].includes(parsed.observationStatus ?? "")) {
+        const fallbackBrowser = await ensureBrowserFallback();
+        if (fallbackBrowser) {
+          browserFallbackAttempted += 1;
+          browserRenderAttemptedForTarget = true;
+          queueItem.browserRenderAttemptedAt = observedAt;
+          const rendered = await fetchMercariSearchWithBrowser(fallbackBrowser, target.searchUrl, normalizedTimeout);
+          if (rendered.failure && !rendered.rows.length) {
+            finalParsed = {
+              observationStatus: rendered.failure.kind,
+              listingCandidates: [],
+              soldCandidates: [],
+              parseWarnings: ["browser_render_fallback", ...(rendered.failure.warnings ?? [])],
+              confidence: rendered.failure.kind === "blocked" || rendered.failure.kind === "login_required" ? 0.1 : 0.2,
+            };
+          } else {
+            finalParsed = parseMercariBrowserRenderedRows(rendered.rows, target.query, observedAt);
+            if (finalParsed.observationStatus === "succeeded") browserFallbackSucceeded += 1;
+          }
+        } else if (MARKETPLACE_BROWSER_RENDER_FALLBACK) {
+          browserFallbackUnavailable = true;
+        }
+      }
+      const observationStatus = finalParsed.observationStatus ?? "parse_failed";
+      if (browserRenderAttemptedForTarget && observationStatus !== "succeeded") {
+        queueItem.browserRenderLastError = observationStatus;
+      }
       execution.byStatus[observationStatus] = (execution.byStatus[observationStatus] ?? 0) + 1;
 
       if (observationStatus === "succeeded") {
         execution.succeeded += 1;
-        const signal = buildMarketplaceSignalFromObservation(target, parsed, observedAt);
+        const signal = buildMarketplaceSignalFromObservation(target, finalParsed, observedAt);
         if (isRecheck) {
           execution.unknownCurrencyRecheckSucceeded += 1;
           if (signalNeedsCurrencyRecheck(signal)) {
@@ -635,6 +947,9 @@ export async function collectMarketplaceObservationSignals({
       }
     }
   }
+  } finally {
+    await closeBrowserFallback();
+  }
 
   for (const row of existingSignals) {
     if (signalNeedsCurrencyRecheck(row)) continue;
@@ -651,6 +966,8 @@ export async function collectMarketplaceObservationSignals({
     const left = statusOrder[a.status] ?? 9;
     const right = statusOrder[b.status] ?? 9;
     if (left !== right) return left - right;
+    const priority = marketplaceQueuePriority(a) - marketplaceQueuePriority(b);
+    if (priority !== 0) return priority;
     return String(a.productName ?? "").localeCompare(String(b.productName ?? ""), "ja");
   });
   const queueSummary = summarizeMarketplaceObservationQueue(updatedQueue);
@@ -662,6 +979,12 @@ export async function collectMarketplaceObservationSignals({
   execution.marketplaceObservationQueueStale = queueSummary.stale;
   execution.skipped = queueSummary.skipped;
   execution.skippedByReason = queueSummary.skippedByReason;
+  execution.browserRenderFallback = {
+    enabled: MARKETPLACE_BROWSER_RENDER_FALLBACK,
+    attempted: browserFallbackAttempted,
+    succeeded: browserFallbackSucceeded,
+    unavailable: browserFallbackUnavailable,
+  };
 
   const marketplaceSignals = mergeMarketplaceSignals(existingSignals, incomingSignals);
 

@@ -12,7 +12,12 @@ import {
 } from "./marketlens-observation.mjs";
 import { buildXObservationQueue } from "./marketlens-x-reader.mjs";
 import { resolveObservationLimits, resolveXQueueLimit } from "./marketlens-limits.mjs";
-import { isProvisionalBuyLineRank } from "./marketlens-buyline.mjs";
+import {
+  applyPromotedMarketPricesToCandidates,
+  isProvisionalBuyLineCandidateFieldEligible,
+  promoteObservedMarketPrices,
+  resolveProvisionalBuyLinePriceFields,
+} from "./marketlens-buyline.mjs";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 const historyPath = new URL("../data/marketlens.history.json", import.meta.url);
@@ -483,8 +488,75 @@ function normalizeProductKey(name) {
   return normalizeSignalText(canonicalizeProductName(name));
 }
 
+function productTypeFromCategory(category = "") {
+  if (category === "pokemon" || category === "pokemon_box") return "pokemon_box";
+  if (category === "kuji") return "kuji_lot";
+  if (category === "watch") return "watch";
+  if (category === "figure") return "figure";
+  if (category === "movie_bonus") return "movie_bonus";
+  if (category === "movie_goods") return "movie_goods";
+  return "generic";
+}
+
+function bootstrapNormalizedProducts(snapshot = {}) {
+  if (Array.isArray(snapshot.normalizedProducts) && snapshot.normalizedProducts.length > 0) return snapshot.normalizedProducts;
+  const rows = [];
+  const seen = new Set();
+  const push = (name, extra = {}) => {
+    const canonicalName = canonicalizeProductName(name);
+    const productKey = normalizeProductKey(canonicalName);
+    if (!canonicalName || !productKey || seen.has(productKey) || !productPhraseLooksSpecific(canonicalName)) return;
+    seen.add(productKey);
+    const category = extra.category || extra.categoryHint || "generic_hobby";
+    rows.push({
+      productKey,
+      canonicalName,
+      aliases: [canonicalName],
+      category,
+      productType: productTypeFromCategory(category),
+      sourceKinds: [extra.sourceKind || "bootstrap"].filter(Boolean),
+    });
+  };
+
+  for (const deal of snapshot.deals ?? []) push(deal.name, { category: deal.category, sourceKind: "deal" });
+  for (const release of snapshot.pokemonReleases ?? []) push(release.name, { category: "pokemon", sourceKind: "pokemon_release" });
+  for (const candidate of snapshot.discoveryCandidates ?? []) {
+    push(candidate.name, { category: candidate.category, sourceKind: candidate.sourceChannel || "candidate" });
+  }
+  for (const special of snapshot.kujiSpecials ?? []) push(special.title, { category: "kuji", sourceKind: "kuji_special" });
+  return rows;
+}
+
 function safeIsoDate(value) {
   return /^\d{4}-\d{2}-\d{2}$/.test(String(value ?? "").trim()) ? String(value).trim() : "";
+}
+
+function todayIsoDate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function candidateHasEnded(candidate = {}) {
+  const end = safeIsoDate(String(candidate.endDate ?? "").slice(0, 10));
+  return Boolean(end && end < todayIsoDate());
+}
+
+function stripEndedSpecializedMarket(candidate = {}) {
+  if (!candidateHasEnded(candidate)) return candidate;
+  if (!String(candidate.marketPriceSource ?? "").includes("specialized-search")) return candidate;
+  return {
+    ...candidate,
+    marketPrice: null,
+    marketPriceLabel: null,
+    marketPriceSource: null,
+    marketPriceSourceRank: null,
+    marketPriceUsage: null,
+    marketPriceBuyLineEligible: false,
+    marketPriceCurrency: null,
+    marketPriceSourceMode: null,
+    marketPricePromotionStatus: null,
+    marketObservedAt: null,
+    marketPriceEvidence: null,
+  };
 }
 
 function addDaysToIsoDate(isoDate, days) {
@@ -527,21 +599,38 @@ function priceSourceRankFromSource(source = "", priceType = "") {
   if (priceType === "predicted_market" || priceType === "predicted_profit") return "historical_prediction";
   if (/llm|heuristic|blog-sns-article/.test(text)) return "llm_mentioned_price";
   if (/history-median|comparables|learning/.test(text)) return "historical_prediction";
-  if (/specialized-search/.test(text)) return "observed_market_price";
+  if (/observed_market|mercari_observed_market/.test(text)) return "observed_market_price";
+  if (/specialized-search/.test(text)) return "specialized_estimate";
   if (/deal|pokemon-release|pokemon_release|kuji_special|manual/.test(text)) return "manual_price";
   if (/candidate|release|variant|article/.test(text)) return "specialized_estimate";
   return priceType === "retail" ? "manual_price" : "specialized_estimate";
 }
 
 function priceSourceUsageFromRank(rank = "") {
-  return isProvisionalBuyLineRank(rank) ? "buyline" : "watch";
+  return rank === "manual_price" || rank === "confirmed_price" ? "buyline" : "watch";
+}
+
+function candidatePriceBuyLineFields(candidate = {}, prefix = "market", rank = "") {
+  const explicitEligible = candidate[`${prefix}PriceBuyLineEligible`];
+  const existingUsage = candidate[`${prefix}PriceUsage`];
+  const buyLineEligible =
+    typeof explicitEligible === "boolean" ? explicitEligible : existingUsage ? existingUsage === "buyline" : true;
+  const eligible = isProvisionalBuyLineCandidateFieldEligible({
+    rank,
+    buyLineEligible,
+    currency: candidate[`${prefix}PriceCurrency`],
+    sourceMode: candidate[`${prefix}PriceSourceMode`],
+    promotionStatus: candidate[`${prefix}PricePromotionStatus`],
+  });
+  return {
+    usage: eligible ? "buyline" : "watch",
+    eligible,
+  };
 }
 
 function provisionalCandidateBuyLineStatus(candidate = {}) {
-  const marketOk =
-    isProvisionalBuyLineRank(candidate.marketPriceSourceRank) && Number.isFinite(candidate.marketPrice);
-  const retailOk =
-    isProvisionalBuyLineRank(candidate.retailPriceSourceRank) && Number.isFinite(candidate.retailPrice);
+  const marketOk = candidate.marketPriceBuyLineEligible === true && Number.isFinite(candidate.marketPrice);
+  const retailOk = candidate.retailPriceBuyLineEligible === true && Number.isFinite(candidate.retailPrice);
   return marketOk && retailOk ? "available" : "unavailable";
 }
 
@@ -1086,7 +1175,14 @@ snapshot.lotteryRoutes = (snapshot.lotteryRoutes ?? [])
 
 snapshot.llmExtractions = pruneExtractions((snapshot.llmExtractions ?? []).map(sanitizeExtraction).filter(Boolean), 20);
 
-snapshot.normalizedProducts = (snapshot.normalizedProducts ?? [])
+snapshot.productEvents = Array.isArray(snapshot.productEvents) ? snapshot.productEvents : [];
+snapshot.routeSnapshots = Array.isArray(snapshot.routeSnapshots) ? snapshot.routeSnapshots : [];
+snapshot.priceSnapshots = Array.isArray(snapshot.priceSnapshots) ? snapshot.priceSnapshots : [];
+snapshot.predictedPriceSnapshots = Array.isArray(snapshot.predictedPriceSnapshots) ? snapshot.predictedPriceSnapshots : [];
+snapshot.marketplaceSignals = Array.isArray(snapshot.marketplaceSignals) ? snapshot.marketplaceSignals : [];
+snapshot.selectionReasons = Array.isArray(snapshot.selectionReasons) ? snapshot.selectionReasons : [];
+
+snapshot.normalizedProducts = bootstrapNormalizedProducts(snapshot)
   .map((product) => ({
     ...product,
     canonicalName: canonicalizeProductName(product.canonicalName),
@@ -1149,18 +1245,25 @@ snapshot.routeSnapshots = (snapshot.routeSnapshots ?? [])
   .filter((route) => keepProductKey(route.productName));
 
 snapshot.priceSnapshots = (snapshot.priceSnapshots ?? [])
-  .map((price) => ({
-    ...price,
-    productName: canonicalizeProductName(price.productName),
-    productKey: normalizeProductKey(price.productName),
-    priceSourceRank: price.priceSourceRank || priceSourceRankFromSource(price.source, price.priceType),
-    priceUsage: price.priceUsage || priceSourceUsageFromRank(price.priceSourceRank || priceSourceRankFromSource(price.source, price.priceType)),
-    buyLineEligible:
-      typeof price.buyLineEligible === "boolean"
-        ? price.buyLineEligible
-        : priceSourceUsageFromRank(price.priceSourceRank || priceSourceRankFromSource(price.source, price.priceType)) === "buyline",
-  }))
+  .map((price) => {
+    const priceSourceRank = price.priceSourceRank || priceSourceRankFromSource(price.source, price.priceType);
+    const row = {
+      ...price,
+      productName: canonicalizeProductName(price.productName),
+      productKey: normalizeProductKey(price.productName),
+      priceSourceRank,
+    };
+    return {
+      ...row,
+      ...resolveProvisionalBuyLinePriceFields(row),
+    };
+  })
   .filter((price) => keepProductKey(price.productName));
+
+const observedMarketPromotion = promoteObservedMarketPrices(snapshot);
+snapshot.priceSnapshots = observedMarketPromotion.priceSnapshots.filter((price) => keepProductKey(price.productName));
+const promotedCandidateApplication = applyPromotedMarketPricesToCandidates(snapshot);
+snapshot.discoveryCandidates = promotedCandidateApplication.discoveryCandidates;
 
 snapshot.predictedPriceSnapshots = (snapshot.predictedPriceSnapshots ?? [])
   .map((price) => ({
@@ -1174,16 +1277,19 @@ snapshot.predictedPriceSnapshots = (snapshot.predictedPriceSnapshots ?? [])
   .filter((price) => keepProductKey(price.productName));
 
 snapshot.discoveryCandidates = (snapshot.discoveryCandidates ?? []).map((candidate) => {
+  candidate = stripEndedSpecializedMarket(candidate);
   const marketPriceSourceRank = candidate.marketPriceSourceRank || priceSourceRankFromSource(candidate.marketPriceSource, "market");
   const retailPriceSourceRank = candidate.retailPriceSourceRank || priceSourceRankFromSource(candidate.retailPriceSource, "retail");
+  const marketFields = candidatePriceBuyLineFields(candidate, "market", marketPriceSourceRank);
+  const retailFields = candidatePriceBuyLineFields(candidate, "retail", retailPriceSourceRank);
   const enriched = {
     ...candidate,
     marketPriceSourceRank,
-    marketPriceUsage: candidate.marketPriceUsage || priceSourceUsageFromRank(marketPriceSourceRank),
-    marketPriceBuyLineEligible: isProvisionalBuyLineRank(marketPriceSourceRank),
+    marketPriceUsage: marketFields.usage,
+    marketPriceBuyLineEligible: marketFields.eligible,
     retailPriceSourceRank,
-    retailPriceUsage: candidate.retailPriceUsage || priceSourceUsageFromRank(retailPriceSourceRank),
-    retailPriceBuyLineEligible: isProvisionalBuyLineRank(retailPriceSourceRank),
+    retailPriceUsage: retailFields.usage,
+    retailPriceBuyLineEligible: retailFields.eligible,
     buyLineStatus: provisionalCandidateBuyLineStatus({
       marketPriceSourceRank,
       retailPriceSourceRank,
@@ -1241,6 +1347,8 @@ snapshot.metadata.normalizedProductCount = snapshot.normalizedProducts.length;
 snapshot.metadata.productEventCount = snapshot.productEvents.length;
 snapshot.metadata.routeSnapshotCount = snapshot.routeSnapshots.length;
 snapshot.metadata.priceSnapshotCount = snapshot.priceSnapshots.length;
+snapshot.metadata.observedMarketPromotion = observedMarketPromotion.summary;
+snapshot.metadata.promotedCandidateApplication = promotedCandidateApplication.summary;
 snapshot.metadata.predictedPriceSnapshotCount = snapshot.predictedPriceSnapshots.length;
 snapshot.metadata.historicalComparableCount = snapshot.historicalComparables.length;
 snapshot.metadata.llmExtractionCount = snapshot.llmExtractions.length;

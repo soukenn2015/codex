@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const PORT = Number(process.env.MARKETLENS_PORT ?? 8765);
+const HOST = process.env.MARKETLENS_HOST ?? "127.0.0.1";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "public-share");
 
 const MIME = {
@@ -56,7 +57,7 @@ const server = http.createServer((req, res) => {
 });
 
 function stopExistingOnPort() {
-  const probe = spawnSync("lsof", ["-ti", `:${PORT}`], { encoding: "utf8" });
+  const probe = spawnSync("lsof", ["-nP", "-iTCP", `:${PORT}`, "-sTCP:LISTEN", "-t"], { encoding: "utf8" });
   const pids = (probe.stdout ?? "")
     .split(/\s+/)
     .map((s) => s.trim())
@@ -75,7 +76,7 @@ function stopExistingOnPort() {
 }
 
 stopExistingOnPort();
-server.listen(PORT, () => {
-  console.log(`MarketLens public-share: http://localhost:${PORT}/`);
+server.listen(PORT, HOST, () => {
+  console.log(`MarketLens public-share: http://${HOST}:${PORT}/`);
   console.log(`root: ${ROOT}`);
 });

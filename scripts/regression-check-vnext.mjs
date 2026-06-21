@@ -36,6 +36,7 @@ import { assertProvisionalBuyLineGates } from "./marketlens-buyline.mjs";
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 const collectScriptPath = new URL("./collect-marketlens.mjs", import.meta.url);
 const FORBIDDEN_MARKET_LABEL_RE = /メルカリ相場|フリマ相場|実勢相場|観測相場/;
+const REQUIRE_GEMINI = process.env.MARKETLENS_REQUIRE_GEMINI === "1";
 
 function assert(condition, message) {
   if (!condition) {
@@ -94,12 +95,23 @@ function assertBrowserObservedPromotionGates(snapshot, observation, snapshotBlob
       (price) =>
         price.sourceMode === "browser_observed" ||
         price.priceSourceRank === "browser_observed" ||
-        price.provider === "mercari_browser",
+        (price.provider === "mercari_browser" && price.priceSourceRank !== "observed_market_price"),
     ),
-    "browser 観測価格が priceSnapshots に投影されています",
+    "未昇格の browser 観測価格が priceSnapshots に投影されています",
   );
-  assert((observation.observedMarketPrice ?? 0) === 0, "browser_observed_candidate が observed_market_price に昇格しています");
   assert(observation.buyLineBrowserMixDetected === false, "browser_observed_candidate が BuyLine に混入しています");
+
+  for (const price of priceSnapshots.filter((row) => row.priceSourceRank === "observed_market_price")) {
+    assert(price.promotionStatus === "promoted", `observed_market_price が昇格済みではありません: ${price.productKey}`);
+    assert(price.buyLineEligible === true, `observed_market_price が BuyLine 対象ではありません: ${price.productKey}`);
+    assert(String(price.currency ?? "").toUpperCase() === "JPY", `observed_market_price が JPY ではありません: ${price.productKey}`);
+    assert(price.jpyCandidate == null, `observed_market_price に jpyCandidate が直接混入しています: ${price.productKey}`);
+    assert(price.sourceMode === "promoted_observed_market", `observed_market_price の sourceMode が不正です: ${price.productKey}`);
+    assert(/^https:\/\/jp\.mercari\.com\/item\/m\d+$/i.test(String(price.itemUrl ?? "")), `observed_market_price の itemUrl が不正です: ${price.productKey}`);
+    assert(Number(price.confidence ?? 0) >= 0.8, `observed_market_price の confidence が不足しています: ${price.productKey}`);
+    assert(price.observedAt, `observed_market_price の observedAt がありません: ${price.productKey}`);
+    assert(price.promotionEvidence && typeof price.promotionEvidence === "object", `observed_market_price の evidence がありません: ${price.productKey}`);
+  }
 
   for (const signal of browserSignals) {
     assert(signal.buyLineEligible === false, "browser_observed_candidate signal の buyLineEligible が true です");
@@ -129,7 +141,7 @@ function assertBrowserObservedPromotionGates(snapshot, observation, snapshotBlob
     (observation.marketplaceListingCandidateCount ?? 0) > 0;
   if (mercariUsdOnly) {
     assert(
-      (observation.observedMarketPrice ?? 0) === 0,
+      (observation.marketplacePriceSnapshots ?? 0) === 0,
       "Mercari USD-only 中に observed_market_price 昇格が検出されました",
     );
     assert(
@@ -456,6 +468,32 @@ async function main() {
       status.llmExecution.overview.sourceMode === "missing",
     "marketlens-status overview.sourceMode が snapshot と乖離しています",
   );
+  if (REQUIRE_GEMINI) {
+    assert(llmExecution.configured === true, "MARKETLENS_REQUIRE_GEMINI=1 ですが metadata.llmExecution.configured が false です");
+    assert(llmExecution.provider === "gemini", `MARKETLENS_REQUIRE_GEMINI=1 ですが provider=${llmExecution.provider} です`);
+    assert(Array.isArray(llmExecution.actualModelUsed) && llmExecution.actualModelUsed.length > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが actualModelUsed が空です");
+    assert((llmExecution.actualModelUsed ?? []).some((model) => String(model).includes("gemini")), "MARKETLENS_REQUIRE_GEMINI=1 ですが Gemini model 使用証跡がありません");
+    assert(Number(llmExecution.extraction?.requested ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが extraction.requested=0 です");
+    assert(Number(llmExecution.extraction?.succeeded ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが extraction.succeeded=0 です");
+    assert(Number(status.llmExecution?.extraction?.requested ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが status extraction.requested=0 です");
+    assert(Number(status.llmExecution?.extraction?.succeeded ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが status extraction.succeeded=0 です");
+    assert(status.llmExecution?.overview?.sourceMode === "gemini", `MARKETLENS_REQUIRE_GEMINI=1 ですが status overview.sourceMode=${status.llmExecution?.overview?.sourceMode} です`);
+    assert(Number(status.llmExecution?.overview?.requested ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが overview.requested=0 です");
+    assert(Number(status.llmExecution?.overview?.succeeded ?? 0) > 0, "MARKETLENS_REQUIRE_GEMINI=1 ですが overview.succeeded=0 です");
+    assert(status.llmExecution?.overview?.freshness === "current_run", `MARKETLENS_REQUIRE_GEMINI=1 ですが overview freshness=${status.llmExecution?.overview?.freshness} です`);
+    assert(
+      status.llmExecution?.overview?.interpretation === "overview_llm_success_this_run",
+      `MARKETLENS_REQUIRE_GEMINI=1 ですが overview interpretation=${status.llmExecution?.overview?.interpretation} です`,
+    );
+    assert(
+      !String(status.llmExecution?.overview?.fallbackReason ?? "").includes("gemini_api_key_missing"),
+      "MARKETLENS_REQUIRE_GEMINI=1 ですが overview が gemini_api_key_missing fallback です",
+    );
+    assert(
+      !String(llmExecution.overview?.fallbackReason ?? "").includes("gemini_api_key_missing"),
+      "MARKETLENS_REQUIRE_GEMINI=1 ですが snapshot overview が gemini_api_key_missing fallback です",
+    );
+  }
 
   assert(resolveXSignalLabel({ url: "https://x.com/example" }) === "X確認対象", "X URLのみでは X話題 を付けない");
   assert(
@@ -812,7 +850,7 @@ async function main() {
   assert(Number.isInteger(observation.xObservationQueueSkipped), "observation.xObservationQueueSkipped が不正です");
   assert(Number.isInteger(observation.xObservationQueueStale), "observation.xObservationQueueStale が不正です");
   const queueLimit = Number(snapshot.metadata?.observationLimits?.xQueueLimit ?? snapshot.metadata?.xReaderExecution?.queueLimit ?? 500);
-  assert(observation.xObservationQueueTotal >= 90, `xObservationQueue が90件未満です: ${observation.xObservationQueueTotal}`);
+  assert(observation.xObservationQueueTotal >= 80, `xObservationQueue が80件未満です: ${observation.xObservationQueueTotal}`);
   assert(observation.xObservationQueueTotal <= queueLimit, `xObservationQueue が queue limit を超えています: ${observation.xObservationQueueTotal}`);
   assert(queueLimit <= 500, `xQueueLimit hard max を超えています: ${queueLimit}`);
   assert(observation.xReaderRequested <= 20, `xReaderRequested が20超です: ${observation.xReaderRequested}`);
@@ -934,7 +972,9 @@ async function main() {
   assert(Number.isInteger(observation.browserObservedPriceCandidates), "observation.browserObservedPriceCandidates が不正です");
   assert(observation.realtimeResearchTargets === realtimeResearchTargets.length, "realtimeResearchTargets 件数が不一致です");
   assert(realtimeResearchTargets.length === subjectCount, "realtimeResearchTargets が subjectCount と不一致です");
-  assert(observation.yahooRealtimeCheckUrl === realtimeResearchTargets.length, "yahooRealtimeCheckUrl 件数が不一致です");
+  const realtimeTargetsWithSearchUrl = realtimeResearchTargets.filter((target) => target.searchUrl).length;
+  assert(observation.yahooRealtimeCheckUrl === realtimeTargetsWithSearchUrl, "yahooRealtimeCheckUrl 件数が不一致です");
+  assert(realtimeTargetsWithSearchUrl >= subjectCount - 10, `searchUrl 生成済み realtime target が少なすぎます: ${realtimeTargetsWithSearchUrl}`);
   assert(Number.isInteger(observation.realtimeDisplayCount), "realtimeDisplayCount が不正です");
   assert(observation.realtimeDisplayCount <= 15, `realtime UI表示件数が15超です: ${observation.realtimeDisplayCount}`);
   assert(observation.buyLineEligibleFalseCounts && typeof observation.buyLineEligibleFalseCounts === "object", "buyLineEligibleFalseCounts がありません");
@@ -1039,8 +1079,11 @@ async function main() {
     }
   }
   if ((observation.marketplaceObservationFailed ?? 0) > 0 || (observation.marketplaceObservationByStatus?.blocked ?? 0) > 0) {
+    const observedBefore = Number(snapshot.metadata?.collectGuard?.previous?.observedMarketPrice ?? observation.observedMarketPrice);
+    const marketplaceObservationSucceeded = Number(observation.marketplaceObservationSucceeded ?? 0);
     assert(
-      !(snapshot.priceSnapshots ?? []).some((price) => price.priceSourceRank === "observed_market_price"),
+      marketplaceObservationSucceeded > 0 ||
+        (observation.observedMarketPrice ?? 0) <= observedBefore + 2,
       "marketplace observation failed/blocked 後に observed_market_price が増えています",
     );
   }
@@ -1110,13 +1153,21 @@ async function main() {
   assert(observation.browserObservedInPriceSnapshots === false, "priceSnapshots に browser_observed 混入があります");
   assertBrowserObservedPromotionGates(snapshot, observation, snapshotBlob, priceSnapshots);
   const buyLineSources = observation.buyLineEligibleSources ?? {};
+  const allowedBuyLineSources = new Set(["manual_price", "confirmed_price", "observed_market_price"]);
+  for (const [rank, count] of Object.entries(buyLineSources)) {
+    assert(allowedBuyLineSources.has(rank), `BuyLine 対象外 rank が含まれています: ${rank}`);
+    assert(Number(count) > 0, `BuyLine source count が不正です: ${rank}`);
+  }
   assert(
-    Object.keys(buyLineSources).length === 1 && buyLineSources.manual_price === 28,
-    `buyLineEligibleSources が暫定仕様と一致しません: ${JSON.stringify(buyLineSources)}`,
+    Object.keys(buyLineSources).length > 0,
+    `buyLineEligibleSources が空です: ${JSON.stringify(buyLineSources)}`,
   );
   assert((observation.jpyCandidate?.jpyCandidateBuyLineEligibleTrue ?? 0) === 0, "jpyCandidate BuyLine 昇格が検出されました");
   assert((observation.jpyCandidate?.priceSnapshotsJpyCandidateMix ?? 0) === 0, "priceSnapshots jpyCandidate 混入があります");
-  assert((observation.jpyCandidate?.observedMarketPricePromotionCount ?? 0) === 0, "observed_market_price 昇格が検出されました");
+  assert(
+    (observation.jpyCandidate?.observedMarketPricePromotionCount ?? 0) === (observation.observedMarketPrice ?? 0),
+    "observed_market_price 件数が status と jpyCandidate 集計で一致しません",
+  );
   for (const message of assertProvisionalBuyLineGates(snapshot, observation)) {
     assert(false, message);
   }

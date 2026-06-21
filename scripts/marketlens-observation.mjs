@@ -36,8 +36,41 @@ const MARKETPLACE_URL_RE = /mercari\.com|mercari\.jp|paypayfleamarket\.yahoo\.co
 const YAHOO_FLEAMARKET_URL_RE = /paypayfleamarket\.yahoo\.co\.jp|fril\.jp/i;
 const MERCARI_ITEM_URL_RE = /jp\.mercari\.com\/item\//i;
 
+function toWellFormedText(value) {
+  const text = String(value ?? "");
+  if (typeof text.toWellFormed === "function") return text.toWellFormed();
+  let out = "";
+  for (let index = 0; index < text.length; index += 1) {
+    const code = text.charCodeAt(index);
+    if (code >= 0xd800 && code <= 0xdbff) {
+      const next = text.charCodeAt(index + 1);
+      if (next >= 0xdc00 && next <= 0xdfff) {
+        out += text[index] + text[index + 1];
+        index += 1;
+      } else {
+        out += "\ufffd";
+      }
+      continue;
+    }
+    if (code >= 0xdc00 && code <= 0xdfff) {
+      out += "\ufffd";
+      continue;
+    }
+    out += text[index];
+  }
+  return out;
+}
+
+export function truncateUnicodeText(value, maxChars) {
+  const text = toWellFormedText(value);
+  if (!Number.isFinite(maxChars) || maxChars < 0) return text;
+  const chars = Array.from(text);
+  if (chars.length <= maxChars) return text;
+  return chars.slice(0, maxChars).join("");
+}
+
 function compactText(value) {
-  return String(value ?? "").replace(/\s+/g, " ").trim();
+  return toWellFormedText(value).replace(/\s+/g, " ").trim();
 }
 
 function hasEngagementMetrics(target) {
@@ -320,8 +353,8 @@ export function isMercariItemUrl(url = "") {
 
 export function isObservedMarketplacePrice(price = {}) {
   if (price?.priceSourceRank !== "observed_market_price") return false;
-  const urls = [price.url, price.sourceUrl, price.marketUrl, price.listingUrl, price.source].filter(Boolean).join(" ");
-  return isMarketplaceUrl(urls) || /specialized-search/i.test(String(price.source ?? ""));
+  const urls = [price.url, price.sourceUrl, price.marketUrl, price.listingUrl, price.itemUrl, price.source].filter(Boolean).join(" ");
+  return isMarketplaceUrl(urls) || /observed_market|mercari_observed_market/i.test(String(price.source ?? ""));
 }
 
 export const MARKETPLACE_MANUAL_CHECK_EVIDENCE = [
@@ -947,6 +980,20 @@ function inferListingCurrency(rawPriceText = "", explicitCurrency = "") {
   return "unknown";
 }
 
+function normalizeListingRawPriceText(rawPriceText = "", currency = "unknown") {
+  const raw = compactText(rawPriceText);
+  if (!raw) return "";
+  if (currency === "JPY") {
+    const match = raw.match(/(?:¥|￥)\s*[\d,]+(?:\.\d+)?|[\d,]+(?:\.\d+)?\s*円/u);
+    return compactText(match?.[0] ?? raw);
+  }
+  if (currency === "USD") {
+    const match = raw.match(/(?:US\$|\$|USD\s+)\s*[\d,]+(?:\.\d+)?/iu);
+    return compactText(match?.[0] ?? raw);
+  }
+  return raw;
+}
+
 export function formatMarketplaceListingPrice(listing = {}) {
   const currency = inferListingCurrency(listing.rawPriceText ?? "", listing.currency ?? "");
   const value = Number(listing.value);
@@ -998,8 +1045,9 @@ function normalizeListingCandidate(row = {}) {
   if (!Number.isFinite(value) || value <= 0) return null;
   const title = compactText(row.title ?? "");
   if (!title) return null;
-  const rawPriceText = compactText(row.rawPriceText ?? "");
-  const currency = inferListingCurrency(rawPriceText, row.currency ?? "");
+  const inferredRawPriceText = compactText(row.rawPriceText ?? "");
+  const currency = inferListingCurrency(inferredRawPriceText, row.currency ?? "");
+  const rawPriceText = normalizeListingRawPriceText(inferredRawPriceText, currency);
   const priceParseConfidence = Math.min(
     1,
     Math.max(0, Number(row.priceParseConfidence ?? (currency === "unknown" ? 0.35 : 0.85))),

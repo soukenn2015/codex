@@ -5,6 +5,10 @@ import {
 } from "./marketlens-exploration-affinity.mjs";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
+const historyPath = new URL("../data/marketlens.history.json", import.meta.url);
+const publicHistoryPath = new URL("../data/marketlens.public-history.json", import.meta.url);
+const INVALID_JSON_SURROGATE_ESCAPE_RE =
+  /\\u[dD][89abAB][0-9a-fA-F]{2}(?!\\u[dD][c-fC-F][0-9a-fA-F]{2})|(?<!\\u[dD][89abAB][0-9a-fA-F]{2})\\u[dD][c-fC-F][0-9a-fA-F]{2}/g;
 
 function assert(condition, message) {
   if (!condition) {
@@ -57,6 +61,15 @@ async function main() {
     selectedTasks.map((task) => task.id).join(",") === "name,brand,series",
     `探索タスクの絞り込み結果が不正です: ${selectedTasks.map((task) => task.id).join(",")}`,
   );
+
+  for (const fileUrl of [snapshotPath, historyPath, publicHistoryPath]) {
+    const rawJson = await readFile(fileUrl, "utf8");
+    const invalidEscape = rawJson.match(INVALID_JSON_SURROGATE_ESCAPE_RE);
+    assert(
+      !invalidEscape,
+      `${new URL(fileUrl).pathname.split("/").pop()} に不正 surrogate escape があります: ${invalidEscape?.[0] ?? ""}`,
+    );
+  }
 
   const raw = await readFile(snapshotPath, "utf8");
   const snapshot = JSON.parse(raw);

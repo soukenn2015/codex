@@ -1,7 +1,92 @@
-# TASK — 価格昇格ポリシー草案 + 専用 regression 設計
+# TASK — 商品群主役 + AI ドリブン再設計の第1実装
 
-最終更新: 2026-06-10  
-対象フェーズ: 大分類 5 完了 → 大分類 6 着手前の境界確認 + **価格表示概念確定（2026-06-10）**
+最終更新: 2026-06-21  
+対象フェーズ: 商品群正本化 / AI 判断契約 / 実装土台づくり
+
+## 現在の状態
+
+- 6レイヤー価格実装は完了済み
+- `observed_market_price` は正式保存され、BuyLine 入力に接続済み
+- Gemini current-run は real 発火確認済み
+- current docs は 6レイヤー完成監査まで同期されたが、**商品群主役 + AI 主役** の新方針はまだ実装へ落ちていない
+- `marketlens.product-group.v1` / `marketlens.ai-judgment.v1` の独立土台と契約回帰は導入済み
+- collector / postprocess / UI はまだ新しい商品群正本へ接続しておらず、現行の flat な見え方と reason 生成は次段階の対象
+
+## 2026-06-21 第1実装結果
+
+- 商品群スキーマ: 複数 member、複数 event、source evidence、AI judgment、決定論価格への参照境界を実装
+- AI 判断契約: identity / grouping / event classification / Tier / reason / uncertainty / counter evidence を検証
+- 並行生成土台: light extraction + strong identification を並行実行し、critic の disagreement を `HOLD` へ安全に収束
+- 安全境界: AI 出力内の price / profit / BuyLine / promotion / fee / shipping 系フィールドを再帰的に拒否
+- 回帰: 商品群構造、抽選終了と販売開始の分離、公式 > X > 記事、価格境界、不一致時 review を追加
+
+## このフェーズでやること
+
+1. **商品群を正本単位へ上げる**
+   - item 単位の flat な見え方をやめ、product group を主役にする
+   - 個別イベントは group の配下へ整理する
+2. **AI 判断契約を明文化してコードへ入れられる形にする**
+   - 商品同定
+   - 商品群化
+   - 抽選 / 販売 / 再販などのイベント分類
+   - Tier 判定
+   - 今見るべき理由
+   - 不確実性 / 反証
+3. **既存安全契約を壊さずに AI 主役化の土台を作る**
+   - 価格計算
+   - BuyLine
+   - `priceSnapshots`
+   - `observed_market_price`
+   - promotion gate
+4. **並行生成の実装土台を作る**
+   - 軽い抽出
+   - 強い同定
+   - critic / disagreement handling
+
+## 第1実装のスコープ
+
+含む:
+
+- 正本 docs の更新
+- 商品群スキーマの導入
+- AI 出力契約の導入
+- 商品群 / イベント / 理由 / Tier の生成土台
+- 回帰追加
+
+含まない:
+
+- 利益計算式の変更
+- BuyLine ロジック変更
+- `observed_market_price` 昇格条件の変更
+- 既存価格 safety の緩和
+- D6-B/C の現行順位ロジックを一気に壊す大改造
+
+## 完了条件
+
+1. 商品群を正本単位として表現できる最小データ構造が入る
+2. AI の判断出力が、商品群 / イベント / Tier / 理由 / uncertainty を返せる形で定義される
+3. 価格 safety と BuyLine safety が既存回帰で守られる
+4. 新実装が「AI 主役だが価格は決定論で守る」という境界を壊していない
+
+## 実装順
+
+1. 正本方針の固定
+2. 商品群スキーマ
+3. AI 判断契約
+4. 並行生成の導線
+5. 回帰追加
+6. 次段階で UI / 並び順の再設計へ進む
+
+## 今回の安全境界
+
+- `manual_price` / `confirmed_price` / 昇格済み `observed_market_price` だけが BuyLine 対象
+- `browser_observed_candidate` / 未昇格 `jpyCandidate` / USD-only / unknown / AI / heuristic は BuyLine 不可
+- AI 推定利益は確定利益へ混ぜない
+- 公式 > X > ブログ/ニュース の優先順位を崩さない
+
+## Archive
+
+以下は 2026-06-10 時点の設計・調査メモ。価格正本まわりの過去検討として残す。現行タスクの主眼は上記を優先する。
 
 ---
 
@@ -24,7 +109,7 @@
 
 ---
 
-## 価格昇格ポリシー草案（PM 合意待ち）
+## 参考: 2026-06-10 時点の価格昇格ポリシー草案
 
 ### 基本原則
 
@@ -613,7 +698,7 @@ Mercari 自動正本化を待たず、全体を止めないための進行順。
 | BuyLine | **対象外**（`buyLineEligible: false` 必須） |
 | 保存先候補 | `marketplaceSignals[].listingCandidates[].jpyCandidate` または別 observation detail |
 | `priceSnapshots` | **入れない** |
-| `observed_market_price` | **昇格しない** |
+| `observed_market_price` | **raw candidate からは直接昇格しない** |
 | UI | 「参考価格候補」「確認する」まで。相場断定語禁止 |
 
 **候補フィールド案（Playwright `playwright_product_page` 経路）:**

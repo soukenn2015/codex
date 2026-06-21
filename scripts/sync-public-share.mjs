@@ -3,7 +3,7 @@
  * Build public-share/ with only files safe for external/static sharing.
  * Does not copy source-config, history, scripts, secrets, or dev markdown.
  */
-import { copyFileSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -35,6 +35,15 @@ mkdirSync(OUT, { recursive: true });
 
 for (const rel of PUBLIC_FILES) {
   copyIfExists(rel);
+}
+
+const publicIndexPath = path.join(OUT, "index.html");
+const publicIndex = readFileSync(publicIndexPath, "utf8");
+if (!publicIndex.includes('name="marketlens-surface"')) {
+  writeFileSync(
+    publicIndexPath,
+    publicIndex.replace("</head>", '    <meta name="marketlens-surface" content="public-share" />\n  </head>'),
+  );
 }
 
 writeFileSync(

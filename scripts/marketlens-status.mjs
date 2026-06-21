@@ -32,7 +32,7 @@ function readExtractionMetrics(llm = {}, llmExtractions = []) {
   const extraction = llm.extraction && typeof llm.extraction === "object" ? llm.extraction : {};
   const modeCountsFromExtractions = countBy(llmExtractions, (item) => item.mode ?? "heuristic");
   const modeCounts = Object.keys(extraction.modeCounts ?? {}).length > 0 ? extraction.modeCounts : llm.modeCounts ?? modeCountsFromExtractions;
-  const geminiOutputCount = numberOr(modeCounts.gemini, 0);
+  const retainedGeminiOutputCount = numberOr(modeCountsFromExtractions.gemini, numberOr(modeCounts.gemini, 0));
   const metadataRequested = numberOr(
     extraction.geminiRequestedCount,
     numberOr(extraction.requested, numberOr(llm.geminiRequestedCount, llm.requested)),
@@ -49,30 +49,31 @@ function readExtractionMetrics(llm = {}, llmExtractions = []) {
     extraction.geminiSkippedCount,
     numberOr(extraction.skipped, numberOr(llm.geminiSkippedCount, llm.skipped)),
   );
-  const reconciledSucceeded = geminiOutputCount;
-  const reconciledRequested = geminiOutputCount > 0 ? metadataRequested : 0;
-  const staleMetadata = geminiOutputCount === 0 && (metadataSucceeded > 0 || metadataRequested > 0);
+  const staleMetadata = retainedGeminiOutputCount < metadataSucceeded || (retainedGeminiOutputCount === 0 && metadataRequested > 0);
   return {
-    requested: reconciledRequested,
-    succeeded: reconciledSucceeded,
+    requested: metadataRequested,
+    succeeded: metadataSucceeded,
     failed: metadataFailed,
     skipped: metadataSkipped,
     eligible: numberOr(extraction.eligible, llm.eligible),
-    geminiRequestedCount: reconciledRequested,
-    geminiSucceededCount: reconciledSucceeded,
+    geminiRequestedCount: metadataRequested,
+    geminiSucceededCount: metadataSucceeded,
     geminiFailedCount: metadataFailed,
     geminiSkippedCount: metadataSkipped,
     metadataGeminiRequestedCount: metadataRequested,
     metadataGeminiSucceededCount: metadataSucceeded,
+    retainedGeminiOutputCount,
     modeCounts,
     openAiCount: numberOr(llm.openAiCount, modeCounts.openai),
-    geminiCount: geminiOutputCount,
+    geminiCount: retainedGeminiOutputCount,
     heuristicCount: numberOr(llm.heuristicCount, modeCounts.heuristic),
     staleMetadata,
     interpretation:
-      geminiOutputCount === 0
-        ? "no_gemini_document_extractions_in_llmExtractions"
-        : "gemini_document_extractions_present",
+      metadataSucceeded > 0 && retainedGeminiOutputCount === 0
+        ? "gemini_document_extraction_succeeded_but_not_retained_in_llmExtractions"
+        : retainedGeminiOutputCount === 0
+          ? "no_gemini_document_extractions_in_llmExtractions"
+          : "gemini_document_extractions_present",
   };
 }
 

@@ -1,6 +1,6 @@
 const FORBIDDEN_LABEL_RE = /観測相場|メルカリ相場|フリマ相場|実勢相場|実勢価格|observed market|market price/i;
 const THEME_STORAGE_KEY = "marketlens-theme";
-const OVERVIEW_BUILD = "2026-06-10b";
+const OVERVIEW_BUILD = "2026-06-19a";
 
 const DATE_LAYER_EXPLAIN = `
   <ul>
@@ -92,7 +92,7 @@ const MARKDOWN_EXTRACTS = {
     "観測レイヤーは出口価格候補（断定表示しない）",
     "新品購入価格は人間が公式・小売・ECで判断",
     "概念変更時は overview・引き継ぎ・Markdown を同時更新",
-    "browser_observed_candidate を priceSnapshots / 確認済み価格 / BuyLine に入れない",
+    "raw browser_observed_candidate を priceSnapshots / 確認済み価格 / BuyLine に入れない",
     "観測系はすべて buyLineEligible=false",
     "Documents正本 http://localhost:8765/",
     "skipped/delta0 は重複統合や既観測で正常系あり",
@@ -100,14 +100,14 @@ const MARKDOWN_EXTRACTS = {
     "8分類ロードマップで作業範囲を切る",
   ],
   "TASK.md": [
-    "昇格禁止: 出口価格候補を priceSnapshots / observed_market_price / BuyLine に入れない",
-    "確認済み価格へ昇格は8条件+PM合意+専用regression",
+    "昇格禁止: raw 出口価格候補を priceSnapshots / observed_market_price / BuyLine に入れない",
+    "昇格済み observed_market_price は BuyLine 入力へ接続済み",
     "jpyCandidate は別フィールド、USD正本を置換しない",
     "為替換算でJPYを作らない",
     "Playwrightは関連価格ノイズあり、confidence閾値で保存",
     "batchは最大25件、件数増より品質",
-    "R9-R14 regressionで jpyCandidate 隔離",
-    "第4batchよりUI/overview/selector整理優先",
+    "identity match / outlier 除外 / traceable item URL を昇格条件に含む",
+    "Gemini 実発火は key 設定待ち",
   ],
   "CODEX_MCP_RULES.md": [
     "四層UI維持、旧セクション（急上昇ボード等）に戻さない",
@@ -142,8 +142,8 @@ const LAYER_ARCHITECTURE = [
   { id: "B", name: "収集レイヤー", purpose: "候補・話題・参考になりそうな価格を「見つける」", inputs: "収集元設定・既存の保存データ", outputs: "候補・イベント・観測メモの素データ", mustNot: "見つけた価格を正しいと断定しない", safetyRules: "観測結果は参考として扱い、正本化しない", related: "情報を集める処理・フリマ読み取り", userMeaning: "見逃しを減らす入口。まだ判断材料ではない", dangerIfBroken: "未検証価格がそのまま「正しい価格」に見える", nextConnection: "→ C 保存レイヤーへ素データを渡す", source: "AI_CONTEXT: 観測レイヤー隔離" },
   { id: "C", name: "保存レイヤー", purpose: "集めた情報を1つの保存データにまとめる", inputs: "収集・観測の出力", outputs: "現在の保存データ（画面が読む1ファイル）", mustNot: "出口価格候補を正本・参考ライン用の棚へ混ぜない", safetyRules: "保存データは手で書き換えない。自動生成のみ", related: "現在の保存データファイル", userMeaning: "いつ見ても同じ状態を追える記録庫", dangerIfBroken: "出口候補が正本に混ざり、後から検証不能になる", nextConnection: "→ D 整理レイヤーへまとめデータを渡す", source: "README: snapshot正本" },
   { id: "D", name: "整理レイヤー", purpose: "ノイズを減らし、見やすい形に整える", inputs: "保存データ", outputs: "候補状態・表示ラベル・四層への振り分け", mustNot: "参考候補を確認済み価格のように扱わない", safetyRules: "ナビ文言などを商品候補にしない", related: "集めた後の整理処理", userMeaning: "優先度の高いものが上に来るよう整える", dangerIfBroken: "ノイズが候補に見え、確認コストが爆増する", nextConnection: "→ E 価格安全性レイヤーへ分類対象を渡す", source: "CODEX_MCP_RULES: ノイズ除外" },
-  { id: "E", name: "価格安全性レイヤー", purpose: "価格の種類を分け、危険な混入を防ぐ", inputs: "基準価格（シード）・出口価格候補・AI推定・通貨不明・US$", outputs: "使える/使えないの区分・隔離メトリクス", mustNot: "件数を増やすことより、使ってはいけない価格の混入を防ぐ", safetyRules: "出口価格候補・フリマ出口候補は参考ライン・確認済み価格へ入れない", related: "整理処理・データの自動確認", userMeaning: "怪しい価格を判断補助から守る最重要の柵", dangerIfBroken: "1件の混入で購入判断が一瞬で壊れる", nextConnection: "→ F 参考ライン（判断補助）レイヤーへ安全な価格だけを渡す", source: "TASK: 昇格禁止" },
-  { id: "F", name: "参考ライン（判断補助）レイヤー", purpose: "安全な基準価格だけで参考ラインを試算する（内部名 BuyLine）", inputs: "基準価格（シード / manual_price）のみ（現状）", outputs: "参考ラインの算出可/不可", mustNot: "出口価格候補・フリマ出口候補・AI推定を使わない", safetyRules: "新品購入価格の自動確定はしない。試算は判断補助まで", related: "通常画面の参考ライン表示・固定の手数料設定", userMeaning: "目標利益を守れるかの試算材料（「買ってよい上限」ではない）", dangerIfBroken: "未検証価格で参考ラインが出ると、損失リスクが跳ね上がる", nextConnection: "→ G 画面表示レイヤーへ参考ラインと出口候補を分けて渡す", source: "README: BuyLine式（内部名）" },
+  { id: "E", name: "価格安全性レイヤー", purpose: "価格の種類を分け、危険な混入を防ぎ、昇格済み実測だけを正本へ通す", inputs: "基準価格（シード）・raw 出口価格候補・昇格候補・AI推定・通貨不明・US$", outputs: "使える/使えないの区分・昇格済み observed_market_price・隔離メトリクス", mustNot: "件数を増やすことより、使ってはいけない価格の混入を防ぐ", safetyRules: "raw 出口価格候補・フリマ出口候補は参考ライン・確認済み価格へ入れない。昇格は専用 gate 経由のみ", related: "整理処理・promotion gate・データの自動確認", userMeaning: "怪しい価格を判断補助から守りつつ、十分に確認できた実測だけを正式採用する最重要の柵", dangerIfBroken: "1件の混入で購入判断が一瞬で壊れる", nextConnection: "→ F 参考ライン（判断補助）レイヤーへ安全な価格だけを渡す", source: "TASK: 現在の正式ポリシー" },
+  { id: "F", name: "参考ライン（判断補助）レイヤー", purpose: "安全な基準価格で参考ラインを試算する（内部名 BuyLine）", inputs: "基準価格（シード / manual_price） + 昇格済み observed_market_price", outputs: "参考ラインの算出可/不可", mustNot: "raw 出口価格候補・フリマ出口候補・AI推定を使わない", safetyRules: "新品購入価格の自動確定はしない。試算は判断補助まで", related: "通常画面の参考ライン表示・固定の手数料設定", userMeaning: "目標利益を守れるかの試算材料（「買ってよい上限」ではない）", dangerIfBroken: "未検証価格で参考ラインが出ると、損失リスクが跳ね上がる", nextConnection: "→ G 画面表示レイヤーへ参考ラインと出口候補を分けて渡す", source: "AI_CONTEXT: priceSourceRank / BuyLine" },
   { id: "G", name: "画面表示レイヤー", purpose: "候補・理由・出口価格候補を見やすく見せる", inputs: "整理済み保存データ・参考ライン試算結果", outputs: "通常画面のカード・バッジ・確認リンク", mustNot: "出口候補を買値・相場のように見せない", safetyRules: "禁止されている断定価格ラベルを出さない", related: "通常画面（四層UI + 状態ラベル）", userMeaning: "毎日開いて、何から見るかが分かる操作面", dangerIfBroken: "言葉一つで出口候補が正本に見え、即決事故が起きる", nextConnection: "→ H 人間判断レイヤーへ情報を渡す", source: "AI_CONTEXT: UIラベル方針" },
   { id: "H", name: "人間判断レイヤー", purpose: "買う・見送る・追加確認を人間が決める", inputs: "画面情報・フリマでの目視・外部情報", outputs: "あなたの行動（購入・保留・再調査）", mustNot: "MarketLensが自動で買い断定しない", safetyRules: "参考と書いてある価格で即決しない", related: "通常画面＋あなたの確認", userMeaning: "最終決定は常に人間。ツールは助言まで", dangerIfBroken: "自動化に任せると、例外ケースで大きな損失", nextConnection: "→ 行動の結果が次の収集・確認の入力になる", source: "AI_CONTEXT: 目的", analysis: "自動化は補助までが設計の上限" },
   { id: "I", name: "自動確認レイヤー", purpose: "混入・誤表示・導線破損がないか機械的に検査", inputs: "保存データ・HTML・JS", outputs: "データの自動確認 / 画面の自動確認 の結果", mustNot: "検査失敗を無視して反映しない", safetyRules: "毎回の変更後に自動確認を通す", related: "データの自動確認・画面の自動確認スクリプト", userMeaning: "人の記憶に頼らず、柵が壊れていないか確認", dangerIfBroken: "小さな変更が隔離を壊し、気づかないうちに危険化", nextConnection: "→ J 運用レイヤーと連動し、安全な状態だけを正本へ", source: "TASK: R1-R14" },
@@ -155,7 +155,7 @@ B 収集 ──→ 候補と参考を見つける
 C 保存 ──→ 1つの保存データにまとめる
 D 整理 ──→ ノイズを減らし優先度を付ける
 E 価格安全 ─→ 使える/使えない価格を分ける ★中心
-F 参考ライン ─→ 基準価格だけで判断補助を出す ★中心
+F 参考ライン ─→ manual_price と昇格済み observed_market_price で判断補助を出す ★中心
 G 画面 ───→ 通常画面に見せる
 H 人間判断 → 買う/見送る/追加確認（最終）
 I 自動確認 → 壊れていないか毎回検査
@@ -169,13 +169,13 @@ const SUBMAP_DIAGRAMS = [
    ├─ フリマ出口候補 → 見せるだけ（多くはUS$）
    ├─ AI推定 → 説明用
    └─ 不明・未検証 → 使わない` },
-  { id: "evolution", title: "候補 → 出口候補 → 確認済み → 参考ライン", body: `商品候補として見つかる
+  { id: "evolution", title: "候補 → 出口候補 → 昇格済み観測価格 → 参考ライン", body: `商品候補として見つかる
         ↓
 出口価格候補として表示（売却側参考・買値ではない）
         ↓
-確認済み価格へ昇格（将来・今は0件・未実装）
+昇格済み observed_market_price へ通過（identity / confidence / outlier gate）
         ↓
-参考ラインの材料になる（今は基準価格シードのみ）` },
+参考ラインの材料になる（manual_price + 昇格済み observed_market_price）` },
   { id: "mix", title: "なぜ出口価格候補を混ぜないか", body: `出口候補は便利だが読み違えやすい
         ↓
 参考ラインに入れると「安く買える錯覚」
@@ -193,7 +193,7 @@ const SUBMAP_DIAGRAMS = [
 自動で読んだ価格は出口価格候補（E層）
         ↓
 断定表示しない・参考ラインに入れない` },
-  { id: "buyline", title: "参考ライン（判断補助）だけに注目", body: `基準価格（シード）だけ
+  { id: "buyline", title: "参考ライン（判断補助）だけに注目", body: `manual_price / 昇格済み observed_market_price
         ↓
 手数料・送料・目標利益を引く
         ↓
@@ -215,12 +215,12 @@ const SUBMAP_DIAGRAMS = [
 ];
 
 const GLOSSARY = [
-  ["参考ライン（BuyLine）", "目標利益を守れるかの判断補助。今は基準価格（シード）だけから計算。自動購入判断ではない。"],
+  ["参考ライン（BuyLine）", "目標利益を守れるかの判断補助。manual_price と昇格済み observed_market_price だけから計算する。自動購入判断ではない。"],
   ["出口価格候補（jpyCandidate）", "Playwrightで読んだ円の候補。売却参考として見せるが、参考ライン・正本には入れない。"],
   ["基準価格（manual_price / シード）", "アプリ内シード由来の定価・売却参考。人間確認済みフリマ価格ではない。"],
   ["フリマ出口候補", "Mercari等の検索・商品ページで見つけた候補。多くはUS$表示。確認材料。"],
   ["定価（新品基準）", "新品側の基準価格として表示可。購入は公式・小売・ECを人間が見て決める。"],
-  ["確認済み価格", "将来、十分に確認できた価格の置き場。今は0件・昇格は未実装。"],
+  ["確認済み価格", "promotion gate を通過した observed_market_price。現在は Mercari JPY 観測の一部が正式反映済み。"],
   ["現在の保存データ", "画面が読む1つのまとめファイル。手編集しない。"],
   ["データの自動確認", "保存データが壊れていないか機械的に検査する仕組み。"],
   ["画面の自動確認", "画面の言葉・導線・禁止ラベルを機械的に検査する仕組み。"],
@@ -236,9 +236,9 @@ const ROLE_DETAILS = [
   { name: "候補を見つける", plain: "発売・抽選・再販・話題の芽を逃さず拾う", source: "README: 監視対象IP / WORKLOG: collector確立", analysis: "見つけることと正しい価格と断定することは別作業" },
   { name: "ノイズを減らす", plain: "ナビ文言や説明コピーを商品候補にしない", source: "CODEX_MCP_RULES: ノイズフレーズ一覧", analysis: "ノイズ除去は信頼性の前提。件数より精度" },
   { name: "価格を分類する", plain: "新品基準・基準価格シード・出口候補・推定・不明を棚分け", source: "AI_CONTEXT: priceSourceRank表", analysis: "分類が崩れると購入判断が一瞬で壊れる" },
-  { name: "危険な価格を混ぜない", plain: "出口候補を参考ラインや確認済み価格に入れない", source: "TASK: 昇格禁止 / GROK: 混入なし維持", analysis: "50件集めても混入1件の方が危険" },
-  { name: "参考ラインを出す", plain: "目標利益を守れるかの判断補助を試算（自動購入判断ではない）", source: "README: BuyLine式（内部名）", analysis: "参考ラインと出口候補は別表示" },
-  { name: "今は基準価格（シード）だけ", plain: "manual_priceはシード由来。フリマ手入力ではない", source: "AI_CONTEXT: manual_priceのみ暫定BuyLine", analysis: "早く広げたい欲求と安全のトレードオフで後者優先" },
+  { name: "危険な価格を混ぜない", plain: "raw 出口候補を参考ラインや確認済み価格に入れない", source: "TASK: 現在の正式ポリシー", analysis: "50件集めても混入1件の方が危険" },
+  { name: "参考ラインを出す", plain: "目標利益を守れるかの判断補助を試算（自動購入判断ではない）", source: "README: BuyLine式（内部名）", analysis: "参考ラインと出口候補は別表示。raw 候補は使わない" },
+  { name: "使える価格を限定する", plain: "manual_price と昇格済み observed_market_price だけを BuyLine に通す", source: "AI_CONTEXT: priceSourceRank表", analysis: "早く広げたい欲求と安全のトレードオフで、昇格 gate を通った価格だけを採用" },
   { name: "出口価格候補を見せる", plain: "Playwrightで読んだ円候補を別枠表示（売却参考）", source: "TASK: jpyCandidate設計", analysis: "見せる＝使うではない。新品購入の判断材料ではない" },
   { name: "フリマを確認場所に", plain: "検索リンクで人が出品を見る。自動断定しない", source: "AI_CONTEXT: marketplaceResearchTargets", analysis: "フリマは現場確認の入口" },
   { name: "AIに説明・要約", plain: "名前抽出・分類・文章補助", source: "CODEX_MCP_RULES: LLM may help", analysis: "読む量を減らす補助輪" },
@@ -253,14 +253,14 @@ const ROLE_DETAILS = [
 const MECHANISM_WHY = [
   { q: "なぜ収集と判断を分けるのか", source: "AI_CONTEXT: 観測は参考、決定論がBuyLine", analysis: "集める段階では情報が汚れている。判断は整理・安全分離の後にしか信頼できない。早く判断したくなる欲求が事故の元。" },
   { q: "なぜ出口価格候補をすぐ使わないのか", source: "TASK: jpyCandidate buyLineEligible=false必須", analysis: "PlaywrightはDOM変化・関連価格・blockedで読み違える。売却参考として見せるが、参考ラインには入れない。" },
-  { q: "なぜ参考ラインの材料を絞るのか", source: "README: 保守利益とBuyLine式", analysis: "判断補助の試算はお金を守る柵。材料が弱いと全体が崩れる。基準価格シードに絞るのは慎重さ。" },
+  { q: "なぜ参考ラインの材料を絞るのか", source: "README: 保守利益とBuyLine式", analysis: "判断補助の試算はお金を守る柵。manual_price と昇格済み observed_market_price に限定し、raw 候補は通さない。" },
   { q: "なぜ新品購入を自動決定しないのか", source: "GROK_HANDOFF 価格概念 2026-06-10", analysis: "ユーザーは新品を公式・小売・ECで人間が判断する。MarketLensは出口候補と確認材料を出す道具。" },
   { q: "なぜ概要をコードと同時に更新するのか", source: "AI_CONTEXT 概要同期ルール", analysis: "実装だけ変えて説明が古いと、次の作業者が旧概念で壊す。overviewは正本の思想面。" },
-  { q: "なぜ確認済み価格が0のままか", source: "TASK: 昇格8条件+PM未実装", analysis: "昇格パイプラインがないのに件数だけ増やすと、参考が正本に化ける。0は「未実装」の明示。" },
+  { q: "なぜ raw 候補をそのまま確認済み価格にしないのか", source: "TASK: 現在の正式ポリシー", analysis: "昇格 gate を飛ばすと、関連商品や外れ値が正本に混ざる。確認済み価格は『観測した』ではなく『通した』価格だけに限定する。" },
   { q: "なぜ相場断定ラベルを禁止するか", source: "AI_CONTEXT: 禁止UIラベル一覧", analysis: "フリマ価格を相場と呼ぶと、脳が自動でBuyLineに結びつける。言葉が安全装置。" },
   { q: "なぜAI推定を利益計算に入れないか", source: "CODEX_MCP_RULES: LLM must not own profit", analysis: "推定は説明用。数値の根拠が弱いと仕入れ判断が危険。" },
   { q: "なぜJina由来US$を円に置換しないか", source: "AI_CONTEXT: USD-only原因調査 / TASK: 為替換算禁止", analysis: "見えない計算で円を作ると、後から検証不能。US$はUS$のまま保持。" },
-  { q: "なぜbatch4よりUI/overview整理優先か", source: "TASK: 第4batch後回し / GROK: 50/381一区切り", analysis: "件数を増やしても理解と安全柵が追いつかないと、開発が速く壊れる。理解ページを厚くするのが今の投資。" },
+  { q: "なぜ UI/overview を先に直すのか", source: "AI_CONTEXT: 概要同期ルール", analysis: "実装だけ先に進めて説明が古いままだと、次の変更者が旧前提で安全柵を壊す。説明面も正本の一部。" },
   { q: "なぜDocuments正本へ同期するか", source: "WORKLOG: cp -p運用 / AI_CONTEXT: 固定URL", analysis: "見る場所を1つにしないと、古い画面で判断してしまう。8765は確認の儀式。" },
   { q: "なぜregressionを毎回通すか", source: "README + TASK: regression設計", analysis: "小さな変更が隔離を壊す。自動確認は変更のたびの安全ベルト。" },
   { q: "なぜ件数増加より混入防止か", source: "GROK: delta0でも隔離維持 / WORKLOG: 50到達後停止", analysis: "出口価格候補を50件集めても、1件のBuyLine混入の方が被害が大きい。KPIは件数ではなく隔離。" },
@@ -276,7 +276,8 @@ const DIAGRAM_PRICE_LAYERS = `[収集元の設定]
         ↓
 [価格を分ける層]
         ├─ 基準価格（シード）→ 参考ラインの材料（自動購入判断ではない）
-        ├─ 出口価格候補 → 売却参考として表示。計算には使わない
+        ├─ 昇格済み observed_market_price → 参考ラインの材料
+        ├─ raw 出口価格候補 → 売却参考として表示。計算には使わない
         ├─ フリマ出口候補 → 表示・調査用。計算には使わない
         ├─ AI推定価格 → 理由づけ用。計算には使わない
         └─ 不明な価格 → 計算には使わない
@@ -318,20 +319,21 @@ marketplaceSignals → listingCandidates
         ├─ jpyCandidate（listing内・円候補）
         └─ browser_observed_candidate（signal側・US$候補が多い）
         ↓
-priceSnapshots（基準価格シードのみ）──╳── jpyCandidate 混入禁止
+priceSnapshots（manual_price + 昇格済み observed_market_price）──╳── raw jpyCandidate 混入禁止
         ↓
 overview / public-share / 通常画面` },
   { id: "priceFork", title: "4. 価格種別の分岐", caption: "新品購入は人間判断。MarketLensは出口候補を出す", body: `[価格らしき数字を見つけた]
         │
         ├─ 定価（新品基準）────────→ 表示可。購入は人間が公式・小売・ECで判断
         ├─ 基準価格（シード）──────→ 参考ラインに使える（buyLineEligible）
+        ├─ 昇格済み observed_market_price → 参考ラインに使える（buyLineEligible）
         ├─ 出口価格候補(jpy) ────→ 表示のみ（判断補助対象外）
         ├─ フリマ出口候補 ───────→ 表示のみ（多くはUS$）
         ├─ AI推定 / 履歴推定 ────→ 説明のみ
         └─ 通貨不明 / 未検証 ────→ 計算に使わない` },
   { id: "buylineGate", title: "5. 参考ラインに入る/入らない", caption: "ゲートを通過した価格だけが試算へ（内部 buyLineEligible）", body: `[価格]
    → 参考ラインに使えるか？（buyLineEligible）
-        ├─ YES かつ 基準価格（シード）→ 参考ライン試算へ
+        ├─ YES かつ manual_price / 昇格済み observed_market_price → 参考ライン試算へ
         └─ NO（出口候補・AI・US$・不明）→ 別枠表示のみ
    → 自動確認（regression）が毎回検査` },
   { id: "p1Boundary", title: "6. P1境界（遮断する流れ）", caption: "候補収集を止めるためではなく、未確認候補を判断価格に昇格させないため", body: `jpyCandidate ──╳──→ priceSnapshots
@@ -343,7 +345,8 @@ browser_observed_candidate ──╳──→ observed_market_price
 browser_observed_candidate ──╳──→ BuyLine
 
 通過してよい流れ:
-基準価格（シード / manual_price）→ priceSnapshots → 参考ライン試算` },
+基準価格（シード / manual_price）→ priceSnapshots → 参考ライン試算
+昇格済み observed_market_price → priceSnapshots → 参考ライン試算` },
   { id: "uiFour", title: "7. 四層UIとライフサイクル", caption: "開催中は状態ラベル。先読みは未来・準備用", body: `時間軸 ─────────────────────────────────→
 
 [今すぐ見る] 0〜2日 or 寿命内 + [開催中][抽選中][販売中] ラベル
@@ -392,7 +395,7 @@ const CANDIDATE_COMPARE_ROWS = [
   ["通貨", "円（Playwright抽出）", "多くはUS$（Jina検索一覧）"],
   ["UI表示", "出口価格候補（売却参考）", "フリマ出口候補（確認材料）"],
   ["priceSnapshots", "入れない（P1）", "入れない（P1）"],
-  ["observed_market_price", "昇格しない（P1）", "昇格しない（P1）"],
+  ["observed_market_price", "raw 候補から直接は昇格しない", "raw 候補から直接は昇格しない"],
   ["BuyLine / buyLineEligible", "使わない（false固定）", "使わない"],
   ["人間の使い方", "出品ページ目視の補助", "検索リンクから出口・反応確認"],
   ["判断補助", "対象外", "対象外"],
@@ -422,7 +425,7 @@ const DATA_FLOW_VIZ = `
   <div class="viz-fork">
     <div class="viz-branch viz-ok">
       <span class="viz-branch-label">通過してよい</span>
-      <div class="viz-node">基準価格（シード）→ priceSnapshots</div>
+      <div class="viz-node">manual_price / 昇格済み observed_market_price → priceSnapshots</div>
       <span class="viz-arrow">→</span>
       <div class="viz-node">参考ライン試算</div>
       <span class="viz-arrow">→</span>
@@ -451,7 +454,7 @@ const PRICE_SEPARATION_VIZ = `
     </div>
     <div class="viz-price-col viz-seed">
       <h4>判断補助に使う</h4>
-      <ul><li>基準価格（シード / manual_price）</li><li>参考ライン</li></ul>
+      <ul><li>manual_price</li><li>昇格済み observed_market_price</li><li>参考ライン</li></ul>
     </div>
     <div class="viz-price-col viz-exit">
       <h4>出口側（表示のみ）</h4>
@@ -467,7 +470,7 @@ const P1_BOUNDARY_VIZ = `
   <div class="viz-p1">
     <div class="viz-p1-col">
       <h4>通過してよい流れ</h4>
-      <div class="viz-p1-path ok">基準価格（シード）→ priceSnapshots → 参考ライン</div>
+      <div class="viz-p1-path ok">manual_price / 昇格済み observed_market_price → priceSnapshots → 参考ライン</div>
       <div class="viz-p1-path ok">出口候補 → 別枠表示 → 人間が目視確認</div>
     </div>
     <div class="viz-p1-col">
@@ -525,7 +528,7 @@ const SCOPE_BASE = [
   { id: 3, name: "SNS観測", weight: 5, role: "話題の確認導線", gap: "観測の本格開始" },
   { id: 4, name: "フリマ確認導線", weight: 5, role: "手で確認するリンクの提示", gap: "参考表示の拡大（計算には使わない）" },
   { id: 5, name: "価格観測レイヤー", weight: 15, role: "出口価格候補の限定蓄積", gap: "価格を拾う場所の選び方の改善" },
-  { id: 6, name: "価格正本 / 参考ライン", weight: 20, role: "基準価格（シード）だけで判断補助を試算", gap: "確認済み価格への昇格は未着手" },
+  { id: 6, name: "価格正本 / 参考ライン", weight: 20, role: "manual_price と昇格済み observed_market_price で判断補助を試算", gap: "Gemini 実発火と昇格品質の継続確認" },
   { id: 7, name: "UI / ダッシュボード", weight: 15, role: "四層UI・状態ラベル・出口候補表示", gap: "静的シード説明文の旧語整理" },
   { id: 8, name: "引き継ぎ・運用", weight: 10, role: "自動確認と説明ページの維持", gap: "説明と数字の同期" },
 ];
@@ -544,7 +547,7 @@ const MODULE_ROWS = [
 
 const P1_BOUNDARIES_PLAIN = [
   "出口価格候補やフリマ出口候補を、参考ライン・正本の計算に入れない",
-  "出口候補を「確認済み価格」として扱わない（今は0件のまま）",
+  "出口候補を gate なしで「確認済み価格」として扱わない",
   "禁止されている断定価格ラベル（TASK一覧）を画面に出さない",
   "ドル表示を、根拠なく円に置き換えない。為替計算で円を作らない",
   "ログイン突破やCAPTCHA回避、大量アクセスをしない",
@@ -553,7 +556,7 @@ const P1_BOUNDARIES_PLAIN = [
 
 const P1_BOUNDARIES_TECH = [
   "browser_observed_candidate / jpyCandidate → priceSnapshots 不可",
-  "browser_observed_candidate / jpyCandidate → observed_market_price 昇格不可",
+  "browser_observed_candidate / jpyCandidate → observed_market_price 直接昇格不可",
   "jpyCandidate / browser_observed_candidate → BuyLine 不可",
   "Jina US$ / currency unknown / AI推定 / heuristic → BuyLine 不可",
   "禁止されている相場断定ラベルを UI に出さない",
@@ -612,7 +615,7 @@ const PRODUCT_COPY = {
     <ul>
       <li><strong>いつチェックするか</strong> — 発売まで何日か（「開始まで○日」）</li>
       <li><strong>どこを見るか</strong> — 公式ページ、抽選、フリマ確認リンク</li>
-      <li><strong>判断補助の参考ライン</strong> — 手数料・送料・目標利益を考慮した試算（自動購入判断ではない）</li>
+      <li><strong>判断補助の参考ライン</strong> — manual_price と昇格済み observed_market_price を使った試算（自動購入判断ではない）</li>
       <li><strong>出口価格候補</strong> — フリマで読んだ円候補を別枠表示（参考ライン・正本には入れない）</li>
     </ul>
     <p>「利益が出そう」とすぐ結論しないのが大切です。出口候補は<strong>表示はするが、判断補助の参考ラインには使いません</strong>。</p>`,
@@ -626,7 +629,7 @@ const PRODUCT_COPY = {
       <li><strong>定価</strong>は新品側の基準として表示してよいが、購入判断の確定価格ではない</li>
       <li><strong>出口価格候補</strong>（jpyCandidate / フリマ出口候補）は売却参考として別枠表示</li>
       <li>出口候補を参考ライン・priceSnapshots・observed_market_price・BuyLineに入れない</li>
-      <li><strong>manual_price</strong>は現状シード由来の基準価格（人間確認済みフリマ価格ではない）</li>
+      <li><strong>manual_price</strong>はシード由来の基準価格、<strong>observed_market_price</strong> は昇格済み実測価格</li>
       <li>禁止されている断定価格ラベル（TASKの一覧）は画面に出さない</li>
       <li>AIに最終判断を任せない — 説明と整理の補助だけ</li>
     </ul>
@@ -636,7 +639,7 @@ const PRODUCT_COPY = {
     <ol>
       <li>候補と出口参考が集まる（B〜C層）</li>
       <li>価格の種類が分かれる（E層）</li>
-      <li>基準価格（シード）だけで参考ラインが試算される（F層・自動購入判断ではない）</li>
+      <li>manual_price と昇格済み observed_market_price だけで参考ラインが試算される（F層・自動購入判断ではない）</li>
       <li>四層UIで優先度順に見る（G層）</li>
       <li>新品購入・見送り・追加確認を決める（H層）</li>
     </ol>`,
@@ -699,10 +702,10 @@ const PRODUCT_COPY = {
     </ul>
     <p>混ぜると誤判断が起きます。<strong>jpyCandidate は出口価格候補として別棚</strong>に置き、priceSnapshots / observed_market_price / BuyLine には入れません。</p>`,
   buyLine: `
-    <p><strong>参考ライン</strong>（内部名 BuyLine / buyLineEligible）は、<strong>基準価格（シード）</strong>から目標利益を逆算した<strong>判断補助</strong>です。「買ってよい上限」「新品仕入れ上限」ではありません。自動で購入を決めません。</p>
-    <pre class="formula-box">参考ライン ≒ 基準価格（シード）− 手数料 − 送料 − 梱包 − 値下げ余地 − 目標利益</pre>
+    <p><strong>参考ライン</strong>（内部名 BuyLine / buyLineEligible）は、<strong>manual_price と昇格済み observed_market_price</strong> から目標利益を逆算した<strong>判断補助</strong>です。「買ってよい上限」「新品仕入れ上限」ではありません。自動で購入を決めません。</p>
+    <pre class="formula-box">参考ライン ≒ 利用可能な基準価格 − 手数料 − 送料 − 梱包 − 値下げ余地 − 目標利益</pre>
     <p>手数料率・目標利益などはコード内の固定値です（設定画面はありません）。</p>
-    <p>使えるのは<strong>基準価格（シード / manual_price）</strong>のみ。出口価格候補・フリマ出口候補・AI推定は<strong>入れません</strong>。</p>`,
+    <p>使えるのは<strong>manual_price</strong> と <strong>昇格済み observed_market_price</strong> のみ。raw 出口価格候補・フリマ出口候補・AI推定は<strong>入れません</strong>。</p>`,
   referenceCaution: `
     <p><strong>出口価格候補（jpyCandidate）</strong>は、ブラウザで商品ページを開いて読み取った円の候補です。便利ですが、</p>
     <ul>
@@ -781,6 +784,21 @@ function countBuyLineStatus(snapshot) {
   return counts;
 }
 
+function hasOnlyAllowedBuyLineSources(buyLineSources = {}) {
+  const allowed = new Set(["manual_price", "observed_market_price"]);
+  const keys = Object.keys(buyLineSources);
+  return keys.length > 0 && keys.every((key) => allowed.has(key));
+}
+
+function buyLineSourceSummary(buyLineSources = {}) {
+  const manual = buyLineSources.manual_price ?? 0;
+  const observed = buyLineSources.observed_market_price ?? 0;
+  const parts = [];
+  if (manual > 0) parts.push(`manual_price ${manual}`);
+  if (observed > 0) parts.push(`observed_market_price ${observed}`);
+  return parts.length ? parts.join(" / ") : "なし";
+}
+
 function pct(value) {
   if (value == null || Number.isNaN(Number(value))) return "—";
   return `${(Number(value) * 100).toFixed(1)}%`;
@@ -824,8 +842,8 @@ function computeScopeItems(metrics, snapshot) {
         state = `出口価格候補 ${metrics.jpySaved} 件 / 再確認回避 ${metrics.skipSummary.activeSkipUrlCount ?? 0}`;
         break;
       case 6:
-        progress = metrics.observedMarket === 0 && metrics.manualPrice >= 28 ? 58 : 42;
-        state = `確認済み価格 ${metrics.observedMarket} / 基準価格シード ${metrics.manualPrice}`;
+        progress = Math.min(92, 52 + Math.min(metrics.observedMarket, 24));
+        state = `確認済み価格 ${metrics.observedMarket} / BuyLine入力 ${buyLineSourceSummary(metrics.buyLineSources)}`;
         break;
       case 7:
         progress = 86;
@@ -895,8 +913,9 @@ function buildMetrics(snapshot) {
   const buyLineBrowserMix = obs.buyLineBrowserMixDetected === true;
   const forbiddenInSnapshot = FORBIDDEN_LABEL_RE.test(JSON.stringify(snapshot));
   const forbiddenLabelDetected = obs.forbiddenLabelDetected === true;
-  const isolationOk = observedMarket === 0
-    && JSON.stringify(buyLineSources) === JSON.stringify({ manual_price: 28 })
+  const isolationOk = hasOnlyAllowedBuyLineSources(buyLineSources)
+    && (buyLineSources.manual_price ?? 0) > 0
+    && observedMarket === (buyLineSources.observed_market_price ?? 0)
     && jpy.buyLineTrue === 0
     && priceSnapshotsJpyMix === 0
     && !buyLineBrowserMix
@@ -1126,8 +1145,8 @@ function renderSourceExtractIndex() {
 
 function renderStickyP1(metrics) {
   const chips = [
-    ["chipObserved", `確認済み価格=${metrics.observedMarket}`, metrics.observedMarket === 0],
-    ["chipBuyLine", `判断補助=基準価格（シード）のみ`, JSON.stringify(metrics.buyLineSources) === JSON.stringify({ manual_price: 28 })],
+    ["chipObserved", `確認済み価格=${metrics.observedMarket}`, metrics.observedMarket > 0],
+    ["chipBuyLine", `判断補助=${buyLineSourceSummary(metrics.buyLineSources)}`, hasOnlyAllowedBuyLineSources(metrics.buyLineSources)],
     ["chipMix", `出口候補の混入=${metrics.priceSnapshotsJpyMix}`, metrics.priceSnapshotsJpyMix === 0 && !metrics.buyLineBrowserMix],
     ["chipForbidden", `禁止ラベル=${metrics.forbiddenLabelDetected ? 1 : 0}`, !metrics.forbiddenLabelDetected && !metrics.forbiddenInSnapshot],
     ["chipRegression", `自動確認=${metrics.isolationOk ? "passed" : "要確認"}`, metrics.isolationOk],
@@ -1164,7 +1183,7 @@ function renderDevStatusMetrics(metrics) {
     ["参考ライン 算出可", metrics.buyLineStatus.available],
     ["参考ライン 算出不可", metrics.buyLineStatus.unavailable],
     ["参考ライン 未設定", metrics.buyLineStatus.missing],
-    ["参考ラインの根拠", JSON.stringify(metrics.buyLineSources)],
+    ["参考ラインの根拠", buyLineSourceSummary(metrics.buyLineSources)],
     ["確認済み価格（observed_market_price）", metrics.observedMarket],
     ["出口価格候補（jpyCandidate）", metrics.jpySaved],
     ["出口候補が判断補助に接続", metrics.jpyBuyLineTrue],
@@ -1203,8 +1222,8 @@ function renderMinSafetyStatus(metrics) {
   const host = document.getElementById("minSafetyStatus");
   if (!host) return;
   const items = [
-    ["確認済み価格", metrics.observedMarket, metrics.observedMarket === 0],
-    ["参考ラインの材料", "基準価格（シード）のみ", JSON.stringify(metrics.buyLineSources) === JSON.stringify({ manual_price: 28 })],
+    ["確認済み価格", metrics.observedMarket, metrics.observedMarket > 0],
+    ["参考ラインの材料", buyLineSourceSummary(metrics.buyLineSources), hasOnlyAllowedBuyLineSources(metrics.buyLineSources)],
     ["出口価格候補", `${metrics.jpySaved}件（判断補助に未接続）`, metrics.jpyBuyLineTrue === 0],
     ["出口候補の混入", metrics.priceSnapshotsJpyMix, metrics.priceSnapshotsJpyMix === 0 && !metrics.buyLineBrowserMix],
     ["禁止ラベル", metrics.forbiddenLabelDetected ? "検出" : "なし", !metrics.forbiddenLabelDetected && !metrics.forbiddenInSnapshot],
@@ -1219,7 +1238,7 @@ function renderRegressionSummary(metrics) {
   const host = document.getElementById("regressionSummary");
   if (!host) return;
   const checks = [
-    ["確認済み価格は0", metrics.observedMarket === 0],
+    ["昇格済み観測価格は gate 経由のみ", hasOnlyAllowedBuyLineSources(metrics.buyLineSources)],
     ["出口候補は判断補助に接続しない", metrics.jpyBuyLineTrue === 0],
     ["出口候補の混入なし", metrics.priceSnapshotsJpyMix === 0 && !metrics.buyLineBrowserMix],
     ["データの自動確認", metrics.isolationOk],
@@ -1277,7 +1296,7 @@ function renderPriceTable(metrics) {
     ["基準価格（シード）", "deal/release 由来。人間確認済みフリマ価格ではない", "判断補助に使う", metrics.manualPrice],
     ["出口価格候補（jpyCandidate）", "Playwrightで読んだ円候補・売却参考", "使わない", metrics.jpySaved],
     ["フリマ出口候補", "検索・一覧で見つけた候補（多くはUS$）", "使わない", metrics.browserSignals],
-    ["確認済み価格", "将来の昇格先（今は未使用）", "使わない", metrics.observedMarket],
+    ["確認済み価格", "promotion gate を通過した observed_market_price", "判断補助に使う", metrics.observedMarket],
     ["AI推定・履歴推定", "説明・参考用の推定", "使わない", metrics.llmMentioned + metrics.historicalPrediction],
   ];
   tbody.innerHTML = rows.map(
@@ -1294,10 +1313,10 @@ function renderBuyLineTable() {
   const tbody = document.querySelector("#buyLineTable tbody");
   if (!tbody) return;
   const rows = [
-    ["基準価格（シード）", "使える", "いま唯一の判断補助入力（自動購入判断ではない）"],
+    ["基準価格（シード）", "使える", "安定した基準入力（自動購入判断ではない）"],
+    ["確認済み価格（observed_market_price）", "使える", "昇格 gate を通過した実測価格だけを利用"],
     ["出口価格候補", "使えない", "未検証・読み違えリスク"],
     ["フリマ出口候補", "使えない", "確認材料。正本化しない"],
-    ["確認済み価格", "使えない", "昇格の仕組みは未実装"],
     ["AI / 履歴推定", "使えない", "説明用のみ"],
   ];
   tbody.innerHTML = rows.map(
@@ -1311,11 +1330,11 @@ function renderIsolationExplain() {
   host.innerHTML = `
     <div class="explain-block">
       <h3>なぜ出口価格候補を参考ラインに使わないか</h3>
-      <p>ページの見た目・関連商品・ブロックで読み違えます。表示はしますが、判断補助の参考ライン・priceSnapshots・observed_market_price には入れません。</p>
+      <p>ページの見た目・関連商品・ブロックで読み違えます。表示はしますが、raw 候補のままでは判断補助の参考ライン・priceSnapshots・observed_market_price には入れません。</p>
     </div>
     <div class="explain-block">
-      <h3>なぜ確認済み価格が0件か</h3>
-      <p>フリマ等から「確認できた価格」として昇格する仕組みは、まだ作っていません。合意と自動確認の準備が整うまで0件です。</p>
+      <h3>なぜ raw 候補をそのまま確認済み価格にしないか</h3>
+      <p>いまは昇格 gate を通った observed_market_price だけを使います。identity match、traceable item URL、confidence、outlier 除外を満たさない候補は別枠のままです。</p>
     </div>`;
 }
 

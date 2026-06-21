@@ -46,7 +46,7 @@ let initialDeals = [
     velocity: "普通",
     risk: "低",
     tags: ["フィギュア", "プレバン", "価格差"],
-    reason: "プレミアムバンダイ商品ページを発売元として確認。フリマ相場との差額を見る候補。",
+    reason: "プレミアムバンダイ商品ページを発売元として確認。フリマの売却参考との差額を見る候補。",
     confidence: "高",
     evidence: ["プレバン商品ページ", "出品少", "目標利益超え"],
     releaseUrl: "https://p-bandai.jp/item/item-1000216200/",
@@ -272,7 +272,7 @@ let discoveryCandidates = [
     reason: "DMMはホビー抽選の入口として有効。対象商品が広いので、BANDAI SPIRITS、フィギュア、ガンプラ、人気IPだけに絞って見る。",
     confidence: "中",
     adoptionReason: "抽選販売は定価購入ルートになりやすく、人気商品の利益差が出やすい。",
-    missingData: "対象商品一覧、応募期限、販売価格、相場",
+    missingData: "対象商品一覧、応募期限、販売価格、出口参考",
     sourceUrl: "https://www.dmm.com/mono/hobby/",
   },
   {
@@ -435,7 +435,7 @@ let marketMemory = [
     learnedFrom: "一番くじ、フィギュア、限定時計、公式ストア限定グッズ",
     signal: "エルバフ編、限定店舗、ノベルティ、上位フィギュア、時計コラボが重なると強い",
     history: "商品種別ごとに発売日、販売場所、成約価格、数量限定要素を保存。",
-    watchNext: "ONE PIECE.com、麦わらストア、一番くじ公式、HOBBY Watch、電撃系ニュース、スニダン相場",
+    watchNext: "ONE PIECE.com、麦わらストア、一番くじ公式、HOBBY Watch、電撃系ニュース、スニダン価格参考",
     sourceUrl: "https://one-piece.com/news/79661/index.html",
   },
   {
@@ -607,7 +607,7 @@ let pokemonReleases = [
     saleEndDate: "2026-06-30",
     retailPrice: 6000,
     marketPrice: 13500,
-    marketLabel: "一般相場 13,500円〜",
+    marketLabel: "一般売却参考 13,500円〜",
     marketUpdated: "2026-05-22",
     sourceUrl: "https://snkrdunk.com/articles/32287/",
     note: "発売直後のBOX相場が定価を大きく上回る。抽選/再販ルートを重点監視。",
@@ -661,7 +661,7 @@ let pokemonReleases = [
     saleEndDate: "2026-06-30",
     retailPrice: 5500,
     marketPrice: 20000,
-    marketLabel: "一般相場 20,000円〜",
+    marketLabel: "一般売却参考 20,000円〜",
     marketUpdated: "2026-05-12",
     sourceUrl: "https://snkrdunk.com/articles/32203/",
     note: "再販後も即完売が続き、BOX相場が高い状態。定価購入ルートを別枠で監視。",
@@ -778,7 +778,7 @@ let pokemonReleases = [
 const sourceLabels = {
   lottery: "抽選",
   restock: "再販",
-  market: "相場",
+  market: "出口参考",
   manual: "手動",
 };
 
@@ -1173,8 +1173,8 @@ function candidateProfitSummary(candidate) {
   }
   if (candidateCalc && !reliableCandidateProfit) {
     const reasons = [];
-    if (isHistoryMedian) reasons.push("履歴補完の相場");
-    if (isStale || isMissingObservedAt) reasons.push("相場更新待ち");
+    if (isHistoryMedian) reasons.push("履歴補完の売却参考");
+    if (isStale || isMissingObservedAt) reasons.push("出口参考更新待ち");
     if (ratioTooHigh) reasons.push("相場比率が異常");
     return {
       known: false,
@@ -1197,7 +1197,7 @@ function candidateProfitSummary(candidate) {
       body: `許容上限 ${yen.format(Math.max(0, calc.buyLine))} / 発売元 ${dealReleaseSourceName(matchedDeal)}`,
       evidence: "既存の利益候補データと一致",
       reasons: [],
-      targets: [dealReleaseSourceName(matchedDeal), "メルカリ相場"].filter(Boolean),
+      targets: [dealReleaseSourceName(matchedDeal), "メルカリ確認待ち"].filter(Boolean),
     };
   }
 
@@ -1212,7 +1212,7 @@ function candidateProfitSummary(candidate) {
         body: `${getReleaseMarketLabel(matchedRelease)} / 定価 ${yen.format(matchedRelease.retailPrice)}`,
         evidence: "既存の弾別相場データと一致",
         reasons: [],
-        targets: ["スニダン相場", "公式価格"],
+        targets: ["スニダン価格参考", "公式価格"],
       };
     }
   }
@@ -1458,15 +1458,26 @@ function buildOverviewFromSnapshotData(snapshot) {
   };
 }
 
+function currentSurfaceMode() {
+  const content = document.querySelector('meta[name="marketlens-surface"]')?.getAttribute("content");
+  if (content === "public-share") return "public-share";
+  return "full";
+}
+
+async function loadOptionalHistoryForSurface() {
+  if (currentSurfaceMode() === "public-share") return null;
+  return requestJson("./data/marketlens.public-history.json").catch(() =>
+    requestJson("./data/marketlens.history.json").catch(() => null),
+  );
+}
+
 async function loadResearchSnapshot({ rerender = false } = {}) {
   if (elements.refreshData) elements.refreshData.disabled = true;
   updateDataStatus("Data: loading...");
   try {
     const [snapshot, history] = await Promise.all([
       requestJson("./data/marketlens.snapshot.json"),
-      requestJson("./data/marketlens.public-history.json").catch(() =>
-        requestJson("./data/marketlens.history.json").catch(() => null),
-      ),
+      loadOptionalHistoryForSurface(),
     ]);
     applyResearchSnapshot(snapshot);
     const runs = Array.isArray(history?.runs) ? history.runs : [];
@@ -1767,7 +1778,7 @@ function dealAvailability(deal) {
 }
 
 function dealPriceSignal(deal, calc) {
-  if (deal.priceSignal === "recheck") return { label: "相場更新待ち", kind: "recheck" };
+  if (deal.priceSignal === "recheck") return { label: "出口参考更新待ち", kind: "recheck" };
   if (calc.profit < state.settings.targetProfit) return { label: "価格待ち", kind: "recheck" };
   return { label: "価格差あり", kind: "gap" };
 }
@@ -2130,7 +2141,7 @@ function candidateMissingReasons(candidate) {
   const reasons = new Set();
   for (const part of splitMissingParts(candidate.missingData)) {
     if (/定価|価格データ|価格/i.test(part)) reasons.add("公式価格");
-    if (/成約|相場/i.test(part)) reasons.add("相場価格");
+    if (/成約|相場/i.test(part)) reasons.add("売却参考価格");
     if (/取引量|出来高/i.test(part)) reasons.add("成約件数");
     if (/送料|厚み|サイズ/i.test(part)) reasons.add("送料サイズ");
     if (/在庫|残数/i.test(part)) reasons.add("在庫状況");
@@ -2164,15 +2175,15 @@ function candidateResearchTargets(candidate) {
 
   const text = [candidate.name, candidate.trend, candidate.reason].join(" ");
   if (/ポケモン|ポケカ/i.test(text)) {
-    targets.push("スニダン相場", "メルカリ相場");
+    targets.push("スニダン価格参考", "メルカリ確認待ち");
   } else if (/時計|watch|g-shock|garrack/i.test(text)) {
-    targets.push("メルカリ相場", "楽天/公式在庫");
+    targets.push("メルカリ確認待ち", "楽天/公式在庫");
   } else if (/ドラゴンクエスト|ドラクエ/i.test(text)) {
-    targets.push("スクエニ公式ニュース", "コラボ告知", "メルカリ相場", "スクエニ在庫");
+    targets.push("スクエニ公式ニュース", "コラボ告知", "メルカリ確認待ち", "スクエニ在庫");
   } else if (/ワンピース|フィギュア|s\\.h\\.figuarts/i.test(text)) {
-    targets.push("メルカリ相場", "公式販売ページ");
+    targets.push("メルカリ確認待ち", "公式販売ページ");
   } else {
-    targets.push("メルカリ相場");
+    targets.push("メルカリ確認待ち");
   }
   return [...new Set(targets)];
 }
@@ -2672,7 +2683,7 @@ function buildTodayEmptyReasons() {
     `利益候補 対象 ${actionableDeals.length}/${activeDeals.length}`,
     `利益未達 ${belowProfit}`,
     `低評価 ${lowConfidence}`,
-    `相場更新待ち ${staleMarket}`,
+    `出口参考更新待ち ${staleMarket}`,
     `抽選ルート 対象 ${activeRoutes}`,
     `詳細紐付け 利益 ${detailLinkedDeals}/${activeDeals.length} / 抽選 ${detailLinkedReleases}/${visibleReleases.length}`,
     `急上昇由来も条件一致なら今日見るものへ昇格`,
@@ -3154,7 +3165,7 @@ function displayWaitState(value) {
   if (value === "missing_price") return "価格待ち";
   if (value === "missing_route") return "リンク待ち";
   if (value === "missing_period") return "日程待ち";
-  if (value === "stale_price") return "相場更新待ち";
+  if (value === "stale_price") return "出口参考更新待ち";
   return "";
 }
 
@@ -3257,7 +3268,7 @@ function priceRowsForDeal(deal) {
   return {
     rows: [
       { label: "定価", value: formatYenPlain(deal.buyPrice) },
-      { label: "相場", value: formatPriceRange(lowSell, highSell) },
+      { label: "出口参考", value: formatPriceRange(lowSell, highSell) },
       { label: "利益目安", value: formatSignedRange(lowProfit, highProfit), className: calc.profit >= 0 ? "profit" : "negative" },
     ],
     profit: calc.profit,
@@ -3274,7 +3285,7 @@ function priceRowsForRelease(release) {
     rows: [
       { label: "定価", value: formatYenPlain(release.retailPrice) },
       {
-        label: "相場",
+        label: "出口参考",
         value:
           marketPrices.length > 0
             ? formatPriceRange(Math.min(...marketPrices), Math.max(...marketPrices))
@@ -3304,7 +3315,7 @@ function priceRowsForCandidate(candidate) {
   return {
     rows: [
       { label: "定価", value: formatYenPlain(candidate?.retailPrice) },
-      { label: "相場", value: formatPriceRange(lowMarket, highMarket) },
+      { label: "出口参考", value: formatPriceRange(lowMarket, highMarket) },
       {
         label: "利益目安",
         value: calc ? formatSignedRange(lowProfit, highProfit) : "計算待ち",
@@ -3319,7 +3330,7 @@ function priceRowsForTrend(trend) {
   return {
     rows: [
       { label: "定価", value: "確認中" },
-      { label: "相場", value: "確認中" },
+      { label: "出口参考", value: "確認中" },
       { label: "利益目安", value: "計算前", className: "profit" },
     ],
     profit: null,
@@ -3343,7 +3354,7 @@ function researchItemFromDeal(deal) {
   const hold = availability.kind === "ended";
   const layer = researchLayerFromPeriod({ startTs, endTs, periodKind: availability.kind, hold });
   const pricing = priceRowsForDeal(deal);
-  const waitTags = priceSignal.kind === "recheck" ? [{ label: "相場更新待ち", tone: "wait" }] : [];
+  const waitTags = priceSignal.kind === "recheck" ? [{ label: "出口参考更新待ち", tone: "wait" }] : [];
   const attention = attentionLevel({ layer, profit: pricing.profit, score: deal.confidence === "高" ? 85 : 70, waitCount: waitTags.length, endTs });
   return {
     canonicalId: dealDetailTargetId(deal),
@@ -3364,11 +3375,11 @@ function researchItemFromDeal(deal) {
       ...(deal.tags ?? []).slice(0, 2),
     ]),
     priceRows: pricing.rows,
-    reason: compactReasonText(deal.reason, "定価・相場・日付を確認"),
-    nextInfo: priceSignal.kind === "gap" ? "公式販売ページ / 相場 / 販売終了日" : "相場更新 / 公式販売ページ / 状態確認",
+    reason: compactReasonText(deal.reason, "定価・出口参考・日付を確認"),
+    nextInfo: priceSignal.kind === "gap" ? "公式販売ページ / 出口参考 / 販売終了日" : "出口参考更新 / 公式販売ページ / 状態確認",
     actions: [
       { label: "公式", url: deal.releaseUrl ?? deal.sourceUrl },
-      { label: "相場", url: deal.marketUrl && !/^https?:\/\/jp\.mercari\.com\/?$/.test(deal.marketUrl.trim()) ? deal.marketUrl : mercariSearchUrl(deal.name) },
+      { label: "出口参考", url: deal.marketUrl && !/^https?:\/\/jp\.mercari\.com\/?$/.test(deal.marketUrl.trim()) ? deal.marketUrl : mercariSearchUrl(deal.name) },
     ],
     check: { key: dealActionKey(deal, "profit"), type: "deal", label: "確認済み" },
     sourceRank: 2,
@@ -3417,10 +3428,10 @@ function researchItemFromAction(action) {
     priceRows: pricing.rows,
     reason: compactReasonText(action.why || action.evidence, "日付・リンク・相場を確認"),
     nextInfo: release
-      ? `応募 ${action.routes?.length ?? 0}件 / シュリンク相場 / 店頭条件`
+      ? `応募 ${action.routes?.length ?? 0}件 / シュリンク参考 / 店頭条件`
       : deal
-        ? "公式販売ページ / 相場 / 販売終了日"
-        : "公式価格 / 販売リンク / 相場",
+        ? "公式販売ページ / 出口参考 / 販売終了日"
+        : "公式価格 / 販売リンク / 出口参考",
     actions: [{ label: action.linkText ?? (isLottery ? "応募" : "確認"), url: action.url }],
     routes: (action.routes ?? []).map((route) => ({
       key: route.key,
@@ -3483,7 +3494,7 @@ function researchItemFromCandidate(candidate, { hold = false } = {}) {
     reason: compactReasonText(candidate.reason ?? candidate.adoptionReason, "話題・日付・リンクを確認"),
     nextInfo: waitTag
       ? `${waitTag} / ${candidateResearchTargets(candidate).slice(0, 2).join(" / ")}`
-      : "公式価格 / 販売リンク / 相場",
+      : "公式価格 / 販売リンク / 出口参考",
     actions: [{ label: "確認", url: candidate.sourceUrl }],
     check: hold ? null : { key: `candidate:${candidate.name}`, type: "candidate", label: "確認済み" },
     sourceRank: hold ? 5 : 3,
@@ -3512,7 +3523,7 @@ function researchItemFromTrend(trend) {
     tags: uniqueResearchTags(["話題", trend.type, { label: periodLayerLabel(layer), tone: "period" }]),
     priceRows: pricing.rows,
     reason: compactReasonText(trend.context || trend.action, "話題の動きを確認"),
-    nextInfo: "公式価格 / 販売リンク / 相場",
+    nextInfo: "公式価格 / 販売リンク / 出口参考",
     actions: [],
     sourceRank: 4,
   };
@@ -3781,7 +3792,7 @@ function deriveCompletenessForView(item) {
   const contextText = `${tagText} ${item.reason ?? ""} ${item.nextInfo ?? ""}`;
   const priceRows = item.priceRows ?? [];
   const retailRow = priceRows.find((row) => row.label === "定価");
-  const marketRow = priceRows.find((row) => row.label === "相場");
+  const marketRow = priceRows.find((row) => row.label === "出口参考");
   const weakValue = (row) => !row || /未取得|確認中|計算前|計算待ち/.test(String(row.value ?? ""));
 
   if (!isFiniteTs(item.startTs) || !isFiniteTs(item.endTs)) gaps.push("日程不足");
@@ -4008,7 +4019,7 @@ function renderDealCard(deal, container) {
       ? deal.marketUrl
       : mercariSearchUrl(deal.name);
   if (marketTargetUrl) {
-    setSafeLink(marketLink, marketTargetUrl, `${deal.name}の相場を開く`);
+    setSafeLink(marketLink, marketTargetUrl, `${deal.name}の価格参考を開く`);
   } else {
     marketLink.remove();
   }
@@ -4076,8 +4087,8 @@ function renderProvisionalCandidateCard(candidate, container) {
     `終了: ${formatDateOnly(candidate.endDate, "未取得")}`,
     `利益状態: ${profitSummary.value}`,
     candidate.retailPrice ? `公式価格: ${yen.format(candidate.retailPrice)}` : "",
-    candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
-    `相場鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
+    candidate.marketPrice ? `出口参考価格: ${yen.format(candidate.marketPrice)}` : "",
+    `出口参考鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
     `不足情報: ${candidateMissingReasons(candidate).join(" / ") || "なし"}`,
     `確認状況: ${validationLabel}`,
     `理由: ${compactReasonText(candidate.reason, "更新情報を確認")}`,
@@ -4126,8 +4137,8 @@ function renderPromotedCandidateDetailCard(candidate, container) {
     `終了: ${formatDateOnly(candidate.endDate, "未取得")}`,
     `利益状態: ${profitSummary.value}`,
     candidate.retailPrice ? `公式価格: ${yen.format(candidate.retailPrice)}` : "",
-    candidate.marketPrice ? `相場価格: ${yen.format(candidate.marketPrice)}` : "",
-    `相場鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
+    candidate.marketPrice ? `出口参考価格: ${yen.format(candidate.marketPrice)}` : "",
+    `出口参考鮮度: ${marketFreshnessLabel(candidate.marketObservedAt)}`,
     `不足情報: ${candidateMissingReasons(candidate).join(" / ") || "なし"}`,
     `確認状況: ${
       validationState === "ready"
@@ -4139,7 +4150,7 @@ function renderPromotedCandidateDetailCard(candidate, container) {
             : validationState === "missing_route"
               ? "リンク待ち"
               : validationState === "stale_price"
-                ? "相場更新待ち"
+                ? "出口参考更新待ち"
                 : "要確認"
     }`,
     `理由: ${compactReasonText(candidate.reason, "更新情報を確認")}`,
@@ -4456,7 +4467,7 @@ function archiveReasonForCandidate(candidate) {
   if (state === "ended") return "期間終了";
   if (state === "missing_period") return "日程待ち";
   if (state === "missing_price") return "価格待ち";
-  if (state === "stale_price") return "相場更新待ち";
+  if (state === "stale_price") return "出口参考更新待ち";
   if (state === "missing_route") return "リンク待ち";
   if (candidate.confidence === "低") return "低評価";
   return "注目度外";
@@ -4466,7 +4477,7 @@ function archiveRecoveryHint(candidate) {
   const state = candidateValidationState(candidate);
   if (state === "ended") return "復帰なし（新規シグナル待ち）";
   if (state === "missing_period") return "開始日/終了日の取得で復帰";
-  if (state === "missing_price") return "定価/相場の取得で復帰";
+  if (state === "missing_price") return "定価/出口参考の取得で復帰";
   if (state === "stale_price") return "相場の再取得で復帰";
   if (state === "missing_route") return "応募/販売導線の取得で復帰";
   if (candidate.confidence === "低") return "他ソース一致で復帰";
@@ -4525,7 +4536,7 @@ function renderArchivedCandidates() {
   const summary = document.createElement("div");
   summary.className = "detail-box";
   summary.hidden = false;
-  summary.textContent = `内訳: 期間終了 ${summaryCounts.ended} / 日程待ち ${summaryCounts.missingPeriod} / 価格待ち ${summaryCounts.missingPrice} / 相場更新待ち ${summaryCounts.stalePrice} / リンク待ち ${summaryCounts.missingRoute} / 低評価 ${summaryCounts.lowConfidence}`;
+  summary.textContent = `内訳: 期間終了 ${summaryCounts.ended} / 日程待ち ${summaryCounts.missingPeriod} / 価格待ち ${summaryCounts.missingPrice} / 出口参考更新待ち ${summaryCounts.stalePrice} / リンク待ち ${summaryCounts.missingRoute} / 低評価 ${summaryCounts.lowConfidence}`;
   elements.archiveCandidateList.append(summary);
 
   if (archived.length === 0) {
@@ -5131,7 +5142,7 @@ function buildReleaseVariantSummary(release) {
     return {
       condition: variant.condition,
       kind: variant.priority === "primary" ? "primary" : "caution",
-      marketText: variant.marketPrice ? `相場 ${yen.format(variant.marketPrice)}` : "相場 取得待ち",
+      marketText: variant.marketPrice ? `出口参考 ${yen.format(variant.marketPrice)}` : "出口参考 取得待ち",
       profitText: profit === null ? "利益 -" : `利益 ${signedYen(profit)}`,
     };
   });

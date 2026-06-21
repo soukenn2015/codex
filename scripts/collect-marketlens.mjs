@@ -4,6 +4,7 @@ import {
   hasObservedXEvidence,
   resolveXSignalLabel,
   sanitizeClaimText,
+  truncateUnicodeText,
 } from "./marketlens-observation.mjs";
 import { collectXReaderSocialSignals } from "./marketlens-x-reader.mjs";
 import { collectMarketplaceObservationSignals } from "./marketlens-mercari-reader.mjs";
@@ -17,6 +18,12 @@ import {
   resolveXReaderLimit,
 } from "./marketlens-limits.mjs";
 import { selectProductExplorationTasks } from "./marketlens-exploration-affinity.mjs";
+import {
+  applyPromotedMarketPricesToCandidates,
+  isProvisionalBuyLineCandidateFieldEligible,
+  promoteObservedMarketPrices,
+  resolveProvisionalBuyLinePriceFields,
+} from "./marketlens-buyline.mjs";
 
 const configUrl = new URL("../data/source-config.json", import.meta.url);
 const registryUrl = new URL("../data/source-registry.json", import.meta.url);
@@ -48,6 +55,8 @@ const geminiMonthlyCallLimit = clampNumber(Number(process.env.MARKETLENS_GEMINI_
 const aiBudgetJpy = clampNumber(Number(process.env.MARKETLENS_AI_BUDGET_JPY ?? 2500), 0, 1000000);
 const llmTimeoutMs = Number(process.env.MARKETLENS_LLM_TIMEOUT_MS ?? 30000);
 const sourceFetchTimeoutMs = clampNumber(Number(process.env.MARKETLENS_FETCH_TIMEOUT_MS ?? 8000), 2000, 20000);
+const sourceFetchMaxBytes = clampNumber(Number(process.env.MARKETLENS_FETCH_MAX_BYTES ?? 220000), 50000, 2000000);
+const sourceTextPreviewMaxChars = clampNumber(Number(process.env.MARKETLENS_TEXT_PREVIEW_MAX_CHARS ?? 100000), 20000, 500000);
 const xReaderEnabled = truthyEnv(process.env.MARKETLENS_X_READER_ENABLED);
 const browserObservationEnabled = process.env.MARKETLENS_BROWSER_OBSERVATION_ENABLED !== "0";
 const observationLimits = resolveObservationLimits();
@@ -62,12 +71,34 @@ const browserObservationTimeoutMs = clampNumber(
   3000,
   60000,
 );
+const phaseTimingEnabled = truthyEnv(process.env.MARKETLENS_PHASE_TIMING);
+const phaseTimingSlowMs = clampNumber(Number(process.env.MARKETLENS_PHASE_TIMING_SLOW_MS ?? 1500), 100, 60000);
+const phaseTimingTopN = clampNumber(Number(process.env.MARKETLENS_PHASE_TIMING_TOP_N ?? 12), 3, 50);
+const geminiTransientRetryCount = clampNumber(Number(process.env.MARKETLENS_GEMINI_TRANSIENT_RETRY_COUNT ?? 2), 0, 5);
+const geminiTransientRetryDelayMs = clampNumber(Number(process.env.MARKETLENS_GEMINI_TRANSIENT_RETRY_DELAY_MS ?? 1500), 200, 10000);
+const sourceFetchHardTimeoutMs = clampNumber(
+  Number(process.env.MARKETLENS_FETCH_HARD_TIMEOUT_MS ?? sourceFetchTimeoutMs + 4000),
+  3000,
+  30000,
+);
 const marketplaceObservationTimeoutMs = clampNumber(
   Number(process.env.MARKETLENS_MARKETPLACE_BROWSER_OBSERVATION_TIMEOUT_MS ?? process.env.MARKETLENS_BROWSER_OBSERVATION_TIMEOUT_MS ?? 25000),
   5000,
   60000,
 );
+const sourceFetchConcurrency = clampNumber(Number(process.env.MARKETLENS_SOURCE_FETCH_CONCURRENCY ?? 6), 1, 16);
 const routeCheckConcurrency = clampNumber(Number(process.env.MARKETLENS_ROUTE_CHECK_CONCURRENCY ?? 12), 4, 24);
+const candidateRouteVerificationLimit = clampNumber(Number(process.env.MARKETLENS_CANDIDATE_ROUTE_LIMIT ?? 32), 12, 300);
+const activeOfficialSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_ACTIVE_OFFICIAL_SOURCE_FETCH_LIMIT ?? 24), 4, 120);
+const activeNewsSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_ACTIVE_NEWS_SOURCE_FETCH_LIMIT ?? 30), 2, 80);
+const activeBlogSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_ACTIVE_BLOG_SOURCE_FETCH_LIMIT ?? 20), 2, 60);
+const activeLotterySourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_ACTIVE_LOTTERY_SOURCE_FETCH_LIMIT ?? 10), 1, 40);
+const activeSnsSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_ACTIVE_SNS_SOURCE_FETCH_LIMIT ?? 8), 1, 20);
+const trialOfficialSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_TRIAL_OFFICIAL_SOURCE_FETCH_LIMIT ?? 8), 1, 40);
+const trialNewsSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_TRIAL_NEWS_SOURCE_FETCH_LIMIT ?? 8), 1, 20);
+const trialBlogSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_TRIAL_BLOG_SOURCE_FETCH_LIMIT ?? 8), 1, 20);
+const trialLotterySourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_TRIAL_LOTTERY_SOURCE_FETCH_LIMIT ?? 4), 1, 20);
+const trialSnsSourceFetchLimit = clampNumber(Number(process.env.MARKETLENS_TRIAL_SNS_SOURCE_FETCH_LIMIT ?? 4), 1, 10);
 const minSnapshotReachableSources = clampNumber(Number(process.env.MARKETLENS_MIN_REACHABLE_SOURCES ?? 1), 0, 100000);
 const minSnapshotDocumentCount = clampNumber(Number(process.env.MARKETLENS_MIN_DOCUMENTS ?? 100), 0, 100000);
 const minSnapshotProductCount = clampNumber(Number(process.env.MARKETLENS_MIN_PRODUCTS ?? 100), 0, 100000);
@@ -84,6 +115,9 @@ const defaultProfitFeeRate = Number(process.env.MARKETLENS_FEE_RATE ?? 5);
 const defaultProfitBufferRate = Number(process.env.MARKETLENS_PRICE_BUFFER ?? 3);
 const defaultPackingCost = Number(process.env.MARKETLENS_PACKING_COST ?? 80);
 const existingSnapshotOnDisk = await readJsonIfExists(outputUrl);
+const phaseTimingSummary = new Map();
+const phaseTimingSlowEvents = [];
+let phaseTimingInterrupted = false;
 const structuredExtractionSchema = {
   type: "object",
   additionalProperties: false,
@@ -330,6 +364,14 @@ function geminiShouldRetryWithFallback(status, model) {
   return model !== geminiFallbackModel;
 }
 
+function geminiShouldRetryTransient(status) {
+  return status === 500 || status === 502 || status === 503;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function stripHtml(html) {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -338,6 +380,139 @@ function stripHtml(html) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+function isTextLikeContentType(contentType = "") {
+  const value = String(contentType ?? "").toLowerCase();
+  return value.startsWith("text/") || value.includes("html") || value.includes("xml") || value.includes("json") || value.includes("javascript");
+}
+
+async function readResponseTextLimited(response, maxBytes = sourceFetchMaxBytes) {
+  const contentType = response.headers.get("content-type") ?? "";
+  const contentLength = Number(response.headers.get("content-length") ?? "");
+  if (!isTextLikeContentType(contentType)) {
+    return { text: "", skipped: "non_text_content_type", truncated: false, contentType, bytesRead: 0 };
+  }
+  if (Number.isFinite(contentLength) && contentLength > maxBytes) {
+    return { text: "", skipped: "content_length_limit", truncated: true, contentType, bytesRead: contentLength };
+  }
+  if (!response.body) {
+    return { text: await response.text(), skipped: null, truncated: false, contentType, bytesRead: contentLength };
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let text = "";
+  let bytesRead = 0;
+  let truncated = false;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = value ?? new Uint8Array();
+      bytesRead += chunk.byteLength;
+      if (bytesRead > maxBytes) {
+        const allowedBytes = Math.max(0, maxBytes - (bytesRead - chunk.byteLength));
+        if (allowedBytes > 0) {
+          text += decoder.decode(chunk.subarray(0, allowedBytes), { stream: true });
+        }
+        truncated = true;
+        try {
+          await reader.cancel("response_too_large");
+        } catch {
+          // ignore
+        }
+        break;
+      }
+      text += decoder.decode(chunk, { stream: true });
+    }
+    text += decoder.decode();
+  } finally {
+    reader.releaseLock();
+  }
+
+  return {
+    text,
+    skipped: truncated ? "body_size_limit" : null,
+    truncated,
+    contentType,
+    bytesRead,
+  };
+}
+
+async function withHardTimeout(task, timeoutMs, fallbackValue) {
+  let timeoutId = null;
+  try {
+    return await Promise.race([
+      task(),
+      new Promise((resolve) => {
+        timeoutId = setTimeout(() => resolve(fallbackValue), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
+  }
+}
+
+function recordPhaseTiming(label, durationMs, meta = {}) {
+  if (!phaseTimingEnabled) return;
+  const current = phaseTimingSummary.get(label) ?? { count: 0, totalMs: 0, maxMs: 0 };
+  current.count += 1;
+  current.totalMs += durationMs;
+  current.maxMs = Math.max(current.maxMs, durationMs);
+  phaseTimingSummary.set(label, current);
+  if (durationMs >= phaseTimingSlowMs) {
+    phaseTimingSlowEvents.push({
+      label,
+      durationMs,
+      id: meta.id ?? "",
+      url: meta.url ?? "",
+      note: meta.note ?? "",
+    });
+  }
+}
+
+async function measurePhase(label, meta, task) {
+  const startedAt = Date.now();
+  try {
+    return await task();
+  } finally {
+    recordPhaseTiming(label, Date.now() - startedAt, meta);
+  }
+}
+
+function printPhaseTimingReport() {
+  if (!phaseTimingEnabled) return;
+  const summary = [...phaseTimingSummary.entries()]
+    .map(([label, stats]) => ({
+      label,
+      count: stats.count,
+      totalMs: stats.totalMs,
+      avgMs: Math.round(stats.totalMs / Math.max(1, stats.count)),
+      maxMs: stats.maxMs,
+    }))
+    .sort((a, b) => b.totalMs - a.totalMs)
+    .slice(0, phaseTimingTopN);
+  const slow = [...phaseTimingSlowEvents]
+    .sort((a, b) => b.durationMs - a.durationMs)
+    .slice(0, phaseTimingTopN);
+  console.log(`[marketlens-timing] summary=${JSON.stringify(summary)}`);
+  console.log(`[marketlens-timing] slow=${JSON.stringify(slow)}`);
+}
+
+function installPhaseTimingSignalHandlers() {
+  if (!phaseTimingEnabled) return;
+  const handler = (signal) => {
+    if (phaseTimingInterrupted) process.exit(130);
+    phaseTimingInterrupted = true;
+    console.error(`[marketlens-timing] interrupted signal=${signal}`);
+    printPhaseTimingReport();
+    process.exit(130);
+  };
+  process.once("SIGINT", () => handler("SIGINT"));
+  process.once("SIGTERM", () => handler("SIGTERM"));
+}
+
+installPhaseTimingSignalHandlers();
 
 function extractLinksFromHtml(html, baseUrl) {
   const links = [];
@@ -349,7 +524,7 @@ function extractLinksFromHtml(html, baseUrl) {
     if (!rawHref || rawHref.startsWith("#") || rawHref.startsWith("javascript:")) continue;
     try {
       const url = new URL(rawHref, baseUrl).toString();
-      const anchorText = stripHtml(match[2] ?? "").slice(0, 180);
+      const anchorText = truncateUnicodeText(stripHtml(match[2] ?? ""), 180);
       links.push({ url, anchorText });
     } catch {
       // ignore invalid URL
@@ -598,9 +773,10 @@ function truthyEnv(value) {
   return normalized === "1" || normalized === "true" || normalized === "yes" || normalized === "on";
 }
 
-const BLOG_SNS_RECENT_LIMIT = 30;
-const BLOG_SNS_DETAIL_FETCH_LIMIT = 12;
+const BLOG_SNS_RECENT_LIMIT = clampNumber(Number(process.env.MARKETLENS_BLOG_SNS_RECENT_LIMIT ?? 12), 4, 40);
+const BLOG_SNS_DETAIL_FETCH_LIMIT = clampNumber(Number(process.env.MARKETLENS_BLOG_SNS_DETAIL_FETCH_LIMIT ?? 2), 1, 20);
 const DISCOVERY_SOURCE_LIMIT = 120;
+const ACTIVE_SOURCE_FETCH_LIMIT = clampNumber(Number(process.env.MARKETLENS_ACTIVE_SOURCE_FETCH_LIMIT ?? 60), 10, 200);
 const TRIAL_SOURCE_FETCH_LIMIT = 30;
 const TRIAL_PROMOTION_LIMIT = 20;
 const ACTIVE_PROMOTION_LIMIT = 10;
@@ -734,6 +910,7 @@ function discoveredSourceIsValid(candidate) {
   if (isAffiliateUrl(candidate.canonicalUrl)) return false;
   if (candidate.lane !== "blog" && candidate.lane !== "news" && isSearchLikeUrl(candidate.canonicalUrl)) return false;
   if (candidate.lane !== "blog" && candidate.lane !== "news" && routeTargetIsGeneric(candidate.canonicalUrl)) return false;
+  if (sourcePageLooksGeneric(candidate)) return false;
   if (candidate.lane === "official") {
     if (candidate.templateKind === "root") return false;
     if (
@@ -755,6 +932,31 @@ function discoveredSourceIsValid(candidate) {
   }
   if (candidate.lane === "news" && candidate.templateKind === "root") return false;
   return true;
+}
+
+function sourcePageLooksGeneric(candidate) {
+  const lane = String(candidate?.lane ?? "");
+  const templateKind = String(candidate?.templateKind ?? "");
+  const path = String(candidate?.canonicalPath ?? "");
+  const normalizedPath = path.toLowerCase();
+  const title = canonicalizeProductName(candidate?.titleHint ?? candidate?.keywordHint ?? "");
+  if (!lane) return true;
+
+  if (lane === "news" || lane === "blog") {
+    if (templateKind === "section") return true;
+    if (/^\/(?:category|categories|tag|tags|archive|archives|list|lists|series|special|feature)(?:\/|$)/i.test(normalizedPath)) return true;
+    if (looksLikeCategoryListingName(title)) return true;
+    if (/^(?:フィギュア|玩具|グッズ|イベント|セール|プラモデル|材料|工具|トイガン|rc)$/iu.test(title)) return true;
+  }
+
+  if (lane === "official") {
+    if (/^\/(?:news|contents|feature|special|campaign|brand|category|categories|chara|character|shop|shop_list|shop_lists)(?:\/|$)/i.test(normalizedPath)) {
+      return true;
+    }
+    if (looksLikeCategoryListingName(title)) return true;
+  }
+
+  return false;
 }
 
 function sourceKeyForLaneUrl(lane, url) {
@@ -1391,6 +1593,10 @@ function scoreArticleLink(link, sourceHost = "") {
   if (/抽選|再販|発売|予約|完売|品薄/.test(text)) score += 4;
   if (/\/status\/|\/archives\/|\/article|\/news\//.test(link.url)) score += 3;
   if (host && sourceHost && host === sourceHost) score += 2;
+  if (/^(x\.com|twitter\.com)$/.test(host)) {
+    if (/\/hashtag\/|\/photo\/|\/quotes(?:\/|$)|support\.x\.com/i.test(link.url)) score -= 20;
+    if (/\/status\/\d+(?:\/photo\/\d+|\/quotes)?/i.test(link.url)) score -= 10;
+  }
   if (/privacy|about|contact|profile|help/i.test(link.url)) score -= 8;
   return score;
 }
@@ -1411,31 +1617,36 @@ function pickRecentArticleLinks(source, result) {
 }
 
 async function expandBlogSnsCandidates(source, result, historyRuns) {
-  if (!result?.ok) {
-    return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 }, documents: [], discoveredSources: [], llmExtractions: [] };
-  }
-  const channel = detectSourceChannel(source, result.url);
-  if (channel !== "blog" && channel !== "sns" && channel !== "news") {
-    return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 }, documents: [], discoveredSources: [], llmExtractions: [] };
-  }
+  return measurePhase("expandBlogSnsCandidates", { id: source?.id ?? source?.sourceKey, url: result?.url ?? source?.url }, async () => {
+    if (!result?.ok) {
+      return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 }, documents: [], discoveredSources: [], llmExtractions: [] };
+    }
+    const channel = detectSourceChannel(source, result.url);
+    if (channel !== "blog" && channel !== "sns" && channel !== "news") {
+      return { trends: [], candidates: [], stats: { scanned: 0, generated: 0 }, documents: [], discoveredSources: [], llmExtractions: [] };
+    }
 
-  const links = pickRecentArticleLinks(source, result);
-  const trends = [];
-  const candidates = [];
-  const documents = [];
-  const discoveredSources = [];
-  const llmExtractions = [];
-  const discoveredKeys = new Set();
-  const seen = new Set();
-  const detailLimit = Number(source?.crawlBudget?.detailLimit ?? BLOG_SNS_DETAIL_FETCH_LIMIT);
-  const scannedLinks = [
-    { url: result.url ?? source.url, anchorText: source.keyword ?? source.trend?.keyword ?? "", score: 99, useFetchedResult: true },
-    ...links,
-  ].slice(0, detailLimit);
-  const reliability = sourceReliabilityLevel(source, result.url);
+    const resultHost = String(tryParseUrl(result?.url ?? source?.url ?? "")?.hostname ?? "").toLowerCase();
+    const isTimelineSnsSource = channel === "sns" && /(^|\.)x\.com$|(^|\.)twitter\.com$/.test(resultHost);
+    const links = isTimelineSnsSource ? [] : pickRecentArticleLinks(source, result);
+    const trends = [];
+    const candidates = [];
+    const documents = [];
+    const discoveredSources = [];
+    const llmExtractions = [];
+    const discoveredKeys = new Set();
+    const seen = new Set();
+    const detailLimit = isTimelineSnsSource ? 1 : Number(source?.crawlBudget?.detailLimit ?? BLOG_SNS_DETAIL_FETCH_LIMIT);
+    const scannedLinks = [
+      { url: result.url ?? source.url, anchorText: source.keyword ?? source.trend?.keyword ?? "", score: 99, useFetchedResult: true },
+      ...links,
+    ].slice(0, detailLimit);
+    const reliability = sourceReliabilityLevel(source, result.url);
 
-  for (const [index, link] of scannedLinks.entries()) {
-    const articleResult = link.useFetchedResult ? result : await fetchSource({ id: `${source.id}:article:${index}`, url: link.url });
+    for (const [index, link] of scannedLinks.entries()) {
+      const articleResult = link.useFetchedResult
+        ? result
+        : await fetchSourceWithHardTimeout({ id: `${source.id}:article:${index}`, url: link.url });
     const articleText = `${link.anchorText ?? ""} ${articleResult.title ?? ""} ${articleResult.text ?? ""}`.slice(0, 22000);
     if (!PRODUCT_SIGNAL_WORD.test(articleText)) continue;
     const dateBase =
@@ -1565,14 +1776,15 @@ async function expandBlogSnsCandidates(source, result, historyRuns) {
     }
   }
 
-  return {
-    trends,
-    candidates,
-    stats: { scanned: scannedLinks.length, generated: candidates.length },
-    documents,
-    discoveredSources,
-    llmExtractions,
-  };
+    return {
+      trends,
+      candidates,
+      stats: { scanned: scannedLinks.length, generated: candidates.length },
+      documents,
+      discoveredSources,
+      llmExtractions,
+    };
+  });
 }
 
 function deriveSourceKeywordHint(url, lane, anchorText = "") {
@@ -1833,13 +2045,40 @@ function summarizeRegistry(entries) {
 }
 
 function runtimeSourcesFromRegistry(entries) {
-  const active = entries
-    .filter((entry) => entry.status === "active" && entry.lane !== "market")
-    .sort((a, b) => (b.sourceQuality ?? 0) - (a.sourceQuality ?? 0));
-  const trial = entries
-    .filter((entry) => entry.status === "trial" && entry.lane !== "market")
-    .sort((a, b) => (b.sourceQuality ?? 0) - (a.sourceQuality ?? 0))
-    .slice(0, TRIAL_SOURCE_FETCH_LIMIT);
+  const laneCapsByStatus = {
+    active: {
+      official: activeOfficialSourceFetchLimit,
+      news: activeNewsSourceFetchLimit,
+      blog: activeBlogSourceFetchLimit,
+      lottery: activeLotterySourceFetchLimit,
+      sns: activeSnsSourceFetchLimit,
+    },
+    trial: {
+      official: trialOfficialSourceFetchLimit,
+      news: trialNewsSourceFetchLimit,
+      blog: trialBlogSourceFetchLimit,
+      lottery: trialLotterySourceFetchLimit,
+      sns: trialSnsSourceFetchLimit,
+    },
+  };
+  function pickRuntimeEntries(status, totalLimit) {
+    const laneCaps = laneCapsByStatus[status] ?? {};
+    const laneBuckets = new Map();
+    for (const entry of entries) {
+      if (entry.status !== status || entry.lane === "market") continue;
+      const lane = entry.lane ?? "official";
+      if (!laneBuckets.has(lane)) laneBuckets.set(lane, []);
+      laneBuckets.get(lane).push(entry);
+    }
+    const selected = [];
+    for (const [lane, bucket] of laneBuckets.entries()) {
+      const laneLimit = laneCaps[lane] ?? totalLimit;
+      selected.push(...bucket.sort((a, b) => (b.sourceQuality ?? 0) - (a.sourceQuality ?? 0)).slice(0, laneLimit));
+    }
+    return selected.sort((a, b) => (b.sourceQuality ?? 0) - (a.sourceQuality ?? 0)).slice(0, totalLimit);
+  }
+  const active = pickRuntimeEntries("active", ACTIVE_SOURCE_FETCH_LIMIT);
+  const trial = pickRuntimeEntries("trial", TRIAL_SOURCE_FETCH_LIMIT);
   return [...active, ...trial].map((entry) => ({
     id: `registry-${entry.sourceKey}`,
     sourceKey: entry.sourceKey,
@@ -2095,15 +2334,36 @@ function priceSourceRankFromSource(source = "", priceType = "") {
   if (priceType === "predicted_market" || priceType === "predicted_profit") return "historical_prediction";
   if (/llm|heuristic|blog-sns-article/.test(text)) return "llm_mentioned_price";
   if (/history-median|comparables|learning/.test(text)) return "historical_prediction";
-  if (/specialized-search/.test(text)) return "observed_market_price";
+  if (/observed_market|mercari_observed_market/.test(text)) return "observed_market_price";
+  if (/specialized-search/.test(text)) return "specialized_estimate";
   if (/deal|pokemon-release|pokemon_release|kuji_special|manual/.test(text)) return "manual_price";
   if (/candidate|release|variant|article/.test(text)) return "specialized_estimate";
   return priceType === "retail" ? "manual_price" : "specialized_estimate";
 }
 
 function priceSourceUsageFromRank(rank = "") {
-  if (rank === "manual_price" || rank === "observed_market_price") return "buyline";
+  if (rank === "manual_price" || rank === "confirmed_price") return "buyline";
   return "watch";
+}
+
+function candidatePriceBuyLineFields({
+  rank = "",
+  buyLineEligible = true,
+  currency = "JPY",
+  sourceMode = "",
+  promotionStatus = "",
+} = {}) {
+  const eligible = isProvisionalBuyLineCandidateFieldEligible({
+    rank,
+    buyLineEligible,
+    currency,
+    sourceMode,
+    promotionStatus,
+  });
+  return {
+    usage: eligible ? "buyline" : "watch",
+    eligible,
+  };
 }
 
 function priceFreshnessState(observedAt) {
@@ -2305,7 +2565,7 @@ function buildPriceSnapshots(snapshot) {
     const productName = canonicalizeProductName(input.productName);
     if (!productPhraseLooksSpecific(productName)) return;
     const priceSourceRank = priceSourceRankFromSource(input.source, input.priceType);
-    pushUniquePriceSnapshot(rows, {
+    const baseRow = {
       productKey: normalizeProductKey(productName),
       productName,
       priceType: input.priceType,
@@ -2313,11 +2573,13 @@ function buildPriceSnapshots(snapshot) {
       condition: input.condition ?? "",
       source: input.source ?? "",
       priceSourceRank,
-      priceUsage: priceSourceUsageFromRank(priceSourceRank),
-      buyLineEligible: priceSourceUsageFromRank(priceSourceRank) === "buyline",
       observedAt: input.observedAt ?? snapshot.metadata?.updatedAt ?? null,
       confidence: input.confidence ?? "medium",
       freshness: input.freshness ?? priceFreshnessState(input.observedAt ?? snapshot.metadata?.updatedAt ?? null),
+    };
+    pushUniquePriceSnapshot(rows, {
+      ...baseRow,
+      ...resolveProvisionalBuyLinePriceFields(baseRow),
     });
   };
 
@@ -2895,6 +3157,12 @@ function summarizeLlmExecution(snapshot) {
     const reason = String(extraction.fallbackReason ?? "").trim();
     if (reason) fallbackReasons[reason] = (fallbackReasons[reason] ?? 0) + 1;
   }
+  if (configuredLlmProvider === "gemini" && llmExecutionStats.succeeded > 0) {
+    modeCounts.gemini = Math.max(modeCounts.gemini ?? 0, llmExecutionStats.succeeded);
+  }
+  if (configuredLlmProvider === "openai" && llmExecutionStats.succeeded > 0) {
+    modeCounts.openai = Math.max(modeCounts.openai ?? 0, llmExecutionStats.succeeded);
+  }
   const overviewNarrative = snapshot.overviewNarrative ?? {};
   const snapshotUpdatedAt = snapshot.metadata?.updatedAt ?? null;
   const overviewGeneratedAt = overviewNarrative.generatedAt ?? snapshotUpdatedAt ?? null;
@@ -3390,55 +3658,74 @@ async function requestGeminiJsonWithFallback(payload, primaryModel, { allowText 
 
   for (let index = 0; index < modelsToTry.length; index += 1) {
     const model = modelsToTry[index];
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), llmTimeoutMs);
-    try {
-      const response = await fetch(`${geminiBaseUrl}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
-      if (!response.ok) {
-        const errorText = await response.text();
-        if (response.status === 429) {
-          const reason = geminiFallbackReason({ kind: "quota", model, status: response.status });
-          markGeminiQuotaStopped(reason);
-          throw new Error(reason);
+    const maxAttempts = 1 + geminiTransientRetryCount;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), llmTimeoutMs);
+      try {
+        const response = await fetch(`${geminiBaseUrl}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          if (response.status === 429) {
+            const reason = geminiFallbackReason({ kind: "quota", model, status: response.status });
+            markGeminiQuotaStopped(reason);
+            throw new Error(reason);
+          }
+          if (geminiShouldRetryTransient(response.status) && attempt < maxAttempts) {
+            lastError = new Error(
+              `${geminiFallbackReason({ kind: "request", model, status: response.status })}: ${errorText.slice(0, 240)}`,
+            );
+            await wait(geminiTransientRetryDelayMs * attempt);
+            continue;
+          }
+          if (geminiShouldRetryWithFallback(response.status, model)) {
+            const retryError = new Error(
+              `${geminiFallbackReason({ kind: "request", model, status: response.status })}: ${errorText.slice(0, 240)}`,
+            );
+            retryError.retryWithFallback = true;
+            lastError = retryError;
+            break;
+          }
+          throw new Error(`${geminiFallbackReason({ kind: "request", model, status: response.status })}: ${errorText.slice(0, 240)}`);
         }
-        if (geminiShouldRetryWithFallback(response.status, model)) {
-          const retryError = new Error(`${geminiFallbackReason({ kind: "request", model, status: response.status })}: ${errorText.slice(0, 240)}`);
-          retryError.retryWithFallback = true;
-          lastError = retryError;
-          continue;
+        const data = await response.json();
+        const parsed = parseStructuredResponsePayload(data);
+        if ((!parsed || typeof parsed !== "object") && !allowText) {
+          throw new Error(geminiFallbackReason({ kind: "parse", model }));
         }
-        throw new Error(`${geminiFallbackReason({ kind: "request", model, status: response.status })}: ${errorText.slice(0, 240)}`);
+        noteActualModelUsed(model);
+        return {
+          parsed: parsed ?? data,
+          actualModelUsed: model,
+          usedFallbackModel: model !== primaryModel,
+        };
+      } catch (error) {
+        if (error?.name === "AbortError") {
+          if (attempt < maxAttempts) {
+            lastError = new Error(geminiFallbackReason({ kind: "timeout", model }));
+            await wait(geminiTransientRetryDelayMs * attempt);
+            continue;
+          }
+          throw new Error(geminiFallbackReason({ kind: "timeout", model }));
+        }
+        if (String(error?.message ?? "").includes("gemini_quota_exceeded")) throw error;
+        lastError = error;
+        if (!error?.retryWithFallback || index >= modelsToTry.length - 1) {
+          throw error;
+        }
+        break;
+      } finally {
+        clearTimeout(timeout);
       }
-      const data = await response.json();
-      const parsed = parseStructuredResponsePayload(data);
-      if ((!parsed || typeof parsed !== "object") && !allowText) {
-        throw new Error(geminiFallbackReason({ kind: "parse", model }));
-      }
-      noteActualModelUsed(model);
-      return {
-        parsed: parsed ?? data,
-        actualModelUsed: model,
-        usedFallbackModel: model !== primaryModel,
-      };
-    } catch (error) {
-      if (error?.name === "AbortError") {
-        throw new Error(geminiFallbackReason({ kind: "timeout", model }));
-      }
-      if (String(error?.message ?? "").includes("gemini_quota_exceeded")) throw error;
-      lastError = error;
-      if (!error?.retryWithFallback || index >= modelsToTry.length - 1) {
-        throw error;
-      }
-    } finally {
-      clearTimeout(timeout);
     }
+    if (lastError?.retryWithFallback && index < modelsToTry.length - 1) continue;
   }
 
   throw lastError ?? new Error("gemini_request_failed");
@@ -3819,46 +4106,48 @@ async function requestGeminiStructuredExtraction({ docId, source, result, eviden
 }
 
 async function buildStructuredLlmExtraction({ docId, source, result, evidenceProducts = [], extractedCandidates = [] }) {
-  const fallback = buildHeuristicLlmExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
-  const eligibility = llmExtractionEligibility({ source, result, evidenceProducts, extractedCandidates });
-  const fallbackWithEligibility = {
-    ...fallback,
-    geminiEligible: eligibility.eligible && configuredLlmProvider === "gemini",
-    geminiEligibilityReason: eligibility.reason,
-  };
-  if (eligibility.eligible) {
-    llmExecutionStats.eligible += 1;
-  } else {
-    llmExecutionStats.skipped += 1;
-    noteLlmFallbackReason(eligibility.reason);
-    return {
-      ...fallbackWithEligibility,
-      fallbackReason: eligibility.reason,
+  return measurePhase("buildStructuredLlmExtraction", { id: docId, url: result?.url ?? source?.url }, async () => {
+    const fallback = buildHeuristicLlmExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
+    const eligibility = llmExtractionEligibility({ source, result, evidenceProducts, extractedCandidates });
+    const fallbackWithEligibility = {
+      ...fallback,
+      geminiEligible: eligibility.eligible && configuredLlmProvider === "gemini",
+      geminiEligibilityReason: eligibility.reason,
     };
-  }
-  try {
-    const structured =
-      configuredLlmProvider === "gemini"
-        ? await requestGeminiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates })
-        : await requestOpenAiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
-    const structuredWithEligibility = structured
-      ? {
-          ...structured,
-          geminiEligible: eligibility.eligible && configuredLlmProvider === "gemini",
-          geminiEligibilityReason: eligibility.reason,
-        }
-      : null;
-    return structuredWithEligibility ? mergeStructuredExtractions(structuredWithEligibility, fallbackWithEligibility) : fallbackWithEligibility;
-  } catch (error) {
-    const fallbackReason = String(error?.message ?? error ?? `${configuredLlmProvider}_request_failed`);
-    noteLlmFallbackReason(fallbackReason);
-    return {
-      ...fallbackWithEligibility,
-      mode: "heuristic",
-      provider: "heuristic-fallback",
-      fallbackReason,
-    };
-  }
+    if (eligibility.eligible) {
+      llmExecutionStats.eligible += 1;
+    } else {
+      llmExecutionStats.skipped += 1;
+      noteLlmFallbackReason(eligibility.reason);
+      return {
+        ...fallbackWithEligibility,
+        fallbackReason: eligibility.reason,
+      };
+    }
+    try {
+      const structured =
+        configuredLlmProvider === "gemini"
+          ? await requestGeminiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates })
+          : await requestOpenAiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
+      const structuredWithEligibility = structured
+        ? {
+            ...structured,
+            geminiEligible: eligibility.eligible && configuredLlmProvider === "gemini",
+            geminiEligibilityReason: eligibility.reason,
+          }
+        : null;
+      return structuredWithEligibility ? mergeStructuredExtractions(structuredWithEligibility, fallbackWithEligibility) : fallbackWithEligibility;
+    } catch (error) {
+      const fallbackReason = String(error?.message ?? error ?? `${configuredLlmProvider}_request_failed`);
+      noteLlmFallbackReason(fallbackReason);
+      return {
+        ...fallbackWithEligibility,
+        mode: "heuristic",
+        provider: "heuristic-fallback",
+        fallbackReason,
+      };
+    }
+  });
 }
 
 function llmExtractionConfidenceScore(extraction) {
@@ -4494,20 +4783,26 @@ function llmExtractionPriorityScore(extraction) {
 }
 
 function pruneLlmExtractions(extractions, limit = 20) {
-  return [...(extractions ?? [])]
-    .filter((extraction) => {
-      const products = Array.isArray(extraction?.products) ? extraction.products : [];
-      const events = Array.isArray(extraction?.events) ? extraction.events : [];
-      const prices = Array.isArray(extraction?.prices) ? extraction.prices : [];
-      const concreteProducts = products
-        .map((product) => canonicalizeProductName(product?.name ?? ""))
-        .filter(productPhraseLooksSpecific)
-        .filter((name) => !looksLikeSiteChromeProductName(name));
-      const hasRelevantCategory = products.some((product) => ["pokemon", "kuji", "movie_bonus", "movie_goods"].includes(product?.category));
-      return concreteProducts.length > 0 || hasRelevantCategory || events.length > 0 || prices.length > 0;
-    })
-    .sort((a, b) => llmExtractionPriorityScore(b) - llmExtractionPriorityScore(a))
-    .slice(0, limit);
+  const retained = [...(extractions ?? [])].filter((extraction) => {
+    const mode = String(extraction?.mode ?? "heuristic");
+    if (mode !== "heuristic") return true;
+    const products = Array.isArray(extraction?.products) ? extraction.products : [];
+    const events = Array.isArray(extraction?.events) ? extraction.events : [];
+    const prices = Array.isArray(extraction?.prices) ? extraction.prices : [];
+    const concreteProducts = products
+      .map((product) => canonicalizeProductName(product?.name ?? ""))
+      .filter(productPhraseLooksSpecific)
+      .filter((name) => !looksLikeSiteChromeProductName(name));
+    const hasRelevantCategory = products.some((product) => ["pokemon", "kuji", "movie_bonus", "movie_goods"].includes(product?.category));
+    return concreteProducts.length > 0 || hasRelevantCategory || events.length > 0 || prices.length > 0;
+  });
+  const realLlm = retained
+    .filter((extraction) => String(extraction?.mode ?? "heuristic") !== "heuristic")
+    .sort((a, b) => llmExtractionPriorityScore(b) - llmExtractionPriorityScore(a));
+  const heuristic = retained
+    .filter((extraction) => String(extraction?.mode ?? "heuristic") === "heuristic")
+    .sort((a, b) => llmExtractionPriorityScore(b) - llmExtractionPriorityScore(a));
+  return [...realLlm, ...heuristic].slice(0, limit);
 }
 
 function enrichNormalizedProductsWithAi(snapshot, learningMap = new Map()) {
@@ -5243,8 +5538,10 @@ async function fetchSource(source) {
         "user-agent": "MarketLens/0.1 personal research collector",
       },
     });
-    const html = await response.text();
-    const text = stripHtml(html);
+    const body = await readResponseTextLimited(response);
+    const html = body.text;
+    const textPreview = html.length > sourceTextPreviewMaxChars ? html.slice(0, sourceTextPreviewMaxChars) : html;
+    const text = stripHtml(textPreview);
     return {
       id: source.id,
       ok: response.ok,
@@ -5254,6 +5551,10 @@ async function fetchSource(source) {
       title: html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.replace(/\s+/g, " ").trim() ?? "",
       text,
       keywordFound: source.keyword ? text.includes(source.keyword) : true,
+      fetchContentType: body.contentType,
+      fetchBytesRead: body.bytesRead,
+      fetchBodyTruncated: body.truncated,
+      fetchBodySkipped: body.skipped,
       fetchedAt: new Date().toISOString(),
     };
   } catch (error) {
@@ -5270,6 +5571,25 @@ async function fetchSource(source) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function fetchSourceWithHardTimeout(source) {
+  return measurePhase("fetchSource", { id: source.id, url: source.url }, () =>
+    withHardTimeout(
+      () => fetchSource(source),
+      sourceFetchHardTimeoutMs,
+      {
+        id: source.id,
+        ok: false,
+        status: "hard-timeout",
+        url: source.url,
+        title: "",
+        keywordFound: false,
+        error: `source_hard_timeout_${sourceFetchHardTimeoutMs}ms`,
+        fetchedAt: new Date().toISOString(),
+      },
+    ),
+  );
 }
 
 function makeSearchUrl(base, query) {
@@ -5404,12 +5724,12 @@ async function collectSpecializedCandidateMarkets(candidates) {
     for (const query of queries.slice(0, 2)) {
       const urls = [makeSearchUrl("https://snkrdunk.com/search?keyword=", query), ...makeMercariSoldLikeUrls(query)];
       for (const url of urls) {
-        const result = await fetchSource({ id: `market:${candidate.name}:${url}`, url });
+        const result = await fetchSourceWithHardTimeout({ id: `market:${candidate.name}:${url}`, url });
         if (result.ok && result.text) {
           pageBuckets.push({ url, text: result.text, fetchedAt: result.fetchedAt });
           const detailLinks = extractCandidateProductLinksFromSearchHtml(result.html, result.url || url);
           for (const detailUrl of detailLinks) {
-            const detailResult = await fetchSource({ id: `market-detail:${candidate.name}:${detailUrl}`, url: detailUrl });
+            const detailResult = await fetchSourceWithHardTimeout({ id: `market-detail:${candidate.name}:${detailUrl}`, url: detailUrl });
             if (detailResult.ok && detailResult.text) {
               pageBuckets.push({ url: detailUrl, text: detailResult.text, fetchedAt: detailResult.fetchedAt });
             }
@@ -5438,9 +5758,9 @@ async function collectSpecializedCandidateMarkets(candidates) {
         marketPrice,
         marketPriceLabel: `${candidate.name} 実売寄り相場 ${marketPrice.toLocaleString("ja-JP")}円`,
         marketPriceSource: `specialized-search(${extractedRows.length})/sold:${soldStrength.toFixed(2)}`,
-        marketPriceSourceRank: "observed_market_price",
-        marketPriceUsage: "buyline",
-        marketPriceBuyLineEligible: true,
+        marketPriceSourceRank: "specialized_estimate",
+        marketPriceUsage: "watch",
+        marketPriceBuyLineEligible: false,
         marketObservedAt: pageBuckets
           .map((item) => Date.parse(item.fetchedAt || ""))
           .filter((ts) => Number.isFinite(ts))
@@ -5718,7 +6038,7 @@ async function fetchUrlResults(urls, idPrefix, concurrency = routeCheckConcurren
     const batch = urls.slice(index, index + concurrency);
     const batchResults = await Promise.all(
       batch.map(async (url) => {
-        const result = await fetchSource({ id: `${idPrefix}:${url}`, url });
+        const result = await fetchSourceWithHardTimeout({ id: `${idPrefix}:${url}`, url });
         return [url, result];
       }),
     );
@@ -5729,19 +6049,101 @@ async function fetchUrlResults(urls, idPrefix, concurrency = routeCheckConcurren
   return results;
 }
 
+function candidateSourceReliabilityWeight(candidate) {
+  const raw = candidate?.sourceReliability;
+  if (Number.isFinite(raw)) return Number(raw);
+  const value = String(raw ?? "").toLowerCase();
+  if (value.includes("high") || value.includes("official") || value.includes("高")) return 3;
+  if (value.includes("medium") || value.includes("mid") || value.includes("中")) return 2;
+  if (value.includes("low") || value.includes("低")) return 1;
+  return 0;
+}
+
+function candidateRouteStatePriority(candidate) {
+  const state = String(candidate?.candidateState ?? deriveCandidateState(candidate).candidateState ?? "");
+  if (state === "ready") return 0;
+  if (state === "researchTask") return 1;
+  if (state === "watchOnly") return 2;
+  if (state === "archive") return 3;
+  return 4;
+}
+
+function compareCandidateRoutePriority(a, b) {
+  const aFreshCheck = candidateMarketFreshnessState(a?.routeCheckedAt) === "fresh";
+  const bFreshCheck = candidateMarketFreshnessState(b?.routeCheckedAt) === "fresh";
+  if (aFreshCheck !== bFreshCheck) return aFreshCheck ? 1 : -1;
+
+  const stateDiff = candidateRouteStatePriority(a) - candidateRouteStatePriority(b);
+  if (stateDiff !== 0) return stateDiff;
+
+  const aLottery = a?.sourceChannel === "lottery" ? 1 : 0;
+  const bLottery = b?.sourceChannel === "lottery" ? 1 : 0;
+  if (aLottery !== bLottery) return bLottery - aLottery;
+
+  const scoreDiff = Number(b?.genreScore ?? 0) - Number(a?.genreScore ?? 0);
+  if (scoreDiff !== 0) return scoreDiff;
+
+  const reliabilityDiff = candidateSourceReliabilityWeight(b) - candidateSourceReliabilityWeight(a);
+  if (reliabilityDiff !== 0) return reliabilityDiff;
+
+  return String(a?.name ?? "").localeCompare(String(b?.name ?? ""), "ja");
+}
+
+function selectCandidateRouteVerificationUrls(candidates, limit = candidateRouteVerificationLimit) {
+  const selected = [];
+  const seen = new Set();
+  const prioritized = [...(candidates ?? [])]
+    .filter((candidate) => candidateRouteIsUsable(candidateRouteTargetUrl(candidate)))
+    .sort(compareCandidateRoutePriority);
+
+  for (const candidate of prioritized) {
+    const targetUrl = candidateRouteTargetUrl(candidate);
+    if (!targetUrl || seen.has(targetUrl)) continue;
+    selected.push(targetUrl);
+    seen.add(targetUrl);
+    if (selected.length >= limit) break;
+  }
+  return selected;
+}
+
 async function verifyCandidateRouteTargets(candidates) {
-  const targetUrls = [
-    ...new Set(
-      candidates
-        .map((candidate) => candidateRouteTargetUrl(candidate))
-        .filter(Boolean),
-    ),
-  ];
-  const routeResults = await fetchUrlResults(targetUrls, "candidate-route");
+  return measurePhase("verifyCandidateRouteTargets", { note: `candidates:${candidates?.length ?? 0}` }, async () => {
+    const allTargetUrls = [
+      ...new Set(
+        candidates
+          .map((candidate) => candidateRouteTargetUrl(candidate))
+          .filter(Boolean),
+      ),
+    ];
+    const selectedTargetUrls = selectCandidateRouteVerificationUrls(candidates, candidateRouteVerificationLimit);
+    const selectedTargetUrlSet = new Set(selectedTargetUrls);
+    const routeResults = await fetchUrlResults(selectedTargetUrls, "candidate-route");
 
   const enrichedCandidates = candidates.map((candidate) => {
     const targetUrl = candidateRouteTargetUrl(candidate);
-    const verification = buildCandidateRouteVerification(candidate, targetUrl ? routeResults.get(targetUrl) : null);
+    const shouldVerify = Boolean(targetUrl) && selectedTargetUrlSet.has(targetUrl);
+    const shouldBuildStaticVerification = !targetUrl || !candidateRouteIsUsable(targetUrl);
+    let verification = null;
+
+    if (shouldVerify) {
+      verification = buildCandidateRouteVerification(candidate, routeResults.get(targetUrl) ?? null);
+    } else if (shouldBuildStaticVerification) {
+      verification = buildCandidateRouteVerification(candidate, null);
+    } else if (candidate?.routeVerification && typeof candidate.routeVerification === "object") {
+      verification = candidate.routeVerification;
+    } else {
+      verification = {
+        status: candidate?.routeCheckedAt ? (candidate?.routeAlive === false ? "review" : "verified") : "deferred",
+        alive: candidate?.routeAlive,
+        usable: candidate?.routeUsable !== false && candidateRouteIsUsable(targetUrl),
+        checkedAt: candidate?.routeCheckedAt ?? null,
+        sourceStatus: candidate?.routeStatus ?? "deferred",
+        finalUrl: candidate?.routeFinalUrl ?? targetUrl,
+        summary: candidate?.routeCheckedAt ? "既存確認を保持" : "優先度外のため未確認",
+        issues: candidate?.routeCheckedAt ? [] : ["route_verification_deferred"],
+      };
+    }
+
     return {
       ...candidate,
       routeAlive: verification.alive,
@@ -5758,7 +6160,16 @@ async function verifyCandidateRouteTargets(candidates) {
     return publicResult;
   });
 
-  return { candidates: enrichedCandidates, results: publicResults };
+    return {
+      candidates: enrichedCandidates,
+      results: publicResults,
+      summary: {
+        checkedRouteTargets: selectedTargetUrls.length,
+        totalRouteTargets: allTargetUrls.length,
+        verificationLimit: candidateRouteVerificationLimit,
+      },
+    };
+  });
 }
 
 function summarizeCandidateKpi(candidates) {
@@ -5825,7 +6236,7 @@ async function verifyPokemonRouteTargets(releases) {
       const baseUrl = route.url || route.applyUrl;
       if (!baseUrl) continue;
       if (!pageResults.has(baseUrl)) {
-        const pageResult = await fetchSource({ id: `route-page:${baseUrl}`, url: baseUrl });
+        const pageResult = await fetchSourceWithHardTimeout({ id: `route-page:${baseUrl}`, url: baseUrl });
         pageResults.set(baseUrl, pageResult);
       }
       const pageResult = pageResults.get(baseUrl);
@@ -5850,7 +6261,7 @@ async function verifyPokemonRouteTargets(releases) {
   ];
 
   for (const url of targetUrls) {
-    const result = await fetchSource({ id: `route:${url}`, url });
+    const result = await fetchSourceWithHardTimeout({ id: `route:${url}`, url });
     routeResults.set(url, result);
   }
 
@@ -5999,13 +6410,23 @@ function estimateCandidateMarketPrice(snapshot, historyRuns, candidate) {
   if (Number.isFinite(candidate.marketPrice)) {
     const marketPriceSource = candidate.marketPriceSource ?? "candidate";
     const marketPriceSourceRank = priceSourceRankFromSource(marketPriceSource, "market");
+    const fields = candidatePriceBuyLineFields({
+      rank: marketPriceSourceRank,
+      buyLineEligible: candidate.marketPriceBuyLineEligible ?? true,
+      currency: candidate.marketPriceCurrency,
+      sourceMode: candidate.marketPriceSourceMode,
+      promotionStatus: candidate.marketPricePromotionStatus,
+    });
     return {
       marketPrice: candidate.marketPrice,
       marketPriceLabel: candidate.marketPriceLabel ?? null,
       marketPriceSource,
       marketPriceSourceRank,
-      marketPriceUsage: priceSourceUsageFromRank(marketPriceSourceRank),
-      marketPriceBuyLineEligible: priceSourceUsageFromRank(marketPriceSourceRank) === "buyline",
+      marketPriceUsage: fields.usage,
+      marketPriceBuyLineEligible: fields.eligible,
+      marketPriceCurrency: candidate.marketPriceCurrency,
+      marketPriceSourceMode: candidate.marketPriceSourceMode,
+      marketPricePromotionStatus: candidate.marketPricePromotionStatus,
     };
   }
 
@@ -6074,13 +6495,23 @@ function estimateCandidateRetailPrice(snapshot, historyRuns, candidate) {
   if (Number.isFinite(candidate.retailPrice)) {
     const retailPriceSource = candidate.retailPriceSource ?? "candidate";
     const retailPriceSourceRank = priceSourceRankFromSource(retailPriceSource, "retail");
+    const fields = candidatePriceBuyLineFields({
+      rank: retailPriceSourceRank,
+      buyLineEligible: candidate.retailPriceBuyLineEligible ?? true,
+      currency: candidate.retailPriceCurrency,
+      sourceMode: candidate.retailPriceSourceMode,
+      promotionStatus: candidate.retailPricePromotionStatus,
+    });
     return {
       retailPrice: candidate.retailPrice,
       retailPriceLabel: candidate.retailPriceLabel ?? null,
       retailPriceSource,
       retailPriceSourceRank,
-      retailPriceUsage: priceSourceUsageFromRank(retailPriceSourceRank),
-      retailPriceBuyLineEligible: priceSourceUsageFromRank(retailPriceSourceRank) === "buyline",
+      retailPriceUsage: fields.usage,
+      retailPriceBuyLineEligible: fields.eligible,
+      retailPriceCurrency: candidate.retailPriceCurrency,
+      retailPriceSourceMode: candidate.retailPriceSourceMode,
+      retailPricePromotionStatus: candidate.retailPricePromotionStatus,
     };
   }
 
@@ -6304,28 +6735,35 @@ const mergeDiscoveredSourceIntoRegistry = (candidate) => {
   });
 };
 
-for (const rawSource of runtimeSources) {
-  const source = normalizeSeedSource(rawSource);
-  const existingRegistryEntry =
-    registryByKey.get(source.sourceKey) ??
-    buildRegistryEntry({
-      sourceKey: source.sourceKey,
-      lane: source.lane,
-      url: source.url,
-      canonicalUrl: source.url,
-      canonicalPath: tryParseUrl(source.url)?.pathname ?? "/",
-      host: String(tryParseUrl(source.url)?.hostname ?? "").replace(/^www\./, "").toLowerCase(),
-      status: source.seed ? "manual" : source.registryStatus ?? "candidate",
-      seed: source.seed,
-      priority: source.priority,
-      expansionPolicy: source.expansionPolicy,
-      followDomains: source.followDomains,
-      crawlBudget: source.crawlBudget,
-      keywordHint: source.keyword,
-      titleHint: source.keyword,
-      lastDecisionReason: source.seed ? "manual seed source" : "runtime source bootstrap",
-    });
-  const result = await fetchSource(source);
+for (let sourceIndex = 0; sourceIndex < runtimeSources.length; sourceIndex += sourceFetchConcurrency) {
+  const batchSources = runtimeSources.slice(sourceIndex, sourceIndex + sourceFetchConcurrency).map(normalizeSeedSource);
+  const batchResults = await Promise.all(
+    batchSources.map(async (source) => {
+      const existingRegistryEntry =
+        registryByKey.get(source.sourceKey) ??
+        buildRegistryEntry({
+          sourceKey: source.sourceKey,
+          lane: source.lane,
+          url: source.url,
+          canonicalUrl: source.url,
+          canonicalPath: tryParseUrl(source.url)?.pathname ?? "/",
+          host: String(tryParseUrl(source.url)?.hostname ?? "").replace(/^www\./, "").toLowerCase(),
+          status: source.seed ? "manual" : source.registryStatus ?? "candidate",
+          seed: source.seed,
+          priority: source.priority,
+          expansionPolicy: source.expansionPolicy,
+          followDomains: source.followDomains,
+          crawlBudget: source.crawlBudget,
+          keywordHint: source.keyword,
+          titleHint: source.keyword,
+          lastDecisionReason: source.seed ? "manual seed source" : "runtime source bootstrap",
+        });
+      const result = await fetchSourceWithHardTimeout(source);
+      return { source, existingRegistryEntry, result };
+    }),
+  );
+
+  for (const { source, existingRegistryEntry, result } of batchResults) {
   const { text, html, ...publicResult } = result;
 
   if (source.registryStatus === "trial") sourceDiscoveryResults.trialFetched += 1;
@@ -6481,6 +6919,7 @@ for (const rawSource of runtimeSources) {
   publicResult.extractedProductCount = generatedProductCount;
   publicResult.routeHitCount = lotteryCandidates.length;
   sourceResults.push(publicResult);
+  }
 }
 
 snapshot.documents = Array.from(new Map(snapshot.documents.map((document) => [document.docId, document])).values());
@@ -6574,7 +7013,10 @@ snapshot.archivedConcreteTrends = archivedConcrete;
 snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
   const support = computeHistorySupport(historyRuns, candidate.name);
   const estimated = estimateCandidateMarketPrice(snapshot, historyRuns, candidate);
-  const specialized = specializedMarketMap.get(candidate.name) ?? null;
+  const candidateEnded =
+    safeIsoDate(String(candidate.endDate ?? "").slice(0, 10)) &&
+    safeIsoDate(String(candidate.endDate ?? "").slice(0, 10)) < todayIsoDate();
+  const specialized = candidateEnded ? null : specializedMarketMap.get(candidate.name) ?? null;
   const retailEstimated = estimateCandidateRetailPrice(snapshot, historyRuns, candidate);
   const learning = yearlyLearningMap.get(normalizeSignalText(candidate.name)) ?? null;
   const channel = candidate.sourceChannel ?? detectSourceChannel({ trend: { type: candidate.trend, context: candidate.reason } }, candidate.sourceUrl);
@@ -6635,13 +7077,24 @@ snapshot.discoveryCandidates = snapshot.discoveryCandidates.map((candidate) => {
       estimated?.marketPriceBuyLineEligible ??
       candidate.marketPriceBuyLineEligible ??
       false,
+    marketPriceCurrency:
+      specialized?.marketPriceCurrency ?? estimated?.marketPriceCurrency ?? candidate.marketPriceCurrency ?? null,
+    marketPriceSourceMode:
+      specialized?.marketPriceSourceMode ?? estimated?.marketPriceSourceMode ?? candidate.marketPriceSourceMode ?? null,
+    marketPricePromotionStatus:
+      specialized?.marketPricePromotionStatus ?? estimated?.marketPricePromotionStatus ?? candidate.marketPricePromotionStatus ?? null,
     marketObservedAt: specialized?.marketObservedAt ?? candidate.marketObservedAt ?? null,
+    marketPriceEvidence:
+      specialized?.marketPriceEvidence ?? estimated?.marketPriceEvidence ?? candidate.marketPriceEvidence ?? null,
     retailPrice: retailEstimated?.retailPrice ?? candidate.retailPrice ?? null,
     retailPriceLabel: retailEstimated?.retailPriceLabel ?? candidate.retailPriceLabel ?? null,
     retailPriceSource: retailEstimated?.retailPriceSource ?? candidate.retailPriceSource ?? null,
     retailPriceSourceRank: retailEstimated?.retailPriceSourceRank ?? candidate.retailPriceSourceRank ?? null,
     retailPriceUsage: retailEstimated?.retailPriceUsage ?? candidate.retailPriceUsage ?? null,
     retailPriceBuyLineEligible: retailEstimated?.retailPriceBuyLineEligible ?? candidate.retailPriceBuyLineEligible ?? false,
+    retailPriceCurrency: retailEstimated?.retailPriceCurrency ?? candidate.retailPriceCurrency ?? null,
+    retailPriceSourceMode: retailEstimated?.retailPriceSourceMode ?? candidate.retailPriceSourceMode ?? null,
+    retailPricePromotionStatus: retailEstimated?.retailPricePromotionStatus ?? candidate.retailPricePromotionStatus ?? null,
     missingData: dedupMissing.join("、"),
     historyHits: support.hits,
     historyRecentHits: support.recentHits,
@@ -6676,6 +7129,7 @@ snapshot.discoveryCandidates = candidateRouteVerification.candidates.map((candid
   };
 });
 snapshot.candidateRouteVerificationResults = candidateRouteVerification.results;
+snapshot.candidateRouteVerificationSummary = candidateRouteVerification.summary;
 snapshot.normalizedProducts = buildNormalizedProducts(snapshot);
 snapshot.routeSnapshots = buildRouteSnapshots(snapshot);
 snapshot.priceSnapshots = buildPriceSnapshots(snapshot);
@@ -6760,6 +7214,7 @@ snapshot.metadata.verifiedCandidateRouteTargets = snapshot.candidateRouteVerific
 snapshot.metadata.totalCandidateRouteTargets = snapshot.candidateRouteVerificationResults.length;
 snapshot.metadata.candidateRouteFailures =
   snapshot.metadata.totalCandidateRouteTargets - snapshot.metadata.verifiedCandidateRouteTargets;
+snapshot.metadata.candidateRouteVerificationSummary = snapshot.candidateRouteVerificationSummary;
 snapshot.metadata.candidateKpi = candidateKpi;
 snapshot.metadata.documentCount = snapshot.documents.length;
 snapshot.metadata.normalizedProductCount = snapshot.normalizedProducts.length;
@@ -6824,6 +7279,11 @@ const marketplaceObservationResult = await collectMarketplaceObservationSignals(
 });
 snapshot.marketplaceObservationQueue = marketplaceObservationResult.marketplaceObservationQueue;
 snapshot.marketplaceSignals = marketplaceObservationResult.marketplaceSignals;
+const observedMarketPromotion = promoteObservedMarketPrices(snapshot);
+snapshot.priceSnapshots = observedMarketPromotion.priceSnapshots;
+const promotedCandidateApplication = applyPromotedMarketPricesToCandidates(snapshot);
+snapshot.discoveryCandidates = promotedCandidateApplication.discoveryCandidates;
+snapshot.selectionReasons = buildSelectionReasons(snapshot, yearlyLearningMap);
 
 const xReaderResult = await collectXReaderSocialSignals({
   rawArchiveDirUrl,
@@ -6850,6 +7310,8 @@ snapshot.metadata = {
     batchLimit: marketplaceBrowserObservationLimit,
     sharedBatchLimit: browserObservationLimit,
   },
+  observedMarketPromotion: observedMarketPromotion.summary,
+  promotedCandidateApplication: promotedCandidateApplication.summary,
   marketplaceSignalCount: snapshot.marketplaceSignals.length,
   socialSearchSignalCount: snapshot.socialSearchSignals.length,
   xObservationQueueSummary: xReaderResult.queueSummary,
@@ -6858,6 +7320,12 @@ snapshot.metadata = {
     queueLimit: xQueueLimit,
   },
 };
+snapshot.metadata.priceSnapshotCount = snapshot.priceSnapshots.length;
+snapshot.metadata.priceSourceRankCounts = snapshot.priceSnapshots.reduce((acc, price) => {
+  const rank = String(price.priceSourceRank ?? "missing");
+  acc[rank] = (acc[rank] ?? 0) + 1;
+  return acc;
+}, {});
 snapshot.metadata.llmExecution = summarizeLlmExecution(snapshot);
 const snapshotWriteGuard = evaluateSnapshotWriteProtection(snapshot, existingSnapshotOnDisk, { reachableSources: okCount });
 snapshot.metadata.collectGuard = {
@@ -6873,6 +7341,7 @@ snapshot.metadata.collectGuard = {
 
 if (!snapshotWriteGuard.allowWrite && existingSnapshotOnDisk) {
   await writeFile(partialOutputUrl, `${JSON.stringify(snapshot, null, 2)}\n`);
+  printPhaseTimingReport();
   console.log(
     `MarketLens partial snapshot written: ${okCount}/${sourceResults.length} sources reachable (preserved existing snapshot; reasons=${snapshotWriteGuard.reasons.join(",")})`,
   );
@@ -6891,5 +7360,6 @@ history.runs.push({
 await writeFile(historyUrl, `${JSON.stringify(history, null, 2)}\n`);
 await writeFile(publicHistoryUrl, `${JSON.stringify(buildPublicHistory(history.runs), null, 2)}\n`);
 
+printPhaseTimingReport();
 console.log(`MarketLens snapshot written: ${okCount}/${sourceResults.length} sources reachable`);
 process.exit(0);

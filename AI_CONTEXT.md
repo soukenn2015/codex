@@ -1,12 +1,74 @@
 # AI_CONTEXT — MarketLens 正本コンテキスト
 
-最終更新: 2026-06-10
+最終更新: 2026-06-21
 
 ## 目的
 
-MarketLens はホビー転売向けの情報収集・候補提示 UI です。  
-**新品購入価格は自動決定しない。** ユーザーは新品を公式・小売・ECで人間が判断し、MarketLens はフリマ・ヤフオク等の **出口価格候補**・需要・確認材料を提示します。  
-利益試算・参考ライン（内部名 BuyLine）・最終昇格は決定論ロジックが担い、LLM は抽出・分類・要約の補助に限定します。
+MarketLens はホビー転売向けの **AI ドリブン市場判断 UI** です。  
+新品購入価格は自動決定しません。ユーザーは新品を公式・小売・ECで人間が判断し、MarketLens はフリマ・ヤフオク等の **出口価格候補**・需要・確認材料・今見るべき順番を提示します。
+
+## 2026-06-21 時点の正本方針
+
+### 主役
+
+- 主役は **商品群**。個別商品・個別イベントは商品群の下にぶら下がる
+- 主役は **利益判断**。ただし未確定価格や AI 推定を確定利益として扱わない
+- 主役は **AI による統合判断**。ただし価格算術・BuyLine・保存昇格・安全境界は決定論で守る
+
+### 画面の基本思想
+
+- まず「今どの商品群を見るべきか」が一目で分かること
+- 抽選は **終了が重要**
+- 販売は **開始が重要**
+- 商品群の中に複数イベントがあってよく、1枚の代表時刻へ無理に潰さない
+- generic な急上昇タグや弱い理由文は使わない
+- 理由文は内部スコアの説明ではなく、市場文脈と今見るべき理由を出す
+
+### 情報源の優先順位
+
+1. 公式
+2. X / リプ / 引用 / 熱量
+3. ブログ / ニュース / その他記事
+
+- ブログやニュースは参考情報には使うが、価格推定では弱く扱う
+- X は注目度判断で強く使う
+- 商品同定が怪しい情報は、順位も理由も強くしない
+
+### AI と決定論の責務分離
+
+AI が主に担うもの:
+
+- 商品同定
+- 商品群への束ね
+- 抽選 / 販売 / 再販 / 受注などのイベント分類
+- 「今見るべき理由」の生成
+- X 熱量の読み取り
+- Tier 判定
+- 不確実性と反証の整理
+
+決定論が守るもの:
+
+- 利益計算
+- 手数料 / 送料 / BuyLine
+- `priceSnapshots` / `observed_market_price` / BuyLine への昇格可否
+- 公式優先や禁止ラベルなどの安全境界
+- confirmed / estimated の区別
+
+### 次の実装で固定する考え方
+
+- 商品群を正本単位にする
+- 各商品群に複数イベントを持たせる
+- AI を補助ではなく **判断エンジンの主役** に上げる
+- ただし価格の保存・昇格・利益計算は現行安全契約を維持する
+- 既存の 6レイヤー価格実装は壊さず、その上に商品群 + AI 判断を積む
+
+### 第1実装の土台（2026-06-21）
+
+- `scripts/marketlens-product-groups.mjs` に `marketlens.product-group.v1` と `marketlens.ai-judgment.v1` を導入
+- 商品群は複数商品・複数イベントを保持し、抽選は終了、販売系は開始を重要時刻として保持する
+- AI 判断は identity / grouping / events / Tier / reason / uncertainty を返し、価格・利益・BuyLine・promotion は契約上拒否する
+- 軽い抽出と強い同定を並行実行し、critic の不一致時は `HOLD` + human review へ落とす導線を追加
+- この段階では collector / postprocess / generated snapshot へ接続しない。価格正本と D6-B/C への影響を避けた独立土台とする
 
 ---
 
@@ -24,35 +86,34 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 - **細かい KPI**（signals 件数・通貨分布・queue pending 等）は、検証依頼・蓄積報告・障害調査時だけ出す
 - 最新 KPI の正本は `GROK_HANDOFF.md` と `node scripts/marketlens-status.mjs`
 
-### 8分類と現状（2026-06-09 時点）
+### 8分類と現状（2026-06-20 snapshot / 2026-06-21 audit 時点）
 
 | # | 大分類 | 進度 | 要点 |
 |---|--------|------|------|
-| 1 | **商品候補収集・正規化** | 運用中 | collector + postprocess。~700 products、regression 通過。ノイズフィルタ継続 |
-| 2 | **AI / Gemini 基盤** | 経路あり・未発火 | `gemini` provider 実装済み。`gemini_api_key_missing` で heuristic fallback。real 発火はキーあり環境待ち |
-| 3 | **SNS観測** | 基盤あり・未観測 | X Reader キュー構築済み。`socialSignals` 0。Yahoo リアルタイム `socialSearchSignals` 少数観測済み |
+| 1 | **商品候補収集・正規化** | 運用中 | collector + postprocess。current snapshot は `reachableSources=98` / `documents=816` / `normalizedProducts=503` |
+| 2 | **AI / Gemini 基盤** | **real 発火確認済み** | `gemini` provider で current-run 成功。`configured=true`、`actualModelUsed=["gemini-3.1-flash-lite"]`、overview / extraction とも成功 |
+| 3 | **SNS観測** | 基盤あり・部分観測 | X Reader キュー 278件 pending。Yahoo リアルタイム系は `socialSearchSignals=10`、current snapshot の `socialSignals` は 0 |
 | 4 | **フリマ確認導線** | 運用中 | `marketplaceResearchTargets` 400（検索 URL・BuyLine 未使用）。UI「フリマ確認対象」 |
-| 5 | **価格観測レイヤー** | **第1フェーズ完了** | Mercari `browser_observed_candidate` **50 signals / 381 listings** で一区切り。単純 cycle 追加は一時停止 |
-| 6 | **価格正本 / BuyLine** | **▶ 暫定着手** | 安全価格（`manual_price`）のみで暫定 BuyLine。Mercari / `jpyCandidate` は **BuyLine 対象外** |
-| 7 | **UI / ダッシュボード** | **価格表示整理済み** | 参考ライン / 定価（新品基準）/ 出口価格候補 / 判断補助対象外。相場断定語禁止。overview 価格思想同期済み（2026-06-10）。情報充足率/欠損管理（gaps「確認材料」D4表示 + D6-AでSNS/reader詳細を下部折りたたみへ整理）も同系列で進捗。 |
-| 8 | **引き継ぎ・運用** | 整備済み | `AI_CONTEXT.md` / `GROK_HANDOFF.md` / `WORKLOG.md`。固定 URL `http://localhost:8765/` |
+| 5 | **価格観測レイヤー** | 運用中 | Mercari `marketplaceSignals=15`、`listingCandidates=105`、JPY 84 / USD 21。低品質 query skip と stale/blocked 管理を継続 |
+| 6 | **価格正本 / BuyLine** | **本実装済み** | `observed_market_price=31` を正式保存。`buyLineEligibleSources={ manual_price:36, observed_market_price:31 }` |
+| 7 | **UI / ダッシュボード** | 表示整合済み | 参考ライン / 定価（新品基準）/ 出口価格候補 / 正式反映済み観測価格を分離表示。`http://127.0.0.1:18765/` で最終表示確認済み |
+| 8 | **引き継ぎ・運用** | 同期中 | `AI_CONTEXT.md` / `TASK.md` / `WORKLOG.md` を current snapshot に同期し、completion audit を残す |
 
-**現在の主作業:** **ロードマップ #3 価格観測レイヤー** — Mercari 隔離維持 + `jpyCandidate` 設計整理。BuyLine 暫定（#6）は運用中。Mercari 自動正本化は P2。詳細は `TASK.md`。
+**現在の主作業:** **6レイヤー + AI 完成監査**。実データ更新・Gemini real 発火・回帰通過・UI 表示確認は通っており、残りは current docs と証跡の同期です。詳細は `TASK.md`。
 
 ---
 
 ## Scope Map（作業スコープ）
 
-### 現在フォーカス（ロードマップ #3 — 価格観測レイヤー）
+### 現在フォーカス（6レイヤー + AI 完成監査）
 
 | 含む | 含まない |
 |------|----------|
-| Mercari `browser_observed_candidate` 隔離維持 | `priceSnapshots` への投影 |
-| `jpyCandidate` 保持設計（Playwright 由来） | `jpyCandidate` の snapshot 本書込 |
-| Playwright / Jina read-only probe | CAPTCHA 回避・ログイン突破 |
-| 生成側・表示側の禁止相場ラベル除去 | `observed_market_price` への昇格 |
-| regression R9–R14 + 生成側ゲート | BuyLine 入力ソース拡大 |
-| 関連価格ノイズ分類（probe 軽微改善） | 大量巡回・本番 browser cycle |
+| 昇格済み `observed_market_price` の品質維持 | raw `browser_observed_candidate` の直接昇格 |
+| `manual_price` + `observed_market_price` の BuyLine 接続 | USD-only / unknown / AI / heuristic の BuyLine 利用 |
+| low-quality query skip / outlier 除外 / ended specialized 剥離 | CAPTCHA 回避・ログイン突破 |
+| regression / UI / status の current snapshot 整合 | generated JSON の手編集 |
+| Gemini current-run 成功証跡の固定 | X Reader / Yahoo!フリマの次フェーズ拡張 |
 
 ### 価格観測レイヤー内の位置づけ（重要）
 
@@ -92,25 +153,29 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 | 作業内容 | 該当 # | 先に読む |
 |----------|--------|----------|
 | collector / ノイズ / 商品正規化 | 1 | `collect-marketlens.mjs`, `CODEX_MCP_RULES.md` |
-| Gemini 発火確認 | 2 | `gemini-smoke-test.mjs`, `CODEX_HANDOFF.md` |
+| Gemini 発火確認 | 2 | `gemini-smoke-test.mjs` |
 | X Reader 観測開始 | 3 | `marketlens-x-reader.mjs` |
 | targets 拡張・クエリ品質 | 4 | `marketlens-observation.mjs` |
 | Mercari 蓄積・通貨 | **5** | `marketlens-mercari-reader.mjs`, `GROK_HANDOFF.md` |
-| BuyLine / 価格昇格 | 6 | **現在未着手** — 明示依頼まで触らない |
+| BuyLine / 価格昇格 | 6 | **実装済み・品質継続中** — raw candidate 直接利用は禁止、昇格ゲート経由のみ |
 | UI バッジ・表示 | 7 | `script.js`, `ui-regression-check.mjs` |
 | ドキュメント・サーバー | 8 | 本ファイル, `WORKLOG.md` |
 
 ---
 
-## 正本ディレクトリと固定 URL
+## 現行 recovery tree と確認 URL
 
 | 項目 | 値 |
 |------|-----|
-| **正本（Documents）** | `/Users/user/Documents/Codex/2026-05-28/hobbyflip-ai-1-ai-2-box` |
-| **固定 URL** | **http://localhost:8765/** |
-| **起動コマンド** | `cd <正本> && python3 -m http.server 8765` |
+| **現行 recovery tree** | `/Users/user/Documents/Codex/2026-06-11/marketlens-recovery-v1` |
+| **確認 URL** | `http://127.0.0.1:18765/`（publish-public-share 後の確認先） |
+| **常設サーブ例** | `cd /Users/user/Documents/Codex/2026-06-11/marketlens-recovery-v1 && node scripts/serve-public-share.mjs` → `http://127.0.0.1:8765/` |
 
-補足: Grok/Cursor の worktree は開発用コピーです。最新スナップショット確認は worktree 上で `run-marketlens-cycle` を回した後、必要なら Documents 正本へ同期してください。worktree 単体確認は `http://127.0.0.1:8888/` など別ポートでも可。
+補足:
+
+- 旧 Documents worktree は historical evidence であり、recovery の正本ではない。
+- `http://127.0.0.1:18765/` は publish-public-share の HTTP check / UI 確認で使う現在の検証先。
+- `http://127.0.0.1:8765/` は `scripts/serve-public-share.mjs` を起動した時の固定サーバー。起動元が current repo であることを前提にする。
 
 ## 全体スコープ
 
@@ -126,8 +191,8 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 
 | レイヤー | データ | 役割 | 状態 |
 |----------|--------|------|------|
-| **X Reader** | `xObservationQueue`, `socialSignals` | X 投稿 URL 候補のキューイング・Jina Reader 取得 | キュー pending、reader 未観測（詳細は status） |
-| **Yahoo!リアルタイム** | `realtimeResearchTargets`, `socialSearchSignals` | Yahoo リアルタイム検索の browser 観測 | 少数観測済み（詳細は status） |
+| **X Reader** | `xObservationQueue`, `socialSignals` | X 投稿 URL 候補のキューイング・Jina Reader 取得 | キュー 278件 pending、reader 本観測は未着手 |
+| **Yahoo!リアルタイム** | `realtimeResearchTargets`, `socialSearchSignals` | Yahoo リアルタイム検索の browser 観測 | `socialSearchSignals=10`、`socialSignals` は current snapshot で 0 |
 | **marketplaceResearchTargets** | 400件（mercari/yahoo_fleamarket 各200） | フリマ確認リンク（検索 URL）。BuyLine 未使用 | 表示上限 15件 |
 | **marketplaceSignals** | 蓄積中 | メルカリ検索一覧の browser 観測結果 | `browser_observed_candidate`（**出口価格候補・正本ではない**） |
 | **listingCandidates** | 蓄積中 | 個別出品の参考価格（signal 内配列） | 件数・通貨は `GROK_HANDOFF.md` / status 参照 |
@@ -140,7 +205,7 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 | `historical_prediction` | 履歴予測 | 通常不可 |
 | `llm_mentioned_price` | LLM 言及価格 | 不可 |
 | `specialized_estimate` | 専用見積 | 状況依存 |
-| `observed_market_price` | 実測相場（昇格後） | 将来可・**現在未使用** |
+| `observed_market_price` | 昇格済み実測価格（Mercari JPY 実証済みのみ） | **可** |
 | **`browser_observed_candidate`** | **ブラウザ観測の出口価格候補（フリマ出口候補）** | **絶対不可** |
 
 ### BuyLine
@@ -151,10 +216,10 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 
 ## 絶対に守る安全契約
 
-1. **`browser_observed_candidate` を昇格しない**
-   - `priceSnapshots` に入れない
-   - `observed_market_price` に入れない
-   - BuyLine 計算に使わない
+1. **未昇格の `browser_observed_candidate` / `jpyCandidate` を直接昇格しない**
+   - `priceSnapshots` に raw candidate を入れない
+   - `observed_market_price` にする時は promotion gate を通す
+   - BuyLine 計算に raw candidate を使わない
 2. **listingCandidates 品質ゲート**
    - 必須: `title`, `itemUrl`, `value`, `rawPriceText`, `currency`, `priceParseConfidence`
    - `sourceMode=browser_observed`, `priceSourceRank=browser_observed_candidate`, `buyLineEligible=false`
@@ -193,6 +258,7 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 | `scripts/regression-check.mjs` | データ回帰（通貨・混入・ゲート） |
 | `scripts/ui-regression-check.mjs` | UI 回帰（ラベル・通貨表示） |
 | `scripts/gemini-smoke-test.mjs` | Gemini 疎通のみ（full crawl 不要） |
+| `MARKETLENS_REQUIRE_GEMINI=1 node scripts/regression-check-vnext.mjs` | current-run の Gemini extraction / overview 成功を必須検証 |
 
 ### 環境変数（観測関連・キーは読まない）
 
@@ -201,6 +267,8 @@ MarketLens 全体を **8分類** で把握する。引き継ぎ時・報告時�
 | `MARKETLENS_BROWSER_OBSERVATION_LIMIT` | 5 | 共有 browser バッチ上限 |
 | `MARKETLENS_MARKETPLACE_BROWSER_OBSERVATION_LIMIT` | 3 | メルカリ sub-limit / run |
 | `MARKETPLACE_BROWSER_OBSERVATION_TIMEOUT_MS` | 25000 | メルカリ fetch タイムアウト |
+
+Gemini 実発火のローカル設定は repo 内へ key を置かず、`~/.marketlens.env` を `bash scripts/with-marketlens-env.sh ...` で読む運用を推奨する。ひな形は `scripts/marketlens-env.example.sh`。現在のシェルに key が既にある場合は `npm run marketlens:env-save` で `~/.marketlens.env` を生成できる。
 
 ### 軽量観測コマンド（蓄積フェーズ推奨）
 
@@ -295,7 +363,7 @@ Mercari 軽量 cycle の `skipped` は **キュー全体の skipped 件数**（�
 | `failed=0` + delta 0 | **効率低下** | 取得失敗ではない。skipped / 重複統合 / blocked プール当たり |
 | `failed>0` または `collectGuard.degraded=true` | **調査対象** | cycle 継続より原因切り分けを優先 |
 
-**キュー概況（50/381 時点の目安）:** pending ~234 / observed ~36 / skipped ~11（permanent_blocked + permanent_login_required）/ stale ~14
+**キュー概況（2026-06-20 snapshot 時点の目安）:** marketplace pending 315 / observed 10 / skipped 21 / stale 4、realtime pending 327 / skipped 12、X pending 278
 
 **監視:** `node scripts/marketlens-status.mjs` の `marketplaceObservationQueueSkippedByReason` で permanent 系を区別可能。
 
@@ -309,8 +377,8 @@ Mercari 軽量 cycle の `skipped` は **キュー全体の skipped 件数**（�
 |------|--------|
 | 蓄積先 | `marketplaceSignals` / `listingCandidates` / `jpyCandidate` のみ |
 | `priceSnapshots` | **入れない** |
-| `observed_market_price` | **昇格しない** |
-| BuyLine / 参考ライン | **使わない**（`buyLineEligible=false` 維持） |
+| `observed_market_price` | **raw candidate から直接は昇格しない** |
+| BuyLine / 参考ライン | **raw candidate では使わない**（昇格済みのみ可） |
 | UI ラベル | 「出口価格候補」「フリマ出口候補」「判断補助対象外」 |
 | 禁止 UI | 相場 / 実勢価格 / メルカリ相場 / フリマ相場 / 観測相場 / 市場価格 |
 | SNS 断定 | Xでバズ / SNS急上昇 / X話題 と断定しない |
@@ -323,18 +391,19 @@ Mercari 軽量 cycle の `skipped` は **キュー全体の skipped 件数**（�
 
 ## 大分類 6（価格正本 / BuyLine）
 
-### 暫定 BuyLine（着手済み・2026-06-09）
+### 現在の正式仕様（2026-06-19）
 
-- **使う:** `manual_price` / 将来 `confirmed_price`（deals / releases / 手動正本）
-- **使わない:** `browser_observed_candidate` / `jpyCandidate` / Jina US$ / unknown / AI / heuristic / Playwright probe
-- **未算出:** 安全価格がない場合 `buyLineStatus: "unavailable"`
-- **実装:** `scripts/marketlens-buyline.mjs` + `script.js` + `regression-check.mjs`
+- **使う:** `manual_price` / `confirmed_price`（将来互換） / 昇格済み `observed_market_price`
+- **使わない:** `browser_observed_candidate` / 未昇格 `jpyCandidate` / USD-only / unknown / AI / heuristic
+- **昇格条件:** JPY 実証、`on_sale`、fresh、traceable `itemUrl`、confidence threshold、identity match、outlier 除外
+- **未算出:** 許可ソースが無い場合 `buyLineStatus: "unavailable"`
+- **実装:** `scripts/marketlens-buyline.mjs`、`scripts/collect-marketlens.mjs`、`scripts/postprocess-marketlens-snapshot.mjs`、`script.js`
 
-### Mercari 自動正本化（まだ進めない — P2）
+### AI の現状
 
-観測候補の正本投影・Mercari 価格での BuyLine 反映は、JPY 安定取得・PM 合意・専用 regression 後まで **実施しない**。
-
-**P1 / P2:** 残 **P1 なし**。Mercari 自動正本化は **P2**。暫定 BuyLine（安全価格限定）は **着手可**。
+- `gemini` provider 経路は実装済み
+- current-run は Gemini real 発火成功。extraction / overview とも `gemini-3.1-flash-lite` で成功
+- `llmExecution.configured=true` / `actualModelUsed=["gemini-3.1-flash-lite"]` を current snapshot / status の両方で確認済み
 
 ---
 
@@ -353,14 +422,14 @@ Mercari 軽量 cycle の `skipped` は **キュー全体の skipped 件数**（�
 
 ## 次フェーズ方針
 
-### 今やる（効率順ロードマップ 3）
+### 今やる
 
-1. **価格観測レイヤー** — Mercari 参考候補隔離維持 + jpyCandidate / Playwright 改善
-2. **フリマ確認導線** — 人間確認と少量 Playwright の接続
-3. Mercari 観測レイヤー改善（参考候補隔離維持）
-4. 混入ゼロ再確認（regression / localhost / status）
+1. **価格正本 / BuyLine 品質固め** — promotion gate と current snapshot 整合維持
+2. **AI / Gemini** — current-run real 発火の証跡維持
+3. **観測レイヤー改善** — browser fallback 成功率と query 品質の継続改善
+4. **混入ゼロ再確認** — regression / localhost / status
 
-### 一時停止（第1蓄積完了まで実施済み）
+### 一時停止
 
 - Mercari 軽量 cycle の単純追加（50 signals 到達済み）
 - `recheck_unknown_currency` — 現状 0件残
@@ -369,9 +438,8 @@ Mercari 軽量 cycle の `skipped` は **キュー全体の skipped 件数**（�
 
 - Yahoo!フリマ価格読み取り
 - 個別商品ページ深掘り / `soldCandidates`
-- `observed_market_price` 昇格 / `priceSnapshots` 投影 / BuyLine 反映
 - AI `resaleThesis` / UI 大改造
-- real Gemini full verification（キーあり環境が必要）
+- real Gemini full verification の再設計（現 milestone では完了済み）
 
 ## 関連ドキュメント
 
