@@ -71,6 +71,15 @@ async function main() {
     );
   }
 
+  const publicHistory = JSON.parse(await readFile(publicHistoryPath, "utf8"));
+  assert(Array.isArray(publicHistory.runs) && publicHistory.runs.length > 0, "public-history.runs がありません");
+  const lastPublicRun = publicHistory.runs.at(-1);
+  assert(lastPublicRun?.snapshot, "public-history.lastRun.snapshot がありません");
+  assert(
+    JSON.stringify(lastPublicRun.overviewNarrative ?? null) === JSON.stringify(lastPublicRun.snapshot.overviewNarrative ?? null),
+    "public-history の overviewNarrative が snapshot と一致しません",
+  );
+
   const raw = await readFile(snapshotPath, "utf8");
   const snapshot = JSON.parse(raw);
 
@@ -83,6 +92,7 @@ async function main() {
   const candidates = Array.isArray(snapshot.discoveryCandidates) ? snapshot.discoveryCandidates : [];
   const trendPool = Array.isArray(snapshot.trendCollectionPool) ? snapshot.trendCollectionPool : [];
   const archivedConcrete = Array.isArray(snapshot.archivedConcreteTrends) ? snapshot.archivedConcreteTrends : [];
+  const productGroups = Array.isArray(snapshot.productGroups) ? snapshot.productGroups : [];
 
   for (const trend of trends) {
     assert(trend.keyword, "trend.keyword が空です");
@@ -110,8 +120,24 @@ async function main() {
     assert(archived.reason, "archivedConcrete.reason が空です");
   }
 
+  assert(Number.isInteger(snapshot.metadata.productGroupCount ?? 0), "metadata.productGroupCount が不正です");
+  assert((snapshot.metadata.productGroupCount ?? 0) === productGroups.length, "metadata.productGroupCount が productGroups と一致しません");
+  assert(Number.isInteger(snapshot.metadata.productGroupBuildErrorCount ?? 0), "metadata.productGroupBuildErrorCount が不正です");
+  assert((snapshot.metadata.productGroupBuildErrorCount ?? 0) === 0, "product group build errors が残っています");
+  assert(Array.isArray(snapshot.metadata.productGroupBuildErrors), "metadata.productGroupBuildErrors が配列ではありません");
+  assert((snapshot.metadata.productGroupBuildErrors ?? []).length === (snapshot.metadata.productGroupBuildErrorCount ?? 0), "productGroupBuildErrors の件数が一致しません");
+  for (const group of productGroups) {
+    assert(group.groupId, "productGroups.groupId が空です");
+    assert(group.schemaVersion === "marketlens.product-group.v1", `productGroups.schemaVersion が不正です: ${group.groupId}`);
+    assert(group.judgment?.contractVersion === "marketlens.ai-judgment.v1", `productGroups judgment contract が不正です: ${group.groupId}`);
+    assert(Array.isArray(group.members) && group.members.length > 0, `productGroups.members が空です: ${group.groupId}`);
+    if (group.requiresHumanReview) {
+      assert(group.judgment?.tier?.value === "HOLD", `requiresHumanReview group が HOLD ではありません: ${group.groupId}`);
+    }
+  }
+
   console.log(
-    `Regression checks passed: trends=${trends.length}, candidates=${candidates.length}, trendPool=${trendPool.length}, archived=${archivedConcrete.length}`,
+    `Regression checks passed: trends=${trends.length}, candidates=${candidates.length}, groups=${productGroups.length}, trendPool=${trendPool.length}, archived=${archivedConcrete.length}`,
   );
 }
 

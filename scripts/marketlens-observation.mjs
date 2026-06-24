@@ -69,6 +69,14 @@ export function truncateUnicodeText(value, maxChars) {
   return chars.slice(0, maxChars).join("");
 }
 
+export function stringifyWellFormedJson(value, space = 0) {
+  return JSON.stringify(
+    value,
+    (_key, child) => (typeof child === "string" ? toWellFormedText(child) : child),
+    space,
+  );
+}
+
 function compactText(value) {
   return toWellFormedText(value).replace(/\s+/g, " ").trim();
 }
@@ -961,9 +969,13 @@ export function normalizeSocialSearchSignal(row = {}) {
     sampleTexts,
     samples,
     resultCountApprox: Number.isFinite(Number(row.resultCountApprox)) ? Number(row.resultCountApprox) : null,
-    sourceMode: row.sourceMode === "browser_observed" ? "browser_observed" : "browser_observed",
+    sourceMode: row.sourceMode === "buzz_discovery"
+      ? "buzz_discovery"
+      : row.sourceMode === "browser_observed"
+        ? "browser_observed"
+        : "browser_observed",
     confidence: Math.min(1, Math.max(0, Number(row.confidence ?? 0))),
-    buzzEligible: false,
+    buzzEligible: row.buzzEligible === true,
     parseWarnings: Array.isArray(row.parseWarnings) ? row.parseWarnings : [],
     observationStatus: compactText(row.observationStatus ?? "succeeded") || "succeeded",
   };

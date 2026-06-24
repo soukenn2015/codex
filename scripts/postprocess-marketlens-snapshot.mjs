@@ -9,7 +9,9 @@ import {
   applyReaderObservedLabels,
   sanitizeClaimText,
   sanitizeSnapshotClaims,
+  stringifyWellFormedJson,
 } from "./marketlens-observation.mjs";
+import { buildProductGroupsFromSnapshot } from "./marketlens-product-groups.mjs";
 import { buildXObservationQueue } from "./marketlens-x-reader.mjs";
 import { resolveObservationLimits, resolveXQueueLimit } from "./marketlens-limits.mjs";
 import {
@@ -18,6 +20,8 @@ import {
   promoteObservedMarketPrices,
   resolveProvisionalBuyLinePriceFields,
 } from "./marketlens-buyline.mjs";
+import { computeBuzzHeatScore } from "./marketlens-shared.mjs";
+import { collectYahooFurimaSignals } from "./marketlens-yahoo-furima-reader.mjs";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 const historyPath = new URL("../data/marketlens.history.json", import.meta.url);
@@ -25,7 +29,6 @@ const publicHistoryPath = new URL("../data/marketlens.public-history.json", impo
 const requestedLlmProvider = String(process.env.MARKETLENS_AI_PROVIDER ?? "gemini")
   .trim()
   .toLowerCase();
-const openAiApiKey = process.env.OPENAI_API_KEY ?? "";
 const geminiApiKey = process.env.GEMINI_API_KEY ?? "";
 const minSnapshotReachableSources = Number(process.env.MARKETLENS_MIN_REACHABLE_SOURCES ?? 1);
 const minSnapshotDocumentCount = Number(process.env.MARKETLENS_MIN_DOCUMENTS ?? 100);
@@ -52,22 +55,19 @@ const PRODUCT_SIGNAL_WORD =
 
 function normalizeLlmProvider(value) {
   const provider = String(value ?? "").trim().toLowerCase();
-  if (provider === "gemini") return "gemini";
   if (provider === "heuristic") return "heuristic";
-  return "openai";
+  return "gemini";
 }
 
 const configuredLlmProvider = normalizeLlmProvider(requestedLlmProvider);
 
 function llmProviderConfigured(provider = configuredLlmProvider) {
   if (provider === "gemini") return Boolean(geminiApiKey);
-  if (provider === "openai") return Boolean(openAiApiKey);
   return false;
 }
 
 function llmProviderMissingReason(provider = configuredLlmProvider) {
   if (provider === "gemini") return "gemini_api_key_missing";
-  if (provider === "openai") return "openai_api_key_missing";
   return "provider_forced_heuristic";
 }
 
@@ -122,7 +122,7 @@ function buildLlmExecutionMetadata({
   let overviewSucceeded = numberOr(previousOverview.succeeded);
   let overviewFailed = numberOr(previousOverview.failed);
   if (previousOverview.requested === undefined && previousOverview.succeeded === undefined && previousOverview.failed === undefined) {
-    if (["openai", "gemini"].includes(overviewNarrative.sourceMode) && overviewIsCurrentRun) {
+    if (overviewNarrative.sourceMode === "gemini" && overviewIsCurrentRun) {
       overviewRequested = 1;
       if (overviewNarrative.error || inferredOverviewFallbackReason) {
         overviewSucceeded = 0;
@@ -144,13 +144,10 @@ function buildLlmExecutionMetadata({
     error: overviewNarrative.error ?? previousOverview.error ?? null,
     isCurrentRun: previousOverview.isCurrentRun ?? overviewIsCurrentRun,
   };
-  const configuredFromModes =
-    (modeCounts.openai ?? 0) > 0 ||
-    (modeCounts.gemini ?? 0) > 0 ||
-    ["openai", "gemini"].includes(overview.sourceMode);
+  const configuredFromModes = (modeCounts.gemini ?? 0) > 0 || overview.sourceMode === "gemini";
   return {
     configured: llmProviderConfigured() || Boolean(previousLlmExecution.configured) || configuredFromModes,
-    provider: previousLlmExecution.provider || configuredLlmProvider,
+    provider: configuredLlmProvider,
     model:
       previousLlmExecution.model ||
       (configuredLlmProvider === "gemini"
@@ -162,7 +159,7 @@ function buildLlmExecutionMetadata({
     actualModelUsed: Array.isArray(previousLlmExecution.actualModelUsed) ? previousLlmExecution.actualModelUsed : [],
     extraction,
     overview,
-    openAiCount: modeCounts.openai ?? 0,
+    openAiCount: 0,
     geminiCount: modeCounts.gemini ?? 0,
     heuristicCount: modeCounts.heuristic ?? 0,
     modeCounts,
@@ -357,7 +354,8 @@ function looksLikeMovieBonusContext(title = "", text = "", url = "") {
 }
 
 function canonicalizeProductName(name) {
-  let normalized = String(name ?? "").replace(/\s+/g, " ").trim();
+  const raw = String(name ?? "");
+  let normalized = (typeof raw.toWellFormed === "function" ? raw.toWellFormed() : raw).replace(/\s+/g, " ").trim();
   for (const [pattern, replacement] of PRODUCT_ALIAS_RULES) {
     normalized = normalized.replace(pattern, replacement);
   }
@@ -411,9 +409,22 @@ function looksLikeRetailListingSnippet(name) {
   return false;
 }
 
+function looksLikeAccountSignalProductName(name) {
+  const text = String(name ?? "").replace(/\s+/g, " ").trim();
+  if (!text) return true;
+  if (/^[@＠]/.test(text)) return true;
+  if (/@\w{2,}/.test(text)) return true;
+  if (/\(@[\w_]+\)|（@[\w_]+）/.test(text)) return true;
+  if (/抽選・再販速報|抽選・再販まとめ|速報（@|まとめ（@/i.test(text)) return true;
+  if (/^(?:ポケカ|ワンピ|ガンプラ|フィギュア)(?:抽選|再販|品薄)?(?:速報|まとめ)/i.test(text)) return true;
+  return false;
+}
+
 function looksLikeSiteChromeProductName(name) {
   const text = String(name ?? "").replace(/\s+/g, " ").trim();
   if (!text) return true;
+  if (looksLikeAccountSignalProductName(text)) return true;
+  if (/�|&(?:amp|ndash|quot|lt|gt);|<\/?[a-z][^>]*>|(?:window\.)?ShopifyAnalytics|document\.getElementById|HeaderDrawer|class\s*=|コンテンツに進む/i.test(text)) return true;
   if (/^(店舗検索|商品検索|キャラクター一覧|ブランド一覧|発売時期|発売済|すべて|ラインナップ)$/i.test(text)) return true;
   if (/^(ポケモンカードゲーム公式ホームページ\s*商品情報|ポケモンカードチャンネル|公式facebook|公式チャンネル)$/i.test(text)) return true;
   if (/ポケモンカードゲーム公式ホーム$|公式ホームページ?$|公式ホーム$/u.test(text)) return true;
@@ -1089,6 +1100,35 @@ function sanitizeExtraction(extraction) {
   const prices = (extraction.prices ?? [])
     .map((price) => ({ ...price, productName: canonicalizeProductName(price.productName) }))
     .filter((price) => validKeys.has(normalizeProductKey(price.productName)));
+  const groupJudgments = (Array.isArray(extraction.groupJudgments) ? extraction.groupJudgments : [])
+    .map((judgment) => {
+      const memberProductNames = [...new Set(
+        (Array.isArray(judgment?.memberProductNames) ? judgment.memberProductNames : [])
+          .map((name) => canonicalizeProductName(name))
+          .filter((name) => validKeys.has(normalizeProductKey(name))),
+      )];
+      const canonicalName = canonicalizeProductName(judgment?.canonicalName ?? memberProductNames[0] ?? "");
+      if (!canonicalName || memberProductNames.length === 0) return null;
+      const tier = ["T1", "T2", "T3", "HOLD"].includes(judgment?.tier) ? judgment.tier : "HOLD";
+      const requiresHumanReview = Boolean(judgment?.requiresHumanReview || tier === "HOLD");
+      return {
+        canonicalName,
+        memberProductNames,
+        identityConfidence: Math.max(0, Math.min(1, Number(judgment?.identityConfidence ?? 0.5))),
+        tier: requiresHumanReview ? "HOLD" : tier,
+        tierConfidence: Math.max(0, Math.min(1, Number(judgment?.tierConfidence ?? 0.5))),
+        reasonHeadline: cleanupReasonText(judgment?.reasonHeadline ?? "商品群の確認が必要"),
+        whyNow: cleanupReasonText(judgment?.whyNow ?? "公式情報とイベント時刻を確認します。"),
+        uncertaintyLevel: ["low", "medium", "high"].includes(judgment?.uncertaintyLevel) ? judgment.uncertaintyLevel : "high",
+        uncertaintyIssues: [...new Set((Array.isArray(judgment?.uncertaintyIssues) ? judgment.uncertaintyIssues : []).map(String).filter(Boolean))].slice(0, 12),
+        counterEvidenceNotes: [...new Set((Array.isArray(judgment?.counterEvidenceNotes) ? judgment.counterEvidenceNotes : []).map(String).filter(Boolean))].slice(0, 8),
+        attentionLevel: ["high", "medium", "low", "unknown"].includes(judgment?.attentionLevel) ? judgment.attentionLevel : "unknown",
+        attentionRationale: cleanupReasonText(judgment?.attentionRationale ?? "X反応は未確認"),
+        requiresHumanReview,
+      };
+    })
+    .filter(Boolean)
+    .slice(0, 10);
   if (products.length === 0 && events.length === 0 && prices.length === 0) return null;
   const category = products.find((product) => ["movie_bonus", "movie_goods", "kuji", "pokemon"].includes(product.category))?.category ?? "";
   const fallbackReason =
@@ -1099,6 +1139,7 @@ function sanitizeExtraction(extraction) {
     products,
     events,
     prices,
+    groupJudgments,
     geminiEligible: Boolean(extraction.geminiEligible ?? extraction.mode === "gemini"),
     geminiEligibilityReason: fallbackReason,
   };
@@ -1114,7 +1155,7 @@ function extractionPriorityScore(extraction) {
     .filter(productPhraseLooksSpecific)
     .filter((name) => !looksLikeSiteChromeProductName(name));
   const categoryBoost = products.some((product) => ["pokemon", "kuji", "movie_bonus", "movie_goods"].includes(product?.category)) ? 6 : 0;
-  return (mode === "gemini" ? 20 : mode === "openai" ? 18 : 6) + concreteProducts.length * 4 + events.length * 2 + prices.length + categoryBoost;
+  return (mode === "gemini" ? 20 : 6) + concreteProducts.length * 4 + events.length * 2 + prices.length + categoryBoost;
 }
 
 function pruneExtractions(extractions, limit = 20) {
@@ -1181,6 +1222,7 @@ snapshot.priceSnapshots = Array.isArray(snapshot.priceSnapshots) ? snapshot.pric
 snapshot.predictedPriceSnapshots = Array.isArray(snapshot.predictedPriceSnapshots) ? snapshot.predictedPriceSnapshots : [];
 snapshot.marketplaceSignals = Array.isArray(snapshot.marketplaceSignals) ? snapshot.marketplaceSignals : [];
 snapshot.selectionReasons = Array.isArray(snapshot.selectionReasons) ? snapshot.selectionReasons : [];
+snapshot.productGroups = Array.isArray(snapshot.productGroups) ? snapshot.productGroups : [];
 
 snapshot.normalizedProducts = bootstrapNormalizedProducts(snapshot)
   .map((product) => ({
@@ -1324,6 +1366,10 @@ snapshot.selectionReasons = (snapshot.selectionReasons ?? [])
   .map((reason) => rewriteSelectionReason(reason, validProducts.get(normalizeProductKey(reason.productName))))
   .filter((reason) => keepProductKey(reason.productName));
 
+snapshot.productGroups = await buildProductGroupsFromSnapshot(snapshot);
+snapshot.metadata.productGroupBuildErrorCount = snapshot.productGroups.buildErrors?.length ?? 0;
+snapshot.metadata.productGroupBuildErrors = snapshot.productGroups.buildErrors ?? [];
+
 snapshot.productLearning = (snapshot.productLearning ?? [])
   .map((item) => ({
     ...item,
@@ -1353,6 +1399,33 @@ snapshot.metadata.predictedPriceSnapshotCount = snapshot.predictedPriceSnapshots
 snapshot.metadata.historicalComparableCount = snapshot.historicalComparables.length;
 snapshot.metadata.llmExtractionCount = snapshot.llmExtractions.length;
 snapshot.metadata.selectionReasonCount = snapshot.selectionReasons.length;
+snapshot.metadata.productGroupCount = snapshot.productGroups.length;
+snapshot.metadata.productGroupHumanReviewCount = snapshot.productGroups.filter((group) => group.requiresHumanReview).length;
+snapshot.metadata.productGroupCoveredProductCount = new Set(
+  snapshot.productGroups.flatMap((group) => (group.members ?? []).map((member) => member.productKey)),
+).size;
+snapshot.metadata.productGroupCoverageRatio = snapshot.normalizedProducts.length > 0
+  ? snapshot.metadata.productGroupCoveredProductCount / snapshot.normalizedProducts.length
+  : 1;
+snapshot.metadata.productGroupPendingAiCount = snapshot.productGroups.filter((group) => group.sourceMode === "deterministic_pending").length;
+snapshot.metadata.productGroupPromotedCount = snapshot.productGroups.filter((group) => !group.requiresHumanReview).length;
+snapshot.metadata.productGroupTierCounts = snapshot.productGroups.reduce((acc, group) => {
+  const tier = String(group.judgment?.tier?.value ?? "missing");
+  acc[tier] = (acc[tier] ?? 0) + 1;
+  return acc;
+}, {});
+snapshot.metadata.productGroupSourceModeCounts = snapshot.productGroups.reduce((acc, group) => {
+  const mode = String(group.sourceMode ?? "missing");
+  acc[mode] = (acc[mode] ?? 0) + 1;
+  return acc;
+}, {});
+snapshot.metadata.productGroupEvidenceKindCounts = snapshot.productGroups
+  .flatMap((group) => group.evidence ?? [])
+  .reduce((acc, item) => {
+    const key = String(item.kind ?? "unverified");
+    acc[key] = (acc[key] ?? 0) + 1;
+    return acc;
+  }, {});
 snapshot.metadata.aiThesisCount = snapshot.normalizedProducts.filter((product) => product.aiThesis?.whyHot).length;
 snapshot.metadata.priceThesisCount = snapshot.normalizedProducts.filter((product) => product.priceThesis?.estimatedMarketPrice).length;
 snapshot.metadata.aiThesisSourceModeCounts = (snapshot.normalizedProducts ?? []).reduce((acc, product) => {
@@ -1482,10 +1555,60 @@ snapshot.metadata = {
 snapshot = applyMarketplaceResearchToSnapshot(snapshot, {
   maxSubjects: observationLimits.marketplaceSubjectLimit,
 });
+
+const furimaSignals = await collectYahooFurimaSignals(snapshot, { limit: 5 });
+if (furimaSignals.length) {
+  snapshot.marketplaceSignals = [...(snapshot.marketplaceSignals ?? []), ...furimaSignals];
+}
+
+for (const signal of snapshot.socialSearchSignals ?? []) {
+  if (!signal.buzzEligible) continue;
+  const heat = Number(signal.maxHeatScore ?? 0) || Math.max(...(signal.samples ?? []).map((s) => s.heatScore ?? computeBuzzHeatScore(s)), 0);
+  if (heat < 100 && (signal.samples?.length ?? 0) < 2) continue;
+  const sampleText = compactText((signal.samples ?? [])[0]?.text ?? signal.sampleTexts?.[0] ?? signal.productName ?? "");
+  if (sampleText.length < 8) continue;
+  const exists = (snapshot.discoveryCandidates ?? []).some((c) => compactText(c.name) === sampleText.slice(0, 90));
+  if (exists) continue;
+  snapshot.discoveryCandidates = snapshot.discoveryCandidates ?? [];
+  const observedAt = signal.observedAt ?? new Date().toISOString();
+  const startDate = safeIsoDate(observedAt) || todayIsoDate();
+  const endDate = addDaysToIsoDate(startDate, 14) || startDate;
+  snapshot.discoveryCandidates.push({
+    name: sampleText.slice(0, 90),
+    sourceMode: "buzz_discovery",
+    buzzHeat: heat,
+    observedAt,
+    startDate,
+    endDate,
+  });
+}
+
 snapshot = applyReaderObservedLabels(snapshot);
 snapshot = sanitizeSnapshotClaims(snapshot);
 
-await writeFile(snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`);
+// discoveryCandidates の日付を保証（regression-check 契約）
+snapshot.discoveryCandidates = (snapshot.discoveryCandidates ?? []).map((candidate) => {
+  const startDate = safeIsoDate(candidate.startDate) || safeIsoDate(candidate.observedAt) || safeIsoDate(candidate.firstSeenAt) || todayIsoDate();
+  const endDate = safeIsoDate(candidate.endDate) || addDaysToIsoDate(startDate, 45) || startDate;
+  return { ...candidate, startDate, endDate };
+});
+
+// UI 用に軽量 snapshot を生成（フル snapshot の閲覧に必要なフィールドのみ）
+const uiSnapshotPath = new URL("../data/marketlens.ui-snapshot.json", import.meta.url);
+const uiSnapshot = {
+  metadata: snapshot.metadata,
+  productGroups: snapshot.productGroups,
+  priceSnapshots: snapshot.priceSnapshots,
+  marketplaceSignals: snapshot.marketplaceSignals,
+  curatorMentions: snapshot.curatorMentions,
+  socialSearchSignals: snapshot.socialSearchSignals,
+  priceTrendAlerts: snapshot.priceTrendAlerts,
+  overviewNarrative: snapshot.overviewNarrative,
+  buzzDiscovery: snapshot.buzzDiscovery,
+};
+await writeFile(uiSnapshotPath, `${stringifyWellFormedJson(uiSnapshot, 2)}\n`, "utf8");
+
+await writeFile(snapshotPath, `${stringifyWellFormedJson(snapshot, 2)}\n`);
 
 const history = JSON.parse(await readFile(historyPath, "utf8"));
 if (Array.isArray(history.runs) && history.runs.length > 0) {
@@ -1495,16 +1618,23 @@ if (Array.isArray(history.runs) && history.runs.length > 0) {
     lastRun.snapshot.normalizedProducts = snapshot.normalizedProducts.slice(0, 120);
     lastRun.snapshot.productEvents = snapshot.productEvents.slice(0, 180);
     lastRun.snapshot.selectionReasons = snapshot.selectionReasons.slice(0, 120);
+    lastRun.snapshot.productGroups = snapshot.productGroups.slice(0, 80);
   }
 }
-await writeFile(historyPath, `${JSON.stringify(history, null, 2)}\n`);
+await writeFile(historyPath, `${stringifyWellFormedJson(history, 2)}\n`);
 
 const publicHistory = JSON.parse(await readFile(publicHistoryPath, "utf8"));
 if (Array.isArray(publicHistory.runs) && publicHistory.runs.length > 0) {
   const lastRun = publicHistory.runs[publicHistory.runs.length - 1];
-  if (lastRun) lastRun.overviewNarrative = snapshot.overviewNarrative;
+  if (lastRun?.snapshot) {
+    lastRun.snapshot.overviewNarrative = snapshot.overviewNarrative;
+    lastRun.overviewNarrative = snapshot.overviewNarrative;
+    lastRun.snapshot.productGroups = snapshot.productGroups.slice(0, 80);
+  } else if (lastRun) {
+    lastRun.overviewNarrative = snapshot.overviewNarrative;
+  }
 }
-await writeFile(publicHistoryPath, `${JSON.stringify(publicHistory, null, 2)}\n`);
+await writeFile(publicHistoryPath, `${stringifyWellFormedJson(publicHistory, 2)}\n`);
 
 console.log(
   JSON.stringify(

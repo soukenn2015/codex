@@ -7,4 +7,6 @@ data/source-registry.json
 data/marketlens.partial.snapshot.json
 .ai-ops/runs/
 .ai-ops/worktrees/
+marketlens-*.png
+.playwright-cli/
 

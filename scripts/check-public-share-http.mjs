@@ -4,7 +4,7 @@
  */
 const BASE = process.env.MARKETLENS_HTTP_BASE ?? "http://localhost:8765";
 
-const MUST_200 = ["/", "/marketlens-overview.html", "/data/marketlens.snapshot.json"];
+const MUST_200 = ["/", "/manifest.json", "/icon-192.png", "/icon-512.png", "/data/marketlens.ui-snapshot.json"];
 
 const MUST_404 = [
   "/data/source-config.json",

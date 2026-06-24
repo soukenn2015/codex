@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "description": "信頼キュレーター（品質ベンチマーク）。competitor-accounts とは別概念。",
+  "curators": [
+    {
+      "handle": "pokecachan",
+      "role": "pokeca_lottery",
+      "trustLevel": "anchor",
+      "categories": ["pokeca", "onepiece"],
+      "bundlePrefix": ["【ポケカ抽選】", "【ポケカ新弾】"],
+      "searchQuery": "from:pokecachan"
+    },
+    {
+      "handle": "oroshinohito",
+      "role": "resale_goods",
+      "trustLevel": "anchor",
+      "categories": ["figure", "limited", "kuji"],
+      "bundlePrefix": ["【物販】", "【転売注目】"],
+      "searchQuery": "from:oroshinohito"
+    }
+  ]
+}

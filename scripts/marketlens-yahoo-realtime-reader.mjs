@@ -5,6 +5,7 @@ import {
   sanitizeSocialSearchSampleText,
 } from "./marketlens-observation.mjs";
 import { buildJinaReaderUrl } from "./marketlens-x-reader.mjs";
+import { parseEngagementFromTweetContext } from "./marketlens-shared.mjs";
 
 const JINA_READER_PREFIX = "https://r.jina.ai/";
 const STATUS_TIME_RE =
@@ -36,6 +37,8 @@ function stripMarkdownNoise(line = "") {
 function socialSearchSignalKey(row = {}) {
   return [row.provider ?? "yahoo_realtime", row.productKey ?? "", row.query ?? ""].join("::");
 }
+
+export { socialSearchSignalKey };
 
 export function collectObservedSocialSearchKeys(socialSearchSignals = []) {
   const keys = new Set();
@@ -155,10 +158,18 @@ export function buildBrowserObservationQueue(snapshot = {}, options = {}) {
     const id = target.id ?? `realtime:yahoo:${target.productKey}`;
     const key = socialSearchSignalKey(target);
     const existing = existingById.get(id) ?? {};
-    const prepared = prepareRealtimeObservationQuery({
-      query: target.query ?? "",
-      productName: target.productName ?? "",
-    });
+    const prepared = target.buzzEligible
+      ? {
+          ok: true,
+          query: compactText(target.observationQuery ?? target.query ?? ""),
+          originalQuery: compactText(target.query ?? ""),
+          shortened: false,
+          skipReason: null,
+        }
+      : prepareRealtimeObservationQuery({
+          query: target.query ?? "",
+          productName: target.productName ?? "",
+        });
 
     let status = "pending";
     let reason = null;
@@ -323,11 +334,18 @@ function extractTweetBlocks(raw = "") {
 
     text = sanitizeSocialSearchSampleText(text.replace(/_([^_]+)_/g, "$1"));
     if (text.length < 12 || FORBIDDEN_BUZZ_RE.test(text)) continue;
+    const engagement = parseEngagementFromTweetContext(rawLines, index + 1);
+    const heatScore = engagement.likeCount + engagement.repostCount * 2.5 + engagement.replyCount * 1.5 + engagement.quoteCount * 2;
     blocks.push({
       text: text.slice(0, 280),
       postedAt: postedAt || null,
       accountHandle,
       sourceUrl,
+      likeCount: engagement.likeCount,
+      repostCount: engagement.repostCount,
+      replyCount: engagement.replyCount,
+      quoteCount: engagement.quoteCount,
+      heatScore,
     });
   }
 
@@ -521,7 +539,7 @@ function buildSocialSearchSignalFromObservation(target = {}, parsed = {}, observ
     confidence: parsed.confidence ?? 0,
     parseWarnings: parsed.parseWarnings ?? [],
     observationStatus: parsed.observationStatus ?? "parse_failed",
-    buzzEligible: false,
+    buzzEligible: Boolean(target.buzzEligible),
   };
 }
 

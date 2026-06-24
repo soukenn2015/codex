@@ -538,8 +538,50 @@ function parseMercariBrowserLinkText(linkText = "") {
   };
 }
 
+function buildMercariCandidateRow({ parsed, title, itemUrl, status, observedAt, visibleTextSnippet, sourceMode }) {
+  const base = {
+    value: parsed.value,
+    currency: parsed.currency,
+    rawPriceText: parsed.rawPriceText,
+    priceParseConfidence: parsed.priceParseConfidence,
+    title,
+    itemUrl,
+    shippingIncluded: null,
+    status,
+    observedAt: observedAt || null,
+    sourceMode,
+  };
+  if (status === "on_sale") {
+    return {
+      ...base,
+      jpyCandidate: {
+        amount: parsed.value,
+        currency: "JPY",
+        source: sourceMode === "browser_rendered_search" ? "playwright_search_page" : "jina_reader_search_markdown",
+        sourceUrl: itemUrl,
+        fetchedAt: observedAt || null,
+        rawText: visibleTextSnippet,
+        jpyRawPriceText: parsed.rawPriceText,
+        selectorEvidence: sourceMode === "browser_rendered_search" ? "a[href*='/item/m']" : "markdown item link with JPY price",
+        visibleTextSnippet,
+        statusCandidate: status,
+        confidence: parsed.priceParseConfidence,
+        exclusionReason: null,
+        buyLineEligible: false,
+      },
+    };
+  }
+  return {
+    ...base,
+    soldAt: observedAt || null,
+    soldPriceJpy: parsed.currency === "JPY" ? parsed.value : null,
+    soldPriceConfidence: parsed.priceParseConfidence,
+  };
+}
+
 function parseMercariBrowserRenderedRows(rows = [], query = "", observedAt = "") {
   const listingCandidates = [];
+  const soldCandidates = [];
   const seenUrls = new Set();
   const warnings = [];
 
@@ -557,42 +599,26 @@ function parseMercariBrowserRenderedRows(rows = [], query = "", observedAt = "")
       continue;
     }
     seenUrls.add(itemUrl);
-    const status = /売り切れ|sold/i.test(String(row.text ?? "")) ? "sold" : "on_sale";
+    const status = /売り切れ|SOLD|sold out|取引完了/i.test(String(row.text ?? "")) ? "sold" : "on_sale";
     const visibleTextSnippet = compactText(row.text ?? "").slice(0, 500);
-    listingCandidates.push({
-      value: parsed.value,
-      currency: parsed.currency,
-      rawPriceText: parsed.rawPriceText,
-      priceParseConfidence: parsed.priceParseConfidence,
+    const candidate = buildMercariCandidateRow({
+      parsed,
       title,
       itemUrl,
-      shippingIncluded: null,
       status,
-      observedAt: observedAt || null,
+      observedAt,
+      visibleTextSnippet,
       sourceMode: "browser_rendered_search",
-      jpyCandidate:
-        status === "on_sale"
-          ? {
-              amount: parsed.value,
-              currency: "JPY",
-              source: "playwright_search_page",
-              sourceUrl: itemUrl,
-              fetchedAt: observedAt || null,
-              rawText: visibleTextSnippet,
-              jpyRawPriceText: parsed.rawPriceText,
-              selectorEvidence: "a[href*='/item/m']",
-              visibleTextSnippet,
-              statusCandidate: status,
-              confidence: parsed.priceParseConfidence,
-              exclusionReason: null,
-              buyLineEligible: false,
-            }
-          : undefined,
     });
-    if (listingCandidates.length >= MAX_LISTING_CANDIDATES) break;
+    if (status === "sold") {
+      soldCandidates.push(candidate);
+    } else {
+      listingCandidates.push(candidate);
+    }
+    if (listingCandidates.length + soldCandidates.length >= MAX_LISTING_CANDIDATES) break;
   }
 
-  if (!listingCandidates.length) {
+  if (!listingCandidates.length && !soldCandidates.length) {
     return {
       observationStatus: rows.length > 0 ? "parse_failed" : "no_results",
       listingCandidates: [],
@@ -605,14 +631,14 @@ function parseMercariBrowserRenderedRows(rows = [], query = "", observedAt = "")
   const parseWarnings = [...new Set(["browser_render_fallback", ...warnings])];
   const confidence = computeMarketplaceObservationConfidence({
     query,
-    listingCandidates,
+    listingCandidates: [...listingCandidates, ...soldCandidates],
     observationStatus: "succeeded",
     parseWarnings,
   });
   return {
     observationStatus: "succeeded",
     listingCandidates,
-    soldCandidates: [],
+    soldCandidates,
     parseWarnings,
     confidence,
   };

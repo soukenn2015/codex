@@ -14,10 +14,10 @@ const PUBLIC_FILES = [
   "index.html",
   "styles.css",
   "script.js",
-  "marketlens-overview.html",
-  "marketlens-overview.css",
-  "marketlens-overview.js",
-  "data/marketlens.snapshot.json",
+  "manifest.json",
+  "icon-192.png",
+  "icon-512.png",
+  "data/marketlens.ui-snapshot.json",
 ];
 
 function copyIfExists(rel) {

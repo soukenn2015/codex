@@ -1,13 +1,18 @@
 {
-  "name": "2026-06-08-c444245e",
+  "name": "marketlens",
   "version": "1.0.0",
   "description": "ホビー市場の抽選・再販・価格差候補を見て、BuyLineと保守利益をすぐ判断する個人用リサーチAIプロトタイプ。",
   "main": "script.js",
   "scripts": {
-    "check": "node --check scripts/collect-marketlens.mjs && node --check scripts/postprocess-marketlens-snapshot.mjs && node --check scripts/marketlens-observation.mjs && node --check scripts/marketlens-observation-cycle.mjs && node --check scripts/marketlens-mercari-reader.mjs && node --check scripts/marketlens-yahoo-realtime-reader.mjs && node --check scripts/marketlens-x-reader.mjs && node --check scripts/marketlens-product-groups.mjs && node --check scripts/product-group-contract-regression.mjs && node --check marketlens-overview.js",
-    "test": "node scripts/product-group-contract-regression.mjs && node scripts/regression-check.mjs && node scripts/ui-regression-check.mjs",
+    "check": "node --check scripts/collect-marketlens.mjs && node --check scripts/postprocess-marketlens-snapshot.mjs && node --check scripts/marketlens-observation.mjs && node --check scripts/marketlens-observation-cycle.mjs && node --check scripts/marketlens-mercari-reader.mjs && node --check scripts/marketlens-yahoo-realtime-reader.mjs && node --check scripts/marketlens-buzz-discovery.mjs && node --check scripts/marketlens-x-reader.mjs && node --check scripts/marketlens-gemini-contract.mjs && node --check scripts/marketlens-product-groups.mjs && node --check scripts/marketlens-shared.mjs && node --check scripts/curator-parse.mjs && node --check scripts/trusted-curator-sync.mjs && node --check scripts/curator-quality-diff.mjs && node --check scripts/generate-buzz-queries.mjs && node --check scripts/generate-x-accounts.mjs && node --check scripts/expand-source-seeds.mjs && node --check scripts/import-x-accounts.mjs && node --check scripts/discovery-agent.mjs && node --check scripts/market-mapper.mjs && node --check scripts/competitor-monitor.mjs && node --check scripts/marketlens-screening.mjs && node --check scripts/marketlens-deep-dive.mjs && node --check scripts/prediction-accuracy.mjs && node --check scripts/marketlens-price-trend.mjs && node --check scripts/marketlens-yahoo-furima-reader.mjs && node --check scripts/marketlens-yahoo-auction-reader.mjs && node --check scripts/marketlens-rakuma-reader.mjs && node --check scripts/source-priority.mjs && node --check scripts/run-marketlens-cycle.mjs && node --check scripts/rejudge-products.mjs && node --check scripts/generation-safety-regression.mjs && node --check scripts/product-group-contract-regression.mjs",
+    "test": "node scripts/generation-safety-regression.mjs && node scripts/product-group-contract-regression.mjs && node scripts/curator-sync-regression.mjs && node scripts/regression-check.mjs && node scripts/ui-regression-check.mjs && node scripts/ui-helpers.test.mjs",
     "gemini:smoke": "bash scripts/with-marketlens-env.sh node scripts/gemini-smoke-test.mjs",
     "marketlens:cycle": "bash scripts/with-marketlens-env.sh node scripts/run-marketlens-cycle.mjs",
+    "marketlens:buzz": "bash scripts/with-marketlens-env.sh node scripts/marketlens-buzz-discovery.mjs",
+    "marketlens:rejudge": "bash scripts/with-marketlens-env.sh node scripts/rejudge-products.mjs",
+    "marketlens:seeds": "node scripts/generate-buzz-queries.mjs --write && node scripts/generate-x-accounts.mjs --write && node scripts/expand-source-seeds.mjs --write && node scripts/import-x-accounts.mjs",
+    "marketlens:discovery": "bash scripts/with-marketlens-env.sh node scripts/discovery-agent.mjs",
+    "marketlens:mapper": "node scripts/market-mapper.mjs",
     "marketlens:env-save": "bash scripts/save-marketlens-env.sh"
   },
   "keywords": [],

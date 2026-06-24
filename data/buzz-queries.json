@@ -1,0 +1,4234 @@
+{
+  "version": 1,
+  "summary": {
+    "generatedAt": "2026-06-23T07:00:29.924Z",
+    "total": 600,
+    "onePieceCount": 84
+  },
+  "queries": [
+    {
+      "id": "buzz:pokeca:1",
+      "label": "ポケカ 即完売",
+      "query": "ポケカ 即完売",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:2",
+      "label": "ポケカ プレ値",
+      "query": "ポケカ プレ値",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:3",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケカ 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:4",
+      "label": "ポケカ 転売",
+      "query": "ポケカ 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:5",
+      "label": "ポケカ 高騰",
+      "query": "ポケカ 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:6",
+      "label": "ポケカ 品切れ",
+      "query": "ポケカ 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:7",
+      "label": "ポケカ 再販なし",
+      "query": "ポケカ 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:8",
+      "label": "ポケカ 当選",
+      "query": "ポケカ 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:9",
+      "label": "ポケカ 抽選",
+      "query": "ポケカ 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:10",
+      "label": "ポケカ 限定",
+      "query": "ポケカ 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:11",
+      "label": "ポケカ 即完売",
+      "query": "ポケモンカード 即完売",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:12",
+      "label": "ポケカ プレ値",
+      "query": "ポケモンカード プレ値",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:13",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケモンカード 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:14",
+      "label": "ポケカ 転売",
+      "query": "ポケモンカード 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:15",
+      "label": "ポケカ 高騰",
+      "query": "ポケモンカード 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:16",
+      "label": "ポケカ 品切れ",
+      "query": "ポケモンカード 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:17",
+      "label": "ポケカ 再販なし",
+      "query": "ポケモンカード 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:18",
+      "label": "ポケカ 当選",
+      "query": "ポケモンカード 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:19",
+      "label": "ポケカ 抽選",
+      "query": "ポケモンカード 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:20",
+      "label": "ポケカ 限定",
+      "query": "ポケモンカード 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:21",
+      "label": "ポケカ 即完売",
+      "query": "ポケセン抽選 即完売",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:22",
+      "label": "ポケカ プレ値",
+      "query": "ポケセン抽選 プレ値",
+      "ip": "pokeca",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:pokeca:23",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケセン抽選 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:24",
+      "label": "ポケカ 転売",
+      "query": "ポケセン抽選 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:25",
+      "label": "ポケカ 高騰",
+      "query": "ポケセン抽選 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:26",
+      "label": "ポケカ 品切れ",
+      "query": "ポケセン抽選 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:27",
+      "label": "ポケカ 再販なし",
+      "query": "ポケセン抽選 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:28",
+      "label": "ポケカ 当選",
+      "query": "ポケセン抽選 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:29",
+      "label": "ポケカ 抽選",
+      "query": "ポケセン抽選 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:pokeca:30",
+      "label": "ポケカ 限定",
+      "query": "ポケセン抽選 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:31",
+      "label": "ワンピカ 即完売",
+      "query": "ワンピース カード 即完売",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:32",
+      "label": "ワンピカ プレ値",
+      "query": "ワンピース カード プレ値",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:33",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピース カード 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:34",
+      "label": "ワンピカ 転売",
+      "query": "ワンピース カード 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:35",
+      "label": "ワンピカ 高騰",
+      "query": "ワンピース カード 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:36",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピース カード 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:37",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピース カード 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:38",
+      "label": "ワンピカ 当選",
+      "query": "ワンピース カード 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:39",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピース カード 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:40",
+      "label": "ワンピカ 限定",
+      "query": "ワンピース カード 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:41",
+      "label": "ワンピカ 即完売",
+      "query": "ワンピカ 即完売",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:42",
+      "label": "ワンピカ プレ値",
+      "query": "ワンピカ プレ値",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:43",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピカ 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:44",
+      "label": "ワンピカ 転売",
+      "query": "ワンピカ 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:45",
+      "label": "ワンピカ 高騰",
+      "query": "ワンピカ 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:46",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピカ 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:47",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピカ 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:48",
+      "label": "ワンピカ 当選",
+      "query": "ワンピカ 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:49",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピカ 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:50",
+      "label": "ワンピカ 限定",
+      "query": "ワンピカ 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:51",
+      "label": "ワンピカ 即完売",
+      "query": "OP- 即完売",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:52",
+      "label": "ワンピカ プレ値",
+      "query": "OP- プレ値",
+      "ip": "onepiece",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:onepiece:53",
+      "label": "ワンピカ 争奪戦",
+      "query": "OP- 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:54",
+      "label": "ワンピカ 転売",
+      "query": "OP- 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:55",
+      "label": "ワンピカ 高騰",
+      "query": "OP- 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:56",
+      "label": "ワンピカ 品切れ",
+      "query": "OP- 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:57",
+      "label": "ワンピカ 再販なし",
+      "query": "OP- 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:58",
+      "label": "ワンピカ 当選",
+      "query": "OP- 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:59",
+      "label": "ワンピカ 抽選",
+      "query": "OP- 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:onepiece:60",
+      "label": "ワンピカ 限定",
+      "query": "OP- 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:61",
+      "label": "フィギュア 即完売",
+      "query": "ROBOT魂 即完売",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:62",
+      "label": "フィギュア プレ値",
+      "query": "ROBOT魂 プレ値",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:63",
+      "label": "フィギュア 争奪戦",
+      "query": "ROBOT魂 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:64",
+      "label": "フィギュア 転売",
+      "query": "ROBOT魂 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:65",
+      "label": "フィギュア 高騰",
+      "query": "ROBOT魂 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:66",
+      "label": "フィギュア 品切れ",
+      "query": "ROBOT魂 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:67",
+      "label": "フィギュア 再販なし",
+      "query": "ROBOT魂 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:68",
+      "label": "フィギュア 当選",
+      "query": "ROBOT魂 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:69",
+      "label": "フィギュア 抽選",
+      "query": "ROBOT魂 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:70",
+      "label": "フィギュア 限定",
+      "query": "ROBOT魂 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:71",
+      "label": "フィギュア 即完売",
+      "query": "METAL BUILD 即完売",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:72",
+      "label": "フィギュア プレ値",
+      "query": "METAL BUILD プレ値",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:73",
+      "label": "フィギュア 争奪戦",
+      "query": "METAL BUILD 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:74",
+      "label": "フィギュア 転売",
+      "query": "METAL BUILD 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:75",
+      "label": "フィギュア 高騰",
+      "query": "METAL BUILD 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:76",
+      "label": "フィギュア 品切れ",
+      "query": "METAL BUILD 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:77",
+      "label": "フィギュア 再販なし",
+      "query": "METAL BUILD 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:78",
+      "label": "フィギュア 当選",
+      "query": "METAL BUILD 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:79",
+      "label": "フィギュア 抽選",
+      "query": "METAL BUILD 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:80",
+      "label": "フィギュア 限定",
+      "query": "METAL BUILD 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:81",
+      "label": "フィギュア 即完売",
+      "query": "figma 即完売",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:82",
+      "label": "フィギュア プレ値",
+      "query": "figma プレ値",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:83",
+      "label": "フィギュア 争奪戦",
+      "query": "figma 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:84",
+      "label": "フィギュア 転売",
+      "query": "figma 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:85",
+      "label": "フィギュア 高騰",
+      "query": "figma 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:86",
+      "label": "フィギュア 品切れ",
+      "query": "figma 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:87",
+      "label": "フィギュア 再販なし",
+      "query": "figma 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:88",
+      "label": "フィギュア 当選",
+      "query": "figma 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:89",
+      "label": "フィギュア 抽選",
+      "query": "figma 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:90",
+      "label": "フィギュア 限定",
+      "query": "figma 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:91",
+      "label": "フィギュア 即完売",
+      "query": "S.H.Figuarts 即完売",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:92",
+      "label": "フィギュア プレ値",
+      "query": "S.H.Figuarts プレ値",
+      "ip": "figure",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:figure:93",
+      "label": "フィギュア 争奪戦",
+      "query": "S.H.Figuarts 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:94",
+      "label": "フィギュア 転売",
+      "query": "S.H.Figuarts 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:95",
+      "label": "フィギュア 高騰",
+      "query": "S.H.Figuarts 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:96",
+      "label": "フィギュア 品切れ",
+      "query": "S.H.Figuarts 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:97",
+      "label": "フィギュア 再販なし",
+      "query": "S.H.Figuarts 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:98",
+      "label": "フィギュア 当選",
+      "query": "S.H.Figuarts 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:99",
+      "label": "フィギュア 抽選",
+      "query": "S.H.Figuarts 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:figure:100",
+      "label": "フィギュア 限定",
+      "query": "S.H.Figuarts 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:101",
+      "label": "くじ 即完売",
+      "query": "一番くじ 即完売",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:102",
+      "label": "くじ プレ値",
+      "query": "一番くじ プレ値",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:103",
+      "label": "くじ 争奪戦",
+      "query": "一番くじ 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:104",
+      "label": "くじ 転売",
+      "query": "一番くじ 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:105",
+      "label": "くじ 高騰",
+      "query": "一番くじ 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:106",
+      "label": "くじ 品切れ",
+      "query": "一番くじ 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:107",
+      "label": "くじ 再販なし",
+      "query": "一番くじ 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:108",
+      "label": "くじ 当選",
+      "query": "一番くじ 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:109",
+      "label": "くじ 抽選",
+      "query": "一番くじ 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:110",
+      "label": "くじ 限定",
+      "query": "一番くじ 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:111",
+      "label": "くじ 即完売",
+      "query": "くじ引き 即完売",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:112",
+      "label": "くじ プレ値",
+      "query": "くじ引き プレ値",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:113",
+      "label": "くじ 争奪戦",
+      "query": "くじ引き 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:114",
+      "label": "くじ 転売",
+      "query": "くじ引き 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:115",
+      "label": "くじ 高騰",
+      "query": "くじ引き 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:116",
+      "label": "くじ 品切れ",
+      "query": "くじ引き 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:117",
+      "label": "くじ 再販なし",
+      "query": "くじ引き 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:118",
+      "label": "くじ 当選",
+      "query": "くじ引き 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:119",
+      "label": "くじ 抽選",
+      "query": "くじ引き 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:120",
+      "label": "くじ 限定",
+      "query": "くじ引き 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:121",
+      "label": "くじ 即完売",
+      "query": "ラストワン賞 即完売",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:122",
+      "label": "くじ プレ値",
+      "query": "ラストワン賞 プレ値",
+      "ip": "kuji",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:kuji:123",
+      "label": "くじ 争奪戦",
+      "query": "ラストワン賞 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:124",
+      "label": "くじ 転売",
+      "query": "ラストワン賞 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:125",
+      "label": "くじ 高騰",
+      "query": "ラストワン賞 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:126",
+      "label": "くじ 品切れ",
+      "query": "ラストワン賞 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:127",
+      "label": "くじ 再販なし",
+      "query": "ラストワン賞 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:128",
+      "label": "くじ 当選",
+      "query": "ラストワン賞 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:129",
+      "label": "くじ 抽選",
+      "query": "ラストワン賞 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:kuji:130",
+      "label": "くじ 限定",
+      "query": "ラストワン賞 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:131",
+      "label": "ガンプラ 即完売",
+      "query": "ガンプラ 即完売",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:132",
+      "label": "ガンプラ プレ値",
+      "query": "ガンプラ プレ値",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:133",
+      "label": "ガンプラ 争奪戦",
+      "query": "ガンプラ 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:134",
+      "label": "ガンプラ 転売",
+      "query": "ガンプラ 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:135",
+      "label": "ガンプラ 高騰",
+      "query": "ガンプラ 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:136",
+      "label": "ガンプラ 品切れ",
+      "query": "ガンプラ 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:137",
+      "label": "ガンプラ 再販なし",
+      "query": "ガンプラ 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:138",
+      "label": "ガンプラ 当選",
+      "query": "ガンプラ 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:139",
+      "label": "ガンプラ 抽選",
+      "query": "ガンプラ 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:140",
+      "label": "ガンプラ 限定",
+      "query": "ガンプラ 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:141",
+      "label": "ガンプラ 即完売",
+      "query": "HG 再販 即完売",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:142",
+      "label": "ガンプラ プレ値",
+      "query": "HG 再販 プレ値",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:143",
+      "label": "ガンプラ 争奪戦",
+      "query": "HG 再販 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:144",
+      "label": "ガンプラ 転売",
+      "query": "HG 再販 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:145",
+      "label": "ガンプラ 高騰",
+      "query": "HG 再販 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:146",
+      "label": "ガンプラ 品切れ",
+      "query": "HG 再販 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:147",
+      "label": "ガンプラ 再販なし",
+      "query": "HG 再販 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:148",
+      "label": "ガンプラ 当選",
+      "query": "HG 再販 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:149",
+      "label": "ガンプラ 抽選",
+      "query": "HG 再販 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:150",
+      "label": "ガンプラ 限定",
+      "query": "HG 再販 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:151",
+      "label": "ガンプラ 即完売",
+      "query": "MG 限定 即完売",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:152",
+      "label": "ガンプラ プレ値",
+      "query": "MG 限定 プレ値",
+      "ip": "gundam",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:gundam:153",
+      "label": "ガンプラ 争奪戦",
+      "query": "MG 限定 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:154",
+      "label": "ガンプラ 転売",
+      "query": "MG 限定 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:155",
+      "label": "ガンプラ 高騰",
+      "query": "MG 限定 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:156",
+      "label": "ガンプラ 品切れ",
+      "query": "MG 限定 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:157",
+      "label": "ガンプラ 再販なし",
+      "query": "MG 限定 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:158",
+      "label": "ガンプラ 当選",
+      "query": "MG 限定 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:159",
+      "label": "ガンプラ 抽選",
+      "query": "MG 限定 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:gundam:160",
+      "label": "ガンプラ 限定",
+      "query": "MG 限定 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:161",
+      "label": "限定品 即完売",
+      "query": "コラボ 限定 即完売",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:162",
+      "label": "限定品 プレ値",
+      "query": "コラボ 限定 プレ値",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:163",
+      "label": "限定品 争奪戦",
+      "query": "コラボ 限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:164",
+      "label": "限定品 転売",
+      "query": "コラボ 限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:165",
+      "label": "限定品 高騰",
+      "query": "コラボ 限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:166",
+      "label": "限定品 品切れ",
+      "query": "コラボ 限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:167",
+      "label": "限定品 再販なし",
+      "query": "コラボ 限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:168",
+      "label": "限定品 当選",
+      "query": "コラボ 限定 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:169",
+      "label": "限定品 抽選",
+      "query": "コラボ 限定 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:170",
+      "label": "限定品 限定",
+      "query": "コラボ 限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:171",
+      "label": "限定品 即完売",
+      "query": "店舗限定 即完売",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:172",
+      "label": "限定品 プレ値",
+      "query": "店舗限定 プレ値",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:173",
+      "label": "限定品 争奪戦",
+      "query": "店舗限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:174",
+      "label": "限定品 転売",
+      "query": "店舗限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:175",
+      "label": "限定品 高騰",
+      "query": "店舗限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:176",
+      "label": "限定品 品切れ",
+      "query": "店舗限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:177",
+      "label": "限定品 再販なし",
+      "query": "店舗限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:178",
+      "label": "限定品 当選",
+      "query": "店舗限定 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:179",
+      "label": "限定品 抽選",
+      "query": "店舗限定 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:180",
+      "label": "限定品 限定",
+      "query": "店舗限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:181",
+      "label": "限定品 即完売",
+      "query": "受注生産 即完売",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:182",
+      "label": "限定品 プレ値",
+      "query": "受注生産 プレ値",
+      "ip": "limited",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:limited:183",
+      "label": "限定品 争奪戦",
+      "query": "受注生産 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:184",
+      "label": "限定品 転売",
+      "query": "受注生産 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:185",
+      "label": "限定品 高騰",
+      "query": "受注生産 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:186",
+      "label": "限定品 品切れ",
+      "query": "受注生産 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:187",
+      "label": "限定品 再販なし",
+      "query": "受注生産 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:188",
+      "label": "限定品 当選",
+      "query": "受注生産 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:189",
+      "label": "限定品 抽選",
+      "query": "受注生産 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:limited:190",
+      "label": "限定品 限定",
+      "query": "受注生産 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:191",
+      "label": "ゲーム 即完売",
+      "query": "Switch 限定 即完売",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:192",
+      "label": "ゲーム プレ値",
+      "query": "Switch 限定 プレ値",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:193",
+      "label": "ゲーム 争奪戦",
+      "query": "Switch 限定 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:194",
+      "label": "ゲーム 転売",
+      "query": "Switch 限定 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:195",
+      "label": "ゲーム 高騰",
+      "query": "Switch 限定 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:196",
+      "label": "ゲーム 品切れ",
+      "query": "Switch 限定 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:197",
+      "label": "ゲーム 再販なし",
+      "query": "Switch 限定 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:198",
+      "label": "ゲーム 当選",
+      "query": "Switch 限定 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:199",
+      "label": "ゲーム 抽選",
+      "query": "Switch 限定 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:200",
+      "label": "ゲーム 限定",
+      "query": "Switch 限定 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:201",
+      "label": "ゲーム 即完売",
+      "query": "特典付き 即完売",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:202",
+      "label": "ゲーム プレ値",
+      "query": "特典付き プレ値",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:203",
+      "label": "ゲーム 争奪戦",
+      "query": "特典付き 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:204",
+      "label": "ゲーム 転売",
+      "query": "特典付き 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:205",
+      "label": "ゲーム 高騰",
+      "query": "特典付き 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:206",
+      "label": "ゲーム 品切れ",
+      "query": "特典付き 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:207",
+      "label": "ゲーム 再販なし",
+      "query": "特典付き 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:208",
+      "label": "ゲーム 当選",
+      "query": "特典付き 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:209",
+      "label": "ゲーム 抽選",
+      "query": "特典付き 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:210",
+      "label": "ゲーム 限定",
+      "query": "特典付き 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:211",
+      "label": "ゲーム 即完売",
+      "query": "早期購入特典 即完売",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:212",
+      "label": "ゲーム プレ値",
+      "query": "早期購入特典 プレ値",
+      "ip": "game",
+      "minFaves": 1000
+    },
+    {
+      "id": "buzz:game:213",
+      "label": "ゲーム 争奪戦",
+      "query": "早期購入特典 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:214",
+      "label": "ゲーム 転売",
+      "query": "早期購入特典 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:215",
+      "label": "ゲーム 高騰",
+      "query": "早期購入特典 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:216",
+      "label": "ゲーム 品切れ",
+      "query": "早期購入特典 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:217",
+      "label": "ゲーム 再販なし",
+      "query": "早期購入特典 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:218",
+      "label": "ゲーム 当選",
+      "query": "早期購入特典 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:219",
+      "label": "ゲーム 抽選",
+      "query": "早期購入特典 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:game:220",
+      "label": "ゲーム 限定",
+      "query": "早期購入特典 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:221",
+      "label": "くじ 即完売",
+      "query": "くじ引き 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:222",
+      "label": "ガンプラ プレ値",
+      "query": "MG 限定 プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:223",
+      "label": "限定品 争奪戦",
+      "query": "コラボ 限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:224",
+      "label": "ゲーム 転売",
+      "query": "特典付き 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:225",
+      "label": "ポケカ 高騰",
+      "query": "ポケセン抽選 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:226",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピース カード 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:227",
+      "label": "フィギュア 再販なし",
+      "query": "figma 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:228",
+      "label": "くじ 当選",
+      "query": "ラストワン賞 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:229",
+      "label": "ガンプラ 抽選",
+      "query": "ガンプラ 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:230",
+      "label": "限定品 限定",
+      "query": "店舗限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:231",
+      "label": "ゲーム 即完売",
+      "query": "早期購入特典 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:232",
+      "label": "ポケカ プレ値",
+      "query": "ポケカ プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:233",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピカ 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:234",
+      "label": "フィギュア 転売",
+      "query": "METAL BUILD 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:235",
+      "label": "くじ 高騰",
+      "query": "一番くじ 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:236",
+      "label": "ガンプラ 品切れ",
+      "query": "HG 再販 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:237",
+      "label": "限定品 再販なし",
+      "query": "受注生産 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:238",
+      "label": "ゲーム 当選",
+      "query": "Switch 限定 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:239",
+      "label": "ポケカ 抽選",
+      "query": "ポケモンカード 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:240",
+      "label": "ワンピカ 限定",
+      "query": "OP- 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:241",
+      "label": "フィギュア 即完売",
+      "query": "ROBOT魂 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:242",
+      "label": "くじ プレ値",
+      "query": "くじ引き プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:243",
+      "label": "ガンプラ 争奪戦",
+      "query": "MG 限定 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:244",
+      "label": "限定品 転売",
+      "query": "コラボ 限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:245",
+      "label": "ゲーム 高騰",
+      "query": "特典付き 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:246",
+      "label": "ポケカ 品切れ",
+      "query": "ポケセン抽選 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:247",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピース カード 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:248",
+      "label": "フィギュア 当選",
+      "query": "S.H.Figuarts 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:249",
+      "label": "くじ 抽選",
+      "query": "ラストワン賞 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:250",
+      "label": "ガンプラ 限定",
+      "query": "ガンプラ 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:251",
+      "label": "限定品 即完売",
+      "query": "店舗限定 即完売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:252",
+      "label": "ゲーム プレ値",
+      "query": "早期購入特典 プレ値",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:253",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケカ 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:254",
+      "label": "ワンピカ 転売",
+      "query": "ワンピカ 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:255",
+      "label": "フィギュア 高騰",
+      "query": "figma 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:256",
+      "label": "くじ 品切れ",
+      "query": "一番くじ 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:257",
+      "label": "ガンプラ 再販なし",
+      "query": "HG 再販 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:258",
+      "label": "限定品 当選",
+      "query": "受注生産 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:259",
+      "label": "ゲーム 抽選",
+      "query": "Switch 限定 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:260",
+      "label": "ポケカ 限定",
+      "query": "ポケモンカード 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:261",
+      "label": "ワンピカ 即完売",
+      "query": "OP- 即完売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:262",
+      "label": "フィギュア プレ値",
+      "query": "METAL BUILD プレ値",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:263",
+      "label": "くじ 争奪戦",
+      "query": "くじ引き 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:264",
+      "label": "ガンプラ 転売",
+      "query": "MG 限定 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:265",
+      "label": "限定品 高騰",
+      "query": "コラボ 限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:266",
+      "label": "ゲーム 品切れ",
+      "query": "特典付き 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:267",
+      "label": "ポケカ 再販なし",
+      "query": "ポケセン抽選 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:268",
+      "label": "ワンピカ 当選",
+      "query": "ワンピース カード 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:269",
+      "label": "フィギュア 抽選",
+      "query": "ROBOT魂 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:270",
+      "label": "くじ 限定",
+      "query": "ラストワン賞 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:271",
+      "label": "ガンプラ 即完売",
+      "query": "ガンプラ 即完売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:272",
+      "label": "限定品 プレ値",
+      "query": "店舗限定 プレ値",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:273",
+      "label": "ゲーム 争奪戦",
+      "query": "早期購入特典 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:274",
+      "label": "ポケカ 転売",
+      "query": "ポケカ 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:275",
+      "label": "ワンピカ 高騰",
+      "query": "ワンピカ 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:276",
+      "label": "フィギュア 品切れ",
+      "query": "S.H.Figuarts 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:277",
+      "label": "くじ 再販なし",
+      "query": "一番くじ 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:278",
+      "label": "ガンプラ 当選",
+      "query": "HG 再販 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:279",
+      "label": "限定品 抽選",
+      "query": "受注生産 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:280",
+      "label": "ゲーム 限定",
+      "query": "Switch 限定 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:281",
+      "label": "ポケカ 即完売",
+      "query": "ポケモンカード 即完売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:282",
+      "label": "ワンピカ プレ値",
+      "query": "OP- プレ値",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:283",
+      "label": "フィギュア 争奪戦",
+      "query": "figma 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:284",
+      "label": "くじ 転売",
+      "query": "くじ引き 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:285",
+      "label": "ガンプラ 高騰",
+      "query": "MG 限定 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:286",
+      "label": "限定品 品切れ",
+      "query": "コラボ 限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:287",
+      "label": "ゲーム 再販なし",
+      "query": "特典付き 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:288",
+      "label": "ポケカ 当選",
+      "query": "ポケセン抽選 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:289",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピース カード 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:290",
+      "label": "フィギュア 限定",
+      "query": "METAL BUILD 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:291",
+      "label": "くじ 即完売",
+      "query": "ラストワン賞 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:292",
+      "label": "ガンプラ プレ値",
+      "query": "ガンプラ プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:293",
+      "label": "限定品 争奪戦",
+      "query": "店舗限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:294",
+      "label": "ゲーム 転売",
+      "query": "早期購入特典 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:295",
+      "label": "ポケカ 高騰",
+      "query": "ポケカ 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:296",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピカ 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:297",
+      "label": "フィギュア 再販なし",
+      "query": "ROBOT魂 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:298",
+      "label": "くじ 当選",
+      "query": "一番くじ 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:299",
+      "label": "ガンプラ 抽選",
+      "query": "HG 再販 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:300",
+      "label": "限定品 限定",
+      "query": "受注生産 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:301",
+      "label": "ゲーム 即完売",
+      "query": "Switch 限定 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:302",
+      "label": "ポケカ プレ値",
+      "query": "ポケモンカード プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:303",
+      "label": "ワンピカ 争奪戦",
+      "query": "OP- 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:304",
+      "label": "フィギュア 転売",
+      "query": "S.H.Figuarts 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:305",
+      "label": "くじ 高騰",
+      "query": "くじ引き 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:306",
+      "label": "ガンプラ 品切れ",
+      "query": "MG 限定 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:307",
+      "label": "限定品 再販なし",
+      "query": "コラボ 限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:308",
+      "label": "ゲーム 当選",
+      "query": "特典付き 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:309",
+      "label": "ポケカ 抽選",
+      "query": "ポケセン抽選 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:310",
+      "label": "ワンピカ 限定",
+      "query": "ワンピース カード 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:311",
+      "label": "フィギュア 即完売",
+      "query": "figma 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:312",
+      "label": "くじ プレ値",
+      "query": "ラストワン賞 プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:313",
+      "label": "ガンプラ 争奪戦",
+      "query": "ガンプラ 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:314",
+      "label": "限定品 転売",
+      "query": "店舗限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:315",
+      "label": "ゲーム 高騰",
+      "query": "早期購入特典 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:316",
+      "label": "ポケカ 品切れ",
+      "query": "ポケカ 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:317",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピカ 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:318",
+      "label": "フィギュア 当選",
+      "query": "METAL BUILD 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:319",
+      "label": "くじ 抽選",
+      "query": "一番くじ 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:320",
+      "label": "ガンプラ 限定",
+      "query": "HG 再販 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:321",
+      "label": "限定品 即完売",
+      "query": "受注生産 即完売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:322",
+      "label": "ゲーム プレ値",
+      "query": "Switch 限定 プレ値",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:323",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケモンカード 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:324",
+      "label": "ワンピカ 転売",
+      "query": "OP- 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:325",
+      "label": "フィギュア 高騰",
+      "query": "ROBOT魂 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:326",
+      "label": "くじ 品切れ",
+      "query": "くじ引き 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:327",
+      "label": "ガンプラ 再販なし",
+      "query": "MG 限定 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:328",
+      "label": "限定品 当選",
+      "query": "コラボ 限定 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:329",
+      "label": "ゲーム 抽選",
+      "query": "特典付き 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:330",
+      "label": "ポケカ 限定",
+      "query": "ポケセン抽選 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:331",
+      "label": "ワンピカ 即完売",
+      "query": "ワンピース カード 即完売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:332",
+      "label": "フィギュア プレ値",
+      "query": "S.H.Figuarts プレ値",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:333",
+      "label": "くじ 争奪戦",
+      "query": "ラストワン賞 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:334",
+      "label": "ガンプラ 転売",
+      "query": "ガンプラ 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:335",
+      "label": "限定品 高騰",
+      "query": "店舗限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:336",
+      "label": "ゲーム 品切れ",
+      "query": "早期購入特典 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:337",
+      "label": "ポケカ 再販なし",
+      "query": "ポケカ 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:338",
+      "label": "ワンピカ 当選",
+      "query": "ワンピカ 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:339",
+      "label": "フィギュア 抽選",
+      "query": "figma 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:340",
+      "label": "くじ 限定",
+      "query": "一番くじ 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:341",
+      "label": "ガンプラ 即完売",
+      "query": "HG 再販 即完売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:342",
+      "label": "限定品 プレ値",
+      "query": "受注生産 プレ値",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:343",
+      "label": "ゲーム 争奪戦",
+      "query": "Switch 限定 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:344",
+      "label": "ポケカ 転売",
+      "query": "ポケモンカード 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:345",
+      "label": "ワンピカ 高騰",
+      "query": "OP- 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:346",
+      "label": "フィギュア 品切れ",
+      "query": "METAL BUILD 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:347",
+      "label": "くじ 再販なし",
+      "query": "くじ引き 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:348",
+      "label": "ガンプラ 当選",
+      "query": "MG 限定 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:349",
+      "label": "限定品 抽選",
+      "query": "コラボ 限定 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:350",
+      "label": "ゲーム 限定",
+      "query": "特典付き 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:351",
+      "label": "ポケカ 即完売",
+      "query": "ポケセン抽選 即完売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:352",
+      "label": "ワンピカ プレ値",
+      "query": "ワンピース カード プレ値",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:353",
+      "label": "フィギュア 争奪戦",
+      "query": "ROBOT魂 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:354",
+      "label": "くじ 転売",
+      "query": "ラストワン賞 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:355",
+      "label": "ガンプラ 高騰",
+      "query": "ガンプラ 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:356",
+      "label": "限定品 品切れ",
+      "query": "店舗限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:357",
+      "label": "ゲーム 再販なし",
+      "query": "早期購入特典 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:358",
+      "label": "ポケカ 当選",
+      "query": "ポケカ 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:359",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピカ 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:360",
+      "label": "フィギュア 限定",
+      "query": "S.H.Figuarts 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:361",
+      "label": "くじ 即完売",
+      "query": "一番くじ 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:362",
+      "label": "ガンプラ プレ値",
+      "query": "HG 再販 プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:363",
+      "label": "限定品 争奪戦",
+      "query": "受注生産 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:364",
+      "label": "ゲーム 転売",
+      "query": "Switch 限定 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:365",
+      "label": "ポケカ 高騰",
+      "query": "ポケモンカード 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:366",
+      "label": "ワンピカ 品切れ",
+      "query": "OP- 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:367",
+      "label": "フィギュア 再販なし",
+      "query": "figma 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:368",
+      "label": "くじ 当選",
+      "query": "くじ引き 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:369",
+      "label": "ガンプラ 抽選",
+      "query": "MG 限定 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:370",
+      "label": "限定品 限定",
+      "query": "コラボ 限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:371",
+      "label": "ゲーム 即完売",
+      "query": "特典付き 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:372",
+      "label": "ポケカ プレ値",
+      "query": "ポケセン抽選 プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:373",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピース カード 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:374",
+      "label": "フィギュア 転売",
+      "query": "METAL BUILD 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:375",
+      "label": "くじ 高騰",
+      "query": "ラストワン賞 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:376",
+      "label": "ガンプラ 品切れ",
+      "query": "ガンプラ 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:377",
+      "label": "限定品 再販なし",
+      "query": "店舗限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:378",
+      "label": "ゲーム 当選",
+      "query": "早期購入特典 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:379",
+      "label": "ポケカ 抽選",
+      "query": "ポケカ 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:380",
+      "label": "ワンピカ 限定",
+      "query": "ワンピカ 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:381",
+      "label": "フィギュア 即完売",
+      "query": "ROBOT魂 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:382",
+      "label": "くじ プレ値",
+      "query": "一番くじ プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:383",
+      "label": "ガンプラ 争奪戦",
+      "query": "HG 再販 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:384",
+      "label": "限定品 転売",
+      "query": "受注生産 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:385",
+      "label": "ゲーム 高騰",
+      "query": "Switch 限定 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:386",
+      "label": "ポケカ 品切れ",
+      "query": "ポケモンカード 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:387",
+      "label": "ワンピカ 再販なし",
+      "query": "OP- 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:388",
+      "label": "フィギュア 当選",
+      "query": "S.H.Figuarts 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:389",
+      "label": "くじ 抽選",
+      "query": "くじ引き 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:390",
+      "label": "ガンプラ 限定",
+      "query": "MG 限定 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:391",
+      "label": "限定品 即完売",
+      "query": "コラボ 限定 即完売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:392",
+      "label": "ゲーム プレ値",
+      "query": "特典付き プレ値",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:393",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケセン抽選 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:394",
+      "label": "ワンピカ 転売",
+      "query": "ワンピース カード 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:395",
+      "label": "フィギュア 高騰",
+      "query": "figma 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:396",
+      "label": "くじ 品切れ",
+      "query": "ラストワン賞 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:397",
+      "label": "ガンプラ 再販なし",
+      "query": "ガンプラ 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:398",
+      "label": "限定品 当選",
+      "query": "店舗限定 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:399",
+      "label": "ゲーム 抽選",
+      "query": "早期購入特典 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:400",
+      "label": "ポケカ 限定",
+      "query": "ポケカ 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:401",
+      "label": "ワンピカ 即完売",
+      "query": "ワンピカ 即完売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:402",
+      "label": "フィギュア プレ値",
+      "query": "METAL BUILD プレ値",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:403",
+      "label": "くじ 争奪戦",
+      "query": "一番くじ 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:404",
+      "label": "ガンプラ 転売",
+      "query": "HG 再販 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:405",
+      "label": "限定品 高騰",
+      "query": "受注生産 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:406",
+      "label": "ゲーム 品切れ",
+      "query": "Switch 限定 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:407",
+      "label": "ポケカ 再販なし",
+      "query": "ポケモンカード 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:408",
+      "label": "ワンピカ 当選",
+      "query": "OP- 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:409",
+      "label": "フィギュア 抽選",
+      "query": "ROBOT魂 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:410",
+      "label": "くじ 限定",
+      "query": "くじ引き 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:411",
+      "label": "ガンプラ 即完売",
+      "query": "MG 限定 即完売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:412",
+      "label": "限定品 プレ値",
+      "query": "コラボ 限定 プレ値",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:413",
+      "label": "ゲーム 争奪戦",
+      "query": "特典付き 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:414",
+      "label": "ポケカ 転売",
+      "query": "ポケセン抽選 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:415",
+      "label": "ワンピカ 高騰",
+      "query": "ワンピース カード 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:416",
+      "label": "フィギュア 品切れ",
+      "query": "S.H.Figuarts 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:417",
+      "label": "くじ 再販なし",
+      "query": "ラストワン賞 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:418",
+      "label": "ガンプラ 当選",
+      "query": "ガンプラ 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:419",
+      "label": "限定品 抽選",
+      "query": "店舗限定 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:420",
+      "label": "ゲーム 限定",
+      "query": "早期購入特典 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:421",
+      "label": "ポケカ 即完売",
+      "query": "ポケカ 即完売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:422",
+      "label": "ワンピカ プレ値",
+      "query": "ワンピカ プレ値",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:423",
+      "label": "フィギュア 争奪戦",
+      "query": "figma 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:424",
+      "label": "くじ 転売",
+      "query": "一番くじ 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:425",
+      "label": "ガンプラ 高騰",
+      "query": "HG 再販 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:426",
+      "label": "限定品 品切れ",
+      "query": "受注生産 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:427",
+      "label": "ゲーム 再販なし",
+      "query": "Switch 限定 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:428",
+      "label": "ポケカ 当選",
+      "query": "ポケモンカード 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:429",
+      "label": "ワンピカ 抽選",
+      "query": "OP- 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:430",
+      "label": "フィギュア 限定",
+      "query": "METAL BUILD 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:431",
+      "label": "くじ 即完売",
+      "query": "くじ引き 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:432",
+      "label": "ガンプラ プレ値",
+      "query": "MG 限定 プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:433",
+      "label": "限定品 争奪戦",
+      "query": "コラボ 限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:434",
+      "label": "ゲーム 転売",
+      "query": "特典付き 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:435",
+      "label": "ポケカ 高騰",
+      "query": "ポケセン抽選 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:436",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピース カード 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:437",
+      "label": "フィギュア 再販なし",
+      "query": "ROBOT魂 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:438",
+      "label": "くじ 当選",
+      "query": "ラストワン賞 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:439",
+      "label": "ガンプラ 抽選",
+      "query": "ガンプラ 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:440",
+      "label": "限定品 限定",
+      "query": "店舗限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:441",
+      "label": "ゲーム 即完売",
+      "query": "早期購入特典 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:442",
+      "label": "ポケカ プレ値",
+      "query": "ポケカ プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:443",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピカ 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:444",
+      "label": "フィギュア 転売",
+      "query": "S.H.Figuarts 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:445",
+      "label": "くじ 高騰",
+      "query": "一番くじ 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:446",
+      "label": "ガンプラ 品切れ",
+      "query": "HG 再販 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:447",
+      "label": "限定品 再販なし",
+      "query": "受注生産 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:448",
+      "label": "ゲーム 当選",
+      "query": "Switch 限定 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:449",
+      "label": "ポケカ 抽選",
+      "query": "ポケモンカード 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:450",
+      "label": "ワンピカ 限定",
+      "query": "OP- 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:451",
+      "label": "フィギュア 即完売",
+      "query": "figma 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:452",
+      "label": "くじ プレ値",
+      "query": "くじ引き プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:453",
+      "label": "ガンプラ 争奪戦",
+      "query": "MG 限定 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:454",
+      "label": "限定品 転売",
+      "query": "コラボ 限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:455",
+      "label": "ゲーム 高騰",
+      "query": "特典付き 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:456",
+      "label": "ポケカ 品切れ",
+      "query": "ポケセン抽選 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:457",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピース カード 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:458",
+      "label": "フィギュア 当選",
+      "query": "METAL BUILD 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:459",
+      "label": "くじ 抽選",
+      "query": "ラストワン賞 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:460",
+      "label": "ガンプラ 限定",
+      "query": "ガンプラ 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:461",
+      "label": "限定品 即完売",
+      "query": "店舗限定 即完売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:462",
+      "label": "ゲーム プレ値",
+      "query": "早期購入特典 プレ値",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:463",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケカ 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:464",
+      "label": "ワンピカ 転売",
+      "query": "ワンピカ 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:465",
+      "label": "フィギュア 高騰",
+      "query": "ROBOT魂 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:466",
+      "label": "くじ 品切れ",
+      "query": "一番くじ 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:467",
+      "label": "ガンプラ 再販なし",
+      "query": "HG 再販 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:468",
+      "label": "限定品 当選",
+      "query": "受注生産 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:469",
+      "label": "ゲーム 抽選",
+      "query": "Switch 限定 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:470",
+      "label": "ポケカ 限定",
+      "query": "ポケモンカード 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:471",
+      "label": "ワンピカ 即完売",
+      "query": "OP- 即完売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:472",
+      "label": "フィギュア プレ値",
+      "query": "S.H.Figuarts プレ値",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:473",
+      "label": "くじ 争奪戦",
+      "query": "くじ引き 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:474",
+      "label": "ガンプラ 転売",
+      "query": "MG 限定 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:475",
+      "label": "限定品 高騰",
+      "query": "コラボ 限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:476",
+      "label": "ゲーム 品切れ",
+      "query": "特典付き 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:477",
+      "label": "ポケカ 再販なし",
+      "query": "ポケセン抽選 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:478",
+      "label": "ワンピカ 当選",
+      "query": "ワンピース カード 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:479",
+      "label": "フィギュア 抽選",
+      "query": "figma 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:480",
+      "label": "くじ 限定",
+      "query": "ラストワン賞 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:481",
+      "label": "ガンプラ 即完売",
+      "query": "ガンプラ 即完売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:482",
+      "label": "限定品 プレ値",
+      "query": "店舗限定 プレ値",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:483",
+      "label": "ゲーム 争奪戦",
+      "query": "早期購入特典 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:484",
+      "label": "ポケカ 転売",
+      "query": "ポケカ 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:485",
+      "label": "ワンピカ 高騰",
+      "query": "ワンピカ 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:486",
+      "label": "フィギュア 品切れ",
+      "query": "METAL BUILD 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:487",
+      "label": "くじ 再販なし",
+      "query": "一番くじ 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:488",
+      "label": "ガンプラ 当選",
+      "query": "HG 再販 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:489",
+      "label": "限定品 抽選",
+      "query": "受注生産 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:490",
+      "label": "ゲーム 限定",
+      "query": "Switch 限定 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:491",
+      "label": "ポケカ 即完売",
+      "query": "ポケモンカード 即完売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:492",
+      "label": "ワンピカ プレ値",
+      "query": "OP- プレ値",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:493",
+      "label": "フィギュア 争奪戦",
+      "query": "ROBOT魂 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:494",
+      "label": "くじ 転売",
+      "query": "くじ引き 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:495",
+      "label": "ガンプラ 高騰",
+      "query": "MG 限定 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:496",
+      "label": "限定品 品切れ",
+      "query": "コラボ 限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:497",
+      "label": "ゲーム 再販なし",
+      "query": "特典付き 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:498",
+      "label": "ポケカ 当選",
+      "query": "ポケセン抽選 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:499",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピース カード 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:500",
+      "label": "フィギュア 限定",
+      "query": "S.H.Figuarts 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:501",
+      "label": "くじ 即完売",
+      "query": "ラストワン賞 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:502",
+      "label": "ガンプラ プレ値",
+      "query": "ガンプラ プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:503",
+      "label": "限定品 争奪戦",
+      "query": "店舗限定 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:504",
+      "label": "ゲーム 転売",
+      "query": "早期購入特典 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:505",
+      "label": "ポケカ 高騰",
+      "query": "ポケカ 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:506",
+      "label": "ワンピカ 品切れ",
+      "query": "ワンピカ 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:507",
+      "label": "フィギュア 再販なし",
+      "query": "figma 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:508",
+      "label": "くじ 当選",
+      "query": "一番くじ 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:509",
+      "label": "ガンプラ 抽選",
+      "query": "HG 再販 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:510",
+      "label": "限定品 限定",
+      "query": "受注生産 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:511",
+      "label": "ゲーム 即完売",
+      "query": "Switch 限定 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:512",
+      "label": "ポケカ プレ値",
+      "query": "ポケモンカード プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:513",
+      "label": "ワンピカ 争奪戦",
+      "query": "OP- 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:514",
+      "label": "フィギュア 転売",
+      "query": "METAL BUILD 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:515",
+      "label": "くじ 高騰",
+      "query": "くじ引き 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:516",
+      "label": "ガンプラ 品切れ",
+      "query": "MG 限定 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:517",
+      "label": "限定品 再販なし",
+      "query": "コラボ 限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:518",
+      "label": "ゲーム 当選",
+      "query": "特典付き 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:519",
+      "label": "ポケカ 抽選",
+      "query": "ポケセン抽選 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:520",
+      "label": "ワンピカ 限定",
+      "query": "ワンピース カード 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:521",
+      "label": "フィギュア 即完売",
+      "query": "ROBOT魂 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:522",
+      "label": "くじ プレ値",
+      "query": "ラストワン賞 プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:523",
+      "label": "ガンプラ 争奪戦",
+      "query": "ガンプラ 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:524",
+      "label": "限定品 転売",
+      "query": "店舗限定 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:525",
+      "label": "ゲーム 高騰",
+      "query": "早期購入特典 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:526",
+      "label": "ポケカ 品切れ",
+      "query": "ポケカ 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:527",
+      "label": "ワンピカ 再販なし",
+      "query": "ワンピカ 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:528",
+      "label": "フィギュア 当選",
+      "query": "S.H.Figuarts 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:529",
+      "label": "くじ 抽選",
+      "query": "一番くじ 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:530",
+      "label": "ガンプラ 限定",
+      "query": "HG 再販 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:531",
+      "label": "限定品 即完売",
+      "query": "受注生産 即完売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:532",
+      "label": "ゲーム プレ値",
+      "query": "Switch 限定 プレ値",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:533",
+      "label": "ポケカ 争奪戦",
+      "query": "ポケモンカード 争奪戦",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:534",
+      "label": "ワンピカ 転売",
+      "query": "OP- 転売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:535",
+      "label": "フィギュア 高騰",
+      "query": "figma 高騰",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:536",
+      "label": "くじ 品切れ",
+      "query": "くじ引き 品切れ",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:537",
+      "label": "ガンプラ 再販なし",
+      "query": "MG 限定 再販なし",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:538",
+      "label": "限定品 当選",
+      "query": "コラボ 限定 当選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:539",
+      "label": "ゲーム 抽選",
+      "query": "特典付き 抽選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:540",
+      "label": "ポケカ 限定",
+      "query": "ポケセン抽選 限定",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:541",
+      "label": "ワンピカ 即完売",
+      "query": "ワンピース カード 即完売",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:542",
+      "label": "フィギュア プレ値",
+      "query": "METAL BUILD プレ値",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:543",
+      "label": "くじ 争奪戦",
+      "query": "ラストワン賞 争奪戦",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:544",
+      "label": "ガンプラ 転売",
+      "query": "ガンプラ 転売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:545",
+      "label": "限定品 高騰",
+      "query": "店舗限定 高騰",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:546",
+      "label": "ゲーム 品切れ",
+      "query": "早期購入特典 品切れ",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:547",
+      "label": "ポケカ 再販なし",
+      "query": "ポケカ 再販なし",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:548",
+      "label": "ワンピカ 当選",
+      "query": "ワンピカ 当選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:549",
+      "label": "フィギュア 抽選",
+      "query": "ROBOT魂 抽選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:550",
+      "label": "くじ 限定",
+      "query": "一番くじ 限定",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:551",
+      "label": "ガンプラ 即完売",
+      "query": "HG 再販 即完売",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:552",
+      "label": "限定品 プレ値",
+      "query": "受注生産 プレ値",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:553",
+      "label": "ゲーム 争奪戦",
+      "query": "Switch 限定 争奪戦",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:554",
+      "label": "ポケカ 転売",
+      "query": "ポケモンカード 転売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:555",
+      "label": "ワンピカ 高騰",
+      "query": "OP- 高騰",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:556",
+      "label": "フィギュア 品切れ",
+      "query": "S.H.Figuarts 品切れ",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:557",
+      "label": "くじ 再販なし",
+      "query": "くじ引き 再販なし",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:558",
+      "label": "ガンプラ 当選",
+      "query": "MG 限定 当選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:559",
+      "label": "限定品 抽選",
+      "query": "コラボ 限定 抽選",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:560",
+      "label": "ゲーム 限定",
+      "query": "特典付き 限定",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:561",
+      "label": "ポケカ 即完売",
+      "query": "ポケセン抽選 即完売",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:562",
+      "label": "ワンピカ プレ値",
+      "query": "ワンピース カード プレ値",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:563",
+      "label": "フィギュア 争奪戦",
+      "query": "figma 争奪戦",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:564",
+      "label": "くじ 転売",
+      "query": "ラストワン賞 転売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:565",
+      "label": "ガンプラ 高騰",
+      "query": "ガンプラ 高騰",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:566",
+      "label": "限定品 品切れ",
+      "query": "店舗限定 品切れ",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:567",
+      "label": "ゲーム 再販なし",
+      "query": "早期購入特典 再販なし",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:568",
+      "label": "ポケカ 当選",
+      "query": "ポケカ 当選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:569",
+      "label": "ワンピカ 抽選",
+      "query": "ワンピカ 抽選",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:570",
+      "label": "フィギュア 限定",
+      "query": "METAL BUILD 限定",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:571",
+      "label": "くじ 即完売",
+      "query": "一番くじ 即完売",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:572",
+      "label": "ガンプラ プレ値",
+      "query": "HG 再販 プレ値",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:573",
+      "label": "限定品 争奪戦",
+      "query": "受注生産 争奪戦",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:574",
+      "label": "ゲーム 転売",
+      "query": "Switch 限定 転売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:575",
+      "label": "ポケカ 高騰",
+      "query": "ポケモンカード 高騰",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:576",
+      "label": "ワンピカ 品切れ",
+      "query": "OP- 品切れ",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:577",
+      "label": "フィギュア 再販なし",
+      "query": "ROBOT魂 再販なし",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:578",
+      "label": "くじ 当選",
+      "query": "くじ引き 当選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:579",
+      "label": "ガンプラ 抽選",
+      "query": "MG 限定 抽選",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:580",
+      "label": "限定品 限定",
+      "query": "コラボ 限定 限定",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:581",
+      "label": "ゲーム 即完売",
+      "query": "特典付き 即完売",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:582",
+      "label": "ポケカ プレ値",
+      "query": "ポケセン抽選 プレ値",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:583",
+      "label": "ワンピカ 争奪戦",
+      "query": "ワンピース カード 争奪戦",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:584",
+      "label": "フィギュア 転売",
+      "query": "S.H.Figuarts 転売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:585",
+      "label": "くじ 高騰",
+      "query": "ラストワン賞 高騰",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:586",
+      "label": "ガンプラ 品切れ",
+      "query": "ガンプラ 品切れ",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:587",
+      "label": "限定品 再販なし",
+      "query": "店舗限定 再販なし",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:588",
+      "label": "ゲーム 当選",
+      "query": "早期購入特典 当選",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:589",
+      "label": "ポケカ 抽選",
+      "query": "ポケカ 抽選",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:590",
+      "label": "ワンピカ 限定",
+      "query": "ワンピカ 限定",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:591",
+      "label": "フィギュア 即完売",
+      "query": "figma 即完売",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:592",
+      "label": "くじ プレ値",
+      "query": "一番くじ プレ値",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:593",
+      "label": "ガンプラ 争奪戦",
+      "query": "HG 再販 争奪戦",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:594",
+      "label": "限定品 転売",
+      "query": "受注生産 転売",
+      "ip": "limited",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:595",
+      "label": "ゲーム 高騰",
+      "query": "Switch 限定 高騰",
+      "ip": "game",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:596",
+      "label": "ポケカ 品切れ",
+      "query": "ポケモンカード 品切れ",
+      "ip": "pokeca",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:597",
+      "label": "ワンピカ 再販なし",
+      "query": "OP- 再販なし",
+      "ip": "onepiece",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:598",
+      "label": "フィギュア 当選",
+      "query": "METAL BUILD 当選",
+      "ip": "figure",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:599",
+      "label": "くじ 抽選",
+      "query": "くじ引き 抽選",
+      "ip": "kuji",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz:auto:600",
+      "label": "ガンプラ 限定",
+      "query": "MG 限定 限定",
+      "ip": "gundam",
+      "minFaves": 0
+    },
+    {
+      "id": "buzz_query_pop_soc",
+      "label": "Portrait.Of.Pirates S.O.C series to catch new product announcements.",
+      "query": "P.O.P S.O.C",
+      "ip": "agent"
+    },
+    {
+      "id": "buzz_query_ichibankuji_gakumas",
+      "label": "General query for the trending 'Ichiban Kuji Gakuen Idolmaster' to monitor all prizes.",
+      "query": "一番くじ 学園アイドルマスター",
+      "ip": "agent"
+    },
+    {
+      "id": "buzz_query_hobby_sakura_mast",
+      "label": "Specific query for the Hobby Sakura 'Mast' scale figure to differentiate it from the Ichiban Kuji prize.",
+      "query": "Hobby Sakura マスト",
+      "ip": "agent"
+    },
+    {
+      "id": "buzz_query_whg_umamusume",
+      "label": "Query for 'Uma Musume' figures announced at Wonder Hobby (WonHobby/WHG) events.",
+      "query": "ワンホビ ウマ娘 フィギュア",
+      "ip": "agent"
+    }
+  ]
+}

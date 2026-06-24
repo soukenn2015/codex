@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "accounts": [
+    { "handle": "toreru_kun", "label": "トレルくん" },
+    { "handle": "tenbai_news", "label": "転売ニュース" },
+    { "handle": "kaitori_otaku", "label": "買取オタク" },
+    { "handle": "hobby_resale", "label": "ホビー転売" },
+    { "handle": "figure_news_jp", "label": "フィギュア速報" },
+    { "handle": "pokecachan", "label": "ポケキャン" },
+    { "handle": "card_shop_news", "label": "カードショップニュース" },
+    { "handle": "kuji_watch", "label": "くじウォッチ" },
+    { "handle": "mercari_resale", "label": "メルカリ転売" },
+    { "handle": "limited_goods_jp", "label": "限定品JP" },
+    { "handle": "onepiece_card_news", "label": "ワンピカ速報" },
+    { "handle": "op_card_toreca", "label": "OPトレカ" },
+    { "handle": "yugioh_resale", "label": "遊戯王転売" },
+    { "handle": "gundam_plamo", "label": "ガンプラ転売" },
+    { "handle": "toreca_pro", "label": "トレカプロ" },
+    { "handle": "resale_sniper", "label": "転売スナイパー" },
+    { "handle": "kuji_official_watch", "label": "くじ監視" },
+    { "handle": "hobby_watch_jp", "label": "ホビーウォッチJP" },
+    { "handle": "bandai_resale", "label": "バンダイ転売" },
+    { "handle": "premium_bandai_watch", "label": "プレバン監視" }
+  ]
+}

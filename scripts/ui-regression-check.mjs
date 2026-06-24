@@ -2,85 +2,57 @@ import { readFile } from "node:fs/promises";
 
 const snapshotPath = new URL("../data/marketlens.snapshot.json", import.meta.url);
 const uiScriptPath = new URL("../script.js", import.meta.url);
+const uiHtmlPath = new URL("../index.html", import.meta.url);
+const stylesPath = new URL("../styles.css", import.meta.url);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-function isDateActive(endDate) {
-  if (!endDate) return true;
-  const ts = new Date(`${endDate}T23:59:59+09:00`).getTime();
-  return Number.isFinite(ts) && ts >= Date.now();
-}
-
-function marketFreshnessLabel(observedAt) {
-  if (!observedAt) return "未取得";
-  const ts = new Date(observedAt).getTime();
-  if (Number.isNaN(ts)) return "未取得";
-  const ageDays = (Date.now() - ts) / 86_400_000;
-  if (ageDays <= 1) return "新しい";
-  if (ageDays <= 3) return "通常";
-  return "要更新";
-}
-
-function candidateValidationState(candidate) {
-  const periodKnown = Boolean(candidate.startDate && candidate.endDate);
-  const periodActive = candidate.endDate ? isDateActive(candidate.endDate) : true;
-  const hasPrice = Number.isFinite(candidate?.retailPrice) && Number.isFinite(candidate?.marketPrice);
-  const hasRoute = Boolean(candidate.sourceUrl);
-  if (!periodKnown) return "missing_period";
-  if (!periodActive) return "ended";
-  if (!hasPrice) return "missing_price";
-  if (marketFreshnessLabel(candidate.marketObservedAt) === "要更新") return "stale_price";
-  if (!hasRoute) return "missing_route";
-  return "ready";
-}
-
 async function main() {
-  const [snapshotRaw, uiSource] = await Promise.all([readFile(snapshotPath, "utf8"), readFile(uiScriptPath, "utf8")]);
+  const [snapshotRaw, uiSource, htmlSource, stylesSource] = await Promise.all([
+    readFile(snapshotPath, "utf8"),
+    readFile(uiScriptPath, "utf8"),
+    readFile(uiHtmlPath, "utf8"),
+    readFile(stylesPath, "utf8"),
+  ]);
   const snapshot = JSON.parse(snapshotRaw);
-  const candidates = Array.isArray(snapshot.discoveryCandidates) ? snapshot.discoveryCandidates : [];
+  const productGroups = Array.isArray(snapshot.productGroups) ? snapshot.productGroups : [];
 
-  assert(uiSource.includes("function deriveCompletenessForView(item)"), "D6-A表示時派生関数がありません");
-  assert(uiSource.includes('materialStrong.textContent = "確認材料: ";'), "D6-A確認材料が表示されません");
-  assert(!uiSource.includes("item.completeness ="), "D6-A派生値をitemへ保存しています");
-  const buildResearchSource = uiSource.match(/function buildResearchItems\([\s\S]*?\n}\n\nfunction researchItemSort/)?.[0] ?? "";
-  const researchSortSource = uiSource.match(/function researchItemSort\([\s\S]*?\n}\n\nfunction buildFlowIndexItems/)?.[0] ?? "";
-  assert(!buildResearchSource.includes("deriveCompletenessForView"), "D6-A派生値が候補生成に使われています");
-  assert(!researchSortSource.includes("deriveCompletenessForView"), "D6-A派生値が並び順に使われています");
+  assert(uiSource.includes("function escapeHtml("), "XSS escapeHtml がありません");
+  assert(uiSource.includes("function isDisplayable("), "isDisplayable がありません");
+  assert(htmlSource.includes('data-tab="overview"'), "俯瞰タブがありません");
+  assert(htmlSource.includes('data-tab="products"'), "商品タブがありません");
+  assert(uiSource.includes("function initChat("), "AIチャットがありません");
+  assert(uiSource.includes("function getSignalPrice("), "getSignalPrice がありません");
+  assert(uiSource.includes("candidate.value ?? candidate.price"), "メルカリ value 参照がありません");
+  assert(uiSource.includes('currency ?? "JPY"'), "JPY フィルタがありません");
+  assert(uiSource.includes("function normalizeKey("), "productKey 正規化がありません");
+  assert(htmlSource.includes('data-cat="onepiece"'), "ワンピカタブがありません");
+  assert(uiSource.includes("past_week"), "過去1週間セクションがありません");
+  assert(uiSource.includes("similar_products"), "類似商品表示がありません");
+  assert(uiSource.includes("buildBuzzSummary"), "Xバズサマリがありません");
+  assert(uiSource.includes("buildTrendSummary"), "メルカリ急騰サマリがありません");
+  assert(!uiSource.includes("tier === \"HOLD\" || tier === \"T3\""), "T3 非表示フィルタが残っています");
+  assert(htmlSource.includes("chatFab"), "チャットFABがありません");
+  assert(/springExpand/.test(stylesSource), "spring アニメーションがありません");
+  assert(htmlSource.includes('data-mode="all"'), "全候補モード切替がありません");
+  assert(htmlSource.includes('id="productSearch"'), "商品検索ボックスがありません");
+  assert(uiSource.includes("function getVisibleGroups("), "getVisibleGroups がありません");
+  assert(uiSource.includes("isStrictDisplayable"), "厳選フィルタがありません");
+  assert(uiSource.includes("isNameValid"), "名前正常フィルタがありません");
+  assert(uiSource.includes("curatorTrust"), "curatorTrust 参照がありません");
+  assert(uiSource.includes("getCuratorBadgeHtml"), "キュレーターバッジがありません");
+  assert(stylesSource.includes(".curator-badge"), "キュレーターバッジCSSがありません");
+  assert(stylesSource.includes(".display-mode-tabs"), "表示モードCSSがありません");
+  assert(uiSource.includes("buildDigestBundles"), "ダイジェスト束生成がありません");
+  assert(uiSource.includes("renderDigestBundle"), "ダイジェスト束描画がありません");
+  assert(uiSource.includes("renderInfoRow"), "情報行描画がありません");
+  assert(uiSource.includes("getSectionEventDate"), "日付区分用イベント日付がありません");
+  assert(stylesSource.includes(".digest-bundle"), "ダイジェスト束CSSがありません");
+  assert(Array.isArray(productGroups), "snapshot.productGroups が配列ではありません");
 
-  const states = new Map();
-  for (const c of candidates) {
-    states.set(c.name, candidateValidationState(c));
-  }
-
-  // invariant 1: 期間切れ候補は ready にならない
-  for (const c of candidates) {
-    if (c.endDate && !isDateActive(c.endDate)) {
-      assert(candidateValidationState(c) !== "ready", `期限切れがready: ${c.name}`);
-    }
-  }
-
-  // invariant 2: specialized-search 由来で時刻があれば stale/ready のどちらかになる
-  for (const c of candidates) {
-    if (String(c.marketPriceSource ?? "").includes("specialized-search") && c.marketObservedAt) {
-      const st = candidateValidationState(c);
-      assert(st === "ready" || st === "stale_price" || st === "missing_route", `specialized-search状態が不正: ${c.name} -> ${st}`);
-    }
-  }
-
-  // invariant 3: 状態は許可された値のみ
-  const allowed = new Set(["missing_period", "ended", "missing_price", "stale_price", "missing_route", "ready"]);
-  for (const [name, st] of states.entries()) {
-    assert(allowed.has(st), `未知状態: ${name} -> ${st}`);
-  }
-
-  const counts = [...states.values()].reduce((acc, st) => {
-    acc[st] = (acc[st] ?? 0) + 1;
-    return acc;
-  }, {});
-
-  console.log(`UI regression checks passed: ${JSON.stringify(counts)}`);
+  console.log(`UI regression checks passed (productGroups=${productGroups.length})`);
 }
 
 main().catch((e) => {

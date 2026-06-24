@@ -4,8 +4,11 @@ import {
   hasObservedXEvidence,
   resolveXSignalLabel,
   sanitizeClaimText,
+  stringifyWellFormedJson,
   truncateUnicodeText,
 } from "./marketlens-observation.mjs";
+import { toGeminiResponseSchema } from "./marketlens-gemini-contract.mjs";
+import { buildProductGroupsFromSnapshot } from "./marketlens-product-groups.mjs";
 import { collectXReaderSocialSignals } from "./marketlens-x-reader.mjs";
 import { collectMarketplaceObservationSignals } from "./marketlens-mercari-reader.mjs";
 import { collectBrowserObservationSignals } from "./marketlens-yahoo-realtime-reader.mjs";
@@ -24,6 +27,7 @@ import {
   promoteObservedMarketPrices,
   resolveProvisionalBuyLinePriceFields,
 } from "./marketlens-buyline.mjs";
+import { mergePreservedGeminiJudgments } from "./marketlens-shared.mjs";
 
 const configUrl = new URL("../data/source-config.json", import.meta.url);
 const registryUrl = new URL("../data/source-registry.json", import.meta.url);
@@ -38,18 +42,13 @@ const config = JSON.parse(await readFile(configUrl, "utf8"));
 const requestedLlmProvider = String(process.env.MARKETLENS_AI_PROVIDER ?? "gemini")
   .trim()
   .toLowerCase();
-const openAiApiKey = process.env.OPENAI_API_KEY ?? "";
 const geminiApiKey = process.env.GEMINI_API_KEY ?? "";
-const openAiBaseUrl = (process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1").replace(/\/+$/, "");
 const geminiBaseUrl = (process.env.GEMINI_BASE_URL ?? "https://generativelanguage.googleapis.com/v1beta").replace(/\/+$/, "");
-const openAiBaseModel = process.env.MARKETLENS_LLM_MODEL || process.env.OPENAI_MODEL || "gpt-5";
-const openAiComplexModel = process.env.MARKETLENS_LLM_COMPLEX_MODEL || openAiBaseModel;
 const geminiBaseModel = process.env.MARKETLENS_GEMINI_MODEL || "gemini-3.1-flash-lite";
 const geminiFallbackModel = process.env.MARKETLENS_GEMINI_FALLBACK_MODEL || "gemini-2.5-flash";
 const geminiComplexModel = process.env.MARKETLENS_GEMINI_COMPLEX_MODEL || geminiBaseModel;
 const heuristicLlmModel = "heuristic-structured-v1";
-const llmExtractionDocLimit = clampNumber(Number(process.env.MARKETLENS_LLM_LIMIT ?? 18), 1, 50);
-const geminiExtractionDocLimit = clampNumber(Number(process.env.MARKETLENS_GEMINI_LIMIT ?? 1), 1, 3);
+const geminiExtractionDocLimit = clampNumber(Number(process.env.MARKETLENS_GEMINI_LIMIT ?? 18), 1, 20);
 const geminiDailyCallLimit = clampNumber(Number(process.env.MARKETLENS_GEMINI_DAILY_CALL_LIMIT ?? 20), 1, 2000);
 const geminiMonthlyCallLimit = clampNumber(Number(process.env.MARKETLENS_GEMINI_MONTHLY_CALL_LIMIT ?? 500), 1, 100000);
 const aiBudgetJpy = clampNumber(Number(process.env.MARKETLENS_AI_BUDGET_JPY ?? 2500), 0, 1000000);
@@ -121,7 +120,7 @@ let phaseTimingInterrupted = false;
 const structuredExtractionSchema = {
   type: "object",
   additionalProperties: false,
-  required: ["products", "events", "links", "prices", "reasons", "confidence"],
+  required: ["products", "events", "links", "prices", "reasons", "groupJudgments", "confidence"],
   properties: {
     products: {
       type: "array",
@@ -258,6 +257,43 @@ const structuredExtractionSchema = {
         },
       },
     },
+    groupJudgments: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: [
+          "canonicalName",
+          "memberProductNames",
+          "identityConfidence",
+          "tier",
+          "tierConfidence",
+          "reasonHeadline",
+          "whyNow",
+          "uncertaintyLevel",
+          "uncertaintyIssues",
+          "counterEvidenceNotes",
+          "attentionLevel",
+          "attentionRationale",
+          "requiresHumanReview",
+        ],
+        properties: {
+          canonicalName: { type: "string" },
+          memberProductNames: { type: "array", items: { type: "string" } },
+          identityConfidence: { type: "number", minimum: 0, maximum: 1 },
+          tier: { type: "string", enum: ["T1", "T2", "T3", "HOLD"] },
+          tierConfidence: { type: "number", minimum: 0, maximum: 1 },
+          reasonHeadline: { type: "string" },
+          whyNow: { type: "string" },
+          uncertaintyLevel: { type: "string", enum: ["low", "medium", "high"] },
+          uncertaintyIssues: { type: "array", items: { type: "string" } },
+          counterEvidenceNotes: { type: "array", items: { type: "string" } },
+          attentionLevel: { type: "string", enum: ["high", "medium", "low", "unknown"] },
+          attentionRationale: { type: "string" },
+          requiresHumanReview: { type: "boolean" },
+        },
+      },
+    },
     confidence: { type: "number", minimum: 0, maximum: 1 },
   },
 };
@@ -281,6 +317,17 @@ const overviewNarrativeSchema = {
     },
   },
 };
+
+function uniqueBy(items = [], getKey) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const key = getKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 let realLlmExtractionCount = 0;
 let geminiQuotaStopped = false;
 let geminiQuotaStopReason = "";
@@ -300,16 +347,14 @@ const llmExecutionStats = {
 
 function normalizeLlmProvider(value) {
   const provider = String(value ?? "").trim().toLowerCase();
-  if (provider === "gemini") return "gemini";
   if (provider === "heuristic") return "heuristic";
-  return "openai";
+  return "gemini";
 }
 
 const configuredLlmProvider = normalizeLlmProvider(requestedLlmProvider);
 
 function llmProviderApiKey(provider = configuredLlmProvider) {
   if (provider === "gemini") return geminiApiKey;
-  if (provider === "openai") return openAiApiKey;
   return "";
 }
 
@@ -319,25 +364,21 @@ function llmProviderConfigured(provider = configuredLlmProvider) {
 
 function llmProviderMissingReason(provider = configuredLlmProvider) {
   if (provider === "gemini") return "gemini_api_key_missing";
-  if (provider === "openai") return "openai_api_key_missing";
   return "provider_forced_heuristic";
 }
 
 function llmProviderBaseModel(provider = configuredLlmProvider) {
   if (provider === "gemini") return geminiBaseModel;
-  if (provider === "openai") return openAiBaseModel;
   return heuristicLlmModel;
 }
 
 function llmProviderComplexModel(provider = configuredLlmProvider) {
   if (provider === "gemini") return geminiComplexModel;
-  if (provider === "openai") return openAiComplexModel;
   return heuristicLlmModel;
 }
 
 function effectiveLlmExtractionDocLimit(provider = configuredLlmProvider) {
-  if (provider === "gemini") return geminiExtractionDocLimit;
-  return llmExtractionDocLimit;
+  return provider === "gemini" ? geminiExtractionDocLimit : 0;
 }
 
 function markGeminiQuotaStopped(reason = "gemini_quota_exceeded") {
@@ -775,8 +816,8 @@ function truthyEnv(value) {
 
 const BLOG_SNS_RECENT_LIMIT = clampNumber(Number(process.env.MARKETLENS_BLOG_SNS_RECENT_LIMIT ?? 12), 4, 40);
 const BLOG_SNS_DETAIL_FETCH_LIMIT = clampNumber(Number(process.env.MARKETLENS_BLOG_SNS_DETAIL_FETCH_LIMIT ?? 2), 1, 20);
-const DISCOVERY_SOURCE_LIMIT = 120;
-const ACTIVE_SOURCE_FETCH_LIMIT = clampNumber(Number(process.env.MARKETLENS_ACTIVE_SOURCE_FETCH_LIMIT ?? 60), 10, 200);
+const DISCOVERY_SOURCE_LIMIT = clampNumber(Number(process.env.MARKETLENS_DISCOVERY_SOURCE_LIMIT ?? 200), 30, 500);
+const ACTIVE_SOURCE_FETCH_LIMIT = clampNumber(Number(process.env.MARKETLENS_ACTIVE_SOURCE_FETCH_LIMIT ?? 150), 10, 300);
 const TRIAL_SOURCE_FETCH_LIMIT = 30;
 const TRIAL_PROMOTION_LIMIT = 20;
 const ACTIVE_PROMOTION_LIMIT = 10;
@@ -1105,7 +1146,7 @@ async function writeSourceRegistry(registry) {
       .map(buildRegistryEntry)
       .sort((a, b) => registryStatusRank(a.status) - registryStatusRank(b.status) || (b.sourceQuality ?? 0) - (a.sourceQuality ?? 0)),
   };
-  await writeFile(registryUrl, `${JSON.stringify(normalized, null, 2)}\n`);
+  await writeFile(registryUrl, `${stringifyWellFormedJson(normalized, 2)}\n`);
 }
 
 async function archiveFetchedDocument(record) {
@@ -1115,7 +1156,7 @@ async function archiveFetchedDocument(record) {
   await mkdir(rawArchiveDirUrl, { recursive: true });
   const archiveUrl = new URL(`./${month}.jsonl`, rawArchiveDirUrl);
   const docId = record.docId ?? `doc:${normalizeSignalText(`${record.sourceKey ?? record.url}:${record.fetchedAt}`)}`;
-  await appendFile(archiveUrl, `${JSON.stringify({ ...record, docId })}\n`);
+  await appendFile(archiveUrl, `${stringifyWellFormedJson({ ...record, docId })}\n`);
   return docId;
 }
 
@@ -1224,7 +1265,8 @@ function looksLikeMovieArticleTitle(name) {
 }
 
 function canonicalizeProductName(name) {
-  let normalized = String(name ?? "").replace(/\s+/g, " ").trim();
+  const raw = String(name ?? "");
+  let normalized = (typeof raw.toWellFormed === "function" ? raw.toWellFormed() : raw).replace(/\s+/g, " ").trim();
   for (const [pattern, replacement] of PRODUCT_ALIAS_RULES) {
     normalized = normalized.replace(pattern, replacement);
   }
@@ -1310,9 +1352,22 @@ function comparableLaunchPriceFromSnapshots(priceRows = []) {
   return null;
 }
 
+function looksLikeAccountSignalProductName(name) {
+  const text = String(name ?? "").replace(/\s+/g, " ").trim();
+  if (!text) return true;
+  if (/^[@＠]/.test(text)) return true;
+  if (/@\w{2,}/.test(text)) return true;
+  if (/\(@[\w_]+\)|（@[\w_]+）/.test(text)) return true;
+  if (/抽選・再販速報|抽選・再販まとめ|速報（@|まとめ（@/i.test(text)) return true;
+  if (/^(?:ポケカ|ワンピ|ガンプラ|フィギュア)(?:抽選|再販|品薄)?(?:速報|まとめ)/i.test(text)) return true;
+  return false;
+}
+
 function looksLikeSiteChromeProductName(name) {
   const text = String(name ?? "").replace(/\s+/g, " ").trim();
   if (!text) return true;
+  if (looksLikeAccountSignalProductName(text)) return true;
+  if (/�|&(?:amp|ndash|quot|lt|gt);|<\/?[a-z][^>]*>|(?:window\.)?ShopifyAnalytics|document\.getElementById|HeaderDrawer|class\s*=|コンテンツに進む/i.test(text)) return true;
   if (/^(店舗検索|商品検索|キャラクター一覧|ブランド一覧|発売時期|発売済|すべて|ラインナップ)$/i.test(text)) return true;
   if (/^(ポケモンカードゲーム公式ホームページ\s*商品情報|ポケモンカードチャンネル|公式facebook|公式チャンネル)$/i.test(text)) return true;
   if (/ポケモンカードゲーム公式ホーム$|公式ホームページ?$|公式ホーム$/u.test(text)) return true;
@@ -3160,9 +3215,6 @@ function summarizeLlmExecution(snapshot) {
   if (configuredLlmProvider === "gemini" && llmExecutionStats.succeeded > 0) {
     modeCounts.gemini = Math.max(modeCounts.gemini ?? 0, llmExecutionStats.succeeded);
   }
-  if (configuredLlmProvider === "openai" && llmExecutionStats.succeeded > 0) {
-    modeCounts.openai = Math.max(modeCounts.openai ?? 0, llmExecutionStats.succeeded);
-  }
   const overviewNarrative = snapshot.overviewNarrative ?? {};
   const snapshotUpdatedAt = snapshot.metadata?.updatedAt ?? null;
   const overviewGeneratedAt = overviewNarrative.generatedAt ?? snapshotUpdatedAt ?? null;
@@ -3193,7 +3245,7 @@ function summarizeLlmExecution(snapshot) {
   return {
     configured: llmProviderConfigured(),
     provider: configuredLlmProvider,
-    model: configuredLlmProvider === "gemini" ? geminiBaseModel : openAiBaseModel,
+    model: configuredLlmProvider === "gemini" ? geminiBaseModel : heuristicLlmModel,
     fallbackModel: configuredLlmProvider === "gemini" ? geminiFallbackModel : "",
     actualModelUsed: [...llmExecutionStats.actualModelsUsed],
     extraction,
@@ -3210,7 +3262,7 @@ function summarizeLlmExecution(snapshot) {
     succeeded: llmExecutionStats.succeeded,
     failed: llmExecutionStats.failed,
     extractionDocLimit: effectiveLlmExtractionDocLimit(),
-    genericExtractionDocLimit: llmExtractionDocLimit,
+    genericExtractionDocLimit: 0,
     geminiExtractionDocLimit,
     geminiDailyCallLimit,
     geminiMonthlyCallLimit,
@@ -3282,23 +3334,34 @@ function evaluateSnapshotWriteProtection(currentSnapshot, previousSnapshot, { re
 
 function marketLensOverviewSystemPrompt() {
   return [
-    "あなたはホビー商材の要約編集者です。",
-    "与えられた JSON だけを使って、日本語で 3〜6 文の自然な全体まとめを書いてください。",
-    "箇条書き、見出し、番号、セクション分割は禁止です。",
-    "signal, trend_signal, 話題化, heuristic などの内部語は使わず、抽選開始、締切接近、再販気配、具体反応など人が分かる言葉に翻訳してください。",
-    "商品名は具体的に入れてください。抽象語だけで終わらせないでください。",
-    "出力は JSON オブジェクトのみで、余計な説明文は書かないでください。",
+    "あなたは転売市場に詳しいアドバイザーです。",
+    "与えられた JSON の情報を使って、ユーザーが今何をすべきかを日本語の自然文で伝えてください。",
+    "文体ルール:",
+    "- 丁寧語で書いてください（です/ます調）。",
+    "- 体言止めは禁止です。必ず文として完結させてください。",
+    "- 友達口調は禁止です。",
+    "- 箇条書き、見出し、番号、セクション分割は禁止です。",
+    "- signal, trend_signal, 話題化, heuristic などの内部語は使わず、人が分かる言葉に翻訳してください。",
+    "- 商品名は具体的に入れてください。",
+    "- 「いつ、何をすべきか」を明確に伝えてください。",
+    "5〜10文で書いてください。出力は JSON オブジェクトのみで、余計な説明文は書かないでください。",
   ].join("\n");
 }
 
 function marketLensOverviewPlainSystemPrompt() {
   return [
-    "あなたはホビー商材の要約編集者です。",
-    "与えられた JSON だけを使って、日本語で 3〜6 文の自然な全体まとめを書いてください。",
-    "箇条書き、見出し、番号、セクション分割は禁止です。",
-    "signal, trend_signal, 話題化, heuristic などの内部語は使わず、抽選開始、締切接近、再販気配、具体反応など人が分かる言葉に翻訳してください。",
-    "商品名は具体的に入れてください。抽象語だけで終わらせないでください。",
-    "JSON、Markdown、コードフェンス、前置きは使わず、自然文だけを返してください。",
+    "あなたは転売市場に詳しいアドバイザーです。",
+    "与えられた JSON の情報を使って、ユーザーが今何をすべきかを日本語の自然文で伝えてください。",
+    "文体ルール:",
+    "- 丁寧語で書いてください（です/ます調）。",
+    "- 体言止めは禁止です。必ず文として完結させてください。",
+    "- 友達口調（だよ、やっとけ等）は禁止です。",
+    "- 箇条書き、見出し、番号、セクション分割は禁止です。",
+    "- signal, trend_signal, 話題化, heuristic などの内部語は使わず、人が分かる言葉に翻訳してください。",
+    "- 商品名は具体的に入れてください。",
+    "- 「いつ、何をすべきか」を明確に伝えてください。",
+    "- 利益予測がある場合は金額を含めてください。",
+    "5〜10文で書いてください。JSON、Markdown、コードフェンス、前置きは使わず、自然文だけを返してください。",
   ].join("\n");
 }
 
@@ -3457,6 +3520,11 @@ function marketLensLlmSystemPrompt() {
     "eventType は release / sale_open / sale_close / lottery_open / lottery_close / resale_open / invite_open / restock_signal / trend_signal のいずれかにしてください。",
     "lottery や sale の routeType は、本文の意味に合うものだけを選んでください。",
     "価格は本文にある数字だけを採用し、value は数値だけにしてください。",
+    "groupJudgments は、同じ販売単位・同じ取得機会だけを1群にし、シリーズ名だけで別商品を束ねないでください。",
+    "groupJudgments では商品同定、memberProductNames、イベント、今見る順番としての Tier、なぜ今か、uncertainty、反証を判断してください。",
+    "抽選は終了を、販売・再販・受注は開始を重要時刻として理由に反映してください。",
+    "公式を最優先し、X は熱量、記事は補助として扱ってください。商品同定・群境界・イベントが曖昧なら tier=HOLD かつ requiresHumanReview=true にしてください。",
+    "groupJudgments に価格、利益、手数料、送料、BuyLine、promotion の判断や数値を入れないでください。",
     "もし分かるなら aiThesis, priceThesis, explorationTasks も埋めてください。分からなければ空や省略で構いません。",
     "曖昧なら空配列や空文字にしてください。",
     "出力は JSON オブジェクトのみで、余計な説明文は書かないでください。",
@@ -3598,59 +3666,6 @@ function parseOverviewNarrativePayload(payload, fallbackBasedOn = []) {
   return null;
 }
 
-async function requestOpenAiOverviewNarrative(snapshot, previousSnapshot = null) {
-  if (!openAiApiKey) return null;
-  const payload = {
-    model: openAiBaseModel,
-    input: [
-      {
-        role: "system",
-        content: [{ type: "input_text", text: marketLensOverviewSystemPrompt() }],
-      },
-      {
-        role: "user",
-        content: [{ type: "input_text", text: marketLensOverviewUserPrompt(pickOverviewPayload(snapshot, previousSnapshot)) }],
-      },
-    ],
-    text: {
-      format: {
-        type: "json_schema",
-        name: "marketlens_overview_narrative",
-        strict: true,
-        schema: overviewNarrativeSchema,
-      },
-    },
-  };
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), llmTimeoutMs);
-  try {
-    const response = await fetch(`${openAiBaseUrl}/responses`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${openAiApiKey}`,
-      },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`OpenAI ${response.status}: ${errorText.slice(0, 240)}`);
-    }
-    const data = await response.json();
-    const parsed = parseStructuredResponsePayload(data);
-    if (!parsed?.text) return null;
-    return {
-      text: compactReasonText(parsed.text, ""),
-      sourceMode: "openai",
-      generatedAt: snapshot.metadata?.updatedAt ?? new Date().toISOString(),
-      basedOn: Array.isArray(parsed.basedOn) ? parsed.basedOn.filter(Boolean).slice(0, 16) : [],
-    };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 async function requestGeminiJsonWithFallback(payload, primaryModel, { allowText = false } = {}) {
   const modelsToTry = [primaryModel];
   if (geminiFallbackModel && geminiFallbackModel !== primaryModel) modelsToTry.push(geminiFallbackModel);
@@ -3775,7 +3790,6 @@ async function requestGeminiOverviewNarrative(snapshot, previousSnapshot = null)
 
 async function requestLlmOverviewNarrative(snapshot, previousSnapshot = null) {
   if (configuredLlmProvider === "gemini") return requestGeminiOverviewNarrative(snapshot, previousSnapshot);
-  if (configuredLlmProvider === "openai") return requestOpenAiOverviewNarrative(snapshot, previousSnapshot);
   return null;
 }
 
@@ -3914,6 +3928,42 @@ function normalizeLlmExtractionOutput(raw, context, fallbackExtraction) {
         .filter((task) => task.query && task.reason)
         .slice(0, 6)
     : [];
+  const groupJudgments = (Array.isArray(raw?.groupJudgments) ? raw.groupJudgments : [])
+    .map((judgment) => {
+      const memberProductNames = uniqueBy(
+        (Array.isArray(judgment?.memberProductNames) ? judgment.memberProductNames : [])
+          .map((name) => canonicalizeProductName(name))
+          .filter((name) => productPhraseLooksSpecific(name) || productNames.has(name)),
+        (name) => normalizeProductKey(name),
+      ).slice(0, 12);
+      const canonicalName = canonicalizeProductName(judgment?.canonicalName ?? memberProductNames[0] ?? "");
+      if (!canonicalName || memberProductNames.length === 0) return null;
+      const tier = ["T1", "T2", "T3", "HOLD"].includes(judgment?.tier) ? judgment.tier : "HOLD";
+      const requiresHumanReview = Boolean(judgment?.requiresHumanReview || tier === "HOLD");
+      return {
+        canonicalName,
+        memberProductNames,
+        identityConfidence: clampNumber(Number(judgment?.identityConfidence ?? 0.5), 0, 1),
+        tier: requiresHumanReview ? "HOLD" : tier,
+        tierConfidence: clampNumber(Number(judgment?.tierConfidence ?? 0.5), 0, 1),
+        reasonHeadline: compactReasonText(judgment?.reasonHeadline, "商品群の確認が必要"),
+        whyNow: compactReasonText(judgment?.whyNow, "公式情報とイベント時刻を確認します。"),
+        uncertaintyLevel: ["low", "medium", "high"].includes(judgment?.uncertaintyLevel) ? judgment.uncertaintyLevel : "high",
+        uncertaintyIssues: uniqueBy(
+          (Array.isArray(judgment?.uncertaintyIssues) ? judgment.uncertaintyIssues : []).map((item) => compactReasonText(item, "")).filter(Boolean),
+          (item) => item,
+        ).slice(0, 12),
+        counterEvidenceNotes: uniqueBy(
+          (Array.isArray(judgment?.counterEvidenceNotes) ? judgment.counterEvidenceNotes : []).map((item) => compactReasonText(item, "")).filter(Boolean),
+          (item) => item,
+        ).slice(0, 8),
+        attentionLevel: ["high", "medium", "low", "unknown"].includes(judgment?.attentionLevel) ? judgment.attentionLevel : "unknown",
+        attentionRationale: compactReasonText(judgment?.attentionRationale, "X反応は未確認"),
+        requiresHumanReview,
+      };
+    })
+    .filter(Boolean)
+    .slice(0, 10);
   return {
     docId: context.docId,
     model: context.model,
@@ -3930,6 +3980,7 @@ function normalizeLlmExtractionOutput(raw, context, fallbackExtraction) {
     aiThesis,
     priceThesis,
     explorationTasks,
+    groupJudgments,
   };
 }
 
@@ -3962,91 +4013,13 @@ function mergeStructuredExtractions(primary, fallback) {
     aiThesis: primary?.aiThesis || fallback?.aiThesis || null,
     priceThesis: primary?.priceThesis || fallback?.priceThesis || null,
     explorationTasks: [...(primary?.explorationTasks ?? []), ...(fallback?.explorationTasks ?? [])].slice(0, 6),
+    groupJudgments: mergeUnique("groupJudgments", (item) =>
+      `${normalizeProductKey(item.canonicalName)}|${(item.memberProductNames ?? []).map(normalizeProductKey).sort().join(",")}`,
+    ),
     confidence: Math.max(Number(primary?.confidence ?? 0), Number(fallback?.confidence ?? 0)),
     geminiEligible: Boolean(primary?.geminiEligible ?? fallback?.geminiEligible),
     geminiEligibilityReason: primary?.geminiEligibilityReason || fallback?.geminiEligibilityReason || "",
   };
-}
-
-async function requestOpenAiStructuredExtraction({ docId, source, result, evidenceProducts = [], extractedCandidates = [] }) {
-  const eligibility = llmExtractionEligibility({ source, result, evidenceProducts, extractedCandidates });
-  if (!eligibility.eligible) return null;
-  const links = extractLinksFromHtml(result?.html ?? "", result?.url ?? source?.url ?? "");
-  const availableUrls = [...new Set([result?.url ?? source?.url ?? "", ...links.map((link) => link.url)].filter(Boolean))];
-  const model = chooseLlmModel({
-    provider: "openai",
-    source,
-    text: `${result?.title ?? ""} ${result?.text ?? ""}`,
-    extractedCandidates,
-  });
-  llmExecutionStats.requested += 1;
-  const payload = {
-    model,
-    input: [
-      {
-        role: "system",
-        content: [{ type: "input_text", text: marketLensLlmSystemPrompt() }],
-      },
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: marketLensLlmUserPrompt({ source, result, evidenceProducts, extractedCandidates, links }),
-          },
-        ],
-      },
-    ],
-    text: {
-      format: {
-        type: "json_schema",
-        name: "marketlens_structured_extraction",
-        strict: true,
-        schema: structuredExtractionSchema,
-      },
-    },
-  };
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), llmTimeoutMs);
-  try {
-    const response = await fetch(`${openAiBaseUrl}/responses`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${openAiApiKey}`,
-      },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`OpenAI ${response.status}: ${errorText.slice(0, 240)}`);
-    }
-    const data = await response.json();
-    const parsed = parseStructuredResponsePayload(data);
-    if (!parsed) return null;
-    realLlmExtractionCount += 1;
-    llmExecutionStats.succeeded += 1;
-    return normalizeLlmExtractionOutput(
-      parsed,
-      {
-        docId,
-        model,
-        provider: "openai",
-        extractedAt: result?.fetchedAt ?? new Date().toISOString(),
-        sourceKey: source?.sourceKey ?? source?.id ?? "",
-        sourceLane: source?.lane ?? "official",
-        resultUrl: result?.url ?? source?.url ?? "",
-        availableUrls,
-      },
-      buildHeuristicLlmExtraction({ docId, source, result, evidenceProducts, extractedCandidates }),
-    );
-  } catch (error) {
-    llmExecutionStats.failed += 1;
-    throw error;
-  } finally {
-    clearTimeout(timeout);
-  }
 }
 
 async function requestGeminiStructuredExtraction({ docId, source, result, evidenceProducts = [], extractedCandidates = [] }) {
@@ -4079,6 +4052,7 @@ async function requestGeminiStructuredExtraction({ docId, source, result, eviden
     generationConfig: {
       temperature: 0.15,
       responseMimeType: "application/json",
+      responseSchema: toGeminiResponseSchema(structuredExtractionSchema),
     },
   };
   try {
@@ -4125,10 +4099,7 @@ async function buildStructuredLlmExtraction({ docId, source, result, evidencePro
       };
     }
     try {
-      const structured =
-        configuredLlmProvider === "gemini"
-          ? await requestGeminiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates })
-          : await requestOpenAiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
+      const structured = await requestGeminiStructuredExtraction({ docId, source, result, evidenceProducts, extractedCandidates });
       const structuredWithEligibility = structured
         ? {
             ...structured,
@@ -6368,6 +6339,7 @@ function compactSnapshotForHistory(snapshot) {
     overviewNarrative: snapshot?.overviewNarrative ?? null,
     trends: snapshot?.trends ?? [],
     discoveryCandidates: snapshot?.discoveryCandidates ?? [],
+    productGroups: snapshot?.productGroups ?? [],
     productLearning: snapshot?.productLearning ?? [],
   };
 }
@@ -6389,6 +6361,7 @@ function buildPublicHistory(historyRuns) {
       return {
         id: run.id,
         savedAt: run.savedAt,
+        overviewNarrative: snap.overviewNarrative ?? null,
         snapshot: {
           metadata: {
             updatedAt: snap.metadata?.updatedAt ?? null,
@@ -6398,6 +6371,7 @@ function buildPublicHistory(historyRuns) {
           deals: snap.deals ?? [],
           trends: snap.trends ?? [],
           discoveryCandidates: snap.discoveryCandidates ?? [],
+          productGroups: snap.productGroups ?? [],
           lotteryRoutes: snap.lotteryRoutes ?? [],
           pokemonReleases: snap.pokemonReleases ?? [],
         },
@@ -6704,6 +6678,7 @@ const snapshot = {
   historicalComparables: [],
   routeSnapshots: [],
   selectionReasons: [],
+  productGroups: [],
   socialSignals: [],
   marketplaceSignals: [],
   marketplaceObservationQueue: [],
@@ -7160,6 +7135,13 @@ snapshot.metadata = marketplaceEnriched.metadata;
 snapshot.normalizedProducts = enrichNormalizedProductsWithAi(snapshot, yearlyLearningMap);
 snapshot.discoveryCandidates = enrichCandidatesWithAi(snapshot);
 snapshot.llmExtractions = pruneLlmExtractions(snapshot.llmExtractions, 20);
+snapshot.productGroups = await buildProductGroupsFromSnapshot(snapshot);
+snapshot.productGroups = mergePreservedGeminiJudgments(
+  snapshot.productGroups,
+  Array.isArray(existingSnapshotOnDisk?.productGroups) ? existingSnapshotOnDisk.productGroups : [],
+);
+snapshot.metadata.productGroupBuildErrorCount = snapshot.productGroups.buildErrors?.length ?? 0;
+snapshot.metadata.productGroupBuildErrors = snapshot.productGroups.buildErrors ?? [];
 const previousSnapshot = historyRuns.length > 0 ? historyRuns[historyRuns.length - 1]?.snapshot ?? null : null;
 const fallbackOverviewNarrative = buildHeuristicOverviewNarrative(snapshot, previousSnapshot);
 snapshot.overviewNarrative = fallbackOverviewNarrative;
@@ -7240,6 +7222,33 @@ snapshot.metadata.priceThesisSourceModeCounts = snapshot.normalizedProducts.redu
 }, {});
 snapshot.metadata.llmExtractionCount = snapshot.llmExtractions.length;
 snapshot.metadata.selectionReasonCount = snapshot.selectionReasons.length;
+snapshot.metadata.productGroupCount = snapshot.productGroups.length;
+snapshot.metadata.productGroupHumanReviewCount = snapshot.productGroups.filter((group) => group.requiresHumanReview).length;
+snapshot.metadata.productGroupCoveredProductCount = new Set(
+  snapshot.productGroups.flatMap((group) => (group.members ?? []).map((member) => member.productKey)),
+).size;
+snapshot.metadata.productGroupCoverageRatio = snapshot.normalizedProducts.length > 0
+  ? snapshot.metadata.productGroupCoveredProductCount / snapshot.normalizedProducts.length
+  : 1;
+snapshot.metadata.productGroupPendingAiCount = snapshot.productGroups.filter((group) => group.sourceMode === "deterministic_pending").length;
+snapshot.metadata.productGroupPromotedCount = snapshot.productGroups.filter((group) => !group.requiresHumanReview).length;
+snapshot.metadata.productGroupTierCounts = snapshot.productGroups.reduce((acc, group) => {
+  const tier = String(group.judgment?.tier?.value ?? "missing");
+  acc[tier] = (acc[tier] ?? 0) + 1;
+  return acc;
+}, {});
+snapshot.metadata.productGroupSourceModeCounts = snapshot.productGroups.reduce((acc, group) => {
+  const mode = String(group.sourceMode ?? "missing");
+  acc[mode] = (acc[mode] ?? 0) + 1;
+  return acc;
+}, {});
+snapshot.metadata.productGroupEvidenceKindCounts = snapshot.productGroups
+  .flatMap((group) => group.evidence ?? [])
+  .reduce((acc, item) => {
+    const key = String(item.kind ?? "unverified");
+    acc[key] = (acc[key] ?? 0) + 1;
+    return acc;
+  }, {});
 snapshot.metadata.registrySources = snapshot.sourceRegistrySummary.total ?? 0;
 snapshot.metadata.candidateStatusCounts = snapshot.discoveryCandidates.reduce((acc, candidate) => {
   const state = String(candidate.candidateState || candidate.candidateStatus || candidate.status || "missing");
@@ -7340,7 +7349,7 @@ snapshot.metadata.collectGuard = {
 };
 
 if (!snapshotWriteGuard.allowWrite && existingSnapshotOnDisk) {
-  await writeFile(partialOutputUrl, `${JSON.stringify(snapshot, null, 2)}\n`);
+  await writeFile(partialOutputUrl, `${stringifyWellFormedJson(snapshot, 2)}\n`);
   printPhaseTimingReport();
   console.log(
     `MarketLens partial snapshot written: ${okCount}/${sourceResults.length} sources reachable (preserved existing snapshot; reasons=${snapshotWriteGuard.reasons.join(",")})`,
@@ -7348,7 +7357,7 @@ if (!snapshotWriteGuard.allowWrite && existingSnapshotOnDisk) {
   process.exit(2);
 }
 
-await writeFile(outputUrl, `${JSON.stringify(snapshot, null, 2)}\n`);
+await writeFile(outputUrl, `${stringifyWellFormedJson(snapshot, 2)}\n`);
 
 history.updatedAt = snapshot.metadata.updatedAt;
 history.runs.push({
@@ -7357,8 +7366,8 @@ history.runs.push({
   snapshot: compactSnapshotForHistory(snapshot),
 });
 
-await writeFile(historyUrl, `${JSON.stringify(history, null, 2)}\n`);
-await writeFile(publicHistoryUrl, `${JSON.stringify(buildPublicHistory(history.runs), null, 2)}\n`);
+await writeFile(historyUrl, `${stringifyWellFormedJson(history, 2)}\n`);
+await writeFile(publicHistoryUrl, `${stringifyWellFormedJson(buildPublicHistory(history.runs), 2)}\n`);
 
 printPhaseTimingReport();
 console.log(`MarketLens snapshot written: ${okCount}/${sourceResults.length} sources reachable`);
