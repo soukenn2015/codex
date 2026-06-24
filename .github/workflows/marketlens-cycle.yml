@@ -9,6 +9,10 @@ permissions:
   contents: write
   actions: write
 
+concurrency:
+  group: marketlens-cycle
+  cancel-in-progress: false
+
 jobs:
   cycle:
     runs-on: ubuntu-latest

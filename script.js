@@ -3,6 +3,7 @@
 
   const SNAPSHOT_URL = "data/marketlens.ui-snapshot.json";
   const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  const CHAT_COOLDOWN_MS = 3000;
 
   let snapshot = null;
   let currentTab = "overview";
@@ -1297,6 +1298,14 @@
         keySetup.classList.remove("hidden");
         return;
       }
+      const now = Date.now();
+      const lastSend = Number(localStorage.getItem("marketlens_chat_last_send") || 0);
+      const remaining = CHAT_COOLDOWN_MS - (now - lastSend);
+      if (remaining > 0) {
+        addMessage("ai", `しばらく待ってから送信してください（あと ${Math.ceil(remaining / 1000)} 秒）`);
+        return;
+      }
+      localStorage.setItem("marketlens_chat_last_send", String(now));
       input.value = "";
       addMessage("user", text);
 

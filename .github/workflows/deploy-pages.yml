@@ -1,6 +1,9 @@
 name: Deploy MarketLens to GitHub Pages
 
 on:
+  push:
+    branches:
+      - marketlens-recovery-v1
   workflow_run:
     workflows: ["MarketLens Cycle"]
     types: [completed]
