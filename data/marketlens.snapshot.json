@@ -2,26 +2,26 @@
   "metadata": {
     "source": "collector",
     "status": "partial",
-    "updatedAt": "2026-07-24T12:10:15.806Z",
+    "updatedAt": "2026-07-25T00:02:43.175Z",
     "reachableSources": 18,
     "totalSources": 25,
     "manualDeals": 2,
     "verifiedRouteTargets": 3,
     "totalRouteTargets": 4,
-    "verifiedCandidateRouteTargets": 14,
-    "totalCandidateRouteTargets": 18,
+    "verifiedCandidateRouteTargets": 13,
+    "totalCandidateRouteTargets": 17,
     "candidateRouteFailures": 4,
     "candidateKpi": {
-      "total": 34,
-      "ready": 19,
+      "total": 32,
+      "ready": 17,
       "missingPeriod": 0,
       "missingPrice": 3,
       "stalePrice": 0,
       "missingRoute": 12,
-      "blogSns": 28,
-      "withProductName": 34,
-      "routeChecked": 34,
-      "routeAlive": 20
+      "blogSns": 26,
+      "withProductName": 32,
+      "routeChecked": 32,
+      "routeAlive": 18
     },
     "learningProducts1y": 207
   },
@@ -97,9 +97,9 @@
       "action": "公式ニュース確認: ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョンの発売/予約導線を確認",
       "startDate": "2026-05-27",
       "endDate": "2026-06-25",
-      "historyHits": 81,
+      "historyHits": 82,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "DMM通販 プレミアホビー商品抽選販売",
@@ -112,39 +112,39 @@
       "action": "公式ニュース確認: DMM通販 プレミアホビー商品抽選販売の発売/予約導線を確認",
       "startDate": "2025-09-04",
       "endDate": "2025-10-03",
-      "historyHits": 81,
+      "historyHits": 82,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
       "context": "受注終了後 / 出品減 / 特撮・アニメ可動フィギュア",
       "score": 50,
       "type": "価格差",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
-      "historyHits": 76,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ドラクエ メタリックモンスターズ在庫薄",
       "context": "40周年 / コラボ導線 / 小型フィギュア",
       "score": 50,
       "type": "公式グッズ",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
-      "historyHits": 76,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ周辺サプライ新作",
@@ -157,61 +157,61 @@
       "action": "公式ニュース確認: ポケモンカードゲーム 限定デッキシールド・プレイマットの発売/予約導線を確認",
       "startDate": "2026-06-26",
       "endDate": "2026-07-25",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ抽選・再販速報",
       "context": "周年 / 発売予定 / X話題",
       "score": 50,
       "type": "SNS速報",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-22",
-      "historyHits": 37,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-23",
+      "historyHits": 38,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ予約速報@ポケモンカード情報",
       "context": "SNS抽出 / ポケカ抽選",
       "score": 69,
       "type": "SNS抽出",
-      "change24h": "抽出 07/24",
+      "change24h": "抽出 07/25",
       "source": "@pokecachan",
       "confidence": "中",
       "startDate": "2026-07-31",
       "endDate": "2026-08-13",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカード情報 @pokecachan Jun 1",
       "context": "SNS抽出 / ポケカ抽選",
       "score": 69,
       "type": "SNS抽出",
-      "change24h": "抽出 07/24",
+      "change24h": "抽出 07/25",
       "source": "@pokecachan",
       "confidence": "中",
       "startDate": "2026-07-31",
       "endDate": "2026-08-13",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
+      "historyHits": 11,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 3h",
+      "keyword": "ポケモンカード情報 @pokecachan 15h",
       "context": "SNS抽出 / ポケカ抽選",
       "score": 57,
       "type": "SNS抽出",
-      "change24h": "抽出 07/24",
+      "change24h": "抽出 07/25",
       "source": "@pokecachan",
       "confidence": "低",
       "startDate": "2026-07-31",
@@ -222,11 +222,11 @@
       "historyLastSeen": null
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 5h",
+      "keyword": "ポケモンカード情報 @pokecachan 17h",
       "context": "SNS抽出 / ポケカ抽選",
       "score": 57,
       "type": "SNS抽出",
-      "change24h": "抽出 07/24",
+      "change24h": "抽出 07/25",
       "source": "@pokecachan",
       "confidence": "低",
       "startDate": "2026-07-31",
@@ -241,15 +241,15 @@
       "context": "X速報 / 店舗別再販 / 抽選受付",
       "score": 50,
       "type": "SNS速報",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
-      "historyHits": 37,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
+      "historyHits": 38,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ抽選・再販まとめ",
@@ -262,9 +262,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-07-31",
       "endDate": "2026-08-29",
-      "historyHits": 37,
+      "historyHits": 38,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ速報＠予約抽選・最新情報まとめ",
@@ -277,24 +277,24 @@
       "startDate": "2026-07-24",
       "endDate": "2026-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードやポケモンの最新情報をお知らせ│ポケモン30周年│30th CELEBRATION│ストームエメラルダ",
       "context": "SNS抽出 / ポケカまとめ",
-      "score": 61,
+      "score": 63,
       "type": "SNS抽出",
       "change24h": "抽出 07/31",
       "source": "@pokecamatomeru",
-      "confidence": "低",
+      "confidence": "中",
       "startDate": "2026-07-24",
       "endDate": "2026-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 2,
-      "historyRecentHits": 2,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyHits": 3,
+      "historyRecentHits": 3,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ONE PIECE コラボ時計・限定グッズ",
@@ -307,24 +307,24 @@
       "action": "公式ニュース確認: GARRACK ONE PIECE スマートウォッチ シャンクスモデルの発売/予約導線を確認",
       "startDate": "2026-05-29",
       "endDate": "2026-06-27",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "コラボG-SHOCK / CasiOak新作",
       "context": "Coca-Cola 140周年 / GA-2100系 / 国内流通",
       "score": 50,
       "type": "時計",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
-      "historyHits": 76,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "品薄・完売ブログ監視",
@@ -337,24 +337,39 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-07-21",
       "endDate": "2026-08-03",
-      "historyHits": 72,
+      "historyHits": 73,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック スカーレットex / バイオレットex",
+      "context": "ブログ抽出 / 完売",
+      "score": 76,
+      "type": "ブログ抽出",
+      "change24h": "抽出 07/21",
+      "source": "転売LABO",
+      "confidence": "中",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 10,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事 転売・副業初心者も大歓迎！転売/せどり情報コミュニティ",
       "context": "ブログ抽出 / 完売",
-      "score": 80,
+      "score": 78,
       "type": "ブログ抽出",
       "change24h": "抽出 07/21",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2024-01-10",
-      "endDate": "2024-09-10",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
@@ -364,57 +379,57 @@
       "change24h": "抽出 06/28",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック 黒炎の支配者 BOX",
+      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 強化拡張パック",
       "context": "ブログ抽出 / 完売",
-      "score": 78,
-      "type": "ブログ抽出",
-      "change24h": "抽出 06/28",
-      "source": "転売LABO",
-      "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 15,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
-    },
-    {
-      "keyword": "ポケモンカードゲーム シルクスクリーンプリント",
-      "context": "ブログ抽出 / 完売",
-      "score": 72,
+      "score": 74,
       "type": "ブログ抽出",
       "change24h": "抽出 06/28",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 5,
-      "historyRecentHits": 2,
+      "historyHits": 18,
+      "historyRecentHits": 3,
       "historyLastSeen": "2026-07-22T12:19:29.337Z"
     },
     {
-      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 覚醒の鼓動 この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
       "context": "ブログ抽出 / 完売",
-      "score": 74,
+      "score": 76,
+      "type": "ブログ抽出",
+      "change24h": "抽出 06/28",
+      "source": "転売LABO",
+      "confidence": "中",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 10,
+      "historyRecentHits": 4,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
+    },
+    {
+      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 烈火の闘気",
+      "context": "ブログ抽出 / 完売",
+      "score": 72,
       "type": "ブログ抽出",
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 6,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-12T11:49:06.419Z"
+      "historyHits": 5,
+      "historyRecentHits": 2,
+      "historyLastSeen": "2026-07-12T23:53:51.645Z"
     },
     {
       "keyword": "ワンピースースースカードゲームの3周年を記念したグッズセット",
@@ -424,12 +439,12 @@
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
@@ -439,12 +454,12 @@
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ワンピースースースカード 転売",
@@ -454,42 +469,27 @@
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ",
       "context": "ブログ抽出 / 完売",
-      "score": 58,
-      "type": "ブログ抽出",
-      "change24h": "抽出 05/31",
-      "source": "転売LABO",
-      "confidence": "低",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 9,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
-    },
-    {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック",
-      "context": "ブログ抽出 / 完売",
-      "score": 64,
+      "score": 62,
       "type": "ブログ抽出",
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 19,
-      "historyRecentHits": 6,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyHits": 13,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の… 次の記事",
@@ -499,27 +499,12 @@
       "change24h": "抽出 05/31",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
-    },
-    {
-      "keyword": "ポケモンカードゲーム ソード＆シールド 拡張パック パラダイムトリガー",
-      "context": "ブログ抽出 / 完売",
-      "score": 58,
-      "type": "ブログ抽出",
-      "change24h": "抽出 05/31",
-      "source": "転売LABO",
-      "confidence": "低",
-      "startDate": "2021-04-12",
-      "endDate": "2023-03-03",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 9,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-22T12:19:29.337Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事",
@@ -529,12 +514,12 @@
       "change24h": "抽出 05/30",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の刻",
@@ -544,12 +529,12 @@
       "change24h": "抽出 05/30",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ワンピースースースカードゲームのブースターパック第16弾",
@@ -559,27 +544,12 @@
       "change24h": "抽出 05/30",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
-    },
-    {
-      "keyword": "ワンピースースースカードは過去作もプレ値が付いているものが多く",
-      "context": "ブログ抽出 / 完売",
-      "score": 64,
-      "type": "ブログ抽出",
-      "change24h": "抽出 05/30",
-      "source": "転売LABO",
-      "confidence": "中",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 25,
-      "historyRecentHits": 6,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム 転売",
@@ -589,42 +559,42 @@
       "change24h": "抽出 05/01",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
-      "keyword": "ポケモンカードゲーム サン&ムーン 拡張パック",
+      "keyword": "ポケモンカードゲーム イーブイズ スペシャルBOX",
       "context": "ブログ抽出 / 完売",
-      "score": 74,
+      "score": 72,
       "type": "ブログ抽出",
       "change24h": "抽出 05/01",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 8,
-      "historyRecentHits": 3,
+      "historyHits": 9,
+      "historyRecentHits": 2,
       "historyLastSeen": "2026-07-23T23:59:35.441Z"
     },
     {
-      "keyword": "ワンピースースースカードゲーム 決戦の… オンラインコミュニティ カテゴリー Adidas NIKE Supreme その他転売情報 ホビー ポケカ 未分類 村上隆 HOME プライバシーポリシー",
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
       "context": "ブログ抽出 / 完売",
-      "score": 80,
+      "score": 78,
       "type": "ブログ抽出",
       "change24h": "抽出 05/01",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyHits": 13,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケカ",
@@ -637,9 +607,9 @@
       "startDate": "2026-05-01",
       "endDate": "2026-05-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム ハイクラスパック",
@@ -652,9 +622,9 @@
       "startDate": "2026-05-01",
       "endDate": "2026-05-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "ポケモンカードゲーム スカーレット&amp;バイオレット 拡張パック",
@@ -667,9 +637,9 @@
       "startDate": "2026-05-01",
       "endDate": "2026-05-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "えみのせどり部屋 品薄監視",
@@ -682,54 +652,54 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-07-24",
       "endDate": "2026-08-06",
-      "historyHits": 71,
+      "historyHits": 72,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "プレ値SNS監視",
       "context": "公式グッズ / 可愛い系",
       "score": 50,
       "type": "SNS監視",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
-      "historyHits": 70,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
+      "historyHits": 71,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "しなかん 品薄完売監視",
       "context": "公式グッズ / 可愛い系",
       "score": 50,
       "type": "ブログ監視",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
-      "historyHits": 71,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
+      "historyHits": 72,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "keyword": "転売ヤーかなえ 品薄監視",
       "context": "コラボ / 発売予定 / X話題 / 可愛い系",
       "score": 91,
       "type": "SNS監視",
-      "change24h": "公式 07/24",
+      "change24h": "公式 07/25",
       "source": "公式",
       "confidence": "高",
       "action": "公式ニュース確認: 転売ヤーかなえ 品薄ウォッチの発売/予約導線を確認",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
-      "historyHits": 65,
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
+      "historyHits": 66,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z"
+      "historyLastSeen": "2026-07-24T12:10:15.806Z"
     }
   ],
   "discoveryCandidates": [
@@ -757,9 +727,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "deal-buy-price",
-      "historyHits": 81,
+      "historyHits": 82,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -770,20 +740,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 81,
+      "learningMentions1y": 82,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:19.410Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.740Z",
       "routeFinalUrl": "https://www.dragonquest.jp/news/detail/4245/",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.410Z",
+        "checkedAt": "2026-07-25T00:03:40.740Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.dragonquest.jp/news/detail/4245/",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -801,8 +771,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量",
       "sourceUrl": "https://store.jp.square-enix.com/category/263/MW36259.html",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "retailPrice": 2860,
       "retailPriceLabel": "仕入価格 2,860円（利益候補）",
       "category": "thin",
@@ -811,9 +781,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "deal-buy-price",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -824,17 +794,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 76,
+      "learningMentions1y": 77,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "404",
-      "routeCheckedAt": "2026-07-24T12:11:19.445Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.741Z",
       "routeFinalUrl": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.445Z",
+        "checkedAt": "2026-07-25T00:03:40.741Z",
         "sourceStatus": "404",
         "finalUrl": "https://store.jp.square-enix.com/category/263/MW36259.html",
         "summary": "接続未確認",
@@ -857,8 +827,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量、相場価格",
       "sourceUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "retailPrice": 2530,
       "retailPriceLabel": "公式価格 ¥2,530（履歴補完）",
       "category": "thin",
@@ -867,9 +837,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -880,17 +850,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 76,
+      "learningMentions1y": 77,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "404",
-      "routeCheckedAt": "2026-07-24T12:11:19.282Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.633Z",
       "routeFinalUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.282Z",
+        "checkedAt": "2026-07-25T00:03:40.633Z",
         "sourceStatus": "404",
         "finalUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/",
         "summary": "接続未確認",
@@ -923,9 +893,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "candidate",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -936,20 +906,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 76,
+      "learningMentions1y": 77,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:19.355Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.744Z",
       "routeFinalUrl": "https://www.pokemoncenter-online.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:19.355Z",
+        "checkedAt": "2026-07-25T00:03:40.744Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.pokemoncenter-online.com/",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -979,9 +949,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -992,20 +962,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 76,
+      "learningMentions1y": 77,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:19.159Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.540Z",
       "routeFinalUrl": "https://one-piece.com/news/79661/index.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.159Z",
+        "checkedAt": "2026-07-25T00:03:40.540Z",
         "sourceStatus": "200",
         "finalUrl": "https://one-piece.com/news/79661/index.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1033,9 +1003,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1046,20 +1016,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 76,
+      "learningMentions1y": 77,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:19.159Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.540Z",
       "routeFinalUrl": "https://one-piece.com/news/79661/index.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.159Z",
+        "checkedAt": "2026-07-25T00:03:40.540Z",
         "sourceStatus": "200",
         "finalUrl": "https://one-piece.com/news/79661/index.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1077,8 +1047,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、価格データ、取引量、公式価格",
       "sourceUrl": "https://gshock.casio.com/jp/products/recommend/",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "retailPrice": null,
       "retailPriceLabel": null,
       "category": "large",
@@ -1087,9 +1057,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 80,
+      "historyHits": 81,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1100,17 +1070,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 79,
+      "learningMentions1y": 80,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "403",
-      "routeCheckedAt": "2026-07-24T12:11:19.299Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.536Z",
       "routeFinalUrl": "https://gshock.casio.com/jp/products/recommend/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:19.299Z",
+        "checkedAt": "2026-07-25T00:03:40.536Z",
         "sourceStatus": "403",
         "finalUrl": "https://gshock.casio.com/jp/products/recommend/",
         "summary": "接続未確認",
@@ -1124,7 +1094,7 @@
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 91,
+      "genreScore": 89,
       "priceData": "記事ベース",
       "tradeVolume": "要確認",
       "marginSignal": "完売速度と再販頻度を重視",
@@ -1143,36 +1113,89 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 72,
+      "historyHits": 73,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
-        "speed": 16,
+        "speed": 14,
         "route": 20,
         "period": 20,
         "price": 5,
         "repeat": 20,
-        "total": 81
+        "total": 79
       },
-      "learningMentions1y": 72,
+      "learningMentions1y": 73,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.917Z",
+      "routeCheckedAt": "2026-07-25T00:03:41.876Z",
       "routeFinalUrl": "https://tenbailabo.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:20.917Z",
+        "checkedAt": "2026-07-25T00:03:41.876Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
+      }
+    },
+    {
+      "name": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック スカーレットex / バイオレットex",
+      "trend": "品薄・完売ブログ監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 80,
+      "priceData": "取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性14/20 導線4/20 期間20/20 価格20/20 反復18/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "完売由来 / 記事抽出",
+      "missingData": "公式導線",
+      "sourceUrl": "https://tenbailabo.com/levis-s506xx-1944-jacket",
+      "retailPrice": 56100,
+      "retailPriceLabel": "抽出価格 ¥56,100",
+      "retailPriceSource": "blog-sns-article",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": 19554,
+      "marketPriceLabel": "相場 19,554円（履歴補完）",
+      "marketPriceSource": "history-median",
+      "marketObservedAt": null,
+      "historyHits": 10,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 20,
+        "repeat": 18,
+        "total": 78
+      },
+      "learningMentions1y": 1,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-07-25T00:03:42.028Z",
+      "routeFinalUrl": "https://tenbailabo.com/levis-s506xx-1944-jacket",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-07-25T00:03:42.028Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://tenbailabo.com/levis-s506xx-1944-jacket",
+        "summary": "接続 07/25 00:03",
+        "issues": []
       }
     },
     {
@@ -1183,7 +1206,7 @@
       "genreScore": 83,
       "priceData": "取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性16/20 導線4/20 期間20/20 価格20/20 反復20/20",
+      "marginSignal": "速報性14/20 導線4/20 期間20/20 価格20/20 反復20/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "完売由来 / 記事抽出",
@@ -1192,17 +1215,17 @@
       "retailPrice": 56100,
       "retailPriceLabel": "抽出価格 ¥56,100",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2024-01-10",
-      "endDate": "2024-09-10",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1211,20 +1234,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 3,
+      "learningMentions1y": 4,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.053Z",
+      "routeCheckedAt": "2026-07-25T00:03:42.028Z",
       "routeFinalUrl": "https://tenbailabo.com/levis-s506xx-1944-jacket",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.053Z",
+        "checkedAt": "2026-07-25T00:03:42.028Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/levis-s506xx-1944-jacket",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1245,17 +1268,17 @@
       "retailPrice": 200,
       "retailPriceLabel": "抽出価格 ¥200",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1264,34 +1287,34 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.521Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.943Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:20.521Z",
+        "checkedAt": "2026-07-25T00:03:40.943Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
       }
     },
     {
-      "name": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック 黒炎の支配者 BOX",
+      "name": "ポケモンカードゲーム スカーレット＆バイオレット 強化拡張パック",
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 84,
+      "genreScore": 86,
       "priceData": "取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復18/20",
+      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復14/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "完売由来 / 記事抽出",
@@ -1300,17 +1323,72 @@
       "retailPrice": 200,
       "retailPriceLabel": "抽出価格 ¥200",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 15,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyHits": 18,
+      "historyRecentHits": 3,
+      "historyLastSeen": "2026-07-22T12:19:29.337Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 20,
+        "repeat": 20,
+        "total": 80
+      },
+      "learningMentions1y": 13,
+      "routeAlive": false,
+      "routeUsable": false,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-07-25T00:03:40.943Z",
+      "routeFinalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
+      "routeVerification": {
+        "status": "missing",
+        "alive": false,
+        "usable": false,
+        "checkedAt": "2026-07-25T00:03:40.943Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
+        "summary": "接続 07/25 00:03",
+        "issues": [
+          "導線が汎用ページ"
+        ]
+      }
+    },
+    {
+      "name": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
+      "trend": "品薄・完売ブログ監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 84,
+      "priceData": "取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復16/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "高",
+      "adoptionReason": "完売由来 / 記事抽出",
+      "missingData": "送料サイズ",
+      "sourceUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
+      "retailPrice": 200,
+      "retailPriceLabel": "抽出価格 ¥200",
+      "retailPriceSource": "blog-sns-article",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": 19554,
+      "marketPriceLabel": "相場 19,554円（履歴補完）",
+      "marketPriceSource": "history-median",
+      "marketObservedAt": null,
+      "historyHits": 10,
+      "historyRecentHits": 4,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1323,85 +1401,30 @@
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.521Z",
+      "routeCheckedAt": "2026-07-25T00:03:40.943Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:20.521Z",
+        "checkedAt": "2026-07-25T00:03:40.943Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
       }
     },
     {
-      "name": "ポケモンカードゲーム シルクスクリーンプリント",
+      "name": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 烈火の闘気",
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 77,
+      "genreScore": 80,
       "priceData": "取得",
       "tradeVolume": "上昇",
       "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復12/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "中",
-      "adoptionReason": "完売由来 / 記事抽出",
-      "missingData": "送料サイズ",
-      "sourceUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-      "retailPrice": 200,
-      "retailPriceLabel": "抽出価格 ¥200",
-      "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": 19554,
-      "marketPriceLabel": "相場 19,554円（履歴補完）",
-      "marketPriceSource": "history-median",
-      "marketObservedAt": null,
-      "historyHits": 5,
-      "historyRecentHits": 2,
-      "historyLastSeen": "2026-07-22T12:19:29.337Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 20,
-        "repeat": 14,
-        "total": 74
-      },
-      "learningMentions1y": 4,
-      "routeAlive": false,
-      "routeUsable": false,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.521Z",
-      "routeFinalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-      "routeVerification": {
-        "status": "missing",
-        "alive": false,
-        "usable": false,
-        "checkedAt": "2026-07-24T12:11:20.521Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-        "summary": "接続 07/24 12:11",
-        "issues": [
-          "導線が汎用ページ"
-        ]
-      }
-    },
-    {
-      "name": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 覚醒の鼓動 この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
-      "trend": "品薄・完売ブログ監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 79,
-      "priceData": "取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復14/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "中",
       "adoptionReason": "完売由来 / 記事抽出",
@@ -1410,17 +1433,17 @@
       "retailPrice": 15400,
       "retailPriceLabel": "抽出価格 ¥15,400",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 6,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-12T11:49:06.419Z",
+      "historyHits": 5,
+      "historyRecentHits": 2,
+      "historyLastSeen": "2026-07-12T23:53:51.645Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1429,20 +1452,20 @@
         "repeat": 14,
         "total": 74
       },
-      "learningMentions1y": 1,
+      "learningMentions1y": 5,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.229Z",
+      "routeCheckedAt": "2026-07-25T00:03:45.911Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:20.229Z",
+        "checkedAt": "2026-07-25T00:03:45.911Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1463,17 +1486,17 @@
       "retailPrice": 15400,
       "retailPriceLabel": "抽出価格 ¥15,400",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1482,20 +1505,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 15,
+      "learningMentions1y": 16,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.229Z",
+      "routeCheckedAt": "2026-07-25T00:03:45.911Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:20.229Z",
+        "checkedAt": "2026-07-25T00:03:45.911Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1516,17 +1539,17 @@
       "retailPrice": 15400,
       "retailPriceLabel": "抽出価格 ¥15,400",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1535,20 +1558,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 15,
+      "learningMentions1y": 16,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.229Z",
+      "routeCheckedAt": "2026-07-25T00:03:45.911Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:20.229Z",
+        "checkedAt": "2026-07-25T00:03:45.911Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1569,17 +1592,17 @@
       "retailPrice": 15400,
       "retailPriceLabel": "抽出価格 ¥15,400",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 15,
+      "historyHits": 16,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1588,32 +1611,32 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 15,
+      "learningMentions1y": 16,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:20.229Z",
+      "routeCheckedAt": "2026-07-25T00:03:45.911Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:20.229Z",
+        "checkedAt": "2026-07-25T00:03:45.911Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
     {
-      "name": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
+      "name": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ",
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 80,
+      "genreScore": 81,
       "priceData": "取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線4/20 期間20/20 価格20/20 反復14/20",
+      "marginSignal": "速報性0/20 導線4/20 期間20/20 価格20/20 反復18/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "中",
       "adoptionReason": "完売由来 / 記事抽出",
@@ -1622,92 +1645,39 @@
       "retailPrice": 360,
       "retailPriceLabel": "抽出価格 ¥360",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 9,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyHits": 13,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
         "period": 20,
         "price": 20,
-        "repeat": 16,
-        "total": 76
+        "repeat": 18,
+        "total": 78
       },
-      "learningMentions1y": 7,
+      "learningMentions1y": 3,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.259Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.506Z",
       "routeFinalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.259Z",
+        "checkedAt": "2026-07-25T00:03:46.506Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
-        "summary": "接続 07/24 12:11",
-        "issues": []
-      }
-    },
-    {
-      "name": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック",
-      "trend": "品薄・完売ブログ監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 84,
-      "priceData": "取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線4/20 期間20/20 価格20/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "完売由来 / 記事抽出",
-      "missingData": "公式導線",
-      "sourceUrl": "https://tenbailabo.com/pokeca-30th-celebration",
-      "retailPrice": 360,
-      "retailPriceLabel": "抽出価格 ¥360",
-      "retailPriceSource": "blog-sns-article",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": 19554,
-      "marketPriceLabel": "相場 19,554円（履歴補完）",
-      "marketPriceSource": "history-median",
-      "marketObservedAt": null,
-      "historyHits": 19,
-      "historyRecentHits": 6,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 20,
-        "repeat": 20,
-        "total": 80
-      },
-      "learningMentions1y": 8,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.259Z",
-      "routeFinalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.259Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1728,17 +1698,17 @@
       "retailPrice": 360,
       "retailPriceLabel": "抽出価格 ¥360",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1747,73 +1717,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 10,
+      "learningMentions1y": 11,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.259Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.506Z",
       "routeFinalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.259Z",
+        "checkedAt": "2026-07-25T00:03:46.506Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/pokeca-30th-celebration",
-        "summary": "接続 07/24 12:11",
-        "issues": []
-      }
-    },
-    {
-      "name": "ポケモンカードゲーム ソード＆シールド 拡張パック パラダイムトリガー",
-      "trend": "品薄・完売ブログ監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 76,
-      "priceData": "取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線4/20 期間20/20 価格20/20 反復14/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "中",
-      "adoptionReason": "完売由来 / 記事抽出",
-      "missingData": "公式導線",
-      "sourceUrl": "https://tenbailabo.com/otsukalotec-5kai",
-      "retailPrice": 825000,
-      "retailPriceLabel": "抽出価格 ¥825,000",
-      "retailPriceSource": "blog-sns-article",
-      "startDate": "2021-04-12",
-      "endDate": "2023-03-03",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": 19554,
-      "marketPriceLabel": "相場 19,554円（履歴補完）",
-      "marketPriceSource": "history-median",
-      "marketObservedAt": null,
-      "historyHits": 9,
-      "historyRecentHits": 3,
-      "historyLastSeen": "2026-07-22T12:19:29.337Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 20,
-        "repeat": 14,
-        "total": 74
-      },
-      "learningMentions1y": 2,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.449Z",
-      "routeFinalUrl": "https://tenbailabo.com/otsukalotec-5kai",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.449Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://tenbailabo.com/otsukalotec-5kai",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1834,17 +1751,17 @@
       "retailPrice": 1980,
       "retailPriceLabel": "抽出価格 ¥1,980",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1853,20 +1770,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.005Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.534Z",
       "routeFinalUrl": "https://tenbailabo.com/onepiece-op16",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:22.005Z",
+        "checkedAt": "2026-07-25T00:03:46.534Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/onepiece-op16",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1887,17 +1804,17 @@
       "retailPrice": 1980,
       "retailPriceLabel": "抽出価格 ¥1,980",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1906,20 +1823,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 28,
+      "learningMentions1y": 29,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.005Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.534Z",
       "routeFinalUrl": "https://tenbailabo.com/onepiece-op16",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:22.005Z",
+        "checkedAt": "2026-07-25T00:03:46.534Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/onepiece-op16",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -1940,17 +1857,17 @@
       "retailPrice": 1980,
       "retailPriceLabel": "抽出価格 ¥1,980",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 28,
+      "historyHits": 29,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1959,73 +1876,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 28,
+      "learningMentions1y": 29,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.005Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.534Z",
       "routeFinalUrl": "https://tenbailabo.com/onepiece-op16",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:22.005Z",
+        "checkedAt": "2026-07-25T00:03:46.534Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/onepiece-op16",
-        "summary": "接続 07/24 12:11",
-        "issues": []
-      }
-    },
-    {
-      "name": "ワンピースースースカードは過去作もプレ値が付いているものが多く",
-      "trend": "品薄・完売ブログ監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 90,
-      "priceData": "取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線4/20 期間20/20 価格20/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "完売由来 / 記事抽出",
-      "missingData": "公式導線、相場価格",
-      "sourceUrl": "https://tenbailabo.com/onepiece-op16",
-      "retailPrice": 1980,
-      "retailPriceLabel": "抽出価格 ¥1,980",
-      "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 25,
-      "historyRecentHits": 6,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 20,
-        "repeat": 20,
-        "total": 80
-      },
-      "learningMentions1y": 25,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.005Z",
-      "routeFinalUrl": "https://tenbailabo.com/onepiece-op16",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-07-24T12:11:22.005Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://tenbailabo.com/onepiece-op16",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -2046,17 +1910,17 @@
       "retailPrice": 200,
       "retailPriceLabel": "抽出価格 ¥200",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2065,34 +1929,34 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.500Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.602Z",
       "routeFinalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:21.500Z",
+        "checkedAt": "2026-07-25T00:03:46.602Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
       }
     },
     {
-      "name": "ポケモンカードゲーム サン&ムーン 拡張パック",
+      "name": "ポケモンカードゲーム イーブイズ スペシャルBOX",
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 86,
+      "genreScore": 84,
       "priceData": "取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復14/20",
+      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復12/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "完売由来 / 記事抽出",
@@ -2101,94 +1965,94 @@
       "retailPrice": 200,
       "retailPriceLabel": "抽出価格 ¥200",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 8,
-      "historyRecentHits": 3,
+      "historyHits": 9,
+      "historyRecentHits": 2,
       "historyLastSeen": "2026-07-23T23:59:35.441Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
         "period": 20,
         "price": 20,
-        "repeat": 16,
-        "total": 76
+        "repeat": 14,
+        "total": 74
       },
       "learningMentions1y": 6,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.500Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.602Z",
       "routeFinalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:21.500Z",
+        "checkedAt": "2026-07-25T00:03:46.602Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
       }
     },
     {
-      "name": "ワンピースースースカードゲーム 決戦の… オンラインコミュニティ カテゴリー Adidas NIKE Supreme その他転売情報 ホビー ポケカ 未分類 村上隆 HOME プライバシーポリシー",
+      "name": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 93,
+      "genreScore": 86,
       "priceData": "取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復20/20",
+      "marginSignal": "速報性0/20 導線20/20 期間20/20 価格20/20 反復18/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "完売由来 / 記事抽出",
-      "missingData": "発売後の成約価格、送料サイズ、相場価格",
+      "missingData": "送料サイズ",
       "sourceUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
       "retailPrice": 200,
       "retailPriceLabel": "抽出価格 ¥200",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
+      "marketPrice": 19554,
+      "marketPriceLabel": "相場 19,554円（履歴補完）",
+      "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyHits": 13,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
         "period": 20,
         "price": 20,
-        "repeat": 20,
-        "total": 80
+        "repeat": 18,
+        "total": 78
       },
-      "learningMentions1y": 17,
+      "learningMentions1y": 1,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.500Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.602Z",
       "routeFinalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:21.500Z",
+        "checkedAt": "2026-07-25T00:03:46.602Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2219,9 +2083,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 76,
+      "historyHits": 77,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2230,20 +2094,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.827Z",
+      "routeCheckedAt": "2026-07-25T00:03:47.183Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.827Z",
+        "checkedAt": "2026-07-25T00:03:47.183Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -2272,9 +2136,9 @@
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2283,20 +2147,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.827Z",
+      "routeCheckedAt": "2026-07-25T00:03:47.183Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.827Z",
+        "checkedAt": "2026-07-25T00:03:47.183Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -2325,9 +2189,9 @@
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 30,
+      "historyHits": 31,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2336,20 +2200,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:21.827Z",
+      "routeCheckedAt": "2026-07-25T00:03:47.183Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.827Z",
+        "checkedAt": "2026-07-25T00:03:47.183Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     },
@@ -2377,9 +2241,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 71,
+      "historyHits": 72,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -2390,20 +2254,20 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 71,
+      "learningMentions1y": 72,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.271Z",
+      "routeCheckedAt": "2026-07-25T00:03:47.165Z",
       "routeFinalUrl": "https://emisresaleroom.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-07-24T12:11:22.271Z",
+        "checkedAt": "2026-07-25T00:03:47.165Z",
         "sourceStatus": "200",
         "finalUrl": "https://emisresaleroom.com/",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2423,8 +2287,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、価格データ、取引量、相場価格、公式価格",
       "sourceUrl": "https://error.fc2.com/blog3/",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
       "retailPrice": null,
       "retailPriceLabel": null,
       "category": "unknown",
@@ -2433,9 +2297,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 70,
+      "historyHits": 71,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -2446,17 +2310,17 @@
         "repeat": 20,
         "total": 85
       },
-      "learningMentions1y": 70,
+      "learningMentions1y": 71,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "403",
-      "routeCheckedAt": "2026-07-24T12:11:21.483Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.679Z",
       "routeFinalUrl": "https://error.fc2.com/blog3/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.483Z",
+        "checkedAt": "2026-07-25T00:03:46.679Z",
         "sourceStatus": "403",
         "finalUrl": "https://error.fc2.com/blog3/",
         "summary": "接続未確認",
@@ -2479,8 +2343,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量、相場価格",
       "sourceUrl": "https://error.fc2.com/blog3/",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
       "retailPrice": 25300,
       "retailPriceLabel": "公式価格 ¥25,300（履歴補完）",
       "category": "unknown",
@@ -2489,9 +2353,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 71,
+      "historyHits": 72,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -2502,17 +2366,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 71,
+      "learningMentions1y": 72,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "403",
-      "routeCheckedAt": "2026-07-24T12:11:21.483Z",
+      "routeCheckedAt": "2026-07-25T00:03:46.679Z",
       "routeFinalUrl": "https://error.fc2.com/blog3/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:21.483Z",
+        "checkedAt": "2026-07-25T00:03:46.679Z",
         "sourceStatus": "403",
         "finalUrl": "https://error.fc2.com/blog3/",
         "summary": "接続未確認",
@@ -2535,8 +2399,8 @@
       "adoptionReason": "公式ニュースでコラボ / 発売予定 / X話題を確認。",
       "missingData": "公式URL、定価、成約価格、販売期間、相場価格、公式価格",
       "sourceUrl": "https://x.com/KanaeKanri20674?lang=ja",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-06",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-07",
       "retailPrice": null,
       "retailPriceLabel": null,
       "category": "unknown",
@@ -2545,9 +2409,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 65,
+      "historyHits": 66,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-07-23T23:59:35.441Z",
+      "historyLastSeen": "2026-07-24T12:10:15.806Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -2558,20 +2422,20 @@
         "repeat": 20,
         "total": 85
       },
-      "learningMentions1y": 65,
+      "learningMentions1y": 66,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-07-24T12:11:22.105Z",
+      "routeCheckedAt": "2026-07-25T00:03:47.877Z",
       "routeFinalUrl": "https://x.com/KanaeKanri20674?lang=ja",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-07-24T12:11:22.105Z",
+        "checkedAt": "2026-07-25T00:03:47.877Z",
         "sourceStatus": "200",
         "finalUrl": "https://x.com/KanaeKanri20674?lang=ja",
-        "summary": "接続 07/24 12:11",
+        "summary": "接続 07/25 00:03",
         "issues": []
       }
     }
@@ -3014,10 +2878,10 @@
             "status": "verified",
             "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.928Z",
+            "checkedAt": "2026-07-25T00:03:16.967Z",
             "sourceStatus": "200",
             "finalUrl": "https://x.com/YS_SHINJYUKU",
-            "summary": "接続 07/24 12:10 / 終了日あり / 常時/再販枠",
+            "summary": "接続 07/25 00:03 / 終了日あり / 常時/再販枠",
             "issues": []
           }
         },
@@ -3037,7 +2901,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3057,12 +2921,12 @@
           "url": "https://nyuka-now.com/archives/2459",
           "applyUrl": "https://dorasuta.membercard.jp/lottery",
           "applySource": "auto-extracted",
-          "applyHint": "ドラゴンスター通販の応募ページ",
+          "applyHint": "ドラゴンスター各店の詳細ページ",
           "verification": {
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3120,7 +2984,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3145,7 +3009,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3170,7 +3034,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3228,7 +3092,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3253,7 +3117,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3311,7 +3175,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:45.990Z",
+            "checkedAt": "2026-07-25T00:03:17.106Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3333,10 +3197,10 @@
             "status": "verified",
             "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:46.502Z",
+            "checkedAt": "2026-07-25T00:03:17.449Z",
             "sourceStatus": "200",
             "finalUrl": "https://nyuka-now.com/archives/156404",
-            "summary": "接続 07/24 12:10 / 終了日あり / 常時/再販枠",
+            "summary": "接続 07/25 00:03 / 終了日あり / 常時/再販枠",
             "issues": []
           }
         }
@@ -3388,10 +3252,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:47.221Z",
+            "checkedAt": "2026-07-25T00:03:18.214Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 07/24 12:10 / 終了日あり / 常時/再販枠",
+            "summary": "接続 07/25 00:03 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -3410,10 +3274,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-07-24T12:10:47.221Z",
+            "checkedAt": "2026-07-25T00:03:18.214Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 07/24 12:10 / 終了日あり / 常時/再販枠",
+            "summary": "接続 07/25 00:03 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -3432,7 +3296,7 @@
       "url": "https://x.com/YS_SHINJYUKU",
       "title": "イエローサブマリン新宿店 (@YS_SHINJYUKU) / X",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:45.928Z"
+      "fetchedAt": "2026-07-25T00:03:16.967Z"
     },
     {
       "id": "route:https://dorasuta.membercard.jp/lottery",
@@ -3441,16 +3305,16 @@
       "url": "https://dorasuta.membercard.jp/lottery",
       "title": "Just a moment...",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:45.990Z"
+      "fetchedAt": "2026-07-25T00:03:17.106Z"
     },
     {
       "id": "route:https://nyuka-now.com/archives/156404",
       "ok": true,
       "status": 200,
       "url": "https://nyuka-now.com/archives/156404",
-      "title": "【2026年7月24日更新】ポケモンカード ニンジャスピナーの抽選予約・先着販売・在庫あり・再販入荷情報まとめ│入荷Now",
+      "title": "【2026年7月25日更新】ポケモンカード ニンジャスピナーの抽選予約・先着販売・在庫あり・再販入荷情報まとめ│入荷Now",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:46.502Z"
+      "fetchedAt": "2026-07-25T00:03:17.449Z"
     },
     {
       "id": "route:https://snkrdunk.com/articles/30254/",
@@ -3459,7 +3323,7 @@
       "url": "https://snkrdunk.com/articles/30254/",
       "title": "【ポケカ】インフェルノXの再販はいつ？再販入荷情報まとめ【7/3更新】 | スニーカーダンク",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:47.221Z"
+      "fetchedAt": "2026-07-25T00:03:18.214Z"
     }
   ],
   "archivedConcreteTrends": [
@@ -3480,22 +3344,22 @@
     {
       "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
       "source": "公式",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ドラクエ メタリックモンスターズ在庫薄",
       "source": "公式",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケカ抽選・再販速報",
       "source": "公式",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-22",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-23",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
@@ -3513,14 +3377,14 @@
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 3h",
+      "keyword": "ポケモンカード情報 @pokecachan 15h",
       "source": "@pokecachan",
       "startDate": "2026-07-31",
       "endDate": "2026-08-13",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 5h",
+      "keyword": "ポケモンカード情報 @pokecachan 17h",
       "source": "@pokecachan",
       "startDate": "2026-07-31",
       "endDate": "2026-08-13",
@@ -3529,8 +3393,8 @@
     {
       "keyword": "ポケカ再販・抽選情報",
       "source": "公式",
-      "startDate": "2026-07-24",
-      "endDate": "2026-08-13",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-14",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
@@ -3555,129 +3419,122 @@
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック スカーレットex / バイオレットex",
+      "source": "転売LABO",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事 転売・副業初心者も大歓迎！転売/せどり情報コミュニティ",
       "source": "転売LABO",
-      "startDate": "2024-01-10",
-      "endDate": "2024-09-10",
+      "startDate": "2023-01-20",
+      "endDate": "2024-01-10",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック 黒炎の支配者 BOX",
+      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 強化拡張パック",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ポケモンカードゲーム シルクスクリーンプリント",
-      "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-07-28",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 覚醒の鼓動 この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
-      "source": "転売LABO",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ワンピースースースカードゲームの3周年を記念したグッズセット",
-      "source": "転売LABO",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
-      "source": "転売LABO",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ワンピースースースカード 転売",
-      "source": "転売LABO",
-      "startDate": "2020-07-17",
-      "endDate": "2022-03-04",
+      "startDate": "2023-09-22",
+      "endDate": "2024-12-06",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
       "source": "転売LABO",
-      "startDate": "2024-04-26",
+      "startDate": "2023-09-22",
       "endDate": "2024-12-06",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック",
+      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 烈火の闘気",
       "source": "転売LABO",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ワンピースースースカードゲームの3周年を記念したグッズセット",
+      "source": "転売LABO",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
+      "source": "転売LABO",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ワンピースースースカード 転売",
+      "source": "転売LABO",
+      "startDate": "2022-09-30",
+      "endDate": "2023-01-22",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ",
+      "source": "転売LABO",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の… 次の記事",
       "source": "転売LABO",
-      "startDate": "2024-04-26",
-      "endDate": "2024-12-06",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "ポケモンカードゲーム ソード＆シールド 拡張パック パラダイムトリガー",
-      "source": "転売LABO",
-      "startDate": "2021-04-12",
-      "endDate": "2023-03-03",
+      "startDate": "2023-01-26",
+      "endDate": "2026-05-22",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事",
       "source": "転売LABO",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の刻",
       "source": "転売LABO",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ワンピースースースカードゲームのブースターパック第16弾",
       "source": "転売LABO",
-      "startDate": "2020-06-05",
-      "endDate": "2024-02-10",
+      "startDate": "2022-04-19",
+      "endDate": "2024-04-11",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム 転売",
       "source": "転売LABO",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケモンカードゲーム サン&ムーン 拡張パック",
+      "keyword": "ポケモンカードゲーム イーブイズ スペシャルBOX",
       "source": "転売LABO",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ワンピースースースカードゲーム 決戦の… オンラインコミュニティ カテゴリー Adidas NIKE Supreme その他転売情報 ホビー ポケカ 未分類 村上隆 HOME プライバシーポリシー",
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
       "source": "転売LABO",
-      "startDate": "2022-02-12",
-      "endDate": "2024-03-25",
+      "startDate": "2022-06-17",
+      "endDate": "2023-01-26",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
@@ -3719,13 +3576,13 @@
       "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "ドラクエ メタリックモンスターズ在庫薄",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "ポケカ周辺サプライ新作",
@@ -3737,7 +3594,7 @@
       "keyword": "ポケカ抽選・再販速報",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "ポケカ予約速報@ポケモンカード情報",
@@ -3752,13 +3609,13 @@
       "startDate": "2026-07-31"
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 3h",
+      "keyword": "ポケモンカード情報 @pokecachan 15h",
       "type": "specific",
       "source": "@pokecachan",
       "startDate": "2026-07-31"
     },
     {
-      "keyword": "ポケモンカード情報 @pokecachan 5h",
+      "keyword": "ポケモンカード情報 @pokecachan 17h",
       "type": "specific",
       "source": "@pokecachan",
       "startDate": "2026-07-31"
@@ -3767,7 +3624,7 @@
       "keyword": "ポケカ再販・抽選情報",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "ポケカ抽選・再販まとめ",
@@ -3797,13 +3654,13 @@
       "keyword": "コラボG-SHOCK / CasiOak新作",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "コラボG",
       "type": "broad",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "品薄・完売ブログ監視",
@@ -3812,124 +3669,130 @@
       "startDate": "2026-07-21"
     },
     {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック スカーレットex / バイオレットex",
+      "type": "specific",
+      "source": "転売LABO",
+      "startDate": "2023-01-20"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック スカーレットex",
+      "type": "broad",
+      "source": "転売LABO",
+      "startDate": "2023-01-20"
+    },
+    {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事 転売・副業初心者も大歓迎！転売/せどり情報コミュニティ",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2024-01-10"
+      "startDate": "2023-01-20"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事 転売・副業初心者も大歓迎！転売",
       "type": "broad",
       "source": "転売LABO",
-      "startDate": "2024-01-10"
+      "startDate": "2023-01-20"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
+      "startDate": "2023-09-22"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック 黒炎の支配者 BOX",
+      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 強化拡張パック",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
-    },
-    {
-      "keyword": "ポケモンカードゲーム シルクスクリーンプリント",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2023-05-27"
-    },
-    {
-      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 覚醒の鼓動 この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2020-07-17"
-    },
-    {
-      "keyword": "ワンピースースースカードゲームの3周年を記念したグッズセット",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2020-07-17"
-    },
-    {
-      "keyword": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2020-07-17"
-    },
-    {
-      "keyword": "ワンピースースースカード 転売",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2020-07-17"
+      "startDate": "2023-09-22"
     },
     {
       "keyword": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2024-04-26"
+      "startDate": "2023-09-22"
     },
     {
-      "keyword": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック",
+      "keyword": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 烈火の闘気",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2024-04-26"
+      "startDate": "2022-09-30"
+    },
+    {
+      "keyword": "ワンピースースースカードゲームの3周年を記念したグッズセット",
+      "type": "specific",
+      "source": "転売LABO",
+      "startDate": "2022-09-30"
+    },
+    {
+      "keyword": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
+      "type": "specific",
+      "source": "転売LABO",
+      "startDate": "2022-09-30"
+    },
+    {
+      "keyword": "ワンピースースースカード 転売",
+      "type": "specific",
+      "source": "転売LABO",
+      "startDate": "2022-09-30"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ",
+      "type": "specific",
+      "source": "転売LABO",
+      "startDate": "2023-01-26"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース",
+      "type": "broad",
+      "source": "転売LABO",
+      "startDate": "2023-01-26"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の… 次の記事",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2024-04-26"
-    },
-    {
-      "keyword": "ポケモンカードゲーム ソード＆シールド 拡張パック パラダイムトリガー",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2021-04-12"
+      "startDate": "2023-01-26"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA… 次の記事",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2020-06-05"
+      "startDate": "2022-04-19"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の刻",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2020-06-05"
+      "startDate": "2022-04-19"
     },
     {
       "keyword": "ワンピースースースカードゲームのブースターパック第16弾",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2020-06-05"
-    },
-    {
-      "keyword": "ワンピースースースカードは過去作もプレ値が付いているものが多く",
-      "type": "specific",
-      "source": "転売LABO",
-      "startDate": "2020-06-05"
+      "startDate": "2022-04-19"
     },
     {
       "keyword": "ポケモンカードゲーム 転売",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2022-02-12"
+      "startDate": "2022-06-17"
     },
     {
-      "keyword": "ポケモンカードゲーム サン&ムーン 拡張パック",
+      "keyword": "ポケモンカードゲーム イーブイズ スペシャルBOX",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2022-02-12"
+      "startDate": "2022-06-17"
     },
     {
-      "keyword": "ワンピースースースカードゲーム 決戦の… オンラインコミュニティ カテゴリー Adidas NIKE Supreme その他転売情報 ホビー ポケカ 未分類 村上隆 HOME プライバシーポリシー",
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース / サイバージャッジ この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2022-02-12"
+      "startDate": "2022-06-17"
+    },
+    {
+      "keyword": "ポケモンカードゲーム スカーレット&バイオレット 拡張パック ワイルドフォース",
+      "type": "broad",
+      "source": "転売LABO",
+      "startDate": "2022-06-17"
     },
     {
       "keyword": "ポケカ",
@@ -3959,32 +3822,32 @@
       "keyword": "プレ値SNS監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "しなかん 品薄完売監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     },
     {
       "keyword": "転売ヤーかなえ 品薄監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-07-24"
+      "startDate": "2026-07-25"
     }
   ],
   "productLearning": [
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリースライムロトブルーバージョン",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョン",
-      "mentions": 81,
-      "periodFillRate": 0.7654320987654321,
+      "mentions": 82,
+      "periodFillRate": 0.7682926829268293,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": 3280,
       "firstSeen": "2026-05-29T05:25:38.009Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "一番くじワンピースエルバフ編giantbashvol1vol2",
@@ -4077,90 +3940,90 @@
     {
       "key": "gshockcocacolaga2100cc3ajr",
       "name": "G-SHOCK × Coca-Cola GA-2100CC-3AJR",
-      "mentions": 79,
-      "periodFillRate": 0.7848101265822784,
+      "mentions": 80,
+      "periodFillRate": 0.7875,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": 19554,
       "firstSeen": "2026-05-29T05:40:54.156Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリーバトルはぐれメタル",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル",
-      "mentions": 76,
-      "periodFillRate": 0.8157894736842105,
+      "mentions": 77,
+      "periodFillRate": 0.8181818181818182,
       "routeFillRate": 1,
       "retailMedian": 2860,
       "marketMedian": 4580,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリーキングスライムロトブルー系",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリー キングスライム ロトブルー系",
-      "mentions": 76,
-      "periodFillRate": 0.8157894736842105,
+      "mentions": 77,
+      "periodFillRate": 0.8181818181818182,
       "routeFillRate": 1,
       "retailMedian": 2530,
       "marketMedian": null,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲーム限定デッキシールドプレイマット",
       "name": "ポケモンカードゲーム 限定デッキシールド・プレイマット",
-      "mentions": 76,
-      "periodFillRate": 0.8157894736842105,
+      "mentions": 77,
+      "periodFillRate": 0.8181818181818182,
       "routeFillRate": 1,
       "retailMedian": 770,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "garrackonepieceスマートウォッチシャンクスモデル",
       "name": "GARRACK ONE PIECE スマートウォッチ シャンクスモデル",
-      "mentions": 76,
-      "periodFillRate": 0.8157894736842105,
+      "mentions": 77,
+      "periodFillRate": 0.8181818181818182,
       "routeFillRate": 1,
       "retailMedian": 12980,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "garrackonepieceスマートウォッチルフィモデル",
       "name": "GARRACK ONE PIECE スマートウォッチ ルフィモデル",
-      "mentions": 76,
-      "periodFillRate": 0.8157894736842105,
+      "mentions": 77,
+      "periodFillRate": 0.8181818181818182,
       "routeFillRate": 1,
       "retailMedian": 12980,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "転売はかせ転売labo品薄完売ウォッチ",
       "name": "転売はかせ＠転売LABO 品薄完売ウォッチ",
-      "mentions": 72,
-      "periodFillRate": 0.8611111111111112,
+      "mentions": 73,
+      "periodFillRate": 0.863013698630137,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:35:41.944Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "えみのせどり部屋品薄ウォッチ",
       "name": "えみのせどり部屋 品薄ウォッチ",
-      "mentions": 71,
-      "periodFillRate": 0.8732394366197183,
+      "mentions": 72,
+      "periodFillRate": 0.875,
       "routeFillRate": 1,
       "retailMedian": 33000,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:38:40.833Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "3度の飯よりプレミアム監視",
@@ -4176,35 +4039,35 @@
     {
       "key": "しなかん品薄完売ウォッチ",
       "name": "しなかん 品薄完売ウォッチ",
-      "mentions": 71,
-      "periodFillRate": 0.8732394366197183,
+      "mentions": 72,
+      "periodFillRate": 0.875,
       "routeFillRate": 1,
       "retailMedian": 25300,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:38:40.833Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "3度の飯よりプレミアム完売ウォッチ",
       "name": "3度の飯よりプレミアム 完売ウォッチ",
-      "mentions": 70,
-      "periodFillRate": 0.8857142857142857,
+      "mentions": 71,
+      "periodFillRate": 0.8873239436619719,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:39:50.495Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "転売ヤーかなえ品薄ウォッチ",
       "name": "転売ヤーかなえ 品薄ウォッチ",
-      "mentions": 65,
-      "periodFillRate": 0.9538461538461539,
+      "mentions": 66,
+      "periodFillRate": 0.9545454545454546,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:54:23.801Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "フィギュアプラモデル",
@@ -4572,13 +4435,13 @@
     {
       "key": "ポケモンカードゲームmega拡張パック",
       "name": "ポケモンカードゲーム MEGA 拡張パック",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 360,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカード転売のやり方とは",
@@ -4594,35 +4457,35 @@
     {
       "key": "ポケモンカードゲームスカーレットバイオレット拡張パック黒炎の支配者box",
       "name": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック 黒炎の支配者 BOX",
-      "mentions": 8,
+      "mentions": 9,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 360,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-22T12:19:29.337Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームmega次の記事転売副業初心者も大歓迎転売せどり情報コミュニティ",
       "name": "ポケモンカードゲーム MEGA… 次の記事 転売・副業初心者も大歓迎！転売/せどり情報コミュニティ",
-      "mentions": 3,
+      "mentions": 4,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 56100,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-22T12:19:29.337Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲーム転売",
       "name": "ポケモンカードゲーム 転売",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットバイオレット拡張パック変幻の仮面",
@@ -4638,13 +4501,13 @@
     {
       "key": "ポケモンカードゲームハイクラスパック",
       "name": "ポケモンカードゲーム ハイクラスパック",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 5500,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームmegaハイクラスパック",
@@ -4671,13 +4534,13 @@
     {
       "key": "ポケモンカードゲームmega次の記事",
       "name": "ポケモンカードゲーム MEGA … 次の記事",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームイーブイズスペシャルbox",
@@ -4704,24 +4567,24 @@
     {
       "key": "ポケカ",
       "name": "ポケカ",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットampバイオレット拡張パック",
       "name": "ポケモンカードゲーム スカーレット&amp;バイオレット 拡張パック",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 5400,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "品薄注意報1",
@@ -5199,35 +5062,35 @@
     {
       "key": "ワンピースースースカードゲーム決戦の刻",
       "name": "ワンピースースースカードゲーム 決戦の刻",
-      "mentions": 28,
+      "mentions": 29,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": null,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ワンピースースースカードゲームのブースターパック第16弾",
       "name": "ワンピースースースカードゲームのブースターパック第16弾",
-      "mentions": 28,
+      "mentions": 29,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": null,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ワンピースースースカードは過去作もプレ値が付いているものが多く",
       "name": "ワンピースースースカードは過去作もプレ値が付いているものが多く",
-      "mentions": 25,
+      "mentions": 26,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": null,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードスカーレットバイオレット拡張パックスノーハザードクレイバースト",
@@ -5243,24 +5106,24 @@
     {
       "key": "ワンピースースースカードゲーム決戦のオンラインコミュニティカテゴリーadidasnikesupremeその他転売情報ホビーポケカ未分類村上隆homeプライバシーポリシー",
       "name": "ワンピースースースカードゲーム 決戦の… オンラインコミュニティ カテゴリー Adidas NIKE Supreme その他転売情報 ホビー ポケカ 未分類 村上隆 HOME プライバシーポリシー",
-      "mentions": 17,
+      "mentions": 18,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": null,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットバイオレットハイクラスパックテラスタルフェスex",
       "name": "ポケモンカードゲーム スカーレット&バイオレット ハイクラスパック テラスタルフェスex",
-      "mentions": 7,
+      "mentions": 8,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 360,
       "marketMedian": 19554,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードスカーレットバイオレット強化拡張パック151この記事を書いた人転売博士在籍メンバー数900人を超える転売情報コミュニティ",
@@ -5298,13 +5161,13 @@
     {
       "key": "ポケモンカードゲームシルクスクリーンプリント",
       "name": "ポケモンカードゲーム シルクスクリーンプリント",
-      "mentions": 4,
+      "mentions": 5,
       "periodFillRate": 1,
       "routeFillRate": 1,
-      "retailMedian": 360,
+      "retailMedian": 200,
       "marketMedian": 19554,
       "firstSeen": "2026-06-02T01:44:35.872Z",
-      "lastSeen": "2026-07-22T12:19:29.337Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームclassic",
@@ -5331,13 +5194,13 @@
     {
       "key": "ポケモンカードゲームサンムーン拡張パック",
       "name": "ポケモンカードゲーム サン&ムーン 拡張パック",
-      "mentions": 6,
+      "mentions": 7,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": 19554,
       "firstSeen": "2026-06-02T09:32:12.082Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームソードシールドハイクラスパック",
@@ -5397,13 +5260,13 @@
     {
       "key": "ポケモンカードゲームスカーレットバイオレット拡張パック",
       "name": "ポケモンカードゲーム スカーレット＆バイオレット 拡張パック",
-      "mentions": 8,
+      "mentions": 9,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": 19554,
       "firstSeen": "2026-06-02T09:37:58.223Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットバイオレットハイクラスパックシャイニートレジャーex",
@@ -5430,13 +5293,13 @@
     {
       "key": "ポケモンカードゲームソードシールド拡張パックパラダイムトリガー",
       "name": "ポケモンカードゲーム ソード＆シールド 拡張パック パラダイムトリガー",
-      "mentions": 2,
+      "mentions": 3,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 484000,
-      "marketMedian": null,
+      "marketMedian": 19554,
       "firstSeen": "2026-06-02T11:00:27.307Z",
-      "lastSeen": "2026-07-05T12:07:12.362Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードスカーレットバイオレット拡張パックスノーハザードクレイバーストこの記事を書いた人転売博士在籍メンバー数900人を超える転売情報コミュニティ",
@@ -5474,35 +5337,35 @@
     {
       "key": "ワンピースースースカードゲームの3周年を記念したグッズセット",
       "name": "ワンピースースースカードゲームの3周年を記念したグッズセット",
-      "mentions": 15,
+      "mentions": 16,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 15400,
       "marketMedian": null,
       "firstSeen": "2026-06-04T01:42:19.951Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
       "name": "ワンピースースースカードはアニバーサリー系のセットが毎回高騰しており",
-      "mentions": 15,
+      "mentions": 16,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 15400,
       "marketMedian": null,
       "firstSeen": "2026-06-04T01:42:19.951Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ワンピースースースカード転売",
       "name": "ワンピースースースカード 転売",
-      "mentions": 15,
+      "mentions": 16,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 15400,
       "marketMedian": null,
       "firstSeen": "2026-06-04T01:42:19.951Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "一番くじdisneyworldofimagination",
@@ -5617,13 +5480,13 @@
     {
       "key": "ドラゴンボールスーパーカードゲームフュージョンワールドブースターパック覚醒の鼓動この記事を書いた人転売博士在籍メンバー数900人を超える転売情報コミュニティ",
       "name": "ドラゴンボールスーパーカードゲーム フュージョンワールド ブースターパック 覚醒の鼓動 この記事を書いた人 転売博士 在籍メンバー数900人を超える転売情報コミュニティ",
-      "mentions": 1,
+      "mentions": 2,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 396000,
       "marketMedian": null,
       "firstSeen": "2026-06-06T12:03:08.513Z",
-      "lastSeen": "2026-06-06T12:03:08.513Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "一番くじワンピースースース赤髪海賊団",
@@ -5837,13 +5700,13 @@
     {
       "key": "ワンピースースースカードゲーム決戦の次の記事",
       "name": "ワンピースースースカードゲーム 決戦の… 次の記事",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 15400,
       "marketMedian": null,
       "firstSeen": "2026-06-30T13:01:19.052Z",
-      "lastSeen": "2026-07-23T23:59:35.441Z"
+      "lastSeen": "2026-07-24T12:10:15.806Z"
     },
     {
       "key": "ポケモンカードゲームソードシールド25thanniversarygoldenboxこの記事を書いた人転売博士在籍メンバー数900人を超える転売情報コミュニティ",
@@ -6258,46 +6121,46 @@
       "id": "pokemon-official-abyss-eye",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=25&dateLowerM=1&dateLowerY=2026&dateUpperD=20&dateUpperM=4&dateUpperY=2027&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=26&dateLowerM=1&dateLowerY=2026&dateUpperD=21&dateUpperM=4&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:16.162Z"
+      "fetchedAt": "2026-07-25T00:02:43.707Z"
     },
     {
       "id": "pokemon-official-mega-dream-ex",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=25&dateLowerM=1&dateLowerY=2026&dateUpperD=20&dateUpperM=4&dateUpperY=2027&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=26&dateLowerM=1&dateLowerY=2026&dateUpperD=21&dateUpperM=4&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:16.863Z"
+      "fetchedAt": "2026-07-25T00:02:44.238Z"
     },
     {
       "id": "pokemon-official-munikisu-zero",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=25&dateLowerM=1&dateLowerY=2026&dateUpperD=20&dateUpperM=4&dateUpperY=2027&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=26&dateLowerM=1&dateLowerY=2026&dateUpperD=21&dateUpperM=4&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:17.043Z"
+      "fetchedAt": "2026-07-25T00:02:44.359Z"
     },
     {
       "id": "pokemon-official-ninja-spinner",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=25&dateLowerM=1&dateLowerY=2026&dateUpperD=20&dateUpperM=4&dateUpperY=2027&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=26&dateLowerM=1&dateLowerY=2026&dateUpperD=21&dateUpperM=4&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:17.706Z"
+      "fetchedAt": "2026-07-25T00:02:44.861Z"
     },
     {
       "id": "pokemon-official-inferno-x",
       "ok": true,
       "status": 200,
-      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=25&dateLowerM=1&dateLowerY=2026&dateUpperD=20&dateUpperM=4&dateUpperY=2027&productType=expansion",
+      "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=26&dateLowerM=1&dateLowerY=2026&dateUpperD=21&dateUpperM=4&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:17.878Z"
+      "fetchedAt": "2026-07-25T00:02:45.024Z"
     },
     {
       "id": "dragonquest-40th",
@@ -6306,7 +6169,7 @@
       "url": "https://www.dragonquest.jp/news/detail/4245/",
       "title": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！ | ドラクエ・パラダイス(ドラパラ)ドラゴンクエスト公式サイト | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:18.203Z",
+      "fetchedAt": "2026-07-25T00:02:45.389Z",
       "newsTitle": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！",
       "newsDate": "2026-05-27",
       "signals": [
@@ -6328,9 +6191,9 @@
       "url": "https://www.sej.co.jp/products/hhkuji2605.html",
       "title": "ページが見つかりません｜セブン‐イレブン",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:19.032Z",
+      "fetchedAt": "2026-07-25T00:02:46.108Z",
       "newsTitle": "ページが見つかりません｜セブン‐イレブン",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [
         "コラボ",
         "記念コンテンツ",
@@ -6346,7 +6209,7 @@
       "url": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448",
       "title": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4 | 一番くじONLINE",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:20.265Z",
+      "fetchedAt": "2026-07-25T00:02:46.809Z",
       "newsTitle": "一番くじ 機動戦士Gundam GQuuuuuuX（ジークアクス） vol.4",
       "newsDate": "2026-05-22",
       "signals": [
@@ -6364,9 +6227,9 @@
       "url": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/",
       "title": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:20.866Z",
+      "fetchedAt": "2026-07-25T00:02:47.218Z",
       "newsTitle": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6378,7 +6241,7 @@
       "url": "https://hobby.watch.impress.co.jp/docs/news/2044682.html",
       "title": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:22.100Z",
+      "fetchedAt": "2026-07-25T00:02:47.906Z",
       "newsTitle": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "newsDate": "2025-09-04",
       "signals": [
@@ -6400,9 +6263,9 @@
       "url": "https://p-bandai.jp/global_newpc.html",
       "title": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:23.191Z",
+      "fetchedAt": "2026-07-25T00:02:48.183Z",
       "newsTitle": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6414,9 +6277,9 @@
       "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "title": "",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:23.659Z",
+      "fetchedAt": "2026-07-25T00:02:48.782Z",
       "newsTitle": "はぐれメタル",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6428,9 +6291,9 @@
       "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "title": "404- ページが見つかりません。",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:23.979Z",
+      "fetchedAt": "2026-07-25T00:02:48.937Z",
       "newsTitle": "404- ページが見つかりません。",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6442,7 +6305,7 @@
       "url": "https://www.pokemoncenter-online.com/",
       "title": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:24.423Z",
+      "fetchedAt": "2026-07-25T00:02:49.170Z",
       "newsTitle": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "newsDate": "2026-06-26",
       "signals": [
@@ -6463,9 +6326,9 @@
       "url": "https://x.com/pokecachan",
       "title": "ポケカ予約速報@ポケモンカード情報 (@pokecachan) / X",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:25.028Z",
+      "fetchedAt": "2026-07-25T00:02:50.170Z",
       "newsTitle": "ポケカ予約速報@ポケモンカード情報 (@pokecachan) / X",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [
         "周年",
         "発売予定",
@@ -6481,9 +6344,9 @@
       "url": "https://x.com/PokeGetoinfoMain",
       "title": "User Profile Not Found - X | 404 Error",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:28.111Z",
+      "fetchedAt": "2026-07-25T00:02:56.902Z",
       "newsTitle": "User Profile Not Found - X",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6495,7 +6358,7 @@
       "url": "https://x.com/pokecamatomeru",
       "title": "ポケカ速報＠予約抽選・最新情報まとめ (@pokecamatomeru) / X",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:28.567Z",
+      "fetchedAt": "2026-07-25T00:02:57.980Z",
       "newsTitle": "ポケカ速報＠予約抽選・最新情報まとめ (@pokecamatomeru) / X",
       "newsDate": "2026-07-31",
       "signals": [
@@ -6513,7 +6376,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:32.317Z",
+      "fetchedAt": "2026-07-25T00:03:05.744Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -6532,7 +6395,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:32.410Z",
+      "fetchedAt": "2026-07-25T00:03:05.784Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -6551,9 +6414,9 @@
       "url": "https://gshock.casio.com/jp/products/recommend/",
       "title": "Access Denied",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:32.501Z",
+      "fetchedAt": "2026-07-25T00:03:05.845Z",
       "newsTitle": "Access Denied",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [],
       "expandedScanned": 0,
       "expandedGenerated": 0
@@ -6565,14 +6428,14 @@
       "url": "https://tenbailabo.com/",
       "title": "転売博士の転売LABO | 転売・せどりで稼げるおすすめの商品（アパレル、スニーカー、ポケカ、ホビーなど）を紹介するブログ。副業を始めたい初心者の方も歓迎！メンバー800人超えの転売オンラインサロンのオーナーもやってます",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:33.457Z",
+      "fetchedAt": "2026-07-25T00:03:07.001Z",
       "newsTitle": "転売博士の転売LABO",
       "newsDate": "2026-07-21",
       "signals": [
         "発売予定"
       ],
       "expandedScanned": 14,
-      "expandedGenerated": 22
+      "expandedGenerated": 20
     },
     {
       "id": "emi-sedori-room-watch",
@@ -6581,7 +6444,7 @@
       "url": "https://emisresaleroom.com/",
       "title": "絵美のせどり部屋",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:38.879Z",
+      "fetchedAt": "2026-07-25T00:03:11.553Z",
       "newsTitle": "絵美のせどり部屋",
       "newsDate": "2026-07-24",
       "signals": [
@@ -6599,9 +6462,9 @@
       "url": "https://error.fc2.com/blog3/",
       "title": "403 Error - FC2Blog",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:39.562Z",
+      "fetchedAt": "2026-07-25T00:03:11.614Z",
       "newsTitle": "403 Error - FC2Blog",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [
         "公式グッズ",
         "可愛い系"
@@ -6616,9 +6479,9 @@
       "url": "https://error.fc2.com/blog3/",
       "title": "403 Error - FC2Blog",
       "keywordFound": false,
-      "fetchedAt": "2026-07-24T12:10:40.313Z",
+      "fetchedAt": "2026-07-25T00:03:11.646Z",
       "newsTitle": "403 Error - FC2Blog",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [
         "公式グッズ",
         "可愛い系"
@@ -6633,9 +6496,9 @@
       "url": "https://x.com/KanaeKanri20674?lang=ja",
       "title": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:10:40.835Z",
+      "fetchedAt": "2026-07-25T00:03:12.901Z",
       "newsTitle": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
-      "newsDate": "2026-07-24",
+      "newsDate": "2026-07-25",
       "signals": [
         "コラボ",
         "発売予定",
@@ -6654,7 +6517,7 @@
       "url": "https://www.dragonquest.jp/news/detail/4245/",
       "title": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！ | ドラクエ・パラダイス(ドラパラ)ドラゴンクエスト公式サイト | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.410Z"
+      "fetchedAt": "2026-07-25T00:03:40.740Z"
     },
     {
       "id": "candidate-route:https://store.jp.square-enix.com/category/263/MW36259.html",
@@ -6663,7 +6526,7 @@
       "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "title": "",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.445Z"
+      "fetchedAt": "2026-07-25T00:03:40.741Z"
     },
     {
       "id": "candidate-route:https://store.jp.square-enix.com/category/DQMM_R2601/",
@@ -6672,7 +6535,7 @@
       "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "title": "404- ページが見つかりません。",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.282Z"
+      "fetchedAt": "2026-07-25T00:03:40.633Z"
     },
     {
       "id": "candidate-route:https://www.pokemoncenter-online.com/",
@@ -6681,7 +6544,7 @@
       "url": "https://www.pokemoncenter-online.com/",
       "title": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.355Z"
+      "fetchedAt": "2026-07-25T00:03:40.744Z"
     },
     {
       "id": "candidate-route:https://one-piece.com/news/79661/index.html",
@@ -6690,7 +6553,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.159Z"
+      "fetchedAt": "2026-07-25T00:03:40.540Z"
     },
     {
       "id": "candidate-route:https://gshock.casio.com/jp/products/recommend/",
@@ -6699,7 +6562,7 @@
       "url": "https://gshock.casio.com/jp/products/recommend/",
       "title": "Access Denied",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:19.299Z"
+      "fetchedAt": "2026-07-25T00:03:40.536Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/",
@@ -6708,7 +6571,7 @@
       "url": "https://tenbailabo.com/",
       "title": "転売博士の転売LABO | 転売・せどりで稼げるおすすめの商品（アパレル、スニーカー、ポケカ、ホビーなど）を紹介するブログ。副業を始めたい初心者の方も歓迎！メンバー800人超えの転売オンラインサロンのオーナーもやってます",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:20.917Z"
+      "fetchedAt": "2026-07-25T00:03:41.876Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/levis-s506xx-1944-jacket",
@@ -6717,16 +6580,16 @@
       "url": "https://tenbailabo.com/levis-s506xx-1944-jacket",
       "title": "【2026/7/30〜抽選】Levi&#8217;s® Vintage Clothing S506XX 1944 Jacket | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.053Z"
+      "fetchedAt": "2026-07-25T00:03:42.028Z"
     },
     {
       "id": "candidate-route:https://www.amazon.co.jp/dp/B0GP928YDZ",
       "ok": true,
       "status": 200,
       "url": "https://www.amazon.co.jp/dp/B0GP928YDZ",
-      "title": "Amazon.co.jp: ポケモンカードゲーム MEGA 拡張パック ストームエメラルダ BOX : おもちゃ",
+      "title": "Amazon.co.jp",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:20.521Z"
+      "fetchedAt": "2026-07-25T00:03:40.943Z"
     },
     {
       "id": "candidate-route:https://p-bandai.jp/item/item-1000249930/",
@@ -6735,7 +6598,7 @@
       "url": "https://p-bandai.jp/global_newpc.html",
       "title": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:20.229Z"
+      "fetchedAt": "2026-07-25T00:03:45.911Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/pokeca-30th-celebration",
@@ -6744,16 +6607,7 @@
       "url": "https://tenbailabo.com/pokeca-30th-celebration",
       "title": "【2026/9/16（水）発売】ポケモンカードゲーム MEGA 拡張パック「30th CELEBRATION」 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.259Z"
-    },
-    {
-      "id": "candidate-route:https://tenbailabo.com/otsukalotec-5kai",
-      "ok": true,
-      "status": 200,
-      "url": "https://tenbailabo.com/otsukalotec-5kai",
-      "title": "【2026/6/6〜抽選】大塚ローテック 5号改 | 転売博士の転売LABO",
-      "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.449Z"
+      "fetchedAt": "2026-07-25T00:03:46.506Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/onepiece-op16",
@@ -6762,7 +6616,7 @@
       "url": "https://tenbailabo.com/onepiece-op16",
       "title": "【2026/5/30（土）発売】ワンピースカードゲーム 決戦の刻【OP-16】 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:22.005Z"
+      "fetchedAt": "2026-07-25T00:03:46.534Z"
     },
     {
       "id": "candidate-route:https://www.pokemoncenter-online.com/lottery/landing-page.html",
@@ -6771,7 +6625,7 @@
       "url": "https://www.pokemoncenter-online.com/lottery/landing-page.html",
       "title": "抽選応募方法紹介｜【公式】ポケモンセンターオンライン",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.500Z"
+      "fetchedAt": "2026-07-25T00:03:46.602Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
@@ -6780,7 +6634,7 @@
       "url": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "title": "「ポケカ」の記事一覧 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.827Z"
+      "fetchedAt": "2026-07-25T00:03:47.183Z"
     },
     {
       "id": "candidate-route:https://emisresaleroom.com/",
@@ -6789,7 +6643,7 @@
       "url": "https://emisresaleroom.com/",
       "title": "絵美のせどり部屋",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:22.271Z"
+      "fetchedAt": "2026-07-25T00:03:47.165Z"
     },
     {
       "id": "candidate-route:https://error.fc2.com/blog3/",
@@ -6798,7 +6652,7 @@
       "url": "https://error.fc2.com/blog3/",
       "title": "403 Error - FC2Blog",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:21.483Z"
+      "fetchedAt": "2026-07-25T00:03:46.679Z"
     },
     {
       "id": "candidate-route:https://x.com/KanaeKanri20674?lang=ja",
@@ -6807,7 +6661,7 @@
       "url": "https://x.com/KanaeKanri20674?lang=ja",
       "title": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
       "keywordFound": true,
-      "fetchedAt": "2026-07-24T12:11:22.105Z"
+      "fetchedAt": "2026-07-25T00:03:47.877Z"
     }
   ]
 }
