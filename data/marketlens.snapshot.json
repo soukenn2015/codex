@@ -2,26 +2,26 @@
   "metadata": {
     "source": "collector",
     "status": "partial",
-    "updatedAt": "2026-11-27T04:48:08.856Z",
-    "reachableSources": 16,
+    "updatedAt": "2026-11-27T19:42:36.679Z",
+    "reachableSources": 19,
     "totalSources": 25,
     "manualDeals": 2,
-    "verifiedRouteTargets": 2,
+    "verifiedRouteTargets": 3,
     "totalRouteTargets": 4,
-    "verifiedCandidateRouteTargets": 18,
-    "totalCandidateRouteTargets": 22,
-    "candidateRouteFailures": 4,
+    "verifiedCandidateRouteTargets": 20,
+    "totalCandidateRouteTargets": 23,
+    "candidateRouteFailures": 3,
     "candidateKpi": {
-      "total": 47,
+      "total": 50,
       "ready": 14,
       "missingPeriod": 0,
-      "missingPrice": 21,
+      "missingPrice": 24,
       "stalePrice": 0,
       "missingRoute": 12,
-      "blogSns": 41,
-      "withProductName": 47,
-      "routeChecked": 47,
-      "routeAlive": 21
+      "blogSns": 44,
+      "withProductName": 50,
+      "routeChecked": 50,
+      "routeAlive": 25
     },
     "learningProducts1y": 548
   },
@@ -97,9 +97,9 @@
       "action": "公式ニュース確認: ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョンの発売/予約導線を確認",
       "startDate": "2026-05-27",
       "endDate": "2026-06-25",
-      "historyHits": 265,
+      "historyHits": 266,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "DMM通販 プレミアホビー商品抽選販売",
@@ -112,9 +112,9 @@
       "action": "公式ニュース確認: DMM通販 プレミアホビー商品抽選販売の発売/予約導線を確認",
       "startDate": "2025-09-04",
       "endDate": "2025-10-03",
-      "historyHits": 265,
+      "historyHits": 266,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "プレミアムバンダイ限定 S.H.Figuarts",
@@ -127,9 +127,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-17",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ドラクエ メタリックモンスターズ在庫薄",
@@ -142,9 +142,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-17",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケカ周辺サプライ新作",
@@ -157,13 +157,13 @@
       "action": "公式ニュース確認: ポケモンカードゲーム 限定デッキシールド・プレイマットの発売/予約導線を確認",
       "startDate": "2026-10-17",
       "endDate": "2026-11-15",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケカ抽選・再販速報",
-      "context": "X速報 / 抽選開始 / 再販告知",
+      "context": "周年 / 発売予定 / X話題",
       "score": 50,
       "type": "SNS速報",
       "change24h": "公式 11/27",
@@ -171,10 +171,70 @@
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-27",
-      "endDate": "2026-12-17",
-      "historyHits": 221,
+      "endDate": "2026-12-26",
+      "historyHits": 222,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "ポケカ予約速報@ポケモンカード情報",
+      "context": "SNS抽出 / ポケカ抽選",
+      "score": 84,
+      "type": "SNS抽出",
+      "change24h": "抽出 11/27",
+      "source": "@pokecachan",
+      "confidence": "高",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 211,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan Nov 10",
+      "context": "SNS抽出 / ポケカ抽選",
+      "score": 76,
+      "type": "SNS抽出",
+      "change24h": "抽出 11/27",
+      "source": "@pokecachan",
+      "confidence": "中",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 6,
+      "historyRecentHits": 2,
+      "historyLastSeen": "2026-11-25T20:16:05.364Z"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 10h FUTURISTIC BOX追加抽選のお届けは来年9月です ポケカ予約速報@ポケモンカード情報 @pokecachan 13h",
+      "context": "SNS抽出 / ポケカ抽選",
+      "score": 84,
+      "type": "SNS抽出",
+      "change24h": "抽出 11/27",
+      "source": "@pokecachan",
+      "confidence": "高",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 211,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 12h",
+      "context": "SNS抽出 / ポケカ抽選",
+      "score": 72,
+      "type": "SNS抽出",
+      "change24h": "抽出 11/27",
+      "source": "@pokecachan",
+      "confidence": "中",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 3,
+      "historyRecentHits": 0,
+      "historyLastSeen": "2026-08-27T20:50:10.678Z"
     },
     {
       "keyword": "ポケカ再販・抽選情報",
@@ -187,24 +247,84 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-17",
-      "historyHits": 221,
+      "historyHits": 222,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケカ抽選・再販まとめ",
-      "context": "Xまとめ / 抽選開始 / 入荷速報",
+      "context": "周年 / 発売予定 / X話題 / 可愛い系",
       "score": 50,
       "type": "SNS速報",
-      "change24h": "公式 11/27",
+      "change24h": "公式 12/05",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-11-27",
-      "endDate": "2026-12-17",
-      "historyHits": 221,
+      "startDate": "2026-12-05",
+      "endDate": "2027-01-03",
+      "historyHits": 222,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "ポケカ速報＠予約抽選・最新情報まとめ",
+      "context": "SNS抽出 / ポケカまとめ",
+      "score": 69,
+      "type": "SNS抽出",
+      "change24h": "抽出 12/05",
+      "source": "@pokecamatomeru",
+      "confidence": "中",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 211,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "ポケモンカードやポケモンの最新情報をお知らせ│ポケモン30周年│30th CELEBRATION│ストームエメラルダ",
+      "context": "SNS抽出 / ポケカまとめ",
+      "score": 61,
+      "type": "SNS抽出",
+      "change24h": "抽出 12/05",
+      "source": "@pokecamatomeru",
+      "confidence": "低",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 49,
+      "historyRecentHits": 2,
+      "historyLastSeen": "2026-11-25T20:16:05.364Z"
+    },
+    {
+      "keyword": "ポケモンカードを盛り上げていきましょう！ houhou-news.com Joined August 2018 2,491 Following 397.4K Followers Mention",
+      "context": "SNS抽出 / ポケカまとめ",
+      "score": 57,
+      "type": "SNS抽出",
+      "change24h": "抽出 12/05",
+      "source": "@pokecamatomeru",
+      "confidence": "低",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
+    },
+    {
+      "keyword": "ポケモンカード30周年 抽選販売(再販)】 12月1日(火)からポケモンセンターオンラインで拡張パック",
+      "context": "SNS抽出 / ポケカまとめ",
+      "score": 57,
+      "type": "SNS抽出",
+      "change24h": "抽出 12/05",
+      "source": "@pokecamatomeru",
+      "confidence": "低",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
     },
     {
       "keyword": "ONE PIECE コラボ時計・限定グッズ",
@@ -217,9 +337,9 @@
       "action": "公式ニュース確認: GARRACK ONE PIECE スマートウォッチ シャンクスモデルの発売/予約導線を確認",
       "startDate": "2026-05-29",
       "endDate": "2026-06-27",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "コラボG-SHOCK / CasiOak新作",
@@ -232,9 +352,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-17",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "品薄・完売ブログ監視",
@@ -247,9 +367,9 @@
       "action": "公式ページを再取得して内容を確認",
       "startDate": "2026-11-23",
       "endDate": "2026-12-06",
-      "historyHits": 256,
+      "historyHits": 257,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEG… 次の記事",
@@ -259,12 +379,12 @@
       "change24h": "抽出 11/03",
       "source": "転売LABO",
       "confidence": "中",
-      "startDate": "2020-08-30",
-      "endDate": "2020-12-19",
+      "startDate": "2020-06-05",
+      "endDate": "2022-01-21",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 54,
+      "historyHits": 55,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー",
@@ -274,12 +394,12 @@
       "change24h": "抽出 11/03",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
@@ -289,12 +409,12 @@
       "change24h": "抽出 11/03",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲームMEGAシリーズの拡張パックです",
@@ -304,12 +424,12 @@
       "change24h": "抽出 11/03",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 54,
+      "historyHits": 55,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム",
@@ -319,12 +439,12 @@
       "change24h": "抽出 11/03",
       "source": "転売LABO",
       "confidence": "高",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケカ",
@@ -337,9 +457,9 @@
       "startDate": "2026-05-31",
       "endDate": "2026-06-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー 2026年6月28日",
@@ -352,9 +472,9 @@
       "startDate": "2026-05-31",
       "endDate": "2026-06-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ポケモンカードゲーム ハイクラスパック",
@@ -367,9 +487,9 @@
       "startDate": "2026-05-31",
       "endDate": "2026-06-28",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ワンピースースースカード",
@@ -382,9 +502,9 @@
       "startDate": "2026-08-03",
       "endDate": "2026-08-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 207,
+      "historyHits": 208,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ワンピースースースカードゲーム 決戦の刻",
@@ -397,24 +517,24 @@
       "startDate": "2026-08-03",
       "endDate": "2026-08-22",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 207,
+      "historyHits": 208,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "えみのせどり部屋 品薄監視",
       "context": "発売予定",
       "score": 50,
       "type": "SNS監視",
-      "change24h": "公式 11/27",
+      "change24h": "公式 11/26",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-11-27",
-      "endDate": "2026-12-10",
-      "historyHits": 255,
+      "startDate": "2026-11-26",
+      "endDate": "2026-12-09",
+      "historyHits": 256,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "プレ値SNS監視",
@@ -427,9 +547,9 @@
       "action": "公式ニュース確認: 3度の飯よりプレミアム 完売ウォッチの発売/予約導線を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-10",
-      "historyHits": 254,
+      "historyHits": 255,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE (10/26)",
@@ -442,9 +562,9 @@
       "startDate": "2026-10-28",
       "endDate": "2026-11-10",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "品薄注意報 (1)",
@@ -457,9 +577,9 @@
       "startDate": "2010-08-07",
       "endDate": "2010-08-20",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 175,
+      "historyHits": 176,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "タカラトミー ディズニー・ロルカナ ブースターパックハイペリアシティ BOX",
@@ -472,9 +592,9 @@
       "startDate": "2026-11-27",
       "endDate": "2026-12-10",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 86,
+      "historyHits": 87,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "フィギュア",
@@ -487,9 +607,9 @@
       "startDate": "2025-11-22",
       "endDate": "2025-12-04",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 177,
+      "historyHits": 178,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ドラゴンボールZ 孫悟空 01 -限定復刻仕様版- 完成品フィギュア",
@@ -502,9 +622,9 @@
       "startDate": "2025-11-22",
       "endDate": "2025-12-04",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 160,
+      "historyHits": 161,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE 三度の飯よりプレミアム",
@@ -517,9 +637,9 @@
       "startDate": "2026-10-26",
       "endDate": "2026-11-08",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE 三度の飯よりプレミアム いちろーがお届けする",
@@ -532,9 +652,9 @@
       "startDate": "2026-10-26",
       "endDate": "2026-11-08",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "フィギュア (401)",
@@ -547,89 +667,89 @@
       "startDate": "2025-11-22",
       "endDate": "2025-12-04",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 159,
+      "historyHits": 160,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "しなかん 品薄完売監視",
       "context": "周年 / 公式グッズ / コラボ / 記念コンテンツ / 発売予定 / 可愛い系",
       "score": 50,
       "type": "ブログ監視",
-      "change24h": "公式 12/19",
+      "change24h": "公式 01/16",
       "source": "公式",
       "confidence": "低",
       "action": "公式ページを再取得して内容を確認",
-      "startDate": "2026-12-19",
-      "endDate": "2027-01-01",
-      "historyHits": 255,
+      "startDate": "2027-01-16",
+      "endDate": "2027-01-29",
+      "historyHits": 256,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "品薄完売ブログ しなかん！",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
       "score": 85,
       "type": "ブログ抽出",
-      "change24h": "抽出 12/19",
+      "change24h": "抽出 01/16",
       "source": "しなかん",
       "confidence": "高",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 175,
+      "historyHits": 176,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
-      "keyword": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17:00より販",
+      "keyword": "一番くじONLINE 一番くじ 『ペルソナ』シリーズ 一番くじ NieR:Automata Ver1.1a ジェラートピケ ドラクエ初コラボ ・ GELATO PIQUE encounte",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
       "score": 73,
       "type": "ブログ抽出",
-      "change24h": "抽出 12/19",
+      "change24h": "抽出 01/16",
       "source": "しなかん",
       "confidence": "中",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 9,
+      "historyHits": 7,
       "historyRecentHits": 0,
-      "historyLastSeen": "2026-11-06T03:12:17.686Z"
+      "historyLastSeen": "2026-09-21T00:51:36.266Z"
     },
     {
-      "keyword": "一番くじONLINE （販売先リンク） その他",
-      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 85,
-      "type": "ブログ抽出",
-      "change24h": "抽出 12/19",
-      "source": "しなかん",
-      "confidence": "高",
-      "startDate": "2026-01-22",
-      "endDate": "2026-11-09",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 174,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
-    },
-    {
-      "keyword": "一番くじ ディズニー ■一番くじ トイ・ストーリー（Toy Story） #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
+      "keyword": "一番くじ ふくびき所 予約 ★ ドラクエ ドラゴンクエスト ふくびき所スペシャル 参考： 一番くじONLINE Yahoo!ショッピング 楽天市場販売状況 Amazon（アマゾン）一括検索",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
       "score": 73,
       "type": "ブログ抽出",
-      "change24h": "抽出 12/19",
+      "change24h": "抽出 01/16",
       "source": "しなかん",
       "confidence": "中",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 31,
+      "historyHits": 15,
       "historyRecentHits": 0,
-      "historyLastSeen": "2026-11-06T03:12:17.686Z"
+      "historyLastSeen": "2026-09-21T00:51:36.266Z"
+    },
+    {
+      "keyword": "一番くじ 11月2週 / 1週 / 10月5週 ほか その他",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 73,
+      "type": "ブログ抽出",
+      "change24h": "抽出 01/16",
+      "source": "しなかん",
+      "confidence": "中",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-09",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
     },
     {
       "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 83,
+      "score": 81,
       "type": "ブログ抽出",
       "change24h": "抽出 11/25",
       "source": "しなかん",
@@ -637,9 +757,24 @@
       "startDate": "2025-11-19",
       "endDate": "2025-11-20",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
+      "historyHits": 11,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 69,
+      "type": "ブログ抽出",
+      "change24h": "抽出 11/25",
+      "source": "しなかん",
+      "confidence": "中",
+      "startDate": "2025-11-19",
+      "endDate": "2025-11-20",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 9,
+      "historyRecentHits": 0,
+      "historyLastSeen": "2026-10-22T15:58:48.338Z"
     },
     {
       "keyword": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ",
@@ -652,9 +787,9 @@
       "startDate": "2025-11-19",
       "endDate": "2025-11-20",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～",
@@ -667,29 +802,74 @@
       "startDate": "2025-11-19",
       "endDate": "2025-11-20",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyHits": 11,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
-      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
+      "keyword": "スクエニ“ドラクエ”新作くじ＆限定コラボグッズほか!!",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 83,
+      "score": 73,
       "type": "ブログ抽出",
-      "change24h": "抽出 11/25",
+      "change24h": "抽出 11/27",
       "source": "しなかん",
-      "confidence": "高",
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-20",
+      "confidence": "中",
+      "startDate": "2026-11-28",
+      "endDate": "2026-12-11",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
+    },
+    {
+      "keyword": "“ドラゴンボール”新作くじ＆限定グッズほか!!",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 73,
+      "type": "ブログ抽出",
+      "change24h": "抽出 01/16",
+      "source": "しなかん",
+      "confidence": "中",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
       "action": "導線・価格・期間を再確認して候補判定",
       "historyHits": 11,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyRecentHits": 0,
+      "historyLastSeen": "2026-10-22T15:58:48.338Z"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3 』が販売開始となります",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 73,
+      "type": "ブログ抽出",
+      "change24h": "抽出 01/16",
+      "source": "しなかん",
+      "confidence": "中",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール ASSEMBLE COLLECTION ～孫悟空少年期編～（再販売）』が販売！ オンライン販売 は 2026年12月01日(火)17:00より販売開始予定 参考：",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 73,
+      "type": "ブログ抽出",
+      "change24h": "抽出 01/16",
+      "source": "しなかん",
+      "confidence": "中",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null
     },
     {
       "keyword": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ 』が販売開始となります",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 81,
+      "score": 83,
       "type": "ブログ抽出",
       "change24h": "抽出 11/27",
       "source": "しなかん",
@@ -697,14 +877,29 @@
       "startDate": "2026-11-25",
       "endDate": "2026-11-27",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "一番くじONLINE 販売先リンク その他",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 85,
+      "type": "ブログ抽出",
+      "change24h": "抽出 11/27",
+      "source": "しなかん",
+      "confidence": "高",
+      "startDate": "2026-11-25",
+      "endDate": "2026-11-27",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 175,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "一番くじ 仮面ライダー #一番くじ #仮面ライダー #特撮 ============================= 一番くじ 仮面ライダー 予約 ★ 一番くじ 仮面ライダービルド ～B",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 81,
+      "score": 83,
       "type": "ブログ抽出",
       "change24h": "抽出 11/27",
       "source": "しなかん",
@@ -712,9 +907,9 @@
       "startDate": "2026-11-25",
       "endDate": "2026-11-27",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "フィギュア",
@@ -727,9 +922,24 @@
       "startDate": "2026-10-01",
       "endDate": "2026-10-05",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 177,
+      "historyHits": 178,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
+    },
+    {
+      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
+      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
+      "score": 85,
+      "type": "ブログ抽出",
+      "change24h": "抽出 11/27",
+      "source": "しなかん",
+      "confidence": "高",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-05",
+      "action": "導線・価格・期間を再確認して候補判定",
+      "historyHits": 12,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "一番くじ ゴジラ 怪獣乱舞-ゼロの鼓動-",
@@ -742,9 +952,9 @@
       "startDate": "2026-10-01",
       "endDate": "2026-10-05",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 33,
+      "historyHits": 34,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～ 』が販売開始となります",
@@ -757,14 +967,14 @@
       "startDate": "2026-08-10",
       "endDate": "2026-11-24",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyHits": 11,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "一番くじONLINE ★ アニメイト",
       "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 81,
+      "score": 79,
       "type": "ブログ抽出",
       "change24h": "抽出 11/24",
       "source": "しなかん",
@@ -772,9 +982,9 @@
       "startDate": "2026-08-10",
       "endDate": "2026-11-24",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 123,
+      "historyHits": 124,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "フィギュア (1349)",
@@ -787,69 +997,24 @@
       "startDate": "2026-10-01",
       "endDate": "2026-10-05",
       "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 159,
+      "historyHits": 160,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS 』が販売開始となります",
-      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 85,
-      "type": "ブログ抽出",
-      "change24h": "抽出 03/06",
-      "source": "しなかん",
-      "confidence": "高",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS（再販売）』が販売！ オンライン販売 は 2026年11月25日(水)17:00より販売開始予定 参考： 一番く",
-      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 85,
-      "type": "ブログ抽出",
-      "change24h": "抽出 03/06",
-      "source": "しなかん",
-      "confidence": "高",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 10,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
-    },
-    {
-      "keyword": "一番くじ ジョジョJOJO",
-      "context": "ブログ抽出 / 品薄完売ブログ　しなかん！",
-      "score": 85,
-      "type": "ブログ抽出",
-      "change24h": "抽出 03/06",
-      "source": "しなかん",
-      "confidence": "高",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "action": "導線・価格・期間を再確認して候補判定",
-      "historyHits": 11,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "keyword": "転売ヤーかなえ 品薄監視",
-      "context": "SNS / 品薄 / 完売 / 再販",
-      "score": 50,
+      "context": "コラボ / 発売予定 / X話題 / 可愛い系",
+      "score": 91,
       "type": "SNS監視",
       "change24h": "公式 11/27",
       "source": "公式",
-      "confidence": "低",
-      "action": "公式ページを再取得して内容を確認",
+      "confidence": "高",
+      "action": "公式ニュース確認: 転売ヤーかなえ 品薄ウォッチの発売/予約導線を確認",
       "startDate": "2026-11-27",
       "endDate": "2026-12-10",
-      "historyHits": 249,
+      "historyHits": 250,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z"
+      "historyLastSeen": "2026-11-27T04:48:08.856Z"
     }
   ],
   "discoveryCandidates": [
@@ -877,9 +1042,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "deal-buy-price",
-      "historyHits": 265,
+      "historyHits": 266,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -890,20 +1055,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 265,
+      "learningMentions1y": 266,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:58.802Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.528Z",
       "routeFinalUrl": "https://www.dragonquest.jp/news/detail/4245/",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:58.802Z",
+        "checkedAt": "2026-11-27T19:43:42.528Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.dragonquest.jp/news/detail/4245/",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -931,9 +1096,9 @@
       "marketPriceSource": "deal-sell-price",
       "marketObservedAt": null,
       "retailPriceSource": "deal-buy-price",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -944,17 +1109,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 260,
+      "learningMentions1y": 261,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "404",
-      "routeCheckedAt": "2026-11-27T04:48:58.959Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.869Z",
       "routeFinalUrl": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:58.959Z",
+        "checkedAt": "2026-11-27T19:43:42.869Z",
         "sourceStatus": "404",
         "finalUrl": "https://store.jp.square-enix.com/category/263/MW36259.html",
         "summary": "接続未確認",
@@ -987,9 +1152,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -1000,17 +1165,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 260,
+      "learningMentions1y": 261,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "404",
-      "routeCheckedAt": "2026-11-27T04:48:59.032Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.889Z",
       "routeFinalUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:59.032Z",
+        "checkedAt": "2026-11-27T19:43:42.889Z",
         "sourceStatus": "404",
         "finalUrl": "https://store.jp.square-enix.com/category/DQMM_R2601/",
         "summary": "接続未確認",
@@ -1030,22 +1195,22 @@
       "marginSignal": "4cm以下なら送料210円候補",
       "reason": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイトを確認。周年 / 公式グッズ / 記念コンテンツ / 発売予定 / X話題 / 可愛い系を検知。固定URLのため精度高で追跡。",
       "confidence": "高",
-      "adoptionReason": "公式ニュースで周年 / 公式グッズ / 記念コンテンツを確認 / 価格 ¥500。",
+      "adoptionReason": "公式ニュースで周年 / 公式グッズ / 記念コンテンツを確認 / 価格 ¥550。",
       "missingData": "具体柄、初動成約、厚み",
       "sourceUrl": "https://www.pokemoncenter-online.com/",
       "startDate": "2026-10-17",
       "endDate": "2026-11-15",
-      "retailPrice": 500,
-      "retailPriceLabel": "公式価格 ¥500",
+      "retailPrice": 550,
+      "retailPriceLabel": "公式価格 ¥550",
       "category": "large",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "candidate",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1056,20 +1221,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 260,
+      "learningMentions1y": 261,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:58.767Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.558Z",
       "routeFinalUrl": "https://www.pokemoncenter-online.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:48:58.767Z",
+        "checkedAt": "2026-11-27T19:43:42.558Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.pokemoncenter-online.com/",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1099,9 +1264,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1112,20 +1277,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 260,
+      "learningMentions1y": 261,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:58.573Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.405Z",
       "routeFinalUrl": "https://one-piece.com/news/79661/index.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:58.573Z",
+        "checkedAt": "2026-11-27T19:43:42.405Z",
         "sourceStatus": "200",
         "finalUrl": "https://one-piece.com/news/79661/index.html",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1153,9 +1318,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1166,20 +1331,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 260,
+      "learningMentions1y": 261,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:58.573Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.405Z",
       "routeFinalUrl": "https://one-piece.com/news/79661/index.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:58.573Z",
+        "checkedAt": "2026-11-27T19:43:42.405Z",
         "sourceStatus": "200",
         "finalUrl": "https://one-piece.com/news/79661/index.html",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1207,9 +1372,9 @@
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 264,
+      "historyHits": 265,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
@@ -1220,17 +1385,17 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 263,
+      "learningMentions1y": 264,
       "routeAlive": false,
       "routeUsable": true,
       "routeStatus": "403",
-      "routeCheckedAt": "2026-11-27T04:48:58.659Z",
+      "routeCheckedAt": "2026-11-27T19:43:42.621Z",
       "routeFinalUrl": "https://gshock.casio.com/jp/products/recommend/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": true,
-        "checkedAt": "2026-11-27T04:48:58.659Z",
+        "checkedAt": "2026-11-27T19:43:42.621Z",
         "sourceStatus": "403",
         "finalUrl": "https://gshock.casio.com/jp/products/recommend/",
         "summary": "接続未確認",
@@ -1244,7 +1409,7 @@
       "trend": "品薄・完売ブログ監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 89,
+      "genreScore": 87,
       "priceData": "記事ベース",
       "tradeVolume": "要確認",
       "marginSignal": "完売速度と再販頻度を重視",
@@ -1263,33 +1428,33 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 256,
+      "historyHits": 257,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
-        "speed": 14,
+        "speed": 12,
         "route": 20,
         "period": 20,
         "price": 5,
         "repeat": 20,
-        "total": 79
+        "total": 77
       },
-      "learningMentions1y": 256,
+      "learningMentions1y": 257,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.168Z",
+      "routeCheckedAt": "2026-11-27T19:43:43.997Z",
       "routeFinalUrl": "https://tenbailabo.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.168Z",
+        "checkedAt": "2026-11-27T19:43:43.997Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1312,17 +1477,17 @@
       "retailPrice": 9500,
       "retailPriceLabel": "抽出価格 ¥9,500",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2020-08-30",
-      "endDate": "2020-12-19",
+      "startDate": "2020-06-05",
+      "endDate": "2022-01-21",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 54,
+      "historyHits": 55,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1331,20 +1496,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 30,
+      "learningMentions1y": 31,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.289Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.211Z",
       "routeFinalUrl": "https://tenbailabo.com/starbucks-lucky-bag-2027",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.289Z",
+        "checkedAt": "2026-11-27T19:43:44.211Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/starbucks-lucky-bag-2027",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1365,17 +1530,17 @@
       "retailPrice": 6000,
       "retailPriceLabel": "抽出価格 ¥6,000",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1384,20 +1549,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 47,
+      "learningMentions1y": 48,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:59.413Z",
+      "routeCheckedAt": "2026-11-27T19:43:43.091Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:48:59.413Z",
+        "checkedAt": "2026-11-27T19:43:43.091Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1420,17 +1585,17 @@
       "retailPrice": 6000,
       "retailPriceLabel": "抽出価格 ¥6,000",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": null,
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1439,20 +1604,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 209,
+      "learningMentions1y": 210,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:59.413Z",
+      "routeCheckedAt": "2026-11-27T19:43:43.091Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:48:59.413Z",
+        "checkedAt": "2026-11-27T19:43:43.091Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1475,17 +1640,17 @@
       "retailPrice": 6000,
       "retailPriceLabel": "抽出価格 ¥6,000",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 54,
+      "historyHits": 55,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1494,20 +1659,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 37,
+      "learningMentions1y": 38,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:59.413Z",
+      "routeCheckedAt": "2026-11-27T19:43:43.091Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:48:59.413Z",
+        "checkedAt": "2026-11-27T19:43:43.091Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1530,17 +1695,17 @@
       "retailPrice": 6000,
       "retailPriceLabel": "抽出価格 ¥6,000",
       "retailPriceSource": "blog-sns-article",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "marketPrice": 19554,
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1549,20 +1714,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 54,
+      "learningMentions1y": 55,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:48:59.413Z",
+      "routeCheckedAt": "2026-11-27T19:43:43.091Z",
       "routeFinalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:48:59.413Z",
+        "checkedAt": "2026-11-27T19:43:43.091Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
-        "summary": "接続 11/27 04:48",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1593,9 +1758,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 260,
+      "historyHits": 261,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1604,20 +1769,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 209,
+      "learningMentions1y": 210,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.373Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.226Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.373Z",
+        "checkedAt": "2026-11-27T19:43:44.226Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1646,9 +1811,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1657,20 +1822,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 47,
+      "learningMentions1y": 48,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.373Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.226Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.373Z",
+        "checkedAt": "2026-11-27T19:43:44.226Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1699,9 +1864,9 @@
       "marketPriceLabel": "相場 19,554円（履歴補完）",
       "marketPriceSource": "history-median",
       "marketObservedAt": null,
-      "historyHits": 209,
+      "historyHits": 210,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1710,20 +1875,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 209,
+      "learningMentions1y": 210,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.373Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.226Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.373Z",
+        "checkedAt": "2026-11-27T19:43:44.226Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1752,9 +1917,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 207,
+      "historyHits": 208,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1763,20 +1928,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 163,
+      "learningMentions1y": 164,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.321Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.164Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.321Z",
+        "checkedAt": "2026-11-27T19:43:44.164Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1805,9 +1970,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 207,
+      "historyHits": 208,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1816,20 +1981,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 207,
+      "learningMentions1y": 208,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.321Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.164Z",
       "routeFinalUrl": "https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.321Z",
+        "checkedAt": "2026-11-27T19:43:44.164Z",
         "sourceStatus": "200",
         "finalUrl": "https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -1847,8 +2012,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量、相場価格",
       "sourceUrl": "https://emisresaleroom.com/",
-      "startDate": "2026-11-27",
-      "endDate": "2026-12-10",
+      "startDate": "2026-11-26",
+      "endDate": "2026-12-09",
       "retailPrice": 33000,
       "retailPriceLabel": "公式価格 ¥33,000（履歴補完）",
       "category": "unknown",
@@ -1857,33 +2022,33 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 255,
+      "historyHits": 256,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "official",
       "sourceReliability": "high",
       "scoreAxes": {
-        "speed": 20,
+        "speed": 18,
         "route": 20,
         "period": 20,
         "price": 20,
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 255,
+      "learningMentions1y": 256,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.198Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.624Z",
       "routeFinalUrl": "https://emisresaleroom.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.198Z",
+        "checkedAt": "2026-11-27T19:43:44.624Z",
         "sourceStatus": "200",
         "finalUrl": "https://emisresaleroom.com/",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1913,9 +2078,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 254,
+      "historyHits": 255,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -1926,20 +2091,20 @@
         "repeat": 20,
         "total": 85
       },
-      "learningMentions1y": 254,
+      "learningMentions1y": 255,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.495Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.048Z",
       "routeFinalUrl": "https://gentei333.blog.fc2.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.495Z",
+        "checkedAt": "2026-11-27T19:43:45.048Z",
         "sourceStatus": "200",
         "finalUrl": "https://gentei333.blog.fc2.com/",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -1970,9 +2135,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -1981,20 +2146,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 53,
+      "learningMentions1y": 54,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2025,9 +2190,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 175,
+      "historyHits": 176,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2036,20 +2201,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 175,
+      "learningMentions1y": 176,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2080,9 +2245,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 86,
+      "historyHits": 87,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 20,
         "route": 20,
@@ -2091,20 +2256,20 @@
         "repeat": 20,
         "total": 85
       },
-      "learningMentions1y": 86,
+      "learningMentions1y": 87,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.711Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.079Z",
       "routeFinalUrl": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2398850&pid=884524679&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fhbst-store%2F4904810093602.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.711Z",
+        "checkedAt": "2026-11-27T19:43:45.079Z",
         "sourceStatus": "200",
         "finalUrl": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2398850&pid=884524679&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fhbst-store%2F4904810093602.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -2133,9 +2298,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 177,
+      "historyHits": 178,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2144,20 +2309,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 159,
+      "learningMentions1y": 160,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.190Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.190Z",
+        "checkedAt": "2026-11-27T19:43:45.572Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -2186,9 +2351,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 160,
+      "historyHits": 161,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2197,20 +2362,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 149,
+      "learningMentions1y": 150,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2241,9 +2406,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2252,20 +2417,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 53,
+      "learningMentions1y": 54,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2296,9 +2461,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 53,
+      "historyHits": 54,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2307,20 +2472,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 53,
+      "learningMentions1y": 54,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2351,9 +2516,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 159,
+      "historyHits": 160,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2362,20 +2527,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 12,
+      "learningMentions1y": 13,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.467Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.715Z",
       "routeFinalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.467Z",
+        "checkedAt": "2026-11-27T19:43:44.715Z",
         "sourceStatus": "200",
         "finalUrl": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2395,8 +2560,8 @@
       "adoptionReason": "公式ニュースの内容確認が未完了。",
       "missingData": "公式ページ確認、取引量、相場価格",
       "sourceUrl": "http://spkey.blog114.fc2.com/",
-      "startDate": "2026-12-19",
-      "endDate": "2027-01-01",
+      "startDate": "2027-01-16",
+      "endDate": "2027-01-29",
       "retailPrice": 25300,
       "retailPriceLabel": "公式価格 ¥25,300（履歴補完）",
       "category": "unknown",
@@ -2405,9 +2570,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": "history-median",
-      "historyHits": 255,
+      "historyHits": 256,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -2418,20 +2583,20 @@
         "repeat": 20,
         "total": 98
       },
-      "learningMentions1y": 255,
+      "learningMentions1y": 256,
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.500Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.078Z",
       "routeFinalUrl": "http://spkey.blog114.fc2.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:00.500Z",
+        "checkedAt": "2026-11-27T19:43:45.078Z",
         "sourceStatus": "200",
         "finalUrl": "http://spkey.blog114.fc2.com/",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
@@ -2454,7 +2619,7 @@
       "retailPrice": 25300,
       "retailPriceLabel": "公式価格 ¥25,300（履歴補完）",
       "retailPriceSource": "history-median",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
@@ -2462,9 +2627,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 175,
+      "historyHits": 176,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2473,25 +2638,25 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 175,
+      "learningMentions1y": 176,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.649Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.961Z",
       "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.649Z",
+        "checkedAt": "2026-11-27T19:43:44.961Z",
         "sourceStatus": "200",
         "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
     {
-      "name": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17:00より販",
+      "name": "一番くじONLINE 一番くじ 『ペルソナ』シリーズ 一番くじ NieR:Automata Ver1.1a ジェラートピケ ドラクエ初コラボ ・ GELATO PIQUE encounte",
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
@@ -2507,7 +2672,7 @@
       "retailPrice": null,
       "retailPriceLabel": null,
       "retailPriceSource": null,
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
@@ -2515,9 +2680,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 9,
+      "historyHits": 7,
       "historyRecentHits": 0,
-      "historyLastSeen": "2026-11-06T03:12:17.686Z",
+      "historyLastSeen": "2026-09-21T00:51:36.266Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2526,82 +2691,29 @@
         "repeat": 8,
         "total": 53
       },
-      "learningMentions1y": 1,
+      "learningMentions1y": 0,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.649Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.961Z",
       "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.649Z",
+        "checkedAt": "2026-11-27T19:43:44.961Z",
         "sourceStatus": "200",
         "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
     {
-      "name": "一番くじONLINE （販売先リンク） その他",
+      "name": "一番くじ ふくびき所 予約 ★ ドラクエ ドラゴンクエスト ふくびき所スペシャル 参考： 一番くじONLINE Yahoo!ショッピング 楽天市場販売状況 Amazon（アマゾン）一括検索",
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 95,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "相場価格",
-      "sourceUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-      "retailPrice": 8424,
-      "retailPriceLabel": "公式価格 ¥8,424（履歴補完）",
-      "retailPriceSource": "history-median",
-      "startDate": "2026-01-22",
-      "endDate": "2026-11-09",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 174,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 20,
-        "repeat": 20,
-        "total": 80
-      },
-      "learningMentions1y": 172,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.649Z",
-      "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.649Z",
-        "sourceStatus": "200",
-        "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
-        "issues": []
-      }
-    },
-    {
-      "name": "一番くじ ディズニー ■一番くじ トイ・ストーリー（Toy Story） #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 83,
+      "genreScore": 77,
       "priceData": "未取得",
       "tradeVolume": "要確認",
       "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
@@ -2613,7 +2725,7 @@
       "retailPrice": null,
       "retailPriceLabel": null,
       "retailPriceSource": null,
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "sourceChannel": "blog",
       "sourceReliability": "medium",
@@ -2621,31 +2733,84 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 31,
+      "historyHits": 15,
       "historyRecentHits": 0,
-      "historyLastSeen": "2026-11-06T03:12:17.686Z",
+      "historyLastSeen": "2026-09-21T00:51:36.266Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
         "period": 20,
         "price": 5,
-        "repeat": 14,
-        "total": 59
+        "repeat": 12,
+        "total": 57
       },
-      "learningMentions1y": 31,
+      "learningMentions1y": 8,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:00.649Z",
+      "routeCheckedAt": "2026-11-27T19:43:44.961Z",
       "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:00.649Z",
+        "checkedAt": "2026-11-27T19:43:44.961Z",
         "sourceStatus": "200",
         "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "一番くじ 11月2週 / 1週 / 10月5週 ほか その他",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 75,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-09",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null,
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 8,
+        "total": 53
+      },
+      "learningMentions1y": 0,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:44.961Z",
+      "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:44.961Z",
+        "sourceStatus": "200",
+        "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -2654,175 +2819,10 @@
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 88,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性18/20 導線20/20 期間20/20 価格5/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://limited.yodobashi.com/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-20",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 10,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 20,
-        "total": 65
-      },
-      "learningMentions1y": 10,
-      "routeAlive": false,
-      "routeUsable": false,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.778Z",
-      "routeFinalUrl": "https://limited.yodobashi.com/",
-      "routeVerification": {
-        "status": "missing",
-        "alive": false,
-        "usable": false,
-        "checkedAt": "2026-11-27T04:49:01.778Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://limited.yodobashi.com/",
-        "summary": "接続 11/27 04:49",
-        "issues": [
-          "導線が汎用ページ"
-        ]
-      }
-    },
-    {
-      "name": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 82,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性18/20 導線20/20 期間20/20 価格5/20 反復16/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://limited.yodobashi.com/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-20",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 18,
-        "total": 63
-      },
-      "learningMentions1y": 4,
-      "routeAlive": false,
-      "routeUsable": false,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.778Z",
-      "routeFinalUrl": "https://limited.yodobashi.com/",
-      "routeVerification": {
-        "status": "missing",
-        "alive": false,
-        "usable": false,
-        "checkedAt": "2026-11-27T04:49:01.778Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://limited.yodobashi.com/",
-        "summary": "接続 11/27 04:49",
-        "issues": [
-          "導線が汎用ページ"
-        ]
-      }
-    },
-    {
-      "name": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
       "genreScore": 86,
       "priceData": "未取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性18/20 導線20/20 期間20/20 価格5/20 反復18/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://limited.yodobashi.com/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-20",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 10,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 20,
-        "total": 65
-      },
-      "learningMentions1y": 10,
-      "routeAlive": false,
-      "routeUsable": false,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.778Z",
-      "routeFinalUrl": "https://limited.yodobashi.com/",
-      "routeVerification": {
-        "status": "missing",
-        "alive": false,
-        "usable": false,
-        "checkedAt": "2026-11-27T04:49:01.778Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://limited.yodobashi.com/",
-        "summary": "接続 11/27 04:49",
-        "issues": [
-          "導線が汎用ページ"
-        ]
-      }
-    },
-    {
-      "name": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 88,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性18/20 導線20/20 期間20/20 価格5/20 反復20/20",
+      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復20/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
@@ -2841,7 +2841,7 @@
       "marketObservedAt": null,
       "historyHits": 11,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -2854,19 +2854,396 @@
       "routeAlive": false,
       "routeUsable": false,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.778Z",
+      "routeCheckedAt": "2026-11-27T19:43:46.708Z",
       "routeFinalUrl": "https://limited.yodobashi.com/",
       "routeVerification": {
         "status": "missing",
         "alive": false,
         "usable": false,
-        "checkedAt": "2026-11-27T04:49:01.778Z",
+        "checkedAt": "2026-11-27T19:43:46.708Z",
         "sourceStatus": "200",
         "finalUrl": "https://limited.yodobashi.com/",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": [
           "導線が汎用ページ"
         ]
+      }
+    },
+    {
+      "name": "一番くじ ドラゴンボール Fantastic Adventure 3",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 71,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://limited.yodobashi.com/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2025-11-19",
+      "endDate": "2025-11-20",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 9,
+      "historyRecentHits": 0,
+      "historyLastSeen": "2026-10-22T15:58:48.338Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 8,
+        "total": 53
+      },
+      "learningMentions1y": 0,
+      "routeAlive": false,
+      "routeUsable": false,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.708Z",
+      "routeFinalUrl": "https://limited.yodobashi.com/",
+      "routeVerification": {
+        "status": "missing",
+        "alive": false,
+        "usable": false,
+        "checkedAt": "2026-11-27T19:43:46.708Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://limited.yodobashi.com/",
+        "summary": "接続 11/27 19:43",
+        "issues": [
+          "導線が汎用ページ"
+        ]
+      }
+    },
+    {
+      "name": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 82,
+      "priceData": "未取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復18/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "高",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://limited.yodobashi.com/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2025-11-19",
+      "endDate": "2025-11-20",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 20,
+        "total": 65
+      },
+      "learningMentions1y": 5,
+      "routeAlive": false,
+      "routeUsable": false,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.708Z",
+      "routeFinalUrl": "https://limited.yodobashi.com/",
+      "routeVerification": {
+        "status": "missing",
+        "alive": false,
+        "usable": false,
+        "checkedAt": "2026-11-27T19:43:46.708Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://limited.yodobashi.com/",
+        "summary": "接続 11/27 19:43",
+        "issues": [
+          "導線が汎用ページ"
+        ]
+      }
+    },
+    {
+      "name": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 86,
+      "priceData": "未取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復20/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "高",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://limited.yodobashi.com/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2025-11-19",
+      "endDate": "2025-11-20",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 11,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 20,
+        "total": 65
+      },
+      "learningMentions1y": 11,
+      "routeAlive": false,
+      "routeUsable": false,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.708Z",
+      "routeFinalUrl": "https://limited.yodobashi.com/",
+      "routeVerification": {
+        "status": "missing",
+        "alive": false,
+        "usable": false,
+        "checkedAt": "2026-11-27T19:43:46.708Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://limited.yodobashi.com/",
+        "summary": "接続 11/27 19:43",
+        "issues": [
+          "導線が汎用ページ"
+        ]
+      }
+    },
+    {
+      "name": "スクエニ“ドラクエ”新作くじ＆限定コラボグッズほか!!",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 75,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://www.jp.square-enix.com/goods/kuji/monstermaster/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-11-28",
+      "endDate": "2026-12-11",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null,
+      "scoreAxes": {
+        "speed": 20,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 8,
+        "total": 73
+      },
+      "learningMentions1y": 0,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:45.928Z",
+      "routeFinalUrl": "https://www.jp.square-enix.com/goods/kuji/monstermaster/",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:45.928Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://www.jp.square-enix.com/goods/kuji/monstermaster/",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "“ドラゴンボール”新作くじ＆限定グッズほか!!",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 81,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://p-bandai.jp/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 11,
+      "historyRecentHits": 0,
+      "historyLastSeen": "2026-10-22T15:58:48.338Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 12,
+        "total": 57
+      },
+      "learningMentions1y": 11,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.034Z",
+      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:46.034Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://p-bandai.jp/global_newpc.html",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "一番くじ ドラゴンボール Fantastic Adventure 3 』が販売開始となります",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 78,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://p-bandai.jp/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null,
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 8,
+        "total": 53
+      },
+      "learningMentions1y": 0,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.034Z",
+      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:46.034Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://p-bandai.jp/global_newpc.html",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "一番くじ ドラゴンボール ASSEMBLE COLLECTION ～孫悟空少年期編～（再販売）』が販売！ オンライン販売 は 2026年12月01日(火)17:00より販売開始予定 参考：",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 78,
+      "priceData": "未取得",
+      "tradeVolume": "要確認",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復8/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "中",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://p-bandai.jp/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 0,
+      "historyRecentHits": 0,
+      "historyLastSeen": null,
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 8,
+        "total": 53
+      },
+      "learningMentions1y": 0,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.034Z",
+      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:46.034Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://p-bandai.jp/global_newpc.html",
+        "summary": "接続 11/27 19:43",
+        "issues": []
       }
     },
     {
@@ -2874,10 +3251,10 @@
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 87,
+      "genreScore": 89,
       "priceData": "未取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復16/20",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復18/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
@@ -2894,31 +3271,84 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
-        "speed": 18,
+        "speed": 16,
         "route": 20,
         "period": 20,
         "price": 5,
-        "repeat": 18,
+        "repeat": 20,
         "total": 81
       },
-      "learningMentions1y": 4,
+      "learningMentions1y": 5,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.190Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.190Z",
+        "checkedAt": "2026-11-27T19:43:45.572Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "一番くじONLINE 販売先リンク その他",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 98,
+      "priceData": "未取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "高",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "相場価格",
+      "sourceUrl": "https://p-bandai.jp/chara/c0020/",
+      "retailPrice": 8424,
+      "retailPriceLabel": "公式価格 ¥8,424（履歴補完）",
+      "retailPriceSource": "history-median",
+      "startDate": "2026-11-25",
+      "endDate": "2026-11-27",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 175,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
+      "scoreAxes": {
+        "speed": 16,
+        "route": 20,
+        "period": 20,
+        "price": 20,
+        "repeat": 20,
+        "total": 96
+      },
+      "learningMentions1y": 173,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
+      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:45.572Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://p-bandai.jp/global_newpc.html",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -2927,10 +3357,10 @@
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 87,
+      "genreScore": 89,
       "priceData": "未取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復16/20",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復18/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
@@ -2947,31 +3377,84 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 4,
-      "historyRecentHits": 4,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyHits": 5,
+      "historyRecentHits": 5,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
-        "speed": 18,
+        "speed": 16,
         "route": 20,
         "period": 20,
         "price": 5,
-        "repeat": 18,
+        "repeat": 20,
         "total": 81
       },
-      "learningMentions1y": 4,
+      "learningMentions1y": 5,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.190Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.190Z",
+        "checkedAt": "2026-11-27T19:43:45.572Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
+        "issues": []
+      }
+    },
+    {
+      "name": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
+      "trend": "しなかん 品薄完売監視",
+      "stage": "追加候補",
+      "stageKind": "candidate",
+      "genreScore": 94,
+      "priceData": "未取得",
+      "tradeVolume": "上昇",
+      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
+      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
+      "confidence": "高",
+      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
+      "missingData": "価格データ、相場価格、公式価格",
+      "sourceUrl": "https://p-bandai.jp/chara/c0020/",
+      "retailPrice": null,
+      "retailPriceLabel": null,
+      "retailPriceSource": null,
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-05",
+      "sourceChannel": "blog",
+      "sourceReliability": "medium",
+      "marketPrice": null,
+      "marketPriceLabel": null,
+      "marketPriceSource": null,
+      "marketObservedAt": null,
+      "historyHits": 12,
+      "historyRecentHits": 7,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
+      "scoreAxes": {
+        "speed": 0,
+        "route": 20,
+        "period": 20,
+        "price": 5,
+        "repeat": 20,
+        "total": 65
+      },
+      "learningMentions1y": 12,
+      "routeAlive": true,
+      "routeUsable": true,
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
+      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
+      "routeVerification": {
+        "status": "verified",
+        "alive": true,
+        "usable": true,
+        "checkedAt": "2026-11-27T19:43:45.572Z",
+        "sourceStatus": "200",
+        "finalUrl": "https://p-bandai.jp/global_newpc.html",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -3000,9 +3483,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 33,
+      "historyHits": 34,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -3011,20 +3494,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 25,
+      "learningMentions1y": 26,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.190Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.190Z",
+        "checkedAt": "2026-11-27T19:43:45.572Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -3036,7 +3519,7 @@
       "genreScore": 84,
       "priceData": "未取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復18/20",
+      "marginSignal": "速報性14/20 導線20/20 期間20/20 価格5/20 反復20/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
@@ -3053,9 +3536,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 10,
-      "historyRecentHits": 5,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyHits": 11,
+      "historyRecentHits": 6,
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -3064,20 +3547,20 @@
         "repeat": 20,
         "total": 65
       },
-      "learningMentions1y": 10,
+      "learningMentions1y": 11,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.306Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.722Z",
       "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.306Z",
+        "checkedAt": "2026-11-27T19:43:45.722Z",
         "sourceStatus": "200",
         "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -3086,10 +3569,10 @@
       "trend": "しなかん 品薄完売監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 91,
+      "genreScore": 90,
       "priceData": "未取得",
       "tradeVolume": "上昇",
-      "marginSignal": "速報性16/20 導線20/20 期間20/20 価格5/20 反復20/20",
+      "marginSignal": "速報性14/20 導線20/20 期間20/20 価格5/20 反復20/20",
       "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
       "confidence": "高",
       "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
@@ -3106,9 +3589,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 123,
+      "historyHits": 124,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -3117,20 +3600,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 111,
+      "learningMentions1y": 112,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.306Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.722Z",
       "routeFinalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.306Z",
+        "checkedAt": "2026-11-27T19:43:45.722Z",
         "sourceStatus": "200",
         "finalUrl": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -3159,9 +3642,9 @@
       "marketPriceLabel": null,
       "marketPriceSource": null,
       "marketObservedAt": null,
-      "historyHits": 159,
+      "historyHits": 160,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "scoreAxes": {
         "speed": 0,
         "route": 20,
@@ -3170,179 +3653,20 @@
         "repeat": 20,
         "total": 80
       },
-      "learningMentions1y": 4,
+      "learningMentions1y": 5,
       "routeAlive": true,
       "routeUsable": true,
       "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.190Z",
+      "routeCheckedAt": "2026-11-27T19:43:45.572Z",
       "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
       "routeVerification": {
         "status": "verified",
         "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.190Z",
+        "checkedAt": "2026-11-27T19:43:45.572Z",
         "sourceStatus": "200",
         "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
-        "issues": []
-      }
-    },
-    {
-      "name": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS 』が販売開始となります",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 93,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://p-bandai.jp/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 10,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 20,
-        "total": 65
-      },
-      "learningMentions1y": 10,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.678Z",
-      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.678Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
-        "issues": []
-      }
-    },
-    {
-      "name": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS（再販売）』が販売！ オンライン販売 は 2026年11月25日(水)17:00より販売開始予定 参考： 一番く",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 93,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://p-bandai.jp/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 10,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 20,
-        "total": 65
-      },
-      "learningMentions1y": 10,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.678Z",
-      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.678Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
-        "issues": []
-      }
-    },
-    {
-      "name": "一番くじ ジョジョJOJO",
-      "trend": "しなかん 品薄完売監視",
-      "stage": "追加候補",
-      "stageKind": "candidate",
-      "genreScore": 93,
-      "priceData": "未取得",
-      "tradeVolume": "上昇",
-      "marginSignal": "速報性20/20 導線20/20 期間20/20 価格5/20 反復20/20",
-      "reason": "ブログ抽出の最新記事から商品名を抽出。導線と価格を照合して昇格判定。",
-      "confidence": "高",
-      "adoptionReason": "品薄完売ブログ　しなかん！由来 / 記事抽出",
-      "missingData": "価格データ、相場価格、公式価格",
-      "sourceUrl": "https://p-bandai.jp/",
-      "retailPrice": null,
-      "retailPriceLabel": null,
-      "retailPriceSource": null,
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "sourceChannel": "blog",
-      "sourceReliability": "medium",
-      "marketPrice": null,
-      "marketPriceLabel": null,
-      "marketPriceSource": null,
-      "marketObservedAt": null,
-      "historyHits": 11,
-      "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
-      "scoreAxes": {
-        "speed": 0,
-        "route": 20,
-        "period": 20,
-        "price": 5,
-        "repeat": 20,
-        "total": 65
-      },
-      "learningMentions1y": 11,
-      "routeAlive": true,
-      "routeUsable": true,
-      "routeStatus": "200",
-      "routeCheckedAt": "2026-11-27T04:49:01.678Z",
-      "routeFinalUrl": "https://p-bandai.jp/global_newpc.html",
-      "routeVerification": {
-        "status": "verified",
-        "alive": true,
-        "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.678Z",
-        "sourceStatus": "200",
-        "finalUrl": "https://p-bandai.jp/global_newpc.html",
-        "summary": "接続 11/27 04:49",
+        "summary": "接続 11/27 19:43",
         "issues": []
       }
     },
@@ -3351,14 +3675,14 @@
       "trend": "転売ヤーかなえ 品薄監視",
       "stage": "追加候補",
       "stageKind": "candidate",
-      "genreScore": 94,
+      "genreScore": 98,
       "priceData": "投稿ベース",
       "tradeVolume": "要確認",
       "marginSignal": "完売速度と再販告知の重なりを重視",
-      "reason": "転売ヤーかなえの公式ページ確認に失敗。次回取得まで追加候補止まり。",
+      "reason": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / Xを確認。コラボ / 発売予定 / X話題 / 可愛い系を検知。固定URLのため精度高で追跡。",
       "confidence": "高",
-      "adoptionReason": "公式ニュースの内容確認が未完了。",
-      "missingData": "公式ページ確認、価格データ、取引量、相場価格、公式価格",
+      "adoptionReason": "公式ニュースでコラボ / 発売予定 / X話題を確認。",
+      "missingData": "公式URL、定価、成約価格、販売期間、相場価格、公式価格",
       "sourceUrl": "https://x.com/KanaeKanri20674?lang=ja",
       "startDate": "2026-11-27",
       "endDate": "2026-12-10",
@@ -3370,9 +3694,9 @@
       "marketPriceSource": null,
       "marketObservedAt": null,
       "retailPriceSource": null,
-      "historyHits": 249,
+      "historyHits": 250,
       "historyRecentHits": 7,
-      "historyLastSeen": "2026-11-26T19:53:55.078Z",
+      "historyLastSeen": "2026-11-27T04:48:08.856Z",
       "sourceChannel": "sns",
       "sourceReliability": "medium",
       "scoreAxes": {
@@ -3383,23 +3707,21 @@
         "repeat": 20,
         "total": 85
       },
-      "learningMentions1y": 249,
-      "routeAlive": false,
+      "learningMentions1y": 250,
+      "routeAlive": true,
       "routeUsable": true,
-      "routeStatus": "403",
-      "routeCheckedAt": "2026-11-27T04:49:01.232Z",
+      "routeStatus": "200",
+      "routeCheckedAt": "2026-11-27T19:43:46.750Z",
       "routeFinalUrl": "https://x.com/KanaeKanri20674?lang=ja",
       "routeVerification": {
-        "status": "missing",
-        "alive": false,
+        "status": "verified",
+        "alive": true,
         "usable": true,
-        "checkedAt": "2026-11-27T04:49:01.232Z",
-        "sourceStatus": "403",
+        "checkedAt": "2026-11-27T19:43:46.750Z",
+        "sourceStatus": "200",
         "finalUrl": "https://x.com/KanaeKanri20674?lang=ja",
-        "summary": "接続未確認",
-        "issues": [
-          "接続失敗 403"
-        ]
+        "summary": "接続 11/27 19:43",
+        "issues": []
       }
     }
   ],
@@ -3838,16 +4160,14 @@
           "url": "https://nyuka-now.com/archives/157981",
           "applyUrl": "https://twitter.com/YS_SHINJYUKU",
           "verification": {
-            "status": "review",
-            "label": "要目視確認",
+            "status": "verified",
+            "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.440Z",
-            "sourceStatus": "403",
+            "checkedAt": "2026-11-27T19:43:17.523Z",
+            "sourceStatus": "200",
             "finalUrl": "https://x.com/YS_SHINJYUKU",
-            "summary": "終了日あり / 常時/再販枠",
-            "issues": [
-              "接続失敗 403"
-            ]
+            "summary": "接続 11/27 19:43 / 終了日あり / 常時/再販枠",
+            "issues": []
           }
         },
         {
@@ -3866,7 +4186,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3891,7 +4211,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3949,7 +4269,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3974,7 +4294,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -3999,7 +4319,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -4057,7 +4377,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -4082,7 +4402,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -4140,7 +4460,7 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.622Z",
+            "checkedAt": "2026-11-27T19:43:17.717Z",
             "sourceStatus": "403",
             "finalUrl": "https://dorasuta.membercard.jp/lottery",
             "summary": "終了日あり / 常時/再販枠",
@@ -4162,10 +4482,10 @@
             "status": "verified",
             "label": "応募欄確認済み",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:31.970Z",
+            "checkedAt": "2026-11-27T19:43:18.167Z",
             "sourceStatus": "200",
             "finalUrl": "https://nyuka-now.com/archives/156404",
-            "summary": "接続 11/27 04:48 / 終了日あり / 常時/再販枠",
+            "summary": "接続 11/27 19:43 / 終了日あり / 常時/再販枠",
             "issues": []
           }
         }
@@ -4217,10 +4537,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:32.778Z",
+            "checkedAt": "2026-11-27T19:43:18.517Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 11/27 04:48 / 終了日あり / 常時/再販枠",
+            "summary": "接続 11/27 19:43 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -4239,10 +4559,10 @@
             "status": "review",
             "label": "要目視確認",
             "ended": false,
-            "checkedAt": "2026-11-27T04:48:32.778Z",
+            "checkedAt": "2026-11-27T19:43:18.517Z",
             "sourceStatus": "200",
             "finalUrl": "https://snkrdunk.com/articles/30254/",
-            "summary": "接続 11/27 04:48 / 終了日あり / 常時/再販枠",
+            "summary": "接続 11/27 19:43 / 終了日あり / 常時/再販枠",
             "issues": [
               "応募直リンクではない"
             ]
@@ -4256,12 +4576,12 @@
   "routeVerificationResults": [
     {
       "id": "route:https://twitter.com/YS_SHINJYUKU",
-      "ok": false,
-      "status": 403,
+      "ok": true,
+      "status": 200,
       "url": "https://x.com/YS_SHINJYUKU",
-      "title": "Just a moment...",
+      "title": "イエローサブマリン新宿店 (@YS_SHINJYUKU) / X",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:31.440Z"
+      "fetchedAt": "2026-11-27T19:43:17.523Z"
     },
     {
       "id": "route:https://dorasuta.membercard.jp/lottery",
@@ -4270,7 +4590,7 @@
       "url": "https://dorasuta.membercard.jp/lottery",
       "title": "Just a moment...",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:31.622Z"
+      "fetchedAt": "2026-11-27T19:43:17.717Z"
     },
     {
       "id": "route:https://nyuka-now.com/archives/156404",
@@ -4279,7 +4599,7 @@
       "url": "https://nyuka-now.com/archives/156404",
       "title": "【2026年11月27日更新】ポケモンカード ニンジャスピナーの抽選予約・先着販売・在庫あり・再販入荷情報まとめ│入荷Now",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:31.970Z"
+      "fetchedAt": "2026-11-27T19:43:18.167Z"
     },
     {
       "id": "route:https://snkrdunk.com/articles/30254/",
@@ -4288,7 +4608,7 @@
       "url": "https://snkrdunk.com/articles/30254/",
       "title": "【ポケカ】インフェルノXの再販はいつ？再販入荷情報まとめ【10/2更新】 | スニーカーダンク",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:32.778Z"
+      "fetchedAt": "2026-11-27T19:43:18.517Z"
     }
   ],
   "archivedConcreteTrends": [
@@ -4324,7 +4644,35 @@
       "keyword": "ポケカ抽選・再販速報",
       "source": "公式",
       "startDate": "2026-11-27",
-      "endDate": "2026-12-17",
+      "endDate": "2026-12-26",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケカ予約速報@ポケモンカード情報",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan Nov 10",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 10h FUTURISTIC BOX追加抽選のお届けは来年9月です ポケカ予約速報@ポケモンカード情報 @pokecachan 13h",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 12h",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-07",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
@@ -4335,45 +4683,66 @@
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "ポケカ抽選・再販まとめ",
-      "source": "公式",
-      "startDate": "2026-11-27",
-      "endDate": "2026-12-17",
+      "keyword": "ポケカ速報＠予約抽選・最新情報まとめ",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカードやポケモンの最新情報をお知らせ│ポケモン30周年│30th CELEBRATION│ストームエメラルダ",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカードを盛り上げていきましょう！ houhou-news.com Joined August 2018 2,491 Following 397.4K Followers Mention",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "ポケモンカード30周年 抽選販売(再販)】 12月1日(火)からポケモンセンターオンラインで拡張パック",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-16",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム MEG… 次の記事",
       "source": "転売LABO",
-      "startDate": "2020-08-30",
-      "endDate": "2020-12-19",
+      "startDate": "2020-06-05",
+      "endDate": "2022-01-21",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲームMEGAシリーズの拡張パックです",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "ポケモンカードゲーム",
       "source": "転売LABO",
-      "startDate": "2023-05-27",
-      "endDate": "2023-09-22",
+      "startDate": "2023-06-16",
+      "endDate": "2023-07-28",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
@@ -4461,28 +4830,28 @@
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17:00より販",
+      "keyword": "一番くじ ふくびき所 予約 ★ ドラクエ ドラゴンクエスト ふくびき所スペシャル 参考： 一番くじONLINE Yahoo!ショッピング 楽天市場販売状況 Amazon（アマゾン）一括検索",
       "source": "しなかん",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "一番くじONLINE （販売先リンク） その他",
+      "keyword": "一番くじ 11月2週 / 1週 / 10月5週 ほか その他",
       "source": "しなかん",
-      "startDate": "2026-01-22",
-      "endDate": "2026-11-09",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "一番くじ ディズニー ■一番くじ トイ・ストーリー（Toy Story） #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
-      "source": "しなかん",
-      "startDate": "2026-01-22",
+      "startDate": "2026-01-16",
       "endDate": "2026-11-09",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS",
+      "source": "しなかん",
+      "startDate": "2025-11-19",
+      "endDate": "2025-11-20",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3",
       "source": "しなかん",
       "startDate": "2025-11-19",
       "endDate": "2025-11-20",
@@ -4503,14 +4872,28 @@
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
-      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3 』が販売開始となります",
       "source": "しなかん",
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-20",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール ASSEMBLE COLLECTION ～孫悟空少年期編～（再販売）』が販売！ オンライン販売 は 2026年12月01日(火)17:00より販売開始予定 参考：",
+      "source": "しなかん",
+      "startDate": "2026-01-16",
+      "endDate": "2026-11-27",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     },
     {
       "keyword": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ 』が販売開始となります",
+      "source": "しなかん",
+      "startDate": "2026-11-25",
+      "endDate": "2026-11-27",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "一番くじONLINE 販売先リンク その他",
       "source": "しなかん",
       "startDate": "2026-11-25",
       "endDate": "2026-11-27",
@@ -4525,6 +4908,13 @@
     },
     {
       "keyword": "フィギュア",
+      "source": "しなかん",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-05",
+      "reason": "急上昇表示条件外（開始まで7日未満）"
+    },
+    {
+      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
       "source": "しなかん",
       "startDate": "2026-10-01",
       "endDate": "2026-10-05",
@@ -4556,27 +4946,6 @@
       "source": "しなかん",
       "startDate": "2026-10-01",
       "endDate": "2026-10-05",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS 』が販売開始となります",
-      "source": "しなかん",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS（再販売）』が販売！ オンライン販売 は 2026年11月25日(水)17:00より販売開始予定 参考： 一番く",
-      "source": "しなかん",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
-      "reason": "急上昇表示条件外（開始まで7日未満）"
-    },
-    {
-      "keyword": "一番くじ ジョジョJOJO",
-      "source": "しなかん",
-      "startDate": "2026-03-06",
-      "endDate": "2026-11-21",
       "reason": "急上昇表示条件外（開始まで7日未満）"
     }
   ],
@@ -4618,6 +4987,30 @@
       "startDate": "2026-11-27"
     },
     {
+      "keyword": "ポケカ予約速報@ポケモンカード情報",
+      "type": "specific",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan Nov 10",
+      "type": "specific",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 10h FUTURISTIC BOX追加抽選のお届けは来年9月です ポケカ予約速報@ポケモンカード情報 @pokecachan 13h",
+      "type": "specific",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01"
+    },
+    {
+      "keyword": "ポケモンカード情報 @pokecachan 12h",
+      "type": "specific",
+      "source": "@pokecachan",
+      "startDate": "2026-12-01"
+    },
+    {
       "keyword": "ポケカ再販・抽選情報",
       "type": "specific",
       "source": "公式",
@@ -4627,7 +5020,37 @@
       "keyword": "ポケカ抽選・再販まとめ",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-11-27"
+      "startDate": "2026-12-05"
+    },
+    {
+      "keyword": "ポケカ速報＠予約抽選・最新情報まとめ",
+      "type": "specific",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15"
+    },
+    {
+      "keyword": "ポケモンカードやポケモンの最新情報をお知らせ│ポケモン30周年│30th CELEBRATION│ストームエメラルダ",
+      "type": "specific",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15"
+    },
+    {
+      "keyword": "ポケモンカードを盛り上げていきましょう！ houhou-news.com Joined August 2018 2,491 Following 397.4K Followers Mention",
+      "type": "specific",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15"
+    },
+    {
+      "keyword": "ポケモンカードを盛り上げていきましょう！ houhou",
+      "type": "broad",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15"
+    },
+    {
+      "keyword": "ポケモンカード30周年 抽選販売(再販)】 12月1日(火)からポケモンセンターオンラインで拡張パック",
+      "type": "specific",
+      "source": "@pokecamatomeru",
+      "startDate": "2026-11-15"
     },
     {
       "keyword": "ONE PIECE コラボ時計・限定グッズ",
@@ -4657,31 +5080,31 @@
       "keyword": "ポケモンカードゲーム MEG… 次の記事",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2020-08-30"
+      "startDate": "2020-06-05"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
+      "startDate": "2023-06-16"
     },
     {
       "keyword": "ポケモンカードゲーム MEGA 拡張パック",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
+      "startDate": "2023-06-16"
     },
     {
       "keyword": "ポケモンカードゲームMEGAシリーズの拡張パックです",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
+      "startDate": "2023-06-16"
     },
     {
       "keyword": "ポケモンカードゲーム",
       "type": "specific",
       "source": "転売LABO",
-      "startDate": "2023-05-27"
+      "startDate": "2023-06-16"
     },
     {
       "keyword": "ポケカ",
@@ -4717,7 +5140,7 @@
       "keyword": "えみのせどり部屋 品薄監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-11-27"
+      "startDate": "2026-11-26"
     },
     {
       "keyword": "プレ値SNS監視",
@@ -4789,52 +5212,58 @@
       "keyword": "しなかん 品薄完売監視",
       "type": "specific",
       "source": "公式",
-      "startDate": "2026-12-19"
+      "startDate": "2027-01-16"
     },
     {
       "keyword": "品薄完売ブログ しなかん！",
       "type": "specific",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17:00より販",
+      "keyword": "一番くじONLINE 一番くじ 『ペルソナ』シリーズ 一番くじ NieR:Automata Ver1.1a ジェラートピケ ドラクエ初コラボ ・ GELATO PIQUE encounte",
       "type": "specific",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17",
+      "keyword": "一番くじONLINE 一番くじ 『ペルソナ』シリーズ 一番くじ NieR",
       "type": "broad",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじONLINE （販売先リンク） その他",
+      "keyword": "一番くじ ふくびき所 予約 ★ ドラクエ ドラゴンクエスト ふくびき所スペシャル 参考： 一番くじONLINE Yahoo!ショッピング 楽天市場販売状況 Amazon（アマゾン）一括検索",
       "type": "specific",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじONLINE  その他",
+      "keyword": "一番くじ ふくびき所 予約 ★ ドラクエ ドラゴンクエスト ふくびき所スペシャル 参考",
       "type": "broad",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじ ディズニー ■一番くじ トイ・ストーリー（Toy Story） #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
+      "keyword": "一番くじ 11月2週 / 1週 / 10月5週 ほか その他",
       "type": "specific",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
-      "keyword": "一番くじ ディズニー ■一番くじ トイ・ストーリー #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
+      "keyword": "一番くじ 11月2週",
       "type": "broad",
       "source": "しなかん",
-      "startDate": "2026-01-22"
+      "startDate": "2026-01-16"
     },
     {
       "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2025-11-19"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3",
       "type": "specific",
       "source": "しなかん",
       "startDate": "2025-11-19"
@@ -4852,13 +5281,43 @@
       "startDate": "2025-11-19"
     },
     {
-      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
+      "keyword": "スクエニ“ドラクエ”新作くじ＆限定コラボグッズほか!!",
       "type": "specific",
       "source": "しなかん",
-      "startDate": "2025-11-19"
+      "startDate": "2026-11-28"
+    },
+    {
+      "keyword": "“ドラゴンボール”新作くじ＆限定グッズほか!!",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2026-01-16"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール Fantastic Adventure 3 』が販売開始となります",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2026-01-16"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール ASSEMBLE COLLECTION ～孫悟空少年期編～（再販売）』が販売！ オンライン販売 は 2026年12月01日(火)17:00より販売開始予定 参考：",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2026-01-16"
+    },
+    {
+      "keyword": "一番くじ ドラゴンボール ASSEMBLE COLLECTION ～孫悟空少年期編～』が販売！ オンライン販売 は 2026年12月01日(火)17",
+      "type": "broad",
+      "source": "しなかん",
+      "startDate": "2026-01-16"
     },
     {
       "keyword": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ 』が販売開始となります",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2026-11-25"
+    },
+    {
+      "keyword": "一番くじONLINE 販売先リンク その他",
       "type": "specific",
       "source": "しなかん",
       "startDate": "2026-11-25"
@@ -4871,6 +5330,12 @@
     },
     {
       "keyword": "フィギュア",
+      "type": "specific",
+      "source": "しなかん",
+      "startDate": "2026-10-01"
+    },
+    {
+      "keyword": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
       "type": "specific",
       "source": "しなかん",
       "startDate": "2026-10-01"
@@ -4906,30 +5371,6 @@
       "startDate": "2026-10-01"
     },
     {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS 』が販売開始となります",
-      "type": "specific",
-      "source": "しなかん",
-      "startDate": "2026-03-06"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS（再販売）』が販売！ オンライン販売 は 2026年11月25日(水)17:00より販売開始予定 参考： 一番く",
-      "type": "specific",
-      "source": "しなかん",
-      "startDate": "2026-03-06"
-    },
-    {
-      "keyword": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS』が販売！ オンライン販売 は 2026年11月25日(水)17",
-      "type": "broad",
-      "source": "しなかん",
-      "startDate": "2026-03-06"
-    },
-    {
-      "keyword": "一番くじ ジョジョJOJO",
-      "type": "specific",
-      "source": "しなかん",
-      "startDate": "2026-03-06"
-    },
-    {
       "keyword": "転売ヤーかなえ 品薄監視",
       "type": "specific",
       "source": "公式",
@@ -4940,13 +5381,13 @@
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリースライムロトブルーバージョン",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリー スライム ロトブルーバージョン",
-      "mentions": 265,
-      "periodFillRate": 0.9283018867924528,
+      "mentions": 266,
+      "periodFillRate": 0.9285714285714286,
       "routeFillRate": 1,
       "retailMedian": 1980,
       "marketMedian": 3280,
       "firstSeen": "2026-05-29T05:25:38.009Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじワンピースエルバフ編giantbashvol1vol2",
@@ -5039,90 +5480,90 @@
     {
       "key": "gshockcocacolaga2100cc3ajr",
       "name": "G-SHOCK × Coca-Cola GA-2100CC-3AJR",
-      "mentions": 263,
-      "periodFillRate": 0.935361216730038,
+      "mentions": 264,
+      "periodFillRate": 0.9356060606060606,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": 19554,
       "firstSeen": "2026-05-29T05:40:54.156Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリーバトルはぐれメタル",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリーバトル はぐれメタル",
-      "mentions": 260,
-      "periodFillRate": 0.9461538461538461,
+      "mentions": 261,
+      "periodFillRate": 0.946360153256705,
       "routeFillRate": 1,
       "retailMedian": 2860,
       "marketMedian": 4580,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンクエストメタリックモンスターズギャラリーキングスライムロトブルー系",
       "name": "ドラゴンクエスト メタリックモンスターズギャラリー キングスライム ロトブルー系",
-      "mentions": 260,
-      "periodFillRate": 0.9461538461538461,
+      "mentions": 261,
+      "periodFillRate": 0.946360153256705,
       "routeFillRate": 1,
       "retailMedian": 2530,
       "marketMedian": null,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲーム限定デッキシールドプレイマット",
       "name": "ポケモンカードゲーム 限定デッキシールド・プレイマット",
-      "mentions": 260,
-      "periodFillRate": 0.9461538461538461,
+      "mentions": 261,
+      "periodFillRate": 0.946360153256705,
       "routeFillRate": 1,
       "retailMedian": 770,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "garrackonepieceスマートウォッチシャンクスモデル",
       "name": "GARRACK ONE PIECE スマートウォッチ シャンクスモデル",
-      "mentions": 260,
-      "periodFillRate": 0.9461538461538461,
+      "mentions": 261,
+      "periodFillRate": 0.946360153256705,
       "routeFillRate": 1,
       "retailMedian": 12980,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "garrackonepieceスマートウォッチルフィモデル",
       "name": "GARRACK ONE PIECE スマートウォッチ ルフィモデル",
-      "mentions": 260,
-      "periodFillRate": 0.9461538461538461,
+      "mentions": 261,
+      "periodFillRate": 0.946360153256705,
       "routeFillRate": 1,
       "retailMedian": 12980,
       "marketMedian": 19554,
       "firstSeen": "2026-05-30T06:49:39.994Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "転売はかせ転売labo品薄完売ウォッチ",
       "name": "転売はかせ＠転売LABO 品薄完売ウォッチ",
-      "mentions": 256,
-      "periodFillRate": 0.9609375,
+      "mentions": 257,
+      "periodFillRate": 0.9610894941634242,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:35:41.944Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "えみのせどり部屋品薄ウォッチ",
       "name": "えみのせどり部屋 品薄ウォッチ",
-      "mentions": 255,
-      "periodFillRate": 0.9647058823529412,
+      "mentions": 256,
+      "periodFillRate": 0.96484375,
       "routeFillRate": 1,
       "retailMedian": 33000,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:38:40.833Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "3度の飯よりプレミアム監視",
@@ -5138,35 +5579,35 @@
     {
       "key": "しなかん品薄完売ウォッチ",
       "name": "しなかん 品薄完売ウォッチ",
-      "mentions": 255,
-      "periodFillRate": 0.9647058823529412,
+      "mentions": 256,
+      "periodFillRate": 0.96484375,
       "routeFillRate": 1,
       "retailMedian": 25300,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:38:40.833Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "3度の飯よりプレミアム完売ウォッチ",
       "name": "3度の飯よりプレミアム 完売ウォッチ",
-      "mentions": 254,
-      "periodFillRate": 0.968503937007874,
+      "mentions": 255,
+      "periodFillRate": 0.9686274509803922,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:39:50.495Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "転売ヤーかなえ品薄ウォッチ",
       "name": "転売ヤーかなえ 品薄ウォッチ",
-      "mentions": 249,
-      "periodFillRate": 0.9879518072289156,
+      "mentions": 250,
+      "periodFillRate": 0.988,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-05-30T11:54:23.801Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "フィギュアプラモデル",
@@ -5534,13 +5975,13 @@
     {
       "key": "ポケモンカードゲームmega拡張パック",
       "name": "ポケモンカードゲーム MEGA 拡張パック",
-      "mentions": 209,
+      "mentions": 210,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカード転売のやり方とは",
@@ -5600,13 +6041,13 @@
     {
       "key": "ポケモンカードゲームハイクラスパック",
       "name": "ポケモンカードゲーム ハイクラスパック",
-      "mentions": 209,
+      "mentions": 210,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 5500,
       "marketMedian": 19554,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームmegaハイクラスパック",
@@ -5666,13 +6107,13 @@
     {
       "key": "ポケカ",
       "name": "ポケカ",
-      "mentions": 209,
+      "mentions": 210,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 200,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットampバイオレット拡張パック",
@@ -5688,13 +6129,13 @@
     {
       "key": "品薄注意報1",
       "name": "品薄注意報 (1)",
-      "mentions": 175,
+      "mentions": 176,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームmega拡張パックムニキスゼロbox",
@@ -5754,13 +6195,13 @@
     {
       "key": "ドラゴンボールz孫悟空01限定復刻仕様版完成品フィギュア",
       "name": "ドラゴンボールZ 孫悟空 01 -限定復刻仕様版- 完成品フィギュア",
-      "mentions": 149,
+      "mentions": 150,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1500,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールdragonball全42巻セットdoublecoverbox0427三度の飯よりプレミアム",
@@ -5809,13 +6250,13 @@
     {
       "key": "品薄完売ブログしなかん",
       "name": "品薄完売ブログ しなかん！",
-      "mentions": 175,
+      "mentions": 176,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 25300,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじonlineセブンネットショッピング一括amazonアマゾン一括検索コラボ各種hmvbooks限定グッズセブンネット限定グッズ一番くじonl",
@@ -5930,13 +6371,13 @@
     {
       "key": "フィギュア",
       "name": "フィギュア",
-      "mentions": 159,
+      "mentions": 160,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1500,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ歌川一門",
@@ -5996,13 +6437,13 @@
     {
       "key": "一番くじonline販売先リンクその他",
       "name": "一番くじONLINE （販売先リンク） その他",
-      "mentions": 172,
+      "mentions": 173,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 8424,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじアイカツ一番くじaikatsuアイカツ一番くじアイカツ一番くじアイカツhappy7",
@@ -6029,13 +6470,13 @@
     {
       "key": "一番くじonlineアニメイト",
       "name": "一番くじONLINE ★ アニメイト",
-      "mentions": 111,
+      "mentions": 112,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 19800,
       "marketMedian": null,
       "firstSeen": "2026-06-01T14:26:40.325Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "フィギュア1335",
@@ -6161,13 +6602,13 @@
     {
       "key": "ワンピースースースカードゲーム決戦の刻",
       "name": "ワンピースースースカードゲーム 決戦の刻",
-      "mentions": 207,
+      "mentions": 208,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 990,
       "marketMedian": null,
       "firstSeen": "2026-06-02T01:34:59.037Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ワンピースースースカードゲームのブースターパック第16弾",
@@ -6821,13 +7262,13 @@
     {
       "key": "ポケモンカードゲーム",
       "name": "ポケモンカードゲーム",
-      "mentions": 54,
+      "mentions": 55,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 6000,
       "marketMedian": 19554,
       "firstSeen": "2026-07-05T12:07:12.362Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "アズールレーンラフィーiiうとうとビジーデーver17完成品フィギュア",
@@ -7129,13 +7570,13 @@
     {
       "key": "一番くじジョジョjojo",
       "name": "一番くじ ジョジョJOJO",
-      "mentions": 11,
+      "mentions": 12,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-07-23T23:59:35.441Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ刃牙巨大なる鼓動",
@@ -7569,13 +8010,13 @@
     {
       "key": "ワンピースースースカード",
       "name": "ワンピースースースカード",
-      "mentions": 163,
+      "mentions": 164,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 990,
       "marketMedian": null,
       "firstSeen": "2026-08-04T00:08:17.663Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ワンピースースースカードの周年記念セットは発売後に値上がりしやすく",
@@ -8570,13 +9011,13 @@
     {
       "key": "一番くじディズニー一番くじトイストーリーtoystoryツイステディズニートイストーリー一番くじ",
       "name": "一番くじ ディズニー ■一番くじ トイ・ストーリー（Toy Story） #ツイステ #ディズニー #トイストーリー ============================= 一番くじ",
-      "mentions": 31,
+      "mentions": 32,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-09-04T00:48:46.776Z",
-      "lastSeen": "2026-11-06T03:12:17.686Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームスカーレットバイオレット拡張パック変幻の仮面resalelab利用規約前の記事",
@@ -9439,13 +9880,13 @@
     {
       "key": "タカラトミーディズニーロルカナブースターパックハイペリアシティbox",
       "name": "タカラトミー ディズニー・ロルカナ ブースターパックハイペリアシティ BOX",
-      "mentions": 86,
+      "mentions": 87,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-09-30T16:31:59.849Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールスーパーカードゲームフュージョンワールドブースターパックbrightnessofhopefb11前の記事",
@@ -10066,35 +10507,35 @@
     {
       "key": "ドラゴンボールスーパーダイバーズ2ndanniversarysuperguide1026",
       "name": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE (10/26)",
-      "mentions": 53,
+      "mentions": 54,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-10-26T00:59:19.626Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールスーパーダイバーズ2ndanniversarysuperguide三度の飯よりプレミアム",
       "name": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE 三度の飯よりプレミアム",
-      "mentions": 53,
+      "mentions": 54,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-10-26T00:59:19.626Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールスーパーダイバーズ2ndanniversarysuperguide三度の飯よりプレミアムいちろーがお届けする",
       "name": "ドラゴンボールスーパーダイバーズ 2nd ANNIVERSARY SUPER GUIDE 三度の飯よりプレミアム いちろーがお届けする",
-      "mentions": 53,
+      "mentions": 54,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-10-26T00:59:19.626Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールスーパーダイバーズ2ndanniversarysuperguide1026三度の飯よりプレミアム",
@@ -10176,24 +10617,24 @@
     {
       "key": "一番くじお文具といっしょちっちゃくなっちゃった",
       "name": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-10-29T17:08:18.029Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじお文具といっしょちっちゃくなっちゃったが販売開始となります",
       "name": "一番くじ お文具といっしょ ～ちっちゃくなっちゃった!?～ 』が販売開始となります",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-10-29T17:08:18.029Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじリメンバーミーcolorfulmemories",
@@ -10352,13 +10793,13 @@
     {
       "key": "ポケモンカードゲームmega拡張パックハドウシーカー",
       "name": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー",
-      "mentions": 47,
+      "mentions": 48,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 6000,
       "marketMedian": null,
       "firstSeen": "2026-11-03T18:06:59.404Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームmega拡張パックハドウシーカーが1127金に発売されます",
@@ -10385,13 +10826,13 @@
     {
       "key": "ポケモンカードゲームmega拡張パックハドウシーカー2026年6月28日",
       "name": "ポケモンカードゲーム MEGA 拡張パック ハドウシーカー 2026年6月28日",
-      "mentions": 47,
+      "mentions": 48,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 6000,
       "marketMedian": null,
       "firstSeen": "2026-11-03T18:06:59.404Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ポケモンカードゲームソードシールド強化拡張パックイーブイヒーローズbox",
@@ -10473,13 +10914,13 @@
     {
       "key": "一番くじトイストーリーtoysgloriousmemoriesが販売オンライン販売は一番くじモンスターズインク2026年11月09日月1700より販",
       "name": "一番くじ 〈トイ・ストーリー〉Toys' Glorious Memories』が販売！ オンライン販売 は 一番くじ 〈モンスターズ・インク〉 2026年11月09日(月)17:00より販",
-      "mentions": 1,
+      "mentions": 2,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 8424,
       "marketMedian": null,
       "firstSeen": "2026-11-06T03:12:17.686Z",
-      "lastSeen": "2026-11-06T03:12:17.686Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじエスターバニーromanceangel",
@@ -10528,13 +10969,13 @@
     {
       "key": "ポケモンカードゲームmegaシリーズの拡張パックです",
       "name": "ポケモンカードゲームMEGAシリーズの拡張パックです",
-      "mentions": 37,
+      "mentions": 38,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 6000,
       "marketMedian": 19554,
       "firstSeen": "2026-11-08T16:48:22.345Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "ドラゴンボールスーパーカードゲームフュージョンワールドブースターパック覚醒の鼓動前の記事",
@@ -10572,13 +11013,13 @@
     {
       "key": "ポケモンカードゲームmeg次の記事",
       "name": "ポケモンカードゲーム MEG… 次の記事",
-      "mentions": 30,
+      "mentions": 31,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 9500,
       "marketMedian": 19554,
       "firstSeen": "2026-11-11T18:10:07.261Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじhololiveflowglow",
@@ -10627,13 +11068,13 @@
     {
       "key": "一番くじゴジラ怪獣乱舞ゼロの鼓動",
       "name": "一番くじ ゴジラ 怪獣乱舞-ゼロの鼓動-",
-      "mentions": 25,
+      "mentions": 26,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-12T03:37:22.971Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじゴジラ怪獣乱舞ゼロの鼓動が販売開始となります",
@@ -10803,13 +11244,13 @@
     {
       "key": "フィギュア401",
       "name": "フィギュア (401)",
-      "mentions": 12,
+      "mentions": 13,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1500,
       "marketMedian": null,
       "firstSeen": "2026-11-19T19:12:54.593Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじにゃんこ大戦争みんなでペリペリするにゃ",
@@ -10836,13 +11277,13 @@
     {
       "key": "一番くじtamagotchi夜空で発見12星座とたまごっち",
       "name": "一番くじ Tamagotchi ～夜空で発見！？12星座とたまごっち～",
-      "mentions": 11,
+      "mentions": 12,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-20T03:52:57.026Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじtamagotchi夜空で発見12星座とたまごっちが販売開始となります",
@@ -10869,79 +11310,79 @@
     {
       "key": "一番くじジョジョの奇妙な冒険thegatheringofrivals",
       "name": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-21T17:48:43.484Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじジョジョの奇妙な冒険thegatheringofrivalsが販売開始となります",
       "name": "一番くじ ジョジョの奇妙な冒険 The Gathering of RIVALS 』が販売開始となります",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-21T17:48:43.484Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじジョジョの奇妙な冒険thegatheringofstars再販売が販売オンライン販売は2026年11月25日水1700より販売開始予定参考一番く",
       "name": "一番くじ ジョジョの奇妙な冒険 The Gathering of STARS（再販売）』が販売！ オンライン販売 は 2026年11月25日(水)17:00より販売開始予定 参考： 一番く",
-      "mentions": 10,
+      "mentions": 11,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-21T17:48:43.484Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ仮面ライダーマイス仮面ライダーゼッツ",
       "name": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ",
-      "mentions": 4,
+      "mentions": 5,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-25T05:14:48.941Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ仮面ライダーマイス仮面ライダーゼッツが販売開始となります",
       "name": "一番くじ 仮面ライダーマイス＆仮面ライダーゼッツ 』が販売開始となります",
-      "mentions": 4,
+      "mentions": 5,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-25T05:14:48.941Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ仮面ライダー一番くじ仮面ライダー特撮一番くじ仮面ライダー予約一番くじ仮面ライダービルドb",
       "name": "一番くじ 仮面ライダー #一番くじ #仮面ライダー #特撮 ============================= 一番くじ 仮面ライダー 予約 ★ 一番くじ 仮面ライダービルド ～B",
-      "mentions": 4,
+      "mentions": 5,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": null,
       "marketMedian": null,
       "firstSeen": "2026-11-25T05:14:48.941Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "フィギュア1349",
       "name": "フィギュア (1349)",
-      "mentions": 4,
+      "mentions": 5,
       "periodFillRate": 1,
       "routeFillRate": 1,
       "retailMedian": 1500,
       "marketMedian": null,
       "firstSeen": "2026-11-25T05:14:48.941Z",
-      "lastSeen": "2026-11-26T19:53:55.078Z"
+      "lastSeen": "2026-11-27T04:48:08.856Z"
     },
     {
       "key": "一番くじ雪ミクsnowmiku2026年01月22日木1700より販売開始参考一番くじonline販売先リンクその他",
@@ -10974,7 +11415,7 @@
       "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=31&dateLowerM=5&dateLowerY=2026&dateUpperD=24&dateUpperM=8&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:09.083Z"
+      "fetchedAt": "2026-11-27T19:42:37.122Z"
     },
     {
       "id": "pokemon-official-mega-dream-ex",
@@ -10983,7 +11424,7 @@
       "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=31&dateLowerM=5&dateLowerY=2026&dateUpperD=24&dateUpperM=8&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:09.628Z"
+      "fetchedAt": "2026-11-27T19:42:37.323Z"
     },
     {
       "id": "pokemon-official-munikisu-zero",
@@ -10992,7 +11433,7 @@
       "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=31&dateLowerM=5&dateLowerY=2026&dateUpperD=24&dateUpperM=8&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:09.754Z"
+      "fetchedAt": "2026-11-27T19:42:37.467Z"
     },
     {
       "id": "pokemon-official-ninja-spinner",
@@ -11001,7 +11442,7 @@
       "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=31&dateLowerM=5&dateLowerY=2026&dateUpperD=24&dateUpperM=8&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:10.229Z"
+      "fetchedAt": "2026-11-27T19:42:38.023Z"
     },
     {
       "id": "pokemon-official-inferno-x",
@@ -11010,7 +11451,7 @@
       "url": "https://www.pokemon-card.com/products/index.html?dateLowerD=31&dateLowerM=5&dateLowerY=2026&dateUpperD=24&dateUpperM=8&dateUpperY=2027&productType=expansion",
       "title": "商品情報 | ポケモンカードゲーム公式ホームページ",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:10.355Z"
+      "fetchedAt": "2026-11-27T19:42:38.162Z"
     },
     {
       "id": "dragonquest-40th",
@@ -11019,7 +11460,7 @@
       "url": "https://www.dragonquest.jp/news/detail/4245/",
       "title": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！ | ドラクエ・パラダイス(ドラパラ)ドラゴンクエスト公式サイト | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:10.725Z",
+      "fetchedAt": "2026-11-27T19:42:38.568Z",
       "newsTitle": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！",
       "newsDate": "2026-05-27",
       "signals": [
@@ -11041,7 +11482,7 @@
       "url": "https://www.sej.co.jp/products/hhkuji2605.html",
       "title": "ページが見つかりません｜セブン‐イレブン",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:11.824Z",
+      "fetchedAt": "2026-11-27T19:42:39.626Z",
       "newsTitle": "ページが見つかりません｜セブン‐イレブン",
       "newsDate": "2026-11-27",
       "signals": [
@@ -11059,7 +11500,7 @@
       "url": "https://on-line.1kuji.com/Form/Product/ProductDetail.aspx?bid=IP00002109&pid=sap_0000008448",
       "title": "Just a moment...",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:11.952Z",
+      "fetchedAt": "2026-11-27T19:42:39.723Z",
       "newsTitle": "Just a moment...",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11073,7 +11514,7 @@
       "url": "https://sf.1kuji.com/1kuji_dragonball/portal/special/db_goku/",
       "title": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:12.440Z",
+      "fetchedAt": "2026-11-27T19:42:40.272Z",
       "newsTitle": "一番くじ ドラゴンボール THE CHRONICLE OF GOKU フォトギャラリー｜一番くじ『ドラゴンボール』特設サイト",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11087,7 +11528,7 @@
       "url": "https://hobby.watch.impress.co.jp/docs/news/2044682.html",
       "title": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:13.246Z",
+      "fetchedAt": "2026-11-27T19:42:41.261Z",
       "newsTitle": "DMM通販にてガンプラや美少女プラモを対象にした抽選販売が9月5日実施決定！ - HOBBY Watch",
       "newsDate": "2025-09-04",
       "signals": [
@@ -11108,7 +11549,7 @@
       "url": "https://p-bandai.jp/global_newpc.html",
       "title": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:14.174Z",
+      "fetchedAt": "2026-11-27T19:42:42.254Z",
       "newsTitle": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11122,7 +11563,7 @@
       "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "title": "",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:14.876Z",
+      "fetchedAt": "2026-11-27T19:42:42.919Z",
       "newsTitle": "はぐれメタル",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11136,7 +11577,7 @@
       "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "title": "404- ページが見つかりません。",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:15.099Z",
+      "fetchedAt": "2026-11-27T19:42:43.230Z",
       "newsTitle": "404- ページが見つかりません。",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11150,7 +11591,7 @@
       "url": "https://www.pokemoncenter-online.com/",
       "title": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:15.420Z",
+      "fetchedAt": "2026-11-27T19:42:43.572Z",
       "newsTitle": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "newsDate": "2026-10-17",
       "signals": [
@@ -11166,27 +11607,31 @@
     },
     {
       "id": "pokecachan-signal",
-      "ok": false,
-      "status": 403,
+      "ok": true,
+      "status": 200,
       "url": "https://x.com/pokecachan",
-      "title": "Just a moment...",
+      "title": "ポケカ予約速報@ポケモンカード情報 (@pokecachan) / X",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:15.509Z",
-      "newsTitle": "Just a moment...",
+      "fetchedAt": "2026-11-27T19:42:44.041Z",
+      "newsTitle": "ポケカ予約速報@ポケモンカード情報 (@pokecachan) / X",
       "newsDate": "2026-11-27",
-      "signals": [],
-      "expandedScanned": 0,
-      "expandedGenerated": 0
+      "signals": [
+        "周年",
+        "発売予定",
+        "X話題"
+      ],
+      "expandedScanned": 7,
+      "expandedGenerated": 4
     },
     {
       "id": "pokegetoinfo-main-signal",
       "ok": false,
-      "status": 403,
+      "status": 404,
       "url": "https://x.com/PokeGetoinfoMain",
-      "title": "Just a moment...",
+      "title": "User Profile Not Found - X | 404 Error",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:15.572Z",
-      "newsTitle": "Just a moment...",
+      "fetchedAt": "2026-11-27T19:42:48.617Z",
+      "newsTitle": "User Profile Not Found - X",
       "newsDate": "2026-11-27",
       "signals": [],
       "expandedScanned": 0,
@@ -11194,17 +11639,22 @@
     },
     {
       "id": "pokecamatomeru-signal",
-      "ok": false,
-      "status": 403,
+      "ok": true,
+      "status": 200,
       "url": "https://x.com/pokecamatomeru",
-      "title": "Just a moment...",
+      "title": "ポケカ速報＠予約抽選・最新情報まとめ (@pokecamatomeru) / X",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:15.641Z",
-      "newsTitle": "Just a moment...",
-      "newsDate": "2026-11-27",
-      "signals": [],
-      "expandedScanned": 0,
-      "expandedGenerated": 0
+      "fetchedAt": "2026-11-27T19:42:49.007Z",
+      "newsTitle": "ポケカ速報＠予約抽選・最新情報まとめ (@pokecamatomeru) / X",
+      "newsDate": "2026-12-05",
+      "signals": [
+        "周年",
+        "発売予定",
+        "X話題",
+        "可愛い系"
+      ],
+      "expandedScanned": 7,
+      "expandedGenerated": 4
     },
     {
       "id": "onepiece-garrack-watch",
@@ -11213,7 +11663,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:17.460Z",
+      "fetchedAt": "2026-11-27T19:42:54.134Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -11232,7 +11682,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:17.522Z",
+      "fetchedAt": "2026-11-27T19:42:54.220Z",
       "newsTitle": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！",
       "newsDate": "2026-05-29",
       "signals": [
@@ -11251,7 +11701,7 @@
       "url": "https://gshock.casio.com/jp/products/recommend/",
       "title": "Access Denied",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:17.653Z",
+      "fetchedAt": "2026-11-27T19:42:54.334Z",
       "newsTitle": "Access Denied",
       "newsDate": "2026-11-27",
       "signals": [],
@@ -11265,7 +11715,7 @@
       "url": "https://tenbailabo.com/",
       "title": "転売博士の転売LABO | 転売・せどりで稼げるおすすめの商品（アパレル、スニーカー、ポケカ、ホビーなど）を紹介するブログ。副業を始めたい初心者の方も歓迎！メンバー800人超えの転売オンラインサロンのオーナーもやってます",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:19.101Z",
+      "fetchedAt": "2026-11-27T19:42:55.307Z",
       "newsTitle": "転売博士の転売LABO",
       "newsDate": "2026-11-23",
       "signals": [
@@ -11281,9 +11731,9 @@
       "url": "https://emisresaleroom.com/",
       "title": "絵美の転売ルーム | せどり・転売・ポイ活案件お得情報を日々更新していきます！",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:23.283Z",
+      "fetchedAt": "2026-11-27T19:43:00.147Z",
       "newsTitle": "絵美の転売ルーム",
-      "newsDate": "2026-11-27",
+      "newsDate": "2026-11-26",
       "signals": [
         "発売予定"
       ],
@@ -11297,7 +11747,7 @@
       "url": "https://gentei333.blog.fc2.com/",
       "title": "三度の飯よりプレミアム",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:24.175Z",
+      "fetchedAt": "2026-11-27T19:43:01.094Z",
       "newsTitle": "三度の飯よりプレミアム",
       "newsDate": "2026-11-27",
       "signals": [
@@ -11315,9 +11765,9 @@
       "url": "http://spkey.blog114.fc2.com/",
       "title": "品薄完売ブログ しなかん！",
       "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:26.413Z",
+      "fetchedAt": "2026-11-27T19:43:04.886Z",
       "newsTitle": "品薄完売ブログ しなかん！",
-      "newsDate": "2026-12-19",
+      "newsDate": "2027-01-16",
       "signals": [
         "周年",
         "公式グッズ",
@@ -11327,19 +11777,24 @@
         "可愛い系"
       ],
       "expandedScanned": 30,
-      "expandedGenerated": 18
+      "expandedGenerated": 21
     },
     {
       "id": "kanae-resale-watch",
-      "ok": false,
-      "status": 403,
+      "ok": true,
+      "status": 200,
       "url": "https://x.com/KanaeKanri20674?lang=ja",
-      "title": "Just a moment...",
-      "keywordFound": false,
-      "fetchedAt": "2026-11-27T04:48:28.087Z",
-      "newsTitle": "Just a moment...",
+      "title": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
+      "keywordFound": true,
+      "fetchedAt": "2026-11-27T19:43:12.956Z",
+      "newsTitle": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
       "newsDate": "2026-11-27",
-      "signals": [],
+      "signals": [
+        "コラボ",
+        "発売予定",
+        "X話題",
+        "可愛い系"
+      ],
       "expandedScanned": 0,
       "expandedGenerated": 0
     }
@@ -11352,7 +11807,7 @@
       "url": "https://www.dragonquest.jp/news/detail/4245/",
       "title": "2026年5月27日で「ドラゴンクエスト」シリーズ40周年！ 様々な記念コンテンツをまとめた特設ページを公開！ | ドラクエ・パラダイス(ドラパラ)ドラゴンクエスト公式サイト | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:58.802Z"
+      "fetchedAt": "2026-11-27T19:43:42.528Z"
     },
     {
       "id": "candidate-route:https://store.jp.square-enix.com/category/263/MW36259.html",
@@ -11361,7 +11816,7 @@
       "url": "https://store.jp.square-enix.com/category/263/MW36259.html",
       "title": "",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:58.959Z"
+      "fetchedAt": "2026-11-27T19:43:42.869Z"
     },
     {
       "id": "candidate-route:https://store.jp.square-enix.com/category/DQMM_R2601/",
@@ -11370,7 +11825,7 @@
       "url": "https://store.jp.square-enix.com/category/DQMM_R2601/",
       "title": "404- ページが見つかりません。",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:59.032Z"
+      "fetchedAt": "2026-11-27T19:43:42.889Z"
     },
     {
       "id": "candidate-route:https://www.pokemoncenter-online.com/",
@@ -11379,7 +11834,7 @@
       "url": "https://www.pokemoncenter-online.com/",
       "title": "ポケモンセンターオンライン｜ポケモングッズ・ポケモンカードの公式通販サイト",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:58.767Z"
+      "fetchedAt": "2026-11-27T19:43:42.558Z"
     },
     {
       "id": "candidate-route:https://one-piece.com/news/79661/index.html",
@@ -11388,7 +11843,7 @@
       "url": "https://one-piece.com/news/79661/index.html",
       "title": "【麦わらストア限定】GARRACKスマートウォッチ四皇モデル コラボイベントが開催！ | ニュース | ONE PIECE.com（ワンピース ドットコム）",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:58.573Z"
+      "fetchedAt": "2026-11-27T19:43:42.405Z"
     },
     {
       "id": "candidate-route:https://gshock.casio.com/jp/products/recommend/",
@@ -11397,7 +11852,7 @@
       "url": "https://gshock.casio.com/jp/products/recommend/",
       "title": "Access Denied",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:58.659Z"
+      "fetchedAt": "2026-11-27T19:43:42.621Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/",
@@ -11406,7 +11861,7 @@
       "url": "https://tenbailabo.com/",
       "title": "転売博士の転売LABO | 転売・せどりで稼げるおすすめの商品（アパレル、スニーカー、ポケカ、ホビーなど）を紹介するブログ。副業を始めたい初心者の方も歓迎！メンバー800人超えの転売オンラインサロンのオーナーもやってます",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.168Z"
+      "fetchedAt": "2026-11-27T19:43:43.997Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/starbucks-lucky-bag-2027",
@@ -11415,7 +11870,7 @@
       "url": "https://tenbailabo.com/starbucks-lucky-bag-2027",
       "title": "【2026/11/4〜抽選】スターバックス福袋 2027 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.289Z"
+      "fetchedAt": "2026-11-27T19:43:44.211Z"
     },
     {
       "id": "candidate-route:https://www.amazon.co.jp/dp/B0H4PQ6LR5",
@@ -11424,7 +11879,7 @@
       "url": "https://www.amazon.co.jp/dp/B0H4PQ6LR5",
       "title": "Amazon.co.jp",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:48:59.413Z"
+      "fetchedAt": "2026-11-27T19:43:43.091Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
@@ -11433,7 +11888,7 @@
       "url": "https://tenbailabo.com/category/%e3%83%9d%e3%82%b1%e3%82%ab",
       "title": "「ポケカ」の記事一覧 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.373Z"
+      "fetchedAt": "2026-11-27T19:43:44.226Z"
     },
     {
       "id": "candidate-route:https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
@@ -11442,7 +11897,7 @@
       "url": "https://tenbailabo.com/category/%e3%83%af%e3%83%b3%e3%83%94%e3%83%bc%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%89",
       "title": "「ワンピースカード」の記事一覧 | 転売博士の転売LABO",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.321Z"
+      "fetchedAt": "2026-11-27T19:43:44.164Z"
     },
     {
       "id": "candidate-route:https://emisresaleroom.com/",
@@ -11451,7 +11906,7 @@
       "url": "https://emisresaleroom.com/",
       "title": "絵美の転売ルーム | せどり・転売・ポイ活案件お得情報を日々更新していきます！",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.198Z"
+      "fetchedAt": "2026-11-27T19:43:44.624Z"
     },
     {
       "id": "candidate-route:https://gentei333.blog.fc2.com/",
@@ -11460,7 +11915,7 @@
       "url": "https://gentei333.blog.fc2.com/",
       "title": "三度の飯よりプレミアム",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.495Z"
+      "fetchedAt": "2026-11-27T19:43:45.048Z"
     },
     {
       "id": "candidate-route:https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
@@ -11469,7 +11924,7 @@
       "url": "https://www.amazon.co.jp/gp/bestsellers/books?&amp;linkCode=ll2&amp;tag=goo0d3-22&amp;linkId=f6c298a486734794c2cc4ad0e1fcbff3&amp;ref_=as_li_ss_tl",
       "title": "Amazon.co.jp",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.467Z"
+      "fetchedAt": "2026-11-27T19:43:44.715Z"
     },
     {
       "id": "candidate-route:https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2398850&pid=884524679&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fhbst-store%2F4904810093602.html",
@@ -11478,7 +11933,7 @@
       "url": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2398850&pid=884524679&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fhbst-store%2F4904810093602.html",
       "title": "",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.711Z"
+      "fetchedAt": "2026-11-27T19:43:45.079Z"
     },
     {
       "id": "candidate-route:https://p-bandai.jp/chara/c0020/",
@@ -11487,7 +11942,7 @@
       "url": "https://p-bandai.jp/global_newpc.html",
       "title": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:01.190Z"
+      "fetchedAt": "2026-11-27T19:43:45.572Z"
     },
     {
       "id": "candidate-route:http://spkey.blog114.fc2.com/",
@@ -11496,7 +11951,7 @@
       "url": "http://spkey.blog114.fc2.com/",
       "title": "品薄完売ブログ しなかん！",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.500Z"
+      "fetchedAt": "2026-11-27T19:43:45.078Z"
     },
     {
       "id": "candidate-route:http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
@@ -11505,7 +11960,7 @@
       "url": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=879742726&vc_url=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fmovers-and-shakers%2Fbooks%2Fref%3Dzg_bsms_nav_d_1_d%3Ftag%3Dvc-22%26linkCode%3Dure",
       "title": "",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:00.649Z"
+      "fetchedAt": "2026-11-27T19:43:44.961Z"
     },
     {
       "id": "candidate-route:https://limited.yodobashi.com/",
@@ -11514,16 +11969,16 @@
       "url": "https://limited.yodobashi.com/",
       "title": "ヨドバシ・ドット・コム 人気商品抽選|ヨドバシ.com",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:01.778Z"
+      "fetchedAt": "2026-11-27T19:43:46.708Z"
     },
     {
-      "id": "candidate-route:http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
+      "id": "candidate-route:https://www.jp.square-enix.com/goods/kuji/monstermaster/",
       "ok": true,
       "status": 200,
-      "url": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
-      "title": "",
+      "url": "https://www.jp.square-enix.com/goods/kuji/monstermaster/",
+      "title": "ドラゴンクエストふくびき所スペシャル～モンスターマスターと仲間たち編～ | SQUARE ENIX",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:01.306Z"
+      "fetchedAt": "2026-11-27T19:43:45.928Z"
     },
     {
       "id": "candidate-route:https://p-bandai.jp/",
@@ -11532,16 +11987,25 @@
       "url": "https://p-bandai.jp/global_newpc.html",
       "title": "�y�v���~�A���o���_�C�zINTERNATIONAL SHIPPING AVAILABLE�bPREMIUM BANDAI",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:01.678Z"
+      "fetchedAt": "2026-11-27T19:43:46.034Z"
+    },
+    {
+      "id": "candidate-route:http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
+      "ok": true,
+      "status": 200,
+      "url": "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2447355&pid=883057164&vc_url=https%3A%2F%2Fwww.amazon.co.jp%2Fs%3Fk%3D%25E3%2581%258A%25E6%2596%2587%25E5%2585%25B7%25E3%2581%25A8%25E3%2581%2584%25E3%2581%25A3%25E3%2581%2597%25E3%2582%2587%26i%3Doffice-products%26__mk_ja_JP%3D%25E3%2582%25AB%25E3%2582%25BF%25E3%2582%25AB%25E3%2583%258A%26ref%3Dnb_sb_noss%26tag%3Dvc-22%26linkCode%3Dure",
+      "title": "",
+      "keywordFound": true,
+      "fetchedAt": "2026-11-27T19:43:45.722Z"
     },
     {
       "id": "candidate-route:https://x.com/KanaeKanri20674?lang=ja",
-      "ok": false,
-      "status": 403,
+      "ok": true,
+      "status": 200,
       "url": "https://x.com/KanaeKanri20674?lang=ja",
-      "title": "Just a moment...",
+      "title": "転売ヤーかなえ@楽ちんせどり（@KanaeKanri20674） / X",
       "keywordFound": true,
-      "fetchedAt": "2026-11-27T04:49:01.232Z"
+      "fetchedAt": "2026-11-27T19:43:46.750Z"
     }
   ]
 }
